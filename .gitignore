@@ -1,0 +1,28 @@
+# Training artifacts
+checkpoints/
+benchmark_results/
+outputs/
+runs/
+wandb/
+*.pt
+*.bin
+*.safetensors
+
+# Results are committed, but not raw model dumps
+results/**/*.pt
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Tooling / editor state
+.omc/
+.omo/
+.claude-flow/
+.codegraph
+.DS_Store
+.vscode/
+.idea/
