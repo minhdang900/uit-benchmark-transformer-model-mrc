@@ -1,0 +1,1149 @@
+{
+  "version": "1.0",
+  "category": "compound_word_boundary",
+  "description": "Câu hỏi/văn bản có từ ghép ranh giới phức tạp (Compound Word Boundary Errors)",
+  "data": [
+    {
+      "title": "Di sản văn hóa Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Việt Nam là một quốc gia Đông Nam Á với lịch sử hàng ngàn năm. Văn hóa Việt Nam rất đa dạng, với 54 dân tộc thiểu số được công nhận. Di sản văn hóa bao gồm nhiều di tích lịch sử như cố đô Hoa Lư ở Ninh Bình, tháp Chàm ở Quảng Nam, đền Hùng ở Phú Thọ, và cố đô Huế ở Thừa Thiên Huế. Mỗi di tích đều có câu chuyện riêng. Cố đô Hoa Lư được xây dựng vào năm 965 dưới thời vua Đinh Bộ Lê, còn tháp Chàm được xây bắt đầu từ thế kỷ IV dưới ảnh hưởng Pháp và được hoàn thiện vào thế kỷ XV. Đền Hùng được xây lên theo truyền thuyện, kỷ niệm sự trùng sinh của dân tộc Việt. Cố đô Huế được triển khai từ năm 1900 dưới thời vua Tự Đức, và là biểu tượng của triều đình phong kiến. Ngoài ra, di sản Văn hóa thế giới bao gồm cả Di sản Văn hóa Phi Lưu Vân trong, Ninh Bình và Phong Nha – Kẽ Bàng.",
+          "qas": [
+            {
+              "id": "cw_0001",
+              "question": "Tại sao 'tháp Chàm' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "tháp Chàm"
+                ],
+                "answer_start": [
+                  208
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0006",
+              "question": "Tại sao 'Cộng hòa Xã hội chủ nghĩa Việt Nam' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "Việt Nam Dân chủ Cộng hòa"
+                ],
+                "answer_start": [
+                  588
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0007",
+              "question": "Tại sao 'GDP' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "GDP"
+                ],
+                "answer_start": [
+                  408
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0008",
+              "question": "Tại sao 'cây cầu' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "cây cầu"
+                ],
+                "answer_start": [
+                  18
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0009",
+              "question": "Tại sao 'AFF Suzuki Cup' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "AFF Suzuki Cup"
+                ],
+                "answer_start": [
+                  72
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0010",
+              "question": "Tại sao 'Park Hang-seo' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "Park Hang-seo"
+                ],
+                "answer_start": [
+                  200
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0011",
+              "question": "Tại sao 'SEA Games' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "SEA Games"
+                ],
+                "answer_start": [
+                  335
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0012",
+              "question": "Từ 'đại học' cần được giữ nguyên thành một token để tránh nhầm lẫn với từng từ nào?",
+              "answers": {
+                "text": [
+                  "đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0013",
+              "question": "Tại sao 'tháp Chàm' khó được tách từ chính xác?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng địa danh ghép"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0014",
+              "question": "Từ ghép 'TP.HCM' được token hóa thành bao nhiêu phần?",
+              "answers": {
+                "text": [
+                  "một token"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0015",
+              "question": "Tại sao 'Cầu Long Biên' nên được xử lý như một từ ghép?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng của một cây cầu"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0016",
+              "question": "Cách phân biệt từ 'thành phố' và 'Thành phố' trong quá trình token hóa?",
+              "answers": {
+                "text": [
+                  "Thành phố Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0017",
+              "question": "Từ 'đại học' cần được giữ nguyên thành một token để tránh nhầm lẫn với từng từ nào?",
+              "answers": {
+                "text": [
+                  "đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0018",
+              "question": "Tại sao 'tháp Chàm' khó được tách từ chính xác?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng địa danh ghép"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0019",
+              "question": "Từ ghép 'TP.HCM' được token hóa thành bao nhiêu phần?",
+              "answers": {
+                "text": [
+                  "một token"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0020",
+              "question": "Tại sao 'Cầu Long Biên' nên được xử lý như một từ ghép?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng của một cây cầu"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0021",
+              "question": "Cách phân biệt từ 'thành phố' và 'Thành phố' trong quá trình token hóa?",
+              "answers": {
+                "text": [
+                  "Thành phố Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0022",
+              "question": "Từ 'đại học' cần được giữ nguyên thành một token để tránh nhầm lẫn với từng từ nào?",
+              "answers": {
+                "text": [
+                  "đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0023",
+              "question": "Tại sao 'tháp Chàm' khó được tách từ chính xác?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng địa danh ghép"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0024",
+              "question": "Từ ghép 'TP.HCM' được token hóa thành bao nhiêu phần?",
+              "answers": {
+                "text": [
+                  "một token"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0025",
+              "question": "Tại sao 'Cầu Long Biên' nên được xử lý như một từ ghép?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng của một cây cầu"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0026",
+              "question": "Cách phân biệt từ 'thành phố' và 'Thành phố' trong quá trình token hóa?",
+              "answers": {
+                "text": [
+                  "Thành phố Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0027",
+              "question": "Từ 'đại học' cần được giữ nguyên thành một token để tránh nhầm lẫn với từng từ nào?",
+              "answers": {
+                "text": [
+                  "đại"
+                ],
+                "answer_start": [
+                  606
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0028",
+              "question": "Tại sao 'tháp Chàm' khó được tách từ chính xác?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng địa danh ghép"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0029",
+              "question": "Từ ghép 'TP.HCM' được token hóa thành bao nhiêu phần?",
+              "answers": {
+                "text": [
+                  "một token"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0030",
+              "question": "Tại sao 'Cầu Long Biên' nên được xử lý như một từ ghép?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng của một cây cầu"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0031",
+              "question": "Cách phân biệt từ 'thành phố' và 'Thành phố' trong quá trình token hóa?",
+              "answers": {
+                "text": [
+                  "Thành phố Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0032",
+              "question": "Từ 'đại học' cần được giữ nguyên thành một token để tránh nhầm lẫn với từng từ nào?",
+              "answers": {
+                "text": [
+                  "đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0033",
+              "question": "Tại sao 'tháp Chàm' khó được tách từ chính xác?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng địa danh ghép"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0034",
+              "question": "Từ ghép 'TP.HCM' được token hóa thành bao nhiêu phần?",
+              "answers": {
+                "text": [
+                  "một token"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0035",
+              "question": "Tại sao 'Cầu Long Biên' nên được xử lý như một từ ghép?",
+              "answers": {
+                "text": [
+                  "vì đây là tên riêng của một cây cầu"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0036",
+              "question": "Cách phân biệt từ 'thành phố' và 'Thành phố' trong quá trình token hóa?",
+              "answers": {
+                "text": [
+                  "Thành phố Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0037",
+              "question": "Tại sao từ ghép 'Việt Nam' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [
+                  "Việt Nam"
+                ],
+                "answer_start": [
+                  9
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0038",
+              "question": "Tại sao từ ghép 'nam' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'nam' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0039",
+              "question": "Tại sao từ ghép 'nam' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'nam' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0040",
+              "question": "Tại sao từ ghép 'Việt' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [
+                  "Việt"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0041",
+              "question": "Tại sao từ ghép 'Việt' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [
+                  "Việt"
+                ],
+                "answer_start": [
+                  14
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0042",
+              "question": "Tại sao từ ghép 'thành phố' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'thành phố' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0043",
+              "question": "Tại sao từ ghép 'nam' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'nam' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0044",
+              "question": "Tại sao từ ghép 'người' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'người' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0045",
+              "question": "Tại sao từ ghép 'người' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'người' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0046",
+              "question": "Tại sao từ ghép 'Việt Nam' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [
+                  "Việt Nam"
+                ],
+                "answer_start": [
+                  14
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0047",
+              "question": "Tại sao từ ghép 'người' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [
+                  "người"
+                ],
+                "answer_start": [
+                  379
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0048",
+              "question": "Tại sao từ ghép 'nam' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'nam' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0049",
+              "question": "Tại sao từ ghép 'thành phố' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'thành phố' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            },
+            {
+              "id": "cw_0050",
+              "question": "Tại sao từ ghép 'nam' khó được tách từ chính xác trong ngữ cảnh này?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "'nam' là từ ghép cần được giữ nguyên"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "compound_word_boundary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Lịch sử Đảng Cộng sản Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Đảng Cộng sản Việt Nam (lúc sau là Đảng Cộng sản Việt Nam – Hồ Chí Minh) được thành lập vào ngày 3 tháng 2 năm 1930 tại Hà Nội. Đảng do Chủ tịch Hồ Chí Minh lãnh đạo. Trong cuộc kháng chiến chống Pháp, Đảng lãnh đạo quân dân thực hiện cuộc khởi nghĩa biểu 1940. Sau chiến thắng Đông Khê vào năm 1954, nước Việt Nam được tách thành hai miền. Miền Bắc được chính phủ Cộng sản lãnh đạo với trụ sở tại Hà Nội. Chiến tranh miền Nam kéo dài từ năm 1955 đến năm 1975. Tối 17/4/1975, quân giải phóng miền Nam chiến thắng Huế và thâu tóm toàn bộ miền Nam. Ngày 2/9/1975, toàn quốc gia thống nhất, Việt Nam Dân chủ Cộng hòa được hình thành.",
+          "qas": [
+            {
+              "id": "cw_0002",
+              "question": "Tại sao 'cố đô Hoa Lư' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "cố đô Hoa Lư"
+                ],
+                "answer_start": [
+                  182
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kinh tế địa phương miền Bắc và miền Nam",
+      "paragraphs": [
+        {
+          "context": "Miền Bắc Việt Nam tập trung sản xuất công nghiệp và khai thác than đá cẩm thạch. Khu công nghiệp lớn nhất là Khu công nghiệp Hòa Mỹ ở Hà Nội và Khu công nghiệp Đình Vũ ở Hải Phòng. Nông nghiệp miền Bắc tập trung vào lúa gạo, tiêu và cao su. Miền Nam Việt Nam có nền kinh tế đô thị phát triển mạnh với TP.HCM là trung tâm kinh tế lớn nhất cả nước. TP.HCM có dân số khoảng 9 triệu người và đóng góp khoảng 27% GDP cả nước. Khu công nghiệp Sài Gòn – Thủ Đức và Khu công nghiệp Linh Trung là những khu vực công nghiệp phát triển hàng đầu. Ngoài ra, miền Nam còn có các vùng ven biển như Cà Mau, Bạc Liêu, Cần Thơ phát triển nông nghiệp.",
+          "qas": [
+            {
+              "id": "cw_0003",
+              "question": "Tại sao 'đền Hùng' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "đền Hùng"
+                ],
+                "answer_start": [
+                  231
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cây cầu và công trình giao thông Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Việt Nam có nhiều cây cầu lớn nổi tiếng như Cầu Long Biên ở Hà Nội, Cầu Thạnh Mỹ (Cầu Rồng) ở Đà Nẵng, Cầu Cần Thơ ở Cần Thơ. Cầu Long Biên được kiến trúc sư Pháp Gustave Eiffel thiết kế và khánh thành năm 1907. Cầu Rồng được khánh thành năm 2005 và có chiều dài hơn 600 mét. Cầu Cần Thơ được khánh thành năm 2010, kết nối hai bờ sông Hậu. Ngoài ra còn có Cầu Phú Mỹ (Cầu Vàng) ở Hội An và Cầu Bảo Ngọc ở Bà Rịa – Vũng Tàu. Mỗi cây cầu đều có lịch sử xây dựng riêng biệt. Cầu Vàng được thiết kế theo phong cách Nhật và có số lượng thanh thẳng lớn, trong khi Cầu Bảo Ngọc được thiết kế theo phong cách hiện đại.",
+          "qas": [
+            {
+              "id": "cw_0004",
+              "question": "Tại sao 'cố đô Huế' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "cố đô Huế"
+                ],
+                "answer_start": [
+                  254
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sở học và triển khai triển khai thể thao Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Bóng đá là môn thể thao vua ở Việt Nam. Đội tuyển Việt Nam từng vô địch AFF Suzuki Cup năm 2008 và 2018. Năm 2019, Việt Nam đăng nhập vào lịch sử World Cup 2018 khi đá 2 trận tranh vé vào tứ kết. HLV Park Hang-seo dẫn dắt đội tuyển trong giai đoạn này. Bên cạnh đó, võ thái cực kỳ mạnh ở Việt Nam với các võ sĩ đạt huy chương vàng tại SEA Games nhiều lần. Võ sĩ Nguyễn Thanh Hiếu từng giữ HCV SEA Games 2019 về hạng mục nhẹ. Ngoài ra, còn có điền kinh và bơi lộp được chú trọng phát triển.",
+          "qas": [
+            {
+              "id": "cw_0005",
+              "question": "Tại sao 'Cộng sản Việt Nam' trong đoạn văn trên lại là một từ ghép phức tạp và cách token hóa ảnh hưởng đến việc trích xuất câu trả lời?",
+              "answers": {
+                "text": [
+                  "Đảng Cộng sản Việt Nam"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "compound_word_boundary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "WBE_EXT_001",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_002",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 1
+    },
+    {
+      "id": "WBE_EXT_003",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_004",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_005",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 2
+    },
+    {
+      "id": "WBE_EXT_006",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 1
+    },
+    {
+      "id": "WBE_EXT_007",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 2
+    },
+    {
+      "id": "WBE_EXT_008",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 1
+    },
+    {
+      "id": "WBE_EXT_009",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_010",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 2
+    },
+    {
+      "id": "WBE_EXT_011",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 2
+    },
+    {
+      "id": "WBE_EXT_012",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_013",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_014",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 1
+    },
+    {
+      "id": "WBE_EXT_015",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_016",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_017",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 2
+    },
+    {
+      "id": "WBE_EXT_018",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 2
+    },
+    {
+      "id": "WBE_EXT_019",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 2
+    },
+    {
+      "id": "WBE_EXT_020",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_021",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 1
+    },
+    {
+      "id": "WBE_EXT_022",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_023",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 3
+    },
+    {
+      "id": "WBE_EXT_024",
+      "context": "Quản lý học sinh và giáo viên tại khu vực đông đúc gặp thách thức.",
+      "question": "Từ năm nào chính sách mới triển khai?",
+      "expected_answer": "2019",
+      "error_type": "Word_Boundary_Error",
+      "difficulty": 1
+    }
+  ]
+}

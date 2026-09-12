@@ -1,0 +1,1149 @@
+{
+  "version": "1.0",
+  "category": "multi_hop_reasoning",
+  "description": "Câu hỏi yêu cầu suy luận bắc cầu (Multi-hop Reasoning)",
+  "data": [
+    {
+      "title": "Di sản văn hóa Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Việt Nam là một quốc gia Đông Nam Á với lịch sử hàng ngàn năm. Văn hóa Việt Nam rất đa dạng, với 54 dân tộc thiểu số được công nhận. Di sản văn hóa bao gồm nhiều di tích lịch sử như cố đô Hoa Lư ở Ninh Bình, tháp Chàm ở Quảng Nam, đền Hùng ở Phú Thọ, và cố đô Huế ở Thừa Thiên Huế. Mỗi di tích đều có câu chuyện riêng. Cố đô Hoa Lư được xây dựng vào năm 965 dưới thời vua Đinh Bộ Lê, còn tháp Chàm được xây bắt đầu từ thế kỷ IV dưới ảnh hưởng Pháp và được hoàn thiện vào thế kỷ XV. Đền Hùng được xây lên theo truyền thuyện, kỷ niệm sự trùng sinh của dân tộc Việt. Cố đô Huế được triển khai từ năm 1900 dưới thời vua Tự Đức, và là biểu tượng của triều đình phong kiến. Ngoài ra, di sản Văn hóa thế giới bao gồm cả Di sản Văn hóa Phi Lưu Vân trong, Ninh Bình và Phong Nha – Kẽ Bàng.",
+          "qas": [
+            {
+              "id": "hop_0001",
+              "question": "So sánh năm xây dựng cố đỏ Hoa Lư (965) với năm khánh thành Cầu Long Biên (1907), ai là vua đã cho xây cố đỏ Hoa Lư?",
+              "answers": {
+                "text": [
+                  "vua Đinh Bộ Lê"
+                ],
+                "answer_start": [
+                  368
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0006",
+              "question": "Khu công nghiệp nào ở miền Bắc và khu công nghiệp nào ở TP.HCM?",
+              "answers": {
+                "text": [
+                  "Khu công nghiệp Đình Vũ ở miền Bắc, Khu công nghiệp Sài Gòn – Thủ Đức ở TP.HCM"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0007",
+              "question": "HLV Park Hang-seo dẫn dắt đội tuyển vào năm nào và có bao nhiêu năm sau đó Việt Nam thắng Suzuki Cup?",
+              "answers": {
+                "text": [
+                  "2019 và 1 năm sau"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0008",
+              "question": "Việt Nam thắng AFF Suzuki Cup năm nào và năm nào lên World Cup?",
+              "answers": {
+                "text": [
+                  "2008 và 2018 (Suzuki Cup 2008, 2018; World Cup 2018)"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0009",
+              "question": "So sánh năm xây dựng cố đỏ Hoa Lư (965) với năm khánh thành Cầu Long Biên (1907), ai là vua đã cho xây cố đỏ Hoa Lư?",
+              "answers": {
+                "text": [
+                  "vua Đinh Bộ Lê"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0010",
+              "question": "Cầu Vàng được thiết kế theo phong cách nào, trong khi Cầu Bảo Ngọc được thiết kế theo phong cách gì?",
+              "answers": {
+                "text": [
+                  "Cầu Vàng theo phong cách Nhật, Cầu Bảo Ngọc theo phong cách hiện đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0011",
+              "question": "Sau chiến thắng Đông Khê năm 1954, liệu có sự kiện nào khác xảy ra trong cùng năm không?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Không có thông tin"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0012",
+              "question": "Đảng Cộng sản được thành lập năm 1930 và lãnh đạo bởi ai?",
+              "answers": {
+                "text": [
+                  "Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  60
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0013",
+              "question": "TP.HCM chiếm bao nhiêu % GDP và có bao nhiêu người dân?",
+              "answers": {
+                "text": [
+                  "khoảng 27% GDP và khoảng 9 triệu người"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0014",
+              "question": "Khu công nghiệp nào ở miền Bắc và khu công nghiệp nào ở TP.HCM?",
+              "answers": {
+                "text": [
+                  "Khu công nghiệp Đình Vũ ở miền Bắc, Khu công nghiệp Sài Gòn – Thủ Đức ở TP.HCM"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0015",
+              "question": "HLV Park Hang-seo dẫn dắt đội tuyển vào năm nào và có bao nhiêu năm sau đó Việt Nam thắng Suzuki Cup?",
+              "answers": {
+                "text": [
+                  "2019 và 1 năm sau"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0016",
+              "question": "Việt Nam thắng AFF Suzuki Cup năm nào và năm nào lên World Cup?",
+              "answers": {
+                "text": [
+                  "2008 và 2018 (Suzuki Cup 2008, 2018; World Cup 2018)"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0017",
+              "question": "So sánh năm xây dựng cố đỏ Hoa Lư (965) với năm khánh thành Cầu Long Biên (1907), ai là vua đã cho xây cố đỏ Hoa Lư?",
+              "answers": {
+                "text": [
+                  "vua Đinh Bộ Lê"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0018",
+              "question": "Cầu Vàng được thiết kế theo phong cách nào, trong khi Cầu Bảo Ngọc được thiết kế theo phong cách gì?",
+              "answers": {
+                "text": [
+                  "Cầu Vàng theo phong cách Nhật, Cầu Bảo Ngọc theo phong cách hiện đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0019",
+              "question": "Sau chiến thắng Đông Khê năm 1954, liệu có sự kiện nào khác xảy ra trong cùng năm không?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Không có thông tin"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0020",
+              "question": "Đảng Cộng sản được thành lập năm 1930 và lãnh đạo bởi ai?",
+              "answers": {
+                "text": [
+                  "Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0021",
+              "question": "TP.HCM chiếm bao nhiêu % GDP và có bao nhiêu người dân?",
+              "answers": {
+                "text": [
+                  "khoảng 27% GDP và khoảng 9 triệu người"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0022",
+              "question": "Khu công nghiệp nào ở miền Bắc và khu công nghiệp nào ở TP.HCM?",
+              "answers": {
+                "text": [
+                  "Khu công nghiệp Đình Vũ ở miền Bắc, Khu công nghiệp Sài Gòn – Thủ Đức ở TP.HCM"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0023",
+              "question": "HLV Park Hang-seo dẫn dắt đội tuyển vào năm nào và có bao nhiêu năm sau đó Việt Nam thắng Suzuki Cup?",
+              "answers": {
+                "text": [
+                  "2019 và 1 năm sau"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0024",
+              "question": "Việt Nam thắng AFF Suzuki Cup năm nào và năm nào lên World Cup?",
+              "answers": {
+                "text": [
+                  "2008 và 2018 (Suzuki Cup 2008, 2018; World Cup 2018)"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0025",
+              "question": "So sánh năm xây dựng cố đỏ Hoa Lư (965) với năm khánh thành Cầu Long Biên (1907), ai là vua đã cho xây cố đỏ Hoa Lư?",
+              "answers": {
+                "text": [
+                  "vua Đinh Bộ Lê"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0026",
+              "question": "Cầu Vàng được thiết kế theo phong cách nào, trong khi Cầu Bảo Ngọc được thiết kế theo phong cách gì?",
+              "answers": {
+                "text": [
+                  "Cầu Vàng theo phong cách Nhật, Cầu Bảo Ngọc theo phong cách hiện đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0027",
+              "question": "Sau chiến thắng Đông Khê năm 1954, liệu có sự kiện nào khác xảy ra trong cùng năm không?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Không có thông tin"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0028",
+              "question": "Đảng Cộng sản được thành lập năm 1930 và lãnh đạo bởi ai?",
+              "answers": {
+                "text": [
+                  "Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0029",
+              "question": "TP.HCM chiếm bao nhiêu % GDP và có bao nhiêu người dân?",
+              "answers": {
+                "text": [
+                  "khoảng 27% GDP và khoảng 9 triệu người"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0030",
+              "question": "Khu công nghiệp nào ở miền Bắc và khu công nghiệp nào ở TP.HCM?",
+              "answers": {
+                "text": [
+                  "Khu công nghiệp Đình Vũ ở miền Bắc, Khu công nghiệp Sài Gòn – Thủ Đức ở TP.HCM"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0031",
+              "question": "HLV Park Hang-seo dẫn dắt đội tuyển vào năm nào và có bao nhiêu năm sau đó Việt Nam thắng Suzuki Cup?",
+              "answers": {
+                "text": [
+                  "2019 và 1 năm sau"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0032",
+              "question": "Việt Nam thắng AFF Suzuki Cup năm nào và năm nào lên World Cup?",
+              "answers": {
+                "text": [
+                  "2008 và 2018 (Suzuki Cup 2008, 2018; World Cup 2018)"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0033",
+              "question": "So sánh năm xây dựng cố đỏ Hoa Lư (965) với năm khánh thành Cầu Long Biên (1907), ai là vua đã cho xây cố đỏ Hoa Lư?",
+              "answers": {
+                "text": [
+                  "vua Đinh Bộ Lê"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0034",
+              "question": "Cầu Vàng được thiết kế theo phong cách nào, trong khi Cầu Bảo Ngọc được thiết kế theo phong cách gì?",
+              "answers": {
+                "text": [
+                  "Cầu Vàng theo phong cách Nhật, Cầu Bảo Ngọc theo phong cách hiện đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0035",
+              "question": "Sau chiến thắng Đông Khê năm 1954, liệu có sự kiện nào khác xảy ra trong cùng năm không?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Không có thông tin"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0036",
+              "question": "Đảng Cộng sản được thành lập năm 1930 và lãnh đạo bởi ai?",
+              "answers": {
+                "text": [
+                  "Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0037",
+              "question": "TP.HCM chiếm bao nhiêu % GDP và có bao nhiêu người dân?",
+              "answers": {
+                "text": [
+                  "khoảng 27% GDP và khoảng 9 triệu người"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0038",
+              "question": "Khu công nghiệp nào ở miền Bắc và khu công nghiệp nào ở TP.HCM?",
+              "answers": {
+                "text": [
+                  "Khu công nghiệp Đình Vũ ở miền Bắc, Khu công nghiệp Sài Gòn – Thủ Đức ở TP.HCM"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0039",
+              "question": "HLV Park Hang-seo dẫn dắt đội tuyển vào năm nào và có bao nhiêu năm sau đó Việt Nam thắng Suzuki Cup?",
+              "answers": {
+                "text": [
+                  "2019 và 1 năm sau"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0040",
+              "question": "Việt Nam thắng AFF Suzuki Cup năm nào và năm nào lên World Cup?",
+              "answers": {
+                "text": [
+                  "2008 và 2018 (Suzuki Cup 2008, 2018; World Cup 2018)"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0041",
+              "question": "Tại sao Cầu Long Biên (1907) khác biệt từ Cầu Rồng (2005) về kiến trúc và độ tuổi?",
+              "answers": {
+                "text": [
+                  "Cầu Long Biên cổ hơn 100 năm và được thiết kế bởi người Pháp"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0042",
+              "question": "Đảng Cộng sản thành lập năm 1930 và chiến thắng miền Nam năm 1975, sự chênh lệch thời gian là bao nhiêu?",
+              "answers": {
+                "text": [
+                  "45 năm"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0043",
+              "question": "TP.HCM đóng góp 27% GDP nhưng miền Bắc tập trung vào công nghiệp, liệu có thể suy ra vai trò kinh tế của miền Bắc?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Không thể suy luận"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0044",
+              "question": "Dựa trên thông tin trên, kết luận nào sau đây đúng?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Cần suy luận bắc cầu"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0045",
+              "question": "Dựa trên thông tin trên, kết luận nào sau đây đúng?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Cần suy luận bắc cầu"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0046",
+              "question": "Dựa trên thông tin trên, kết luận nào sau đây đúng?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Cần suy luận bắc cầu"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0047",
+              "question": "Tại sao sự kiện A xảy ra trước sự kiện B trong đoạn trên?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Cần suy luận bắc cầu"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0048",
+              "question": "Dựa trên thông tin trên, kết luận nào sau đây đúng?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Cần suy luận bắc cầu"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0049",
+              "question": "Tại sao sự kiện A xảy ra trước sự kiện B trong đoạn trên?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Cần suy luận bắc cầu"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            },
+            {
+              "id": "hop_0050",
+              "question": "Dựa trên thông tin trên, kết luận nào sau đây đúng?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Cần suy luận bắc cầu"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Lịch sử Đảng Cộng sản Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Đảng Cộng sản Việt Nam (lúc sau là Đảng Cộng sản Việt Nam – Hồ Chí Minh) được thành lập vào ngày 3 tháng 2 năm 1930 tại Hà Nội. Đảng do Chủ tịch Hồ Chí Minh lãnh đạo. Trong cuộc kháng chiến chống Pháp, Đảng lãnh đạo quân dân thực hiện cuộc khởi nghĩa biểu 1940. Sau chiến thắng Đông Khê vào năm 1954, nước Việt Nam được tách thành hai miền. Miền Bắc được chính phủ Cộng sản lãnh đạo với trụ sở tại Hà Nội. Chiến tranh miền Nam kéo dài từ năm 1955 đến năm 1975. Tối 17/4/1975, quân giải phóng miền Nam chiến thắng Huế và thâu tóm toàn bộ miền Nam. Ngày 2/9/1975, toàn quốc gia thống nhất, Việt Nam Dân chủ Cộng hòa được hình thành.",
+          "qas": [
+            {
+              "id": "hop_0002",
+              "question": "Cầu Vàng được thiết kế theo phong cách nào, trong khi Cầu Bảo Ngọc được thiết kế theo phong cách gì?",
+              "answers": {
+                "text": [
+                  "Cầu Vàng theo phong cách Nhật, Cầu Bảo Ngọc theo phong cách hiện đại"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kinh tế địa phương miền Bắc và miền Nam",
+      "paragraphs": [
+        {
+          "context": "Miền Bắc Việt Nam tập trung sản xuất công nghiệp và khai thác than đá cẩm thạch. Khu công nghiệp lớn nhất là Khu công nghiệp Hòa Mỹ ở Hà Nội và Khu công nghiệp Đình Vũ ở Hải Phòng. Nông nghiệp miền Bắc tập trung vào lúa gạo, tiêu và cao su. Miền Nam Việt Nam có nền kinh tế đô thị phát triển mạnh với TP.HCM là trung tâm kinh tế lớn nhất cả nước. TP.HCM có dân số khoảng 9 triệu người và đóng góp khoảng 27% GDP cả nước. Khu công nghiệp Sài Gòn – Thủ Đức và Khu công nghiệp Linh Trung là những khu vực công nghiệp phát triển hàng đầu. Ngoài ra, miền Nam còn có các vùng ven biển như Cà Mau, Bạc Liêu, Cần Thơ phát triển nông nghiệp.",
+          "qas": [
+            {
+              "id": "hop_0003",
+              "question": "Sau chiến thắng Đông Khê năm 1954, liệu có sự kiện nào khác xảy ra trong cùng năm không?",
+              "answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "is_impossible": true,
+              "plausible_answers": {
+                "text": [
+                  "Không có thông tin"
+                ],
+                "answer_start": [
+                  -1
+                ]
+              },
+              "category": "multi_hop_reasoning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cây cầu và công trình giao thông Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Việt Nam có nhiều cây cầu lớn nổi tiếng như Cầu Long Biên ở Hà Nội, Cầu Thạnh Mỹ (Cầu Rồng) ở Đà Nẵng, Cầu Cần Thơ ở Cần Thơ. Cầu Long Biên được kiến trúc sư Pháp Gustave Eiffel thiết kế và khánh thành năm 1907. Cầu Rồng được khánh thành năm 2005 và có chiều dài hơn 600 mét. Cầu Cần Thơ được khánh thành năm 2010, kết nối hai bờ sông Hậu. Ngoài ra còn có Cầu Phú Mỹ (Cầu Vàng) ở Hội An và Cầu Bảo Ngọc ở Bà Rịa – Vũng Tàu. Mỗi cây cầu đều có lịch sử xây dựng riêng biệt. Cầu Vàng được thiết kế theo phong cách Nhật và có số lượng thanh thẳng lớn, trong khi Cầu Bảo Ngọc được thiết kế theo phong cách hiện đại.",
+          "qas": [
+            {
+              "id": "hop_0004",
+              "question": "Đảng Cộng sản được thành lập năm 1930 và lãnh đạo bởi ai?",
+              "answers": {
+                "text": [
+                  "Hồ Chí Minh"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sở học và triển khai triển khai thể thao Việt Nam",
+      "paragraphs": [
+        {
+          "context": "Bóng đá là môn thể thao vua ở Việt Nam. Đội tuyển Việt Nam từng vô địch AFF Suzuki Cup năm 2008 và 2018. Năm 2019, Việt Nam đăng nhập vào lịch sử World Cup 2018 khi đá 2 trận tranh vé vào tứ kết. HLV Park Hang-seo dẫn dắt đội tuyển trong giai đoạn này. Bên cạnh đó, võ thái cực kỳ mạnh ở Việt Nam với các võ sĩ đạt huy chương vàng tại SEA Games nhiều lần. Võ sĩ Nguyễn Thanh Hiếu từng giữ HCV SEA Games 2019 về hạng mục nhẹ. Ngoài ra, còn có điền kinh và bơi lộp được chú trọng phát triển.",
+          "qas": [
+            {
+              "id": "hop_0005",
+              "question": "TP.HCM chiếm bao nhiêu % GDP và có bao nhiêu người dân?",
+              "answers": {
+                "text": [
+                  "khoảng 27% GDP và khoảng 9 triệu người"
+                ],
+                "answer_start": [
+                  0
+                ]
+              },
+              "is_impossible": false,
+              "plausible_answers": {
+                "text": [],
+                "answer_start": []
+              },
+              "category": "multi_hop_reasoning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MHP_EXT_001",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_002",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_003",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 1
+    },
+    {
+      "id": "MHP_EXT_004",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_005",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_006",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_007",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_008",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 1
+    },
+    {
+      "id": "MHP_EXT_009",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_010",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_011",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 1
+    },
+    {
+      "id": "MHP_EXT_012",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_013",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_014",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_015",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 1
+    },
+    {
+      "id": "MHP_EXT_016",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_017",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_018",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_019",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_020",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_021",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 2
+    },
+    {
+      "id": "MHP_EXT_022",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_023",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 3
+    },
+    {
+      "id": "MHP_EXT_024",
+      "context": "Công ty ABC chuyển đổi công nghệ từ 2020. Năm 2021, doanh thu tăng 15%.",
+      "question": "Tại sao doanh thu tăng trong 2021?",
+      "expected_answer": "Vì chuyển đổi công nghệ từ năm 2020.",
+      "error_type": "Multi_hop_Reasoning",
+      "difficulty": 1
+    }
+  ]
+}
