@@ -31,7 +31,7 @@ with col_left:
     
     model_choice = st.selectbox(
         "Chọn mô hình dự đoán:",
-        ["vinai/phobert-base-v2 (F1: 82.4%)", "FPTAI/videberta-base (F1: 84.1%)", "bert-base-multilingual-cased (F1: 76.5%)", "Baseline BM25 (F1: 52.3%)"]
+        ["vinai/phobert-base-v2", "FPTAI/videberta-base", "bert-base-multilingual-cased", "Baseline BM25"]
     )
     
     predict_btn = st.button("🚀 Trả Lời Ngay", type="primary")

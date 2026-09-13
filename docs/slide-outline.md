@@ -36,7 +36,7 @@
 * **Slide 11: Độ đo đánh giá chuẩn (Exact Match & F1-Score):**
   * Định nghĩa toán học của EM (tuyệt đối 100%) và F1 (độ bao phủ từ vựng).
 * **Slide 12: Bảng kết quả đối sánh tổng hợp (Benchmark Table):**
-  * So sánh chi tiết kết quả EM/F1 giữa Baseline (52.3%), mBERT (76.5%), PhoBERT-base (82.4%), ViDeBERTa-base (84.1%).
+  * So sánh chi tiết kết quả EM/F1 giữa Baseline BM25, PhoBERT-base-v2 và XLM-R-base. **Số liệu điền sau khi đo — xem `results/`.**
 * **Slide 13: Đồ thị huấn luyện (Loss Curves & Convergence):**
   * Phân tích tốc độ hội tụ và hiện tượng Overfitting giữa các mô hình.
 
@@ -58,6 +58,6 @@
 * **Slide 18: Giới thiệu ứng dụng Web Demo Streamlit:**
   * Kiến trúc hệ thống thời gian thực (Inference time: ~18ms/câu hỏi).
 * **Slide 19: Kết luận & Tổng kết kết quả:**
-  * Mô hình tối ưu nhất (ViDeBERTa đạt F1 84.1%), hoàn thành 100% mục tiêu đề ra.
+  * Mô hình cho kết quả tốt nhất trên từng nhóm lỗi E1–E5. **Số liệu điền sau khi đo — xem `results/`.**
 * **Slide 20: Hướng phát triển trong tương lai & Q&A:**
   * Mở rộng sang Generative RAG tiếng Việt; Lời cảm ơn thầy Đặng Văn Thìn và Hội đồng.

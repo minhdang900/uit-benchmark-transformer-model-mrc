@@ -37,6 +37,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
+
+from qa_postprocessing import compute_span_metrics, postprocess_qa_predictions
 import torch
 from torch.utils.data import DataLoader
 
@@ -82,7 +84,7 @@ MODEL_CONFIGS = {
         "batch_size": 16,
         "learning_rate": 2e-5,
         "epochs": 5,
-        "max_length": 384,
+        "max_length": 256,  # PhoBERT position-embedding limit is 258
         "stride": 128,
         "weight_decay": 0.01,
     },
@@ -90,7 +92,7 @@ MODEL_CONFIGS = {
         "batch_size": 8,
         "learning_rate": 2e-5,
         "epochs": 5,
-        "max_length": 384,
+        "max_length": 256,  # PhoBERT position-embedding limit is 258
         "stride": 128,
         "weight_decay": 0.01,
     },
@@ -120,14 +122,6 @@ MODEL_CONFIGS = {
     },
 }
 
-# Expected results from the benchmark (for reference in slides)
-EXPECTED_RESULTS = {
-    "vinai/phobert-base-v2":       {"EM": 82.4, "F1": 82.4},
-    "FPTAI/videberta-base":        {"EM": 84.1, "F1": 84.1},
-    "bert-base-multilingual-cased": {"EM": 76.5, "F1": 76.5},
-    "xlm-roberta-base":            {"EM": 81.3, "F1": 81.3},
-    "Baseline BM25":               {"EM": 52.3, "F1": 52.3},
-}
 
 
 # ---------------------------------------------------------------------------
@@ -180,47 +174,15 @@ def compute_metrics(eval_pred) -> Dict[str, float]:
     Compute EM (Exact Match) and F1-Score for extractive QA.
     Uses the official SQuAD v2 evaluation (supports unanswerable questions).
     """
-    predictions, labels = eval_pred
-
-    if SQUAD_METRIC is None:
-        # Fallback: simple computation
-        pred_start, pred_end = predictions
-        label_start, label_end = labels
-
-        # Simplified EM/F1
-        exact_matches = (pred_start == label_start) & (pred_end == label_end)
-        em = exact_matches.float().mean().item() * 100
-
-        # Token-level F1 (simplified)
-        f1 = em * 0.95  # Approximation
-        return {"exact_match": em, "f1": f1}
-
-    # Use the evaluate library
-    start_logits, end_logits = predictions
-    start_positions, end_positions = labels
-
-    # Convert to answer spans (simplified)
-    # In full implementation, decode predictions and compare with ground truth
-    pred_answers = []
-    ref_answers = []
-
-    for i in range(len(start_logits)):
-        pred_s = int(np.argmax(start_logits[i]))
-        pred_e = int(np.argmax(end_logits[i]))
-        label_s = int(start_positions[i])
-        label_e = int(end_positions[i])
-
-        pred_answers.append({"id": str(i), "prediction_text": f"span_{pred_s}_{pred_e}"})
-        ref_answers.append({"id": str(i), "answers": {"text": [f"span_{label_s}_{label_e}"], "answer_start": [label_s]}})
-
-    result = SQUAD_METRIC.compute(
-        predictions=pred_answers, references=ref_answers
+    raise NotImplementedError(
+        "Span-level metrics are computed after decoding, not from raw logits.\n"
+        "Use qa_postprocessing.postprocess_qa_predictions() to turn logits into\n"
+        "text spans, then score with compute_span_metrics() below.\n"
+        "The previous implementation compared literal f\"span_{start}_{end}\"\n"
+        "strings and never measured Exact Match or F1."
     )
-    return {
-        "exact_match": result.get("exact", 0.0),
-        "f1": result.get("f1", 0.0),
-        "average": (result.get("exact", 0.0) + result.get("f1", 0.0)) / 2,
-    }
+
+
 
 
 def train_single_model(
@@ -250,10 +212,10 @@ def train_single_model(
     # Load model config
     config = AutoConfig.from_pretrained(model_name, cache_dir=cache_dir)
 
-    # Override for QA
-    config.update({
-        "max_position_embeddings": max_length,
-    })
+    # Do NOT override max_position_embeddings. It is a property of the
+    # pretrained checkpoint, not a runtime knob: PhoBERT supports 258 and
+    # forcing 384 either errors or silently uses untrained position embeddings.
+    # Cap the tokenizer instead (see MODEL_CONFIGS max_length).
 
     # Load tokenizer and datasets
     tokenized_datasets, tokenizer = load_and_prepare_datasets(
@@ -294,7 +256,6 @@ def train_single_model(
         save_steps=eval_steps,
         evaluation_strategy="steps",
         save_total_limit=3,
-        predict_with_generate=True,
         fp16=not no_cuda and torch.cuda.is_available(),
         report_to=["none"],  # Disable W&B by default
         run_name=f"{model_name.replace('/', '_')}_mrc",

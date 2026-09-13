@@ -6,9 +6,6 @@ Author: Nhom 7 - CS116 UIT
 import re
 import string
 from collections import Counter
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 def normalize_text(s):
     """Lower text and remove punctuation, articles and extra whitespace."""
@@ -182,6 +179,12 @@ def _generate_error_report(errors, output_file):
 
 def plot_metrics_curves(train_losses, val_em_scores, val_f1_scores, save_path="training_metrics.png"):
     """Plot training loss and validation metrics curves."""
+    # Imported lazily so the metric functions above stay usable without
+    # matplotlib installed (they are imported by baseline_bm25 and the tests).
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
     fig, axes = plt.subplots(1, 2, figsize=(15, 5))
     
     # Plot training loss
