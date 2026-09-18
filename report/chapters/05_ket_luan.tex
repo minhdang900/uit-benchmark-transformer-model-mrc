@@ -3,7 +3,42 @@
 \label{sec:conclusion}
 % ============================================================================
 
-%CONCLUSION-BODY
+\subsection{Kết luận}
+
+Đồ án khảo sát hai mô hình Transformer tiền huấn luyện cho đọc hiểu trích xuất tiếng Việt --- PhoBERT
+(đơn ngữ, word-level) và XLM-R (đa ngữ, subword) --- được fine-tune trong cùng điều kiện trên
+UIT-ViQuAD~2.0 và chấm một lần trên toàn bộ \NVal{} câu validation. Bốn câu hỏi nghiên cứu được trả lời
+như sau.
+
+\begin{enumerate}
+  \item \textbf{RQ1 --- ranh giới từ.} Giả thuyết ghi trước (PhoBERT yếu hơn vì lỗi tách từ) \emph{sai}
+        ở dạng tổng quát: PhoBERT hơn XLM-R \PairAnsDiff{} điểm EM trên câu có đáp án, và tỉ lệ lỗi biên
+        khi đã trả lời của hai mô hình như nhau (\PhobertBoundaryRate\% và \XlmrBoundaryRate\%). Cơ chế
+        ``không trả lời được nửa từ'' có thật, nhìn thấy được qua dấu hiệu F1 cao/EM thấp, nhưng chỉ tác
+        động lên \SegMisPct\% câu hỏi và bị chặn trên ở \SegCeilingLoss{} điểm EM; phần lớn các câu đó là lỗi
+        của bộ tách từ \code{pyvi}, không phải ranh giới từ ghép thật.
+  \item \textbf{RQ2 --- độ dài.} Không có suy giảm theo độ dài ngữ cảnh ở cả hai họ mô hình; độ dài đáp án
+        làm giảm EM (không giảm F1) như nhau ở cả hai.
+  \item \textbf{RQ3 --- câu không có đáp án.} Không mô hình nào thật sự nhận ra câu không có đáp án. XLM-R từ
+        chối đúng tần suất nhưng sai đối tượng (precision \XlmrAbsPrec\%); PhoBERT gần như không từ chối
+        (\PhobertAbsRate\%), vì loss trên lớp ``không có đáp án'' của nó tăng khoảng 7 lần sau epoch 1 trong
+        khi loss trên vị trí đáp án vẫn giảm --- lặp lại ở hai tốc độ học. Cả hai thường trả về đúng cụm
+        gây nhiễu mà người gán nhãn đặt vào câu hỏi.
+  \item \textbf{RQ4 --- baseline.} Transformer vượt TF-IDF ở mọi nhóm; TF-IDF thậm chí không vượt được hệ
+        thống luôn từ chối về EM tổng.
+\end{enumerate}
+
+\paragraph{Điều rút ra.} Điểm tổng của PhoBERT và XLM-R không khác nhau có ý nghĩa thống kê, nhưng hai mô
+hình có hai hồ sơ kỹ năng ngược nhau: một mô hình đọc giỏi mà không biết từ chối, một mô hình biết từ chối
+nhưng từ chối nhầm chỗ. Chọn mô hình dựa trên điểm tổng sẽ bỏ qua điều quan trọng nhất cho triển khai. Với
+câu hỏi ban đầu của môn học --- \emph{đặc điểm dữ liệu quyết định phương pháp} --- câu trả lời của đồ án là:
+trên UIT-ViQuAD~2.0, đặc điểm quyết định không phải là tách từ mà là \emph{một phần ba câu hỏi không có đáp
+án}; và việc một mô hình xử lý phần đó ra sao phải được đo riêng.
+
+\paragraph{Về phương pháp.} Hai trong ba công cụ chẩn đoán có giá trị nhất của đồ án không cần chạy mô hình
+nào: phép đo biên từ cho biết trước giới hạn trên của hiệu ứng mà giả thuyết RQ1 dự đoán, và phép kiểm định
+bộ stress-test cho thấy bộ dữ liệu chẩn đoán do chính nhóm xây \emph{không đo được thứ nó tuyên bố đo}. Nếu
+không kiểm định, bảng kết quả trên bộ đó sẽ xếp ``không làm gì'' đứng đầu mà không ai nhận ra vì sao.
 
 \subsection{Giới hạn}
 \label{sec:limitations}
@@ -41,4 +76,19 @@ Các giới hạn dưới đây quyết định phạm vi mà mọi kết luận
 \subsection{Hướng phát triển}
 \label{sec:future}
 
-%FUTURE-BODY
+\begin{enumerate}
+  \item \textbf{Hiệu chỉnh ngưỡng từ chối trên dev.} Ngưỡng $\tau$ trong công thức~(\ref{eq:null}) được cố định
+        bằng 0. Chọn $\tau$ riêng cho từng mô hình trên tập dev (không phải validation) là cách rẻ nhất để
+        thử khôi phục khả năng từ chối của PhoBERT; kết quả cần được chấm lại trên validation.
+  \item \textbf{Tìm nguyên nhân gốc của việc PhoBERT bỏ lớp ``không có đáp án''}: nhiều seed, ghi lại chuẩn
+        gradient theo loại nhãn, thử trọng số lớp, thử độ dài 256 cho XLM-R để tách biến ``độ dài cửa sổ''
+        khỏi biến ``mô hình''.
+  \item \textbf{Bộ tách từ.} Chạy lại PhoBERT với RDRSegmenter (VnCoreNLP) --- bộ tách từ dùng lúc tiền
+        huấn luyện --- để đo phần hiệu năng bị mất do lệch bộ tách từ; và sửa luật dính dấu chấm của
+        \code{pyvi}, nguyên nhân của \MisPeriod{} trong \SegMis{} câu lệch biên.
+  \item \textbf{Xây lại bộ stress-test} theo quy trình có kiểm định tự động từ đầu: đáp án phải nằm trong
+        ngữ cảnh (báo lỗi thay vì trả về 0), mỗi nhóm có đủ câu có đáp án làm đối chứng, và câu hỏi do người
+        viết thay vì sinh từ khuôn mẫu; đo độ đồng thuận giữa người gán.
+  \item \textbf{Nhiều seed} cho mọi mô hình để tách độ bất định do huấn luyện khỏi độ bất định do chọn câu
+        hỏi.
+\end{enumerate}

@@ -26,7 +26,49 @@
 \label{fig:main}
 \end{figure}
 
-%RESULTS-MAIN-PROSE
+Bảng~\ref{tab:main} cho ba quan sát.
+
+\begin{enumerate}
+  \item \textbf{Hai Transformer vượt xa hai baseline.} TF-IDF có F1 \TfidfFone{} nhưng EM chỉ
+        \TfidfEM{} --- thấp hơn cả hệ thống luôn từ chối (\AbstainEM) --- vì nó luôn trả về cả một câu
+        và không bao giờ từ chối.
+  \item \textbf{Điểm tổng của PhoBERT và XLM-R gần như bằng nhau}: EM \PhobertEM{} so với \XlmrEM,
+        F1 \PhobertFone{} so với \XlmrFone. Kiểm định cặp trên \PairN{} câu cho chênh lệch EM
+        \PairDiff{} điểm, khoảng tin cậy 95\% [\PairLo; \PairHi], $p$ McNemar = \PairP{}
+        (Bảng~\ref{tab:paired}): \emph{không đủ bằng chứng} để nói mô hình nào tốt hơn về tổng.
+  \item \textbf{Nhưng điểm tổng che hai hồ sơ kỹ năng ngược nhau.} Trên câu có đáp án, PhoBERT hơn
+        XLM-R \PairAnsDiff{} điểm EM ([\PairAnsLo; \PairAnsHi]); trên câu không có đáp án, XLM-R hơn
+        PhoBERT \,$-$\PairImpDiff{}\, điểm. Hai chênh lệch lớn, ngược dấu, gần như triệt tiêu nhau trong
+        điểm tổng. Đây là minh hoạ trực tiếp nhất cho khoảng trống mà đồ án đặt ra: một điểm tổng
+        không cho biết mô hình sai ở đâu.
+\end{enumerate}
+
+PhoBERT cũng nhanh hơn khi suy luận (\PhobertLat{} so với \XlmrLat{} ms/câu trên MPS), nhất quán với
+chuỗi token ngắn hơn khoảng 22\% (Mục~\ref{sec:data}), dù phải tốn thêm bước tách từ.
+
+\begin{keybox}
+\textbf{Kết quả hai lần chạy PhoBERT.} PhoBERT được huấn luyện hai lần (Mục~\ref{sec:curves}); lần
+chính (\PhobertPrimaryLabel) được chọn theo F1 trên dev. Lần chạy thứ hai cho cùng hồ sơ: EM câu có
+đáp án \PhobertRunBAnsEM, EM câu không có đáp án \PhobertRunBImpEM{} (Bảng~\ref{tab:runs}) --- hồ sơ
+``đọc giỏi, hiếm khi từ chối'' không phải do may rủi của một lần chạy.
+\end{keybox}
+
+\begin{table}[htbp]
+\centering
+\caption{Hai lần chạy PhoBERT trên validation. $\star$: lần chạy chính (F1 dev cao nhất)}
+\label{tab:runs}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l c r r r r r r@{}}
+\toprule
+\textbf{Lần chạy} & \textbf{Epoch} & \textbf{F1 dev} & \textbf{EM} & \textbf{F1} & \textbf{EM có đ.án} & \textbf{EM không đ.án} & \textbf{Từ chối (\%)} \\
+\midrule
+\tabinput{generated/tab_phobert_runs.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 \subsection{RQ1 --- Mô hình word-level có nhạy với ranh giới từ hơn?}
 \label{sec:res-rq1}
@@ -55,13 +97,13 @@
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{@{}L r r r r r r r@{}}
+\begin{tabular}{@{}l r r r r r r r@{}}
 \toprule
 \textbf{Hệ thống} & \textbf{Tổng lỗi} & \textbf{Từ chối sai} & \textbf{Trả lời sai} & \textbf{Biên thừa} & \textbf{Biên thiếu} & \textbf{Biên lệch} & \textbf{Sai vị trí} \\
 \midrule
 \tabinput{generated/tab_taxonomy.tex}
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
@@ -78,16 +120,49 @@
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{@{}L r r r r r r l r@{}}
+\begin{tabular}{@{}l r r r r r r l r@{}}
 \toprule
-\textbf{Nhóm câu} & $n$ & \textbf{Cả hai đúng} & \textbf{Chỉ A} & \textbf{Chỉ B} & \textbf{Cả hai sai} & \textbf{Chênh lệch} & \textbf{CI 95\%} & \textbf{$p$ McNemar} \\
+& & \textbf{Cả hai} & \textbf{Chỉ} & \textbf{Chỉ} & \textbf{Cả hai} & \textbf{Chênh} & & \\
+\textbf{Nhóm câu} & $n$ & \textbf{đúng} & \textbf{A} & \textbf{B} & \textbf{sai} & \textbf{lệch} & \textbf{CI 95\%} & \textbf{$p$} \\
 \midrule
 \tabinput{generated/tab_paired.tex}
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 
-%RESULTS-RQ1-PROSE
+\paragraph{Giả thuyết dự đoán sai hướng.} Giả thuyết ghi trước cho rằng PhoBERT \emph{yếu hơn} ở ranh
+giới từ vì lỗi tách từ lan truyền vào mô hình. Số liệu cho điều ngược lại trên phần lớn dữ liệu: trên
+\SegAligned{} câu có đáp án khớp biên từ, PhoBERT đạt EM \PhobertAlEM{} so với \XlmrAlEM{} của XLM-R
+(Bảng~\ref{tab:alignment}). Ở chính kỹ năng ``xác định đúng ranh giới đáp án'', mô hình word-level
+tốt hơn rõ rệt.
+
+\paragraph{Cơ chế giả thuyết có tồn tại --- nhưng ở quy mô rất nhỏ.} Trên \SegMis{} câu lệch biên từ,
+bức tranh đảo chiều: PhoBERT EM \PhobertMisEM{} so với \XlmrMisEM{} của XLM-R, trong khi F1 của
+PhoBERT lại \emph{cao hơn} (\PhobertMisFone{} so với \XlmrMisFone). F1 cao mà EM thấp đúng là dấu vết
+mà cơ chế dự đoán: PhoBERT tìm đúng vùng đáp án nhưng không thể dừng ở giữa một từ. Một ví dụ điển
+hình: vàng ``trận Gonzales'', \code{pyvi} tách thành \code{tại\_trận Gonzales}, PhoBERT trả về ``tại
+trận Gonzales'' còn XLM-R trả về đúng. Tuy vậy, chênh lệch trên nhóm này có khoảng tin cậy
+[\PairMisLo; \PairMisHi], $p$ = \PairMisP{} --- chưa đủ bằng chứng thống kê với $n$ = \PairMisN; và nhóm
+này chỉ chiếm \SegMisPct\% số câu, trong đó phần lớn là lỗi của \code{pyvi} chứ không phải ranh giới
+từ ghép thật (Mục~\ref{sec:alignment-res}).
+
+\paragraph{Phân loại lỗi.} Theo số đếm thô, PhoBERT mắc nhiều lỗi biên hơn (\PhobertErrBoundary{} so
+với \XlmrErrBoundary{}, Bảng~\ref{tab:taxonomy}). Nhưng số đếm thô gây hiểu nhầm: PhoBERT \emph{trả lời}
+\PhobertAnsweredAns{} câu có đáp án, XLM-R chỉ trả lời \XlmrAnsweredAns{} câu (phần còn lại XLM-R từ
+chối sai). Chuẩn hoá theo số lần trả lời, tỉ lệ lỗi biên của hai mô hình \textbf{gần như bằng nhau}:
+\PhobertBoundaryRate\% so với \XlmrBoundaryRate\%. Khác biệt thật nằm ở cột từ chối: XLM-R có
+\XlmrErrFalseAbs{} lỗi từ chối sai (\XlmrErrFalseAbsPct\% số lỗi), PhoBERT chỉ có \PhobertErrFalseAbs;
+ngược lại PhoBERT có \PhobertErrFalseAns{} lỗi trả lời câu không có đáp án (\PhobertErrFalseAnsPct\% số
+lỗi) so với \XlmrErrFalseAns{} của XLM-R.
+
+\begin{keybox}
+\textbf{Trả lời RQ1: Không --- ở dạng tổng quát.} Mô hình word-level không kém hơn ở ranh giới từ;
+nó tốt hơn \PairAnsDiff{} điểm EM trên câu có đáp án. Cơ chế ``không trả lời được nửa từ'' có thật và
+quan sát được, nhưng bị chặn trên ở \SegCeilingLoss{} điểm EM và chỉ tác động lên \SegMis{} câu. Ở
+UIT-ViQuAD~2.0, lỗi tách từ \emph{không} phải yếu tố quyết định khi chọn giữa hai họ mô hình; hành vi
+từ chối mới là yếu tố quyết định (RQ3).
+\end{keybox}
+
 
 \subsection{RQ2 --- Độ dài ngữ cảnh và độ dài đáp án}
 \label{sec:res-rq2}
@@ -131,7 +206,43 @@
 \label{fig:lengths}
 \end{figure}
 
-%RESULTS-RQ2-PROSE
+\paragraph{Độ dài đoạn văn không làm hiệu năng suy giảm.} Với cả hai mô hình, EM không giảm khi đoạn
+văn dài ra (Bảng~\ref{tab:ctxlen}); nhóm trên 300 âm tiết thậm chí có điểm cao hơn, dù chỉ 129 câu và
+khoảng tin cậy rộng. Cửa sổ trượt tự cài làm đúng việc của nó: PhoBERT phải cắt nhiều đoạn văn thành
+nhiều cửa sổ hơn (14\% so với 7\%) nhưng không thấy dấu hiệu bị phạt. Nhóm dưới 100 âm tiết chỉ có 10
+câu và không nên đọc.
+
+\paragraph{Độ dài đáp án làm giảm EM, không làm giảm F1.} Với cả hai mô hình, EM giảm đều khi đáp án
+dài ra (Bảng~\ref{tab:anslen}): XLM-R từ 58,0 xuống 46,1, PhoBERT từ 73,8 xuống 59,7; trong khi F1 gần
+như không đổi. Đáp án dài vẫn được \emph{tìm thấy}, nhưng khớp chính xác cả hai đầu khó hơn --- đó là
+suy giảm về độ chính xác của ranh giới, không phải về định vị. Lợi thế của PhoBERT gần như không đổi
+qua các nhóm độ dài, nên nó không đến từ một loại đáp án riêng nào.
+
+\paragraph{Câu hỏi cần nhiều câu văn khó hơn.} Theo nhãn heuristic (một câu văn phủ được $\ge$ 60\% từ
+nội dung của câu hỏi hay không), câu cần nhiều câu văn khó hơn rõ rệt với cả hai mô hình; khoảng cách
+giữa PhoBERT và XLM-R lớn hơn ở nhóm này.
+
+\begin{table}[htbp]
+\centering
+\caption{EM / F1 theo phạm vi suy luận (heuristic; chỉ câu có đáp án)}
+\label{tab:qtype}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabular}{@{}l r r r r r@{}}
+\toprule
+\textbf{Loại câu hỏi} & $n$ & \textbf{Luôn từ chối} & \textbf{TF-IDF} & \textbf{XLM-R} & \textbf{PhoBERT} \\
+\midrule
+\tabinput{generated/tab_qtype.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{keybox}
+\textbf{Trả lời RQ2:} Không có suy giảm theo độ dài ngữ cảnh ở cả hai họ mô hình. Độ dài đáp án làm
+giảm EM (không giảm F1) theo cùng một cách ở cả hai; khác biệt giữa hai họ mô hình không phụ thuộc
+vào độ dài.
+\end{keybox}
+
 
 \subsection{RQ3 --- Nhận ra câu không có đáp án, hay thiên lệch về từ chối?}
 \label{sec:res-rq3}
@@ -171,17 +282,118 @@ PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec \\
 \par\vspace{2pt}{\footnotesize Số câu hợp lệ mỗi nhóm: E1 \AuditEOneValid, E2 \AuditETwoValid, E3 \AuditEThreeValid, E4 \AuditEFourValid, E5 \AuditEFiveValid.}
 \end{table}
 
-%RESULTS-RQ3-PROSE
+\paragraph{Mức sàn.} Hệ thống không làm gì đạt EM \AbstainEM{} trên validation. Mọi điểm trên câu không
+có đáp án phải được đọc so với nó.
+
+\paragraph{XLM-R từ chối đúng tần suất, sai đối tượng.} XLM-R từ chối \XlmrAbsRate\% số câu --- rất gần
+tỉ lệ thật \PctValImp\% --- nhưng precision chỉ \XlmrAbsPrec\%: gần một nửa số lần từ chối rơi vào câu
+\emph{có} đáp án (\XlmrErrFalseAbs{} câu). Có \PairAnsOnlyP{} câu có đáp án PhoBERT trả lời đúng mà XLM-R
+sai, phần lớn là những câu XLM-R từ chối --- ví dụ ``Ký túc xá cho sinh viên lớn nhất Paris gọi là gì?'',
+vàng ``Cité internationale universitaire'', PhoBERT trả lời đúng còn XLM-R trả về rỗng.
+
+\paragraph{PhoBERT gần như không bao giờ từ chối.} PhoBERT từ chối \PhobertAbsRate\% số câu với
+precision \PhobertAbsPrec\%: khi đã từ chối thì gần như luôn đúng, nhưng recall chỉ \PhobertAbsRec\%.
+
+\paragraph{Cả hai rơi vào bẫy của người gán nhãn.} SQuAD~2.0 và UIT-ViQuAD~2.0 tạo câu không có đáp án
+bằng cách sửa câu hỏi sao cho vẫn có một cụm ``nghe hợp lý'' trong đoạn văn (trường
+\code{plausible\_answers}). Khi PhoBERT trả lời một câu không có đáp án, \PhobertTrapPct\% số lần
+(\PhobertTrapHit/\PhobertTrapN) nó trả về \emph{đúng} cụm hợp lý đó; với XLM-R là \XlmrTrapPct\%
+(\XlmrTrapHit/\XlmrTrapN). Hai mô hình tìm đúng thực thể khớp với câu hỏi, nhưng không nhận ra chi tiết
+đã bị sửa làm câu hỏi mất đáp án --- tức là \emph{không} thật sự ``hiểu'' rằng câu không trả lời được.
+
+\paragraph{Vì sao PhoBERT mất khả năng từ chối?} Loss huấn luyện toàn phần của PhoBERT \emph{tăng} từ
+epoch 2 ở cả hai lần chạy (Bảng~\ref{tab:curves}). Để biết phần tăng nằm ở đâu, loss của từng checkpoint
+được tính lại trên cùng 3.000 câu hỏi của tập fit, tách theo loại nhãn (Bảng~\ref{tab:probe}). Kết quả rõ
+ràng: \textbf{loss trên nhãn ``không có đáp án'' của PhoBERT tăng khoảng 7 lần} sau epoch 1
+(\ProbePhobertRunAClsOne{} $\to$ \ProbePhobertRunAClsTwo{} $\to$ \ProbePhobertRunAClsThree), \emph{trong khi}
+loss trên nhãn vị trí đáp án \emph{giảm đều} (\ProbePhobertRunASpanOne{} $\to$ \ProbePhobertRunASpanThree{})
+và kết thúc thấp hơn của XLM-R. Lần chạy lr $2\cdot10^{-5}$ lặp lại y hệt. Loss ``không có đáp án'' của
+XLM-R ổn định. Tỉ lệ feature mang nhãn ``không có đáp án'' của hai tokenizer tương đương
+(\ProbePhobertRunAClsFrac\% so với \ProbeXlmrClsFrac\%), nên mất cân bằng lớp không giải thích được khác
+biệt.
+
+\begin{table}[htbp]
+\centering
+\caption{Loss trên tập fit theo loại nhãn: ``không có đáp án'' / ``vị trí đáp án'' (nguồn: \code{results/loss\_probe.json})}
+\label{tab:probe}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabular}{@{}l r r r r@{}}
+\toprule
+\textbf{Mô hình} & \textbf{Feature ``không đ.án''} & \textbf{Epoch 1} & \textbf{Epoch 2} & \textbf{Epoch 3} \\
+\midrule
+\tabinput{generated/tab_loss_probe.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tiêu chí chọn epoch cũng góp phần: chọn theo F1 dev thưởng cho chất lượng span, nên chọn epoch 3; chọn
+theo EM dev sẽ chọn epoch 1, khi PhoBERT còn giữ được khả năng từ chối. Nguyên nhân gốc vì sao PhoBERT
+``bỏ'' lớp ``không có đáp án'' khi fine-tune tiếp thì đồ án \emph{chưa xác định được}: giảm tốc độ học
+không khắc phục, và mất cân bằng lớp bị loại trừ; các giả thuyết còn lại (biểu diễn của token \code{<s>}
+trong PhoBERT, tương tác với cửa sổ 256 token, độ bất ổn số học) cần thêm thí nghiệm với nhiều seed.
+
+\paragraph{Bộ stress-test không phân biệt được gì.} Bảng~\ref{tab:stress} xác nhận kết luận kiểm định: ở
+E1, E3, E4, điểm của mọi mô hình \emph{bằng đúng} điểm của hệ thống luôn từ chối; ở E5, hệ thống luôn từ
+chối \emph{thắng} cả hai mô hình. Trên toàn bộ 250 câu, luôn từ chối (\AbstainStressEM) đứng trên XLM-R
+(\XlmrStressEM) và PhoBERT (\PhobertStressEM). Một bảng xếp hạng dựa trên bộ này sẽ kết luận rằng ``không
+làm gì'' là hệ thống tốt nhất.
+
+\begin{keybox}
+\textbf{Trả lời RQ3: chưa --- không mô hình nào thật sự nhận ra câu không có đáp án.} XLM-R từ chối đúng
+tần suất nhưng sai đối tượng; PhoBERT gần như không từ chối vì loss trên lớp ``không có đáp án'' của nó
+tăng vọt sau epoch 1. Cả hai trả về đúng cụm ``nghe hợp lý'' mà người gán nhãn đặt làm bẫy trong khoảng
+một nửa số lần trả lời sai.
+\end{keybox}
+
 
 \subsection{RQ4 --- Transformer có vượt baseline ở mọi nhóm?}
 \label{sec:res-rq4}
 
-%RESULTS-RQ4-PROSE
+TF-IDF thua cả hai Transformer ở \emph{mọi} nhóm trong Bảng~\ref{tab:ctxlen}, \ref{tab:anslen},
+\ref{tab:qtype}, và không vượt được cả mức sàn luôn từ chối về EM tổng (\TfidfEM{} so với \AbstainEM). Cơ
+cấu lỗi giải thích vì sao: \TfidfErrBoundaryPct\% lỗi của nó là lỗi biên, chủ yếu ``biên thừa'' --- nó
+trả về cả câu văn chứa đáp án --- và nó trả lời cả \NValImp{} câu không có đáp án. F1 trên câu có đáp án
+đạt \TfidfAnsFone{} cho thấy so khớp từ khoá thường tìm đúng \emph{câu văn}; vai trò hợp lý của nó là bộ
+truy hồi đứng trước một mô hình đọc hiểu, không phải bộ đọc hiểu.
+
+\begin{keybox}
+\textbf{Trả lời RQ4: Có} --- Transformer vượt baseline không-neural ở mọi nhóm được đo; nhưng cần một
+thước đo thứ hai (luôn từ chối) mới thấy rằng TF-IDF thậm chí không vượt được việc không làm gì.
+\end{keybox}
+
 
 \subsection{Phân tích định tính}
 \label{sec:qualitative}
 
-%RESULTS-QUAL-PROSE
+Bảng~\ref{tab:qual} là các ví dụ đại diện, lấy từ \code{results/disagreements\_phobert\_xlmr.json} (các câu
+hai mô hình bất đồng) và \code{results/error\_sample\_*.json} (100 lỗi ngẫu nhiên mỗi mô hình, seed 42).
+
+\begin{table}[htbp]
+\centering
+\caption{Ví dụ định tính trên validation}
+\label{tab:qual}
+\renewcommand{\arraystretch}{1.2}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.3cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.9cm}@{}}
+\toprule
+\textbf{Câu hỏi} & \textbf{Vàng} & \textbf{PhoBERT} & \textbf{XLM-R} & \textbf{Hiện tượng} \\
+\midrule
+Ký túc xá cho sinh viên lớn nhất Paris gọi là gì? & Cité internationale universitaire & Cité internationale universitaire & $\varnothing$ & XLM-R từ chối sai \\
+Người bản đại tại Nouvelle-Calédonie thuộc nhóm người nào? & Melanesia & nhóm Melanesia & $\varnothing$ & XLM-R từ chối sai \\
+Người Tskhinvali chấp nhận ngưng bắn khi nào? & $\varnothing$ & ngày 13 tháng 8 & $\varnothing$ & PhoBERT trả lời câu không có đáp án \\
+Patel đạt được thành tựu lần đầu tiên vào năm nào? & $\varnothing$ & năm 1918 & $\varnothing$ & bẫy ``plausible'' (1918) \\
+Cuối năm 1835 trận đánh nào ở Texas đã phát triển thành xung đột vũ trang? & trận Gonzales & tại trận Gonzales & trận Gonzales & lỗi tách từ \code{tại\_trận} \\
+Các thành viên Tối cao pháp viện do ai đề cử? & cố vấn của thủ tướng và bộ trưởng tư pháp & toàn quyền bổ nhiệm theo cố vấn của \dots & cố vấn của thủ tướng và bộ trưởng tư pháp & PhoBERT biên thừa \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Các ví dụ khớp với các con số: lỗi đặc trưng của XLM-R là \emph{từ chối} những câu nó lẽ ra trả lời được;
+lỗi đặc trưng của PhoBERT là \emph{trả lời} những câu không có đáp án, thường bằng đúng cụm gây nhiễu; lỗi
+biên của PhoBERT phần lớn là thừa chữ ở đầu span, và một phần nhỏ truy được về bộ tách từ.
+
 
 \subsection{Quá trình huấn luyện và chi phí}
 \label{sec:curves}
@@ -208,4 +420,9 @@ PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec \\
 \label{fig:curves}
 \end{figure}
 
-%RESULTS-CURVES-PROSE
+XLM-R hội tụ đều: loss giảm và F1 dev tăng qua cả ba epoch; bộ chẩn đoán đường cong đánh dấu ``vẫn đang
+cải thiện'', nên thêm epoch có thể còn tăng điểm. PhoBERT học nhanh hơn ở epoch 1 (F1 dev cao hơn XLM-R ở cùng epoch, Bảng~\ref{tab:curves}), rồi loss toàn phần tăng từ epoch 2 do nguyên nhân đã phân tích ở
+Mục~\ref{sec:res-rq3}. Một epoch PhoBERT mất khoảng 22 phút, một epoch XLM-R khoảng 35 phút trên Apple M5 Pro
+--- PhoBERT nhanh hơn vì chuỗi ngắn hơn, dù có nhiều cửa sổ hơn. Tổng thời gian huấn luyện: XLM-R
+\XlmrTrainMin{} phút, mỗi lần chạy PhoBERT khoảng \PhobertRunATrainMin{} phút.
+

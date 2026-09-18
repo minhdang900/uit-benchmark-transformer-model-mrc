@@ -1,0 +1,63 @@
+{
+  "commit": "2ff59db",
+  "n_questions": 3000,
+  "runs": {
+    "xlmr": {
+      "n_features": 3208,
+      "cls_fraction": 0.3656,
+      "impossible_fraction_questions": 0.331,
+      "epochs": {
+        "1": {
+          "cls": 0.7405,
+          "span": 1.5894
+        },
+        "2": {
+          "cls": 0.6127,
+          "span": 1.1758
+        },
+        "3": {
+          "cls": 0.7248,
+          "span": 0.8755
+        }
+      }
+    },
+    "phobert": {
+      "n_features": 3445,
+      "cls_fraction": 0.3962,
+      "impossible_fraction_questions": 0.331,
+      "epochs": {
+        "1": {
+          "cls": 0.5587,
+          "span": 1.3532
+        },
+        "2": {
+          "cls": 4.1841,
+          "span": 0.8797
+        },
+        "3": {
+          "cls": 4.2809,
+          "span": 0.6338
+        }
+      }
+    },
+    "phobert_lr2e5": {
+      "n_features": 3445,
+      "cls_fraction": 0.3962,
+      "impossible_fraction_questions": 0.331,
+      "epochs": {
+        "1": {
+          "cls": 0.5791,
+          "span": 1.5028
+        },
+        "2": {
+          "cls": 4.3335,
+          "span": 1.0168
+        },
+        "3": {
+          "cls": 4.4199,
+          "span": 0.821
+        }
+      }
+    }
+  }
+}

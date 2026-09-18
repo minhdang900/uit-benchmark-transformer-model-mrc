@@ -42,9 +42,9 @@ def models(keys):
 
 def fig_main():
     ms = models(["baseline", "xlmr", "phobert"])
-    groups = [("Tổng EM", "overall", "EM"), ("Tổng F1", "overall", "F1"),
-              ("EM câu có đáp án", "answerable_only", "EM"), ("F1 câu có đáp án", "answerable_only", "F1"),
-              ("EM câu không đáp án", "impossible_only", "EM")]
+    groups = [("EM\ntoàn bộ", "overall", "EM"), ("F1\ntoàn bộ", "overall", "F1"),
+              ("EM\ncâu có đáp án", "answerable_only", "EM"), ("F1\ncâu có đáp án", "answerable_only", "F1"),
+              ("EM\ncâu không đáp án", "impossible_only", "EM")]
     fig, ax = plt.subplots(figsize=(9, 3.6))
     w = 0.8 / max(1, len(ms))
     for i, m in enumerate(ms):
@@ -57,8 +57,8 @@ def fig_main():
     ab = load("eval_abstain_validation.json")
     if ab:
         ax.axhline(ab["overall"]["EM"], color=MUTED, lw=1.2, ls="--")
-        ax.text(len(groups) - 0.5, ab["overall"]["EM"] + 1.5, f"luôn từ chối (tổng) = {ab['overall']['EM']:.2f}".replace(".", ","),
-                ha="right", fontsize=8, color=MUTED)
+        ax.text(1.45, ab["overall"]["EM"] - 6.5, f"luôn từ chối: EM toàn bộ = {ab['overall']['EM']:.2f}".replace(".", ","),
+                ha="left", fontsize=8, color=MUTED, zorder=5, bbox=dict(boxstyle="round,pad=0.2", fc="white", ec=GRID))
     ax.set_xticks(range(len(groups)), [g for g, _, _ in groups])
     ax.set_ylim(0, 105); ax.set_ylabel("Điểm (%)")
     ax.legend(ncol=len(ms), loc="upper left", bbox_to_anchor=(0, 1.13))
@@ -78,7 +78,7 @@ def fig_taxonomy():
         left = 0
         for t, col in zip(types, ERR_COLORS):
             ax.barh(y, c[t], left=left, color=col, edgecolor="white", linewidth=1.5, height=0.6)
-            if c[t] >= 90:
+            if c[t] >= 140:
                 ax.text(left + c[t] / 2, y, str(c[t]), ha="center", va="center", fontsize=7.5, color="white")
             left += c[t]
         ax.text(left + 15, y, f"{left} lỗi", va="center", fontsize=8, color=INK)
@@ -113,19 +113,22 @@ def fig_lines(key, order, xlabel, fname, source):
 
 def fig_curves():
     fig, axes = plt.subplots(1, 2, figsize=(9, 3.2))
-    for m in ["xlmr", "phobert"]:
+    runs = [("xlmr", "-", "o", LABEL["xlmr"]),
+            ("phobert", "-", "o", "PhoBERT (lr 3e-5)"),
+            ("phobert_lr2e5", ":", "^", "PhoBERT (lr 2e-5)")]
+    for m, ls, mk, lab in runs:
         c = load(f"training_curve_{m}.json")
         if not c:
             continue
+        col = COLOR["xlmr" if m == "xlmr" else "phobert"]
         ep = [e["epoch"] for e in c["curve"]]
-        axes[0].plot(ep, [e["train_loss"] for e in c["curve"]], color=COLOR[m], lw=2, marker="o", ms=6, label=LABEL[m])
-        axes[1].plot(ep, [e["val_em"] for e in c["curve"]], color=COLOR[m], lw=2, marker="o", ms=6, label=LABEL[m] + " EM")
-        axes[1].plot(ep, [e["val_f1"] for e in c["curve"]], color=COLOR[m], lw=2, marker="s", ms=6, ls="--", label=LABEL[m] + " F1")
-    axes[0].set_title("Loss huấn luyện", fontsize=10, color=INK); axes[0].set_xlabel("Epoch")
-    axes[1].set_title("EM / F1 trên dev (tách từ train)", fontsize=10, color=INK); axes[1].set_xlabel("Epoch")
+        axes[0].plot(ep, [e["train_loss"] for e in c["curve"]], color=col, lw=2, ls=ls, marker=mk, ms=6, label=lab)
+        axes[1].plot(ep, [e["val_f1"] for e in c["curve"]], color=col, lw=2, ls=ls, marker=mk, ms=6, label=lab)
+    axes[0].set_title("Loss huấn luyện (trung bình epoch)", color=INK)
+    axes[1].set_title("F1 trên dev (tiêu chí chọn epoch)", color=INK)
     for a in axes:
-        a.set_xticks([1, 2, 3])
-    axes[1].legend(fontsize=7.5, loc="lower right"); axes[0].legend(fontsize=8)
+        a.set_xticks([1, 2, 3]); a.set_xlabel("Epoch")
+    axes[0].legend()
     fig.savefig(OUT / (PREFIX + "training_curves.png")); plt.close(fig)
 
 

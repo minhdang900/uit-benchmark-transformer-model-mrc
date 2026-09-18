@@ -89,14 +89,17 @@ dùng được để so sánh mô hình}.
 \label{tab:audit}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
-\setlength{\tabcolsep}{3.5pt}
-\begin{tabularx}{\textwidth}{@{}l L r r r r r r r@{}}
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{2.9cm} r r r r r r r@{}}
 \toprule
-& \textbf{Nhóm} & \textbf{Câu} & \textbf{Có đ.án} & \textbf{Đ.án trong ngữ cảnh} & \textbf{Offset đúng} & \textbf{Đ.án trong câu hỏi} & \textbf{Câu hỏi khác nhau} & \textbf{Hợp lệ} \\
+& & & \textbf{Có} & \multicolumn{3}{c}{\textbf{Trong số câu có đáp án}} & \textbf{Câu hỏi} & \\
+\cmidrule(lr){5-7}
+& \textbf{Nhóm} & \textbf{Câu} & \textbf{đáp án} & \textbf{đ.án $\in$ ngữ cảnh} & \textbf{offset đúng} & \textbf{đ.án $\in$ câu hỏi} & \textbf{khác nhau} & \textbf{Hợp lệ} \\
 \midrule
 \tabinput{generated/tab_audit.tex}
 \bottomrule
-\end{tabularx}
+\end{tabular}}
 \end{table}
 
 \begin{figure}[htbp]

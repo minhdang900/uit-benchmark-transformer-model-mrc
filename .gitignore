@@ -45,5 +45,4 @@ logs/
 *.nav
 *.snm
 *.synctex.gz
-report/main.pdf
-slides/main.pdf
+!results/logs/

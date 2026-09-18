@@ -68,7 +68,20 @@ def main() -> None:
                    "answer_length": {k: len(v) for k, v in sorted(len_buckets.items())}},
         "models": {},
     }
+    # Đáp án "nghe hợp lý" (plausible_answers) mà người gán cố tình đặt vào câu
+    # impossible của SQuAD 2.0 — KHÔNG phải nhãn, chỉ dùng để phân tích lỗi.
+    raw = json.loads(Path("data/raw/viquad2_validation.json").read_text())["data"]
+    plausible = {q["id"]: (q.get("plausible_answers") or {}).get("text", [])
+                 for a in raw for para in a["paragraphs"] for q in para["qas"]}
+    impossible = [q for q, g in refs.items() if not g]
+
     for m, p in preds.items():
+        answered_imp = [q for q in impossible if p.get(q, "").strip()]
+        report.setdefault("plausible_trap", {})[m] = {
+            "answered_impossible": len(answered_imp),
+            "equals_plausible_answer": sum(any(exact_match(p[q], t) for t in plausible.get(q, []))
+                                           for q in answered_imp),
+        }
         report["models"][m] = {
             "taxonomy_all": error_taxonomy(p, refs),
             "abstention": abstention_stats(p, refs),

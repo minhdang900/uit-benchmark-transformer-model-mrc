@@ -159,6 +159,11 @@ def main() -> None:
         m(f"{P}AbsRate", get(dg, "abstention", "abstain_rate"))
         m(f"{P}AbsPrec", get(dg, "abstention", "precision"))
         m(f"{P}AbsRec", get(dg, "abstention", "recall"))
+        trap = get(diag, "plausible_trap", key) or {}
+        m(f"{P}TrapN", trap.get("answered_impossible"), 0)
+        m(f"{P}TrapHit", trap.get("equals_plausible_answer"), 0)
+        m(f"{P}TrapPct", 100 * trap["equals_plausible_answer"] / trap["answered_impossible"]
+          if trap.get("answered_impossible") else None)
         m(f"{P}AlEM", get(dg, "by_alignment", "aligned", "EM"))
         m(f"{P}MisEM", get(dg, "by_alignment", "misaligned", "EM"))
         m(f"{P}MisFone", get(dg, "by_alignment", "misaligned", "F1"))
@@ -168,6 +173,12 @@ def main() -> None:
         m(f"{P}NErr", nerr, 0)
         m(f"{P}ErrBoundary", boundary, 0)
         m(f"{P}ErrBoundaryPct", 100 * boundary / nerr if nerr else None)
+        # Lỗi biên / số câu CÓ đáp án mà hệ thống ĐÃ trả lời: chuẩn hoá theo số lần
+        # thử, vì hệ thống ít từ chối hơn thì có nhiều cơ hội mắc lỗi biên hơn.
+        n_ans = get(ev, "answerable_only", "count")
+        answered = n_ans - counts["false_abstain"] if counts and n_ans else None
+        m(f"{P}AnsweredAns", answered, 0)
+        m(f"{P}BoundaryRate", 100 * boundary / answered if answered else None)
         for k, w in (("false_abstain", "FalseAbs"), ("false_answer", "FalseAns"), ("wrong_span", "Wrong"),
                      ("boundary_superset", "Super"), ("boundary_subset", "Sub"), ("boundary_overlap", "Overlap")):
             m(f"{P}Err{w}", counts.get(k) if counts else None, 0)
@@ -191,8 +202,8 @@ def main() -> None:
                 cells.append(f"{vi(allc.get('EM'), 1)} / {vi(valc.get('EM'), 1)}")
             stress_rows.append(f"{label} & " + " & ".join(cells) + f" & {vi(st['overall']['EM'], 1)} \\\\")
         if counts:
-            tax_rows.append(f"{label} & {nerr} & " + " & ".join(
-                str(counts[k]) for k in ("false_abstain", "false_answer", "boundary_superset",
+            tax_rows.append(f"{label} & {vi(nerr)} & " + " & ".join(
+                vi(counts[k]) for k in ("false_abstain", "false_answer", "boundary_superset",
                                          "boundary_subset", "boundary_overlap", "wrong_span")) + " \\\\")
         if dg:
             al, mi = dg["by_alignment"]["aligned"], dg["by_alignment"]["misaligned"]
@@ -245,8 +256,8 @@ def main() -> None:
         if r:
             name = {"all": "Toàn bộ", "answerable": "Có đáp án", "impossible": "Không có đáp án",
                     "misaligned": "Lệch biên từ"}[part]
-            pair_rows.append(f"{name} & {r['n']} & {r['both_correct']} & {r['only_a']} & {r['only_b']} & "
-                             f"{r['neither']} & {vi(r['em_diff'])} & [{vi(r['ci95'][0])}; {vi(r['ci95'][1])}] & "
+            pair_rows.append(f"{name} & {vi(r['n'])} & {vi(r['both_correct'])} & {vi(r['only_a'])} & {vi(r['only_b'])} & "
+                             f"{vi(r['neither'])} & {vi(r['em_diff'])} & [{vi(r['ci95'][0])}; {vi(r['ci95'][1])}] & "
                              f"{pval(r['mcnemar_p'])} \\\\")
     table("tab_paired.tex", "\n".join(pair_rows) + "\n")
 
@@ -286,6 +297,23 @@ def main() -> None:
                             f"{vi(ev['answerable_only']['EM'])} & {vi(ev['impossible_only']['EM'])} & {vi(ab)} \\\\")
     table("tab_phobert_runs.tex", "\n".join(run_rows) + "\n")
     m("PhobertPrimaryLabel", RUN_LABEL[PHOBERT], raw=True)
+
+    # ── loss tách theo loại nhãn (scripts/probe_loss.py) ──────────────────────
+    probe = get(load("loss_probe.json"), "runs") or {}
+    names = {"xlmr": ("Xlmr", "XLM-R-base"), "phobert": ("PhobertRunA", RUN_LABEL["phobert"]),
+             "phobert_lr2e5": ("PhobertRunB", RUN_LABEL["phobert_lr2e5"])}
+    probe_rows = []
+    for run, (P, label) in names.items():
+        r = probe.get(run)
+        m(f"Probe{P}ClsFrac", 100 * r["cls_fraction"] if r else None)
+        ep = (r or {}).get("epochs", {})
+        for e, w in (("1", "One"), ("2", "Two"), ("3", "Three")):
+            m(f"Probe{P}Cls{w}", get(ep, e, "cls"))
+            m(f"Probe{P}Span{w}", get(ep, e, "span"))
+        if r:
+            probe_rows.append(f"{label} & {vi(100 * r['cls_fraction'], 1)}\\% & " + " & ".join(
+                f"{vi(ep[e]['cls'])} / {vi(ep[e]['span'])}" for e in ("1", "2", "3")) + " \\\\")
+    table("tab_loss_probe.tex", "\n".join(probe_rows) + "\n")
 
     (OUT / "numbers.tex").write_text(
         "% SINH TỰ ĐỘNG bởi scripts/make_report_numbers.py — KHÔNG SỬA TAY\n" + "\n".join(m.lines) + "\n",

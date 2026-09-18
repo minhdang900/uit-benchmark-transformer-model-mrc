@@ -1,0 +1,52 @@
+{
+  "config": {
+    "model": "vinai/phobert-base-v2",
+    "out": "models/phobert_lr2e5",
+    "data_dir": "data/raw",
+    "train_size": null,
+    "epochs": 3,
+    "batch_size": 12,
+    "grad_accum": 2,
+    "lr": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "max_length": 256,
+    "doc_stride": 96,
+    "max_answer_len": 64,
+    "eval_limit": 500,
+    "dev_frac": 0.05,
+    "word_segmented": true,
+    "seed": 42
+  },
+  "curve": [
+    {
+      "epoch": 1,
+      "train_loss": 2.2123,
+      "val_em": 42.0,
+      "val_f1": 54.71,
+      "seconds": 1325.7
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.6339,
+      "val_em": 39.8,
+      "val_f1": 58.36,
+      "seconds": 1404.1
+    },
+    {
+      "epoch": 3,
+      "train_loss": 2.3729,
+      "val_em": 38.2,
+      "val_f1": 57.67,
+      "seconds": 1365.2
+    }
+  ],
+  "best_epoch": 2,
+  "diagnosis": {
+    "overfitting": true,
+    "still_improving": false,
+    "degenerate_collapse": false,
+    "best_epoch": 2,
+    "reason": "val_f1 đạt đỉnh 58.36 ở epoch 2 rồi giảm còn 57.67 ở epoch 3, trong khi train_loss vẫn giảm (2.2123 -> 2.3729). Dừng ở epoch 2."
+  }
+}

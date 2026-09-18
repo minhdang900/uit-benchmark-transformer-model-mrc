@@ -1,5 +1,5 @@
 {
-  "commit": "c73f695",
+  "commit": "2ff59db",
   "n": 3814,
   "slices": {
     "answerable": 2653,
@@ -288,6 +288,97 @@
           "count": 540
         }
       }
+    },
+    "phobert_lr2e5": {
+      "taxonomy_all": {
+        "n": 3814,
+        "n_errors": 1924,
+        "counts": {
+          "false_abstain": 47,
+          "false_answer": 1001,
+          "boundary_superset": 386,
+          "boundary_subset": 215,
+          "boundary_overlap": 143,
+          "wrong_span": 132
+        },
+        "pct_of_errors": {
+          "false_abstain": 2.44,
+          "false_answer": 52.03,
+          "boundary_superset": 20.06,
+          "boundary_subset": 11.17,
+          "boundary_overlap": 7.43,
+          "wrong_span": 6.86
+        }
+      },
+      "abstention": {
+        "abstain_rate": 5.43,
+        "true_impossible_rate": 30.44,
+        "precision": 77.29,
+        "recall": 13.78,
+        "f1": 23.39,
+        "confusion": {
+          "tp": 160,
+          "fp": 47,
+          "fn": 1001,
+          "tn": 2606
+        }
+      },
+      "by_alignment": {
+        "aligned": {
+          "EM": 65.65,
+          "F1": 82.0,
+          "count": 2620
+        },
+        "misaligned": {
+          "EM": 30.3,
+          "F1": 70.03,
+          "count": 33
+        }
+      },
+      "by_answer_length": {
+        "1-2": {
+          "EM": 70.78,
+          "F1": 80.15,
+          "count": 657
+        },
+        "11+": {
+          "EM": 57.74,
+          "F1": 81.87,
+          "count": 859
+        },
+        "3-5": {
+          "EM": 68.51,
+          "F1": 82.04,
+          "count": 597
+        },
+        "6-10": {
+          "EM": 66.67,
+          "F1": 83.66,
+          "count": 540
+        }
+      }
+    }
+  },
+  "plausible_trap": {
+    "abstain": {
+      "answered_impossible": 0,
+      "equals_plausible_answer": 0
+    },
+    "baseline": {
+      "answered_impossible": 1161,
+      "equals_plausible_answer": 16
+    },
+    "xlmr": {
+      "answered_impossible": 539,
+      "equals_plausible_answer": 277
+    },
+    "phobert": {
+      "answered_impossible": 977,
+      "equals_plausible_answer": 443
+    },
+    "phobert_lr2e5": {
+      "answered_impossible": 1001,
+      "equals_plausible_answer": 445
     }
   },
   "phobert_primary": "phobert",

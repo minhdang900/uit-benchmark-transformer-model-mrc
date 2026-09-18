@@ -23,12 +23,10 @@ UIT-ViQuAD~2.0: \PctValImp\% câu validation \textbf{không có đáp án} $\Rig
 \textbf{Hai họ mô hình khác nhau đúng ở khâu tách từ} (Buổi 3)
 \vspace{0.4em}
 
-\begin{tabular}{@{}p{0.2\textwidth}p{0.68\textwidth}@{}}
-\textcolor{phobert}{\textbf{PhoBERT}} & đơn ngữ · đầu vào \emph{đã tách từ}\\
-& \code{Hà\_Nội là thủ\_đô} \\[4pt]
-\textcolor{xlmr}{\textbf{XLM-R}} & đa ngữ · \emph{subword} trên văn bản thô\\
-& \code{\_Hà \_Nội \_là \_thủ \_đô} \\
-\end{tabular}
+\textcolor{phobert}{\textbf{PhoBERT}}: đơn ngữ, đầu vào \emph{đã tách từ}\\
+\quad{\footnotesize\code{Hà\_Nội | là | thủ\_đô}}\\[4pt]
+\textcolor{xlmr}{\textbf{XLM-R}}: đa ngữ, \emph{subword} trên văn bản thô\\
+\quad{\footnotesize\code{\_Hà | \_Nội | \_là | \_thủ | \_đô}}
 
 \vspace{0.6em}
 \alert{Mô hình word-level không thể trả lời \emph{nửa từ}.}\\
@@ -60,40 +58,39 @@ UIT-ViQuAD~2.0: \PctValImp\% câu validation \textbf{không có đáp án} $\Rig
 
 \begin{frame}{Giao thức: validation chỉ được chấm \emph{một lần}}
 \begin{columns}[T]
-\begin{column}{0.5\textwidth}
-\small
+\begin{column}{0.52\textwidth}
+\footnotesize
 \begin{tabular}{@{}l r l@{}}
 \toprule
 \textbf{Tập} & \textbf{Câu} & \textbf{Vai trò} \\
 \midrule
 fit (train) & \NFit & huấn luyện \\
 dev (5\% đoạn văn train) & \NDev & chọn epoch \\
-\textbf{validation} & \textbf{\NVal} & \textbf{test --- chấm 1 lần} \\
-test chính thức & 7.301 & \textcolor{badred}{ẩn nhãn, không chấm được} \\
+\textbf{validation} & \textbf{\NVal} & \textbf{test, chấm 1 lần} \\
+test chính thức & 7.301 & \textcolor{badred}{ẩn nhãn} \\
 \bottomrule
 \end{tabular}
 
 \vspace{0.6em}
-\footnotesize
 $\bullet$ Chia theo \emph{đoạn văn}; \code{assert} không đoạn văn nào dùng chung\\
 $\bullet$ Stress-test \emph{chỉ để đánh giá} (khung mã cũ trộn 60\% vào train)\\
 $\bullet$ 1 seed (42), không tìm siêu tham số
 \end{column}
-\begin{column}{0.46\textwidth}
+\begin{column}{0.44\textwidth}
 \small
 \textbf{Bốn hệ thống, cùng một harness}
 \vspace{0.3em}
 
+\footnotesize
 \begin{tabular}{@{}l l@{}}
-\textcolor{muted}{\textbf{Luôn từ chối}} & thước đo mức sàn \\
+\textcolor{muted}{\textbf{Luôn từ chối}} & mức sàn \\
 \textcolor{tfidf}{\textbf{TF-IDF}} & truy hồi câu (Buổi 4) \\
 \textcolor{xlmr}{\textbf{XLM-R-base}} & fine-tune, 384 token \\
 \textcolor{phobert}{\textbf{PhoBERT-base-v2}} & fine-tune, 256 token \\
 \end{tabular}
 
 \vspace{0.6em}
-\footnotesize Cùng vòng lặp, lr $3\cdot10^{-5}$, batch 24, 3 epoch, đáp án tối đa 64 token.\\
-Chỉ khác những gì kiến trúc bắt buộc.
+Cùng vòng lặp, lr $3\cdot10^{-5}$, batch 24, 3 epoch, đáp án tối đa 64 token. Chỉ khác những gì kiến trúc bắt buộc.
 \end{column}
 \end{columns}
 \end{frame}
@@ -189,4 +186,222 @@ Lỗi gán nhãn: ``o thời gian'' & \MisAnnot \\
 \src{results/segmentation\_validation.json, results/misaligned\_labels.json}
 \end{frame}
 
-%SLIDES-RESULTS
+% ─────────────────────────────────────────────────────────────── 4 KẾT QUẢ
+\section{Kết quả}
+
+\begin{frame}{Kết quả tổng --- validation, \NVal{} câu, chấm một lần}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\includegraphics[width=\textwidth]{slide_main_results.png}
+\end{column}
+\begin{column}{0.4\textwidth}
+\small
+\begin{tabular}{@{}l r r@{}}
+\toprule
+& \textbf{EM} & \textbf{F1} \\
+\midrule
+Luôn từ chối & \AbstainEM & \AbstainFone \\
+TF-IDF & \TfidfEM & \TfidfFone \\
+\textcolor{xlmr}{\textbf{XLM-R}} & \XlmrEM & \XlmrFone \\
+\textcolor{phobert}{\textbf{PhoBERT}} & \PhobertEM & \PhobertFone \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.6em}
+\footnotesize Chênh lệch EM tổng (cặp): \textbf{\PairDiff}, CI 95\% [\PairLo; \PairHi], $p$ = \PairP\\[3pt]
+\alert{$\Rightarrow$ Về tổng: không khác nhau có ý nghĩa.}
+\end{column}
+\end{columns}
+\src{results/eval\_*\_validation.json, results/diagnosis\_validation.json}
+\end{frame}
+
+\begin{frame}{Nhưng điểm tổng che hai hồ sơ kỹ năng \emph{ngược nhau}}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{Câu có đáp án} ({\NValAns})\\[4pt]
+\bignum{+\PairAnsDiff}{phobert}\\
+\small EM cho PhoBERT\\
+\footnotesize CI [\PairAnsLo; \PairAnsHi] · \textcolor{phobert}{\PhobertAnsEM} vs \textcolor{xlmr}{\XlmrAnsEM}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\textbf{Câu không có đáp án} ({\NValImp})\\[4pt]
+\bignum{\PairImpDiff}{xlmr}\\
+\small EM (PhoBERT kém hơn)\\
+\footnotesize CI [\PairImpLo; \PairImpHi] · \textcolor{phobert}{\PhobertImpEM} vs \textcolor{xlmr}{\XlmrImpEM}
+\end{column}
+\end{columns}
+
+\vspace{1.2em}
+\begin{block}{PhoBERT đọc giỏi hơn nhiều --- nhưng gần như không biết từ chối}
+\small Hai chênh lệch lớn, ngược dấu, triệt tiêu nhau trong điểm tổng. Lặp lại ở lần chạy PhoBERT thứ hai
+(lr $2\cdot10^{-5}$): EM có đáp án \PhobertRunBAnsEM, không đáp án \PhobertRunBImpEM.
+\end{block}
+\src{results/diagnosis\_validation.json (McNemar + bootstrap 2.000 lần)}
+\end{frame}
+
+\begin{frame}{RQ1 --- Word-level có yếu ở ranh giới từ? \alert{Không.}}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r@{}}
+\toprule
+& \textcolor{xlmr}{\textbf{XLM-R}} & \textcolor{phobert}{\textbf{PhoBERT}} \\
+\midrule
+EM, khớp biên (\SegAligned) & \XlmrAlEM & \textbf{\PhobertAlEM} \\
+EM, lệch biên (\SegMis) & \textbf{\XlmrMisEM} & \PhobertMisEM \\
+F1, lệch biên & \XlmrMisFone & \textbf{\PhobertMisFone} \\
+\midrule
+Lỗi biên / lần trả lời & \XlmrBoundaryRate\% & \PhobertBoundaryRate\% \\
+\bottomrule
+\end{tabular}
+\end{column}
+\begin{column}{0.46\textwidth}
+\small
+$\bullet$ Cơ chế \textbf{có thật}: câu lệch biên, PhoBERT F1 cao mà EM thấp\\
+\footnotesize\quad vàng ``trận Gonzales'' $\to$ \code{tại\_trận} $\to$ ``tại trận Gonzales''\\[4pt]
+\small $\bullet$ Nhưng chỉ \SegMis{} câu, $p$ = \PairMisP, chặn ở \SegCeilingLoss{} điểm EM\\[4pt]
+$\bullet$ Khi đã trả lời, tỉ lệ lỗi biên \textbf{như nhau}
+
+\vspace{0.5em}
+\alert{Giả thuyết ghi trước sai hướng.}
+\end{column}
+\end{columns}
+\src{results/diagnosis\_validation.json, results/segmentation\_validation.json}
+\end{frame}
+
+\begin{frame}{RQ3 --- Nhận ra câu không có đáp án? \alert{Chưa.}}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r r@{}}
+\toprule
+& \textbf{Từ chối} & \textbf{Prec.} & \textbf{Recall} \\
+\midrule
+Luôn từ chối & \AbstainAbsRate & \AbstainAbsPrec & \AbstainAbsRec \\
+\textcolor{xlmr}{\textbf{XLM-R}} & \XlmrAbsRate & \XlmrAbsPrec & \XlmrAbsRec \\
+\textcolor{phobert}{\textbf{PhoBERT}} & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}\footnotesize Tỉ lệ câu không có đáp án thật: \PctValImp\%
+\end{column}
+\begin{column}{0.46\textwidth}
+\small
+$\bullet$ \textcolor{xlmr}{\textbf{XLM-R}}: từ chối đúng \emph{tần suất}, sai \emph{đối tượng} (\XlmrErrFalseAbs{} câu có đáp án bị từ chối)\\[4pt]
+$\bullet$ \textcolor{phobert}{\textbf{PhoBERT}}: gần như không từ chối\\[4pt]
+$\bullet$ Rơi vào \textbf{bẫy} của người gán nhãn: câu trả lời sai trùng đúng cụm ``plausible'' ---
+PhoBERT \PhobertTrapPct\%, XLM-R \XlmrTrapPct\%
+\end{column}
+\end{columns}
+\src{results/diagnosis\_validation.json}
+\end{frame}
+
+\begin{frame}{Vì sao PhoBERT không từ chối? Tách loss theo loại nhãn}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+\small Loss trên 3.000 câu fit, từng checkpoint:\\[4pt]
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r r@{}}
+\toprule
+& \textbf{Ep 1} & \textbf{Ep 2} & \textbf{Ep 3} \\
+\midrule
+XLM-R ``không đ.án'' & \ProbeXlmrClsOne & \ProbeXlmrClsTwo & \ProbeXlmrClsThree \\
+XLM-R vị trí đ.án & \ProbeXlmrSpanOne & \ProbeXlmrSpanTwo & \ProbeXlmrSpanThree \\
+\textcolor{phobert}{\textbf{PhoBERT ``không đ.án''}} & \ProbePhobertRunAClsOne & \textbf{\ProbePhobertRunAClsTwo} & \textbf{\ProbePhobertRunAClsThree} \\
+PhoBERT vị trí đ.án & \ProbePhobertRunASpanOne & \ProbePhobertRunASpanTwo & \ProbePhobertRunASpanThree \\
+\bottomrule
+\end{tabular}
+\end{column}
+\begin{column}{0.44\textwidth}
+\small
+$\bullet$ Loss ``không có đáp án'' của PhoBERT \textbf{tăng $\sim$7 lần} sau epoch 1\\
+$\bullet$ Loss vị trí đáp án vẫn \textbf{giảm}\\
+$\bullet$ Lặp lại ở lr $2\cdot10^{-5}$ (\ProbePhobertRunBClsOne{} $\to$ \ProbePhobertRunBClsThree)\\
+$\bullet$ Không phải mất cân bằng lớp (\ProbePhobertRunAClsFrac\% vs \ProbeXlmrClsFrac\%)
+
+\vspace{0.4em}
+\footnotesize Nguyên nhân gốc: \emph{chưa xác định} --- cần nhiều seed.
+\end{column}
+\end{columns}
+\src{results/loss\_probe.json (scripts/probe\_loss.py)}
+\end{frame}
+
+\begin{frame}{RQ2 độ dài · RQ4 baseline · và bộ stress-test}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\includegraphics[width=\textwidth]{slide_by_answer_length.png}
+\footnotesize \textbf{RQ2:} không suy giảm theo độ dài ngữ cảnh; đáp án dài làm giảm EM (F1 giữ nguyên) như nhau ở cả hai.\\[3pt]
+\textbf{RQ4:} Transformer vượt TF-IDF ở mọi nhóm; TF-IDF (EM \TfidfEM) còn thua ``luôn từ chối''.
+\end{column}
+\begin{column}{0.46\textwidth}
+\small \textbf{EM trên stress-test 250 câu}\\[3pt]
+\begin{tabular}{@{}l r@{}}
+\toprule
+\textbf{Luôn từ chối} & \textbf{\AbstainStressEM} \\
+XLM-R & \XlmrStressEM \\
+PhoBERT & \PhobertStressEM \\
+TF-IDF & \TfidfStressEM \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+\alert{``Không làm gì'' đứng đầu} --- đúng như kiểm định dự báo. Bộ này không dùng để xếp hạng.
+\end{column}
+\end{columns}
+\end{frame}
+
+% ─────────────────────────────────────────────────────────────── 5 KẾT LUẬN
+\section{Kết luận}
+
+\begin{frame}{Kết luận}
+\small
+\begin{enumerate}
+\item \textbf{Điểm tổng như nhau, hồ sơ kỹ năng ngược nhau.} PhoBERT: đọc giỏi hơn \PairAnsDiff{} điểm EM, gần như không từ chối. XLM-R: từ chối đúng tần suất, sai đối tượng.
+\item \textbf{Tách từ không phải yếu tố quyết định} trên UIT-ViQuAD~2.0: chỉ \SegMisPct\% đáp án cắt ngang từ, phần lớn do lỗi \code{pyvi}.
+\item \textbf{Yếu tố quyết định là một phần ba câu hỏi không có đáp án} --- phải đo riêng.
+\item \textbf{Kiểm định công cụ đo trước khi dùng}: bộ stress-test của chính nhóm xếp ``không làm gì'' đứng đầu.
+\end{enumerate}
+
+\vspace{0.4em}
+\begin{block}{Giới hạn}
+\footnotesize 1 seed · không tìm siêu tham số · \code{pyvi} thay RDRSegmenter · validation làm test (test chính thức ẩn nhãn) · 256 vs 384 token
+\end{block}
+\end{frame}
+
+\begin{frame}{Hướng phát triển}
+\small
+\begin{itemize}
+\item Hiệu chỉnh ngưỡng từ chối $\tau$ trên dev --- khôi phục khả năng từ chối của PhoBERT
+\item Tìm nguyên nhân gốc: nhiều seed, gradient theo loại nhãn, trọng số lớp, XLM-R ở 256 token
+\item PhoBERT với RDRSegmenter; sửa luật dính dấu chấm của \code{pyvi}
+\item Xây lại bộ stress-test có kiểm định tự động và câu hỏi do người viết
+\end{itemize}
+
+\vspace{1em}
+\centering
+{\headfont\bfseries\Large Cảm ơn thầy và các bạn đã lắng nghe!}\\[4pt]
+\footnotesize Mã nguồn, kết quả và nhật ký: \code{github.com/minhdang900/uit-benchmark-transformer-model-mrc}
+\end{frame}
+
+\appendix
+\begin{frame}{Phụ lục --- Quá trình huấn luyện}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\includegraphics[width=\textwidth]{slide_training_curves.png}
+\end{column}
+\begin{column}{0.4\textwidth}
+\footnotesize
+Chọn epoch theo \textbf{F1 trên dev} (tách từ train).\\[3pt]
+XLM-R: epoch \XlmrBestEpoch, \XlmrTrainMin{} phút.\\
+PhoBERT lr $3\cdot10^{-5}$: epoch \PhobertRunABestEpoch, \PhobertRunATrainMin{} phút.\\
+PhoBERT lr $2\cdot10^{-5}$: epoch \PhobertRunBBestEpoch.\\[3pt]
+Lần chạy PhoBERT chính chọn theo F1 dev cao nhất.
+\end{column}
+\end{columns}
+\end{frame}
+
