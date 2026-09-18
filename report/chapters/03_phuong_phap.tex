@@ -1,0 +1,276 @@
+% ============================================================================
+\section{Phương pháp}
+\label{sec:method}
+% ============================================================================
+
+\subsection{Tổng quan}
+\label{sec:overview}
+
+Hình~\ref{fig:pipeline} là toàn bộ quy trình. Bốn hệ thống được chấm bằng \emph{cùng} một
+harness đánh giá: hai baseline không học (luôn từ chối; TF-IDF) và hai Transformer được
+fine-tune (PhoBERT, XLM-R). Điểm khác biệt duy nhất giữa hai nhánh Transformer là bước biến
+văn bản thành token --- đúng biến mà câu hỏi nghiên cứu RQ1 muốn đo. Mọi hệ thống ghi ra dự
+đoán \emph{từng câu}, để các phép đo chẩn đoán ở Mục~\ref{sec:alignment}--\ref{sec:paired}
+ghép được với từng câu hỏi thay vì chỉ với con số tổng.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,
+  box/.style={draw=black!45,rounded corners=3pt,fill=white,align=center,minimum height=0.95cm,inner sep=4pt},
+  pbox/.style={box,fill=uitblue!8,draw=uitblue},
+  xbox/.style={box,fill=okgreen!8,draw=okgreen},
+  dbox/.style={box,fill=orange!8,draw=warnorange},
+  arr/.style={-{Latex[length=2mm]},black!60}]
+  \node[box] (data) {UIT-ViQuAD 2.0\\\footnotesize train / validation};
+  \node[pbox,right=0.8cm of data,yshift=0.85cm] (seg) {Tách từ \code{pyvi}\\\footnotesize ``Hà\_Nội''};
+  \node[pbox,right=0.5cm of seg] (bpe) {BPE PhoBERT\\\footnotesize offset = khoảng của từ};
+  \node[xbox,right=0.8cm of data,yshift=-0.85cm,minimum width=4.9cm] (spm) {SentencePiece XLM-R\\\footnotesize offset từ fast tokenizer};
+  \node[box,right=0.6cm of bpe,yshift=-0.85cm] (win) {Cửa sổ trượt\\\footnotesize offset \emph{tuyệt đối}};
+  \node[box,right=0.5cm of win] (enc) {Encoder + lớp QA\\\footnotesize $(S_i, E_i)$};
+  \node[box,right=0.5cm of enc] (dec) {Chọn span / từ chối\\\footnotesize cắt từ context gốc};
+  \node[dbox,below=0.9cm of dec] (pred) {Dự đoán\\từng câu};
+  \node[dbox,left=0.5cm of pred] (met) {EM / F1\\\footnotesize tách có/không đáp án};
+  \node[dbox,left=0.5cm of met,align=left] (diag) {\footnotesize$\bullet$ biên từ + trần EM\\\footnotesize$\bullet$ phân loại lỗi\\\footnotesize$\bullet$ precision/recall từ chối\\\footnotesize$\bullet$ McNemar + bootstrap};
+  \draw[arr] (data.east) -- ++(0.3,0) |- (seg.west);
+  \draw[arr] (data.east) -- ++(0.3,0) |- (spm.west);
+  \draw[arr] (seg) -- (bpe);
+  \draw[arr] (bpe.east) -| ([xshift=-0.3cm]win.north);
+  \draw[arr] (spm.east) -| ([xshift=-0.3cm]win.south);
+  \draw[arr] (win) -- (enc); \draw[arr] (enc) -- (dec); \draw[arr] (dec) -- (pred);
+  \draw[arr] (pred) -- (met); \draw[arr] (met) -- (diag);
+\end{tikzpicture}}
+\caption{Quy trình. Nhánh xanh dương (PhoBERT) và xanh lá (XLM-R) chỉ khác nhau ở bước tạo token và offset; mọi bước sau dùng chung mã}
+\label{fig:pipeline}
+\end{figure}
+
+\paragraph{Tái sử dụng mã nguồn.} Tầng dữ liệu, metric, cửa sổ trượt, vòng lặp huấn luyện và
+harness đánh giá (\code{src/mrc/}) được kế thừa từ đồ án môn CS116 của cùng nhóm tác giả, vốn
+đã có bộ kiểm thử. Đồ án CS221 bổ sung phần phục vụ câu hỏi nghiên cứu riêng: lớp tokenizer
+cho PhoBERT, phép đo biên từ, kiểm định stress-test, các phép đo chẩn đoán và giao thức chọn
+epoch trên tập dev tách từ train. Hai đồ án trả lời hai câu hỏi khác nhau trên hai tập mô hình
+khác nhau; không con số nào của đồ án CS116 được dùng lại trong báo cáo này. Khung mã ban đầu
+của chính đồ án CS221 (thư mục \code{legacy/}) \emph{không} được dùng để sinh kết quả vì các
+lỗi được nêu ở Phụ lục~\ref{app:legacy}.
+
+\subsection{Giao thức dữ liệu}
+\label{sec:protocol}
+
+\begin{itemize}
+  \item \textbf{Test chính thức của UIT-ViQuAD~2.0 là tập ẩn nhãn.} Toàn bộ 7.301 câu có đáp
+        án rỗng nhưng \code{is\_impossible = False}; không chấm được. Harness từ chối chấm các
+        câu như vậy bằng một kiểm tra chặn (\code{assert\_gradeable}).
+  \item \textbf{Validation chính thức (\NVal{} câu) đóng vai tập test của đồ án}, được chấm
+        \emph{đúng một lần} cho mỗi hệ thống, trên toàn bộ tập, không lấy mẫu con.
+  \item \textbf{Chọn epoch trên tập dev tách từ train}: \NDevCtx{} đoạn văn (\NDev{} câu, 5\%
+        số đoạn văn) được tách khỏi train \emph{theo đoạn văn}, để không câu hỏi nào của cùng
+        một đoạn văn nằm ở cả hai phía. Mô hình được huấn luyện trên phần còn lại (\NFit{} câu).
+        Như vậy validation không ảnh hưởng tới bất kỳ quyết định nào trước khi chấm.
+  \item \textbf{Chống rò rỉ}: trước khi huấn luyện, chương trình khẳng định (\code{assert})
+        rằng ba tập train/dev/validation không có đoạn văn chung; vi phạm làm dừng chương trình.
+  \item \textbf{Bộ stress-test chỉ dùng để đánh giá}, không bao giờ trộn vào dữ liệu huấn luyện
+        (khung mã cũ làm điều này --- Phụ lục~\ref{app:legacy}).
+\end{itemize}
+
+\subsection{Hai baseline}
+\label{sec:baselines}
+
+\paragraph{Luôn từ chối.} Trả về chuỗi rỗng cho mọi câu. Theo quy ước chấm SQuAD~2.0, hệ thống
+này đạt điểm bằng đúng tỉ lệ câu không có đáp án của tập chấm. Nó không phải một mô hình mà là
+một \emph{thước đo}: mọi con số khác phải được đọc so với mức sàn này, và nó làm lộ ra những
+nhóm câu hỏi mà điểm cao không chứng minh năng lực gì (Mục~\ref{sec:res-rq3}).
+
+\paragraph{TF-IDF.} Truy hồi câu bằng TF-IDF (Mục~\ref{sec:tfidf}): tách đoạn văn thành câu,
+vector hoá câu hỏi và các câu bằng \code{TfidfVectorizer} (n-gram 1--2), trả về câu có cosine
+lớn nhất. Baseline này không bao giờ từ chối và luôn trả về \emph{cả một câu}.
+
+\subsection{Đưa PhoBERT vào bài toán trích xuất}
+\label{sec:segtok}
+
+PhoBERT cần đầu vào đã tách từ nhưng không cung cấp offset. Lớp \code{SegmentedTokenizer} tự
+dựng offset theo Thuật toán~\ref{alg:segtok}: tách từ bằng \code{pyvi}, căn từng từ về khoảng
+ký tự của nó trong văn bản gốc, rồi mã hoá BPE \emph{từng từ}; mọi mảnh BPE của một từ mang
+chung khoảng ký tự của cả từ. Lớp này cài đúng phần giao diện mà mã cửa sổ trượt và mã suy luận
+sử dụng, nên PhoBERT và XLM-R đi qua \emph{cùng} một đường mã từ đó trở đi.
+
+\begin{algorithm}[htbp]
+\caption{Dựng offset cho PhoBERT từ bước tách từ}
+\label{alg:segtok}
+\KwIn{văn bản gốc $T$; bộ tách từ \textsc{Seg}; tokenizer BPE}
+\KwOut{danh sách \code{ids}, danh sách \code{offsets} (khoảng ký tự trong $T$)}
+$p \leftarrow 0$\;
+\ForEach{từ $w$ trong \textsc{Seg}$(T)$}{
+  $s \leftarrow \bot$\;
+  \ForEach{âm tiết $a$ trong $w$ tách theo ``\_''}{
+    $p \leftarrow$ vị trí đầu tiên $\ge p$ trong $T$ bắt đầu bằng $a$, bỏ qua khoảng trắng\;
+    \If{không tìm thấy}{\Continue\;}
+    \If{$s = \bot$}{$s \leftarrow p$\;}
+    $p \leftarrow p + |a|$\;
+  }
+  \ForEach{mảnh BPE $b$ của $w$}{thêm $\mathrm{id}(b)$ vào \code{ids}; thêm $(s, p)$ vào \code{offsets}\;}
+}
+\Return \code{ids}, \code{offsets}\;
+\end{algorithm}
+
+Hai hệ quả của thiết kế này được dùng trực tiếp trong phân tích:
+
+\begin{enumerate}
+  \item \textbf{Đáp án luôn được cắt từ văn bản gốc}, nên không bao giờ chứa dấu gạch dưới
+        của bước tách từ. Cách ngây thơ --- giải mã token bằng \code{decode()} --- trả về
+        ``Hà\_Nội''; vì bước chuẩn hoá của metric xoá dấu câu, chuỗi này thành ``hànội'' và
+        một đáp án \emph{đúng} bị chấm EM~0, F1~0. Lỗi này tồn tại trong khung mã ban đầu và
+        được kiểm thử hồi quy.
+  \item \textbf{PhoBERT chỉ trả lời được bằng dãy từ nguyên vẹn} --- đúng tính chất mà phép
+        đo ở Mục~\ref{sec:alignment} khai thác.
+\end{enumerate}
+
+Tính đúng đắn được kiểm thử bằng các bất biến: mỗi offset cắt ra đúng từ gốc (thay ``\_''
+bằng khoảng trắng); nhãn huấn luyện được giải mã ra lại đúng đáp án vàng khi đáp án khớp biên
+từ; và bị \emph{mở rộng} đúng tới từ bao quanh khi đáp án cắt ngang từ. Trên validation, các từ
+đã căn phủ \SegCtxCoverage\% ký tự không phải khoảng trắng của mọi đoạn văn --- không ký tự nào
+bị bỏ sót.
+
+\paragraph{Bộ tách từ.} PhoBERT được tiền huấn luyện với RDRSegmenter (VnCoreNLP), cần Java.
+Đồ án dùng \code{pyvi}, thuần Python, để pipeline chạy được trên máy không có Java. Hai bộ tách
+từ không trùng nhau hoàn toàn; đây là một nguồn lệch phân phối được nêu trong giới hạn
+(Mục~\ref{sec:limitations}) và là một biến đáng thử trong hướng phát triển.
+
+\subsection{Fine-tuning}
+\label{sec:finetune}
+
+Hai mô hình được huấn luyện bằng \emph{cùng} vòng lặp, cùng lịch học và cùng seed
+(Bảng~\ref{tab:hparams}); chỉ các tham số buộc phải khác do kiến trúc được thay đổi. PhoBERT
+chỉ có 256 vị trí hữu dụng nên \code{max\_length} = 256 thay vì 384; phần chồng lấp giữa hai
+cửa sổ được giảm tương ứng. Độ dài đáp án tối đa được đặt 64 token cho cả hai, lớn hơn phân vị
+95 của độ dài đáp án vàng theo cả hai tokenizer (đo trên 400 câu train: 30 token PhoBERT, 38
+token XLM-R), để tham số này không trở thành một yếu tố gây nhiễu.
+
+\begin{table}[htbp]
+\centering
+\caption{Siêu tham số huấn luyện}
+\label{tab:hparams}
+\renewcommand{\arraystretch}{1.13}
+\small
+\begin{tabular}{@{}l c c@{}}
+\toprule
+\textbf{Tham số} & \textbf{PhoBERT-base-v2} & \textbf{XLM-R-base} \\
+\midrule
+Checkpoint & \code{vinai/phobert-base-v2} & \code{FacebookAI/xlm-roberta-base} \\
+Tiền xử lý & tách từ \code{pyvi} & không \\
+\code{max\_length} / chồng lấp cửa sổ & 256 / 96 & 384 / 128 \\
+Độ dài đáp án tối đa (token) & 64 & 64 \\
+Số epoch tối đa & 3 & 3 \\
+Batch $\times$ tích luỹ gradient & $12 \times 2 = 24$ & $12 \times 2 = 24$ \\
+Tốc độ học, warmup, weight decay & $3\cdot10^{-5}$; 10\%; 0,01 & $3\cdot10^{-5}$; 10\%; 0,01 \\
+Tối ưu, cắt gradient & AdamW; 1,0 & AdamW; 1,0 \\
+Chọn epoch & EM trên dev (500 câu ngẫu nhiên) & EM trên dev (500 câu ngẫu nhiên) \\
+Ngưỡng không trả lời $\tau$ & 0 & 0 \\
+Seed & 42 & 42 \\
+\bottomrule
+\end{tabular}
+\par\vspace{2pt}
+{\footnotesize Nguồn: trường \code{config} trong \code{results/training\_curve\_\{phobert,xlmr\}.json}.}
+\end{table}
+
+Không có tìm kiếm siêu tham số: tốc độ học $3\cdot10^{-5}$ và lịch học là giá trị phổ biến cho
+mô hình cỡ \emph{base} trên SQuAD. Đây là lựa chọn có chủ đích --- với một lần chạy mỗi mô hình,
+tìm kiếm siêu tham số trên dev rồi báo cáo trên cùng dev sẽ thổi phồng kết quả --- nhưng cũng có
+nghĩa là cả hai mô hình có thể chưa đạt điểm tốt nhất của chúng.
+
+\subsection{Phép đo tương thích biên từ}
+\label{sec:alignment}
+
+Đây là công cụ chẩn đoán trung tâm cho RQ1, và nó \emph{không cần chạy mô hình}. Gọi
+$\mathcal{W} = \{(a_k, b_k)\}$ là tập khoảng ký tự của các từ mà bộ tách từ sinh ra trên đoạn
+văn, và $[s, e)$ là khoảng ký tự của một đáp án vàng. Đáp án \textbf{khớp biên từ}
+(\emph{aligned}) nếu không đầu nào của nó nằm \emph{bên trong} một từ:
+\begin{equation}
+  \mathrm{aligned}(s, e) \iff \nexists\, (a, b) \in \mathcal{W}:\; a < s < b \;\lor\; a < e < b .
+\end{equation}
+Nếu không khớp, span nguyên-từ tốt nhất mà một mô hình word-level trả về được là span nhỏ nhất
+bao đáp án:
+\begin{equation}
+  \hat{s} = \min\{a : (a,b)\in\mathcal{W},\, a < e,\, b > s\}, \qquad
+  \hat{e} = \max\{b : (a,b)\in\mathcal{W},\, a < e,\, b > s\},
+\end{equation}
+và \textbf{trần EM} của câu đó là $\max_{g \in G} \mathrm{EM}(C[\hat{s}{:}\hat{e}], g)$. Với câu
+có nhiều đáp án vàng, câu được tính là khớp biên nếu \emph{ít nhất một} đáp án khớp. Trung bình
+trần EM trên toàn tập là điểm EM cao nhất mà một mô hình word-level \emph{hoàn hảo} có thể đạt,
+chỉ tính riêng giới hạn do đơn vị đầu ra.
+
+Phép đo này tách được hai kênh mà giả thuyết RQ1 gộp làm một: (i) kênh \emph{đơn vị đầu ra} ---
+PhoBERT không thể trả lời nửa từ, đo được chính xác và không cần mô hình; và (ii) kênh \emph{biểu
+diễn} --- lỗi tách từ làm sai biểu diễn đầu vào, chỉ đo được gián tiếp qua hiệu năng. Nếu kênh (i)
+chỉ giải thích được một phần nhỏ khoảng cách giữa hai mô hình, phần còn lại phải đến từ nơi khác.
+
+\subsection{Phân loại lỗi tự động}
+\label{sec:taxonomy}
+
+Mỗi dự đoán sai được xếp vào đúng một trong sáu loại (Bảng~\ref{tab:taxonomy-def}), định nghĩa
+bằng quan hệ giữa đa tập token của dự đoán và của đáp án vàng sau chuẩn hoá. Với nhiều đáp án
+vàng, dùng đáp án có F1 cao nhất với dự đoán. Vì định nghĩa không cần người gán, phép phân loại
+chạy được trên \emph{toàn bộ} tập chấm và tái lập được.
+
+\begin{table}[htbp]
+\centering
+\caption{Sáu loại lỗi}
+\label{tab:taxonomy-def}
+\renewcommand{\arraystretch}{1.15}
+\small
+\begin{tabularx}{\textwidth}{@{}l L L@{}}
+\toprule
+\textbf{Loại} & \textbf{Điều kiện} & \textbf{Ví dụ (vàng $\to$ dự đoán)} \\
+\midrule
+Từ chối sai & Có đáp án, dự đoán rỗng & ``Hà Nội'' $\to$ $\varnothing$ \\
+Trả lời sai & Không có đáp án, dự đoán khác rỗng & $\varnothing$ $\to$ ``năm 1945'' \\
+Biên thừa & Dự đoán \emph{chứa} đáp án vàng & ``Hà Nội'' $\to$ ``thành phố Hà Nội'' \\
+Biên thiếu & Dự đoán \emph{nằm trong} đáp án vàng & ``thành phố Hà Nội'' $\to$ ``Hà Nội'' \\
+Biên lệch & Có token chung, lệch cả hai phía & ``Hà Nội là'' $\to$ ``Nội là thủ đô'' \\
+Sai vị trí & Không có token chung & ``Hà Nội'' $\to$ ``Paris'' \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Ba loại ``biên'' là lỗi \emph{đã tìm đúng vùng nhưng sai ranh giới} --- loại lỗi mà giả thuyết RQ1
+dự đoán PhoBERT mắc nhiều hơn. ``Sai vị trí'' là lỗi hiểu; ``từ chối sai'' và ``trả lời sai'' là lỗi
+của quyết định có trả lời hay không.
+
+\subsection{Hành vi từ chối như một bộ phân loại}
+\label{sec:abstention}
+
+Trên SQuAD~2.0, điểm tổng trộn hai kỹ năng. Để tách kỹ năng thứ hai, việc ``trả về rỗng'' được
+coi là một bộ phân loại nhị phân dự đoán ``câu này không có đáp án'', với precision (trong những
+lần từ chối, bao nhiêu lần đúng) và recall (trong những câu không có đáp án, bao nhiêu câu được
+từ chối). Hệ thống luôn từ chối có recall 100\% và precision bằng tỉ lệ câu không có đáp án ---
+một mô hình ``biết từ chối'' thật phải có precision cao hơn hẳn mức đó.
+
+\subsection{So sánh cặp PhoBERT và XLM-R}
+\label{sec:paired}
+
+Chênh lệch EM giữa hai mô hình được kiểm định bằng McNemar chính xác (công thức~\ref{eq:mcnemar})
+trên các câu mà hai mô hình bất đồng, kèm khoảng tin cậy bootstrap 95\% (2.000 lần lấy mẫu, seed
+42) --- trên toàn tập và trên từng nhóm: câu có đáp án, câu không có đáp án, câu lệch biên từ.
+Kết luận ``A khác B'' chỉ được đưa ra khi khoảng tin cậy không chứa 0; ngược lại báo cáo ghi
+``chưa đủ bằng chứng''.
+
+\subsection{Kiểm định bộ stress-test}
+\label{sec:audit-method}
+
+Trước khi dùng bộ stress-test 250 câu (5 nhóm E1--E5 $\times$ 50) để chấm mô hình, mỗi câu được
+kiểm tra tự động: (1) với câu có đáp án, đáp án vàng có nằm trong đoạn văn không; (2)
+\code{answer\_start} có trỏ đúng vào đáp án không; (3) đáp án có xuất hiện nguyên văn trong câu
+hỏi không (rò rỉ đáp án); (4) số câu hỏi khác nhau và số khung câu hỏi (câu hỏi sau khi thay
+cụm trong nháy đơn bằng \code{X}). Một câu \textbf{hợp lệ} nếu nó không có đáp án, hoặc đáp án của
+nó nằm trong đoạn văn --- điều kiện tối thiểu để một mô hình trích xuất \emph{có thể} trả lời
+đúng. Kết quả ở Mục~\ref{sec:audit}.
+
+\subsection{Truy vết số liệu và kiểm thử}
+\label{sec:traceability}
+
+Mọi hệ thống ghi \code{results/eval\_<hệ~thống>\_<tập>.json} (số tổng, tách nhóm, commit, thời
+điểm, thiết bị) và \code{results/predictions\_<hệ~thống>\_<tập>.json} (dự đoán từng câu). Mọi
+phép đo chẩn đoán đọc các tệp này. Báo cáo \emph{không gõ tay con số kết quả nào}: script
+\code{make\_report\_numbers.py} sinh các macro \LaTeX{} và các bảng từ \code{results/}; giá trị
+nào chưa có sẽ hiện chữ đỏ ``??'' trong PDF thay vì một con số đoán. Mã nguồn có 218 kiểm thử
+tự động chạy không cần GPU, gồm các bất biến của lớp tokenizer PhoBERT, phép đo biên từ, phân
+loại lỗi và kiểm định McNemar.

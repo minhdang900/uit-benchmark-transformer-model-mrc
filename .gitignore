@@ -31,3 +31,19 @@ venv/
 data/raw/
 models/
 logs/
+
+# LaTeX build artefacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.xdv
+*.nav
+*.snm
+*.synctex.gz
+report/main.pdf
+slides/main.pdf

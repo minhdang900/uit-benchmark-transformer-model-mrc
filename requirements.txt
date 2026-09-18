@@ -1,15 +1,13 @@
-# Pinned for reproducibility.
-# REGENERATE after the first successful run:  pip freeze > requirements.lock.txt
-# Verified target: Python 3.10
-
-torch==2.1.2
-transformers==4.36.2
-datasets==2.16.1
-accelerate==0.25.0
-evaluate==0.4.1
-scikit-learn==1.3.2
-pandas==2.1.4
-numpy==1.26.3
+datasets==5.0.1  # chỉ cho scripts/fetch_data.py
+huggingface-hub==1.32.0
+matplotlib==3.11.2
+numpy==2.5.3
+pandas==3.0.6
+pytest==9.1.1
 pyvi==0.1.1
-rank-bm25==0.2.2
-streamlit==1.29.0
+safetensors==0.8.0
+scikit-learn==1.9.1
+sentencepiece==0.2.2
+tokenizers==0.23.2
+torch==2.14.0
+transformers==5.17.0

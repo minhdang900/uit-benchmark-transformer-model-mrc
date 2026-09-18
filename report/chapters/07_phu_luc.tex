@@ -1,0 +1,120 @@
+% ============================================================================
+%  PHỤ LỤC
+% ============================================================================
+\clearpage
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\titleformat{\section}{\normalfont\Large\bfseries}{Phụ lục \thesection.}{0.6em}{}
+
+\section{Hướng dẫn tái lập}
+\label{app:repro}
+
+Toàn bộ kết quả tái lập được bằng các lệnh sau trên một máy có Python 3.12 (GPU không bắt buộc
+cho phần đánh giá baseline và phân tích; bắt buộc trên thực tế cho fine-tune).
+
+\begin{lstlisting}[language=bash]
+# 1. Môi trường và dữ liệu
+uv venv .venv --python 3.12
+uv pip install --python .venv/bin/python -r requirements.txt
+python scripts/fetch_data.py                   # UIT-ViQuAD 2.0 -> data/raw/
+
+# 2. Kiểm thử (không cần GPU)
+python -m pytest -m "not slow"
+
+# 3. Phân tích không cần mô hình
+python scripts/analyze_segmentation.py         # biên từ + trần EM
+python scripts/audit_stress_test.py            # kiểm định stress-test
+
+# 4. Fine-tune (dev tách từ train; validation không được nhìn thấy)
+python scripts/finetune.py --model FacebookAI/xlm-roberta-base --out models/xlmr \
+    --epochs 3 --max-length 384 --doc-stride 128 --max-answer-len 64
+python scripts/finetune.py --model vinai/phobert-base-v2 --out models/phobert \
+    --word-segmented --epochs 3 --max-length 256 --doc-stride 96 --max-answer-len 64
+
+# 5. Chấm (mỗi hệ thống một lần, toàn bộ validation) và chẩn đoán
+python scripts/run_eval.py --models abstain baseline xlmr phobert
+python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress
+python scripts/diagnose.py
+
+# 6. Báo cáo: số liệu và hình sinh từ results/, rồi biên dịch
+python scripts/make_report_numbers.py && python scripts/make_figures.py
+cd report && latexmk -xelatex main.tex
+\end{lstlisting}
+
+\section{Kiểm định khung mã ban đầu}
+\label{app:legacy}
+
+Trước khi chạy bất kỳ thí nghiệm nào, nhóm rà soát khung mã ban đầu của đồ án (nay ở
+\code{legacy/}). Rà soát cho thấy khung mã \emph{chưa từng được chạy} (không có tệp kết quả
+hay checkpoint nào) nhưng tài liệu đi kèm đã trình bày số liệu. Các phát hiện được liệt kê để
+người đọc biết vì sao khung mã này không được dùng, và vì sao báo cáo có quy tắc ``không con số
+nào không có tệp kết quả''.
+
+\begin{table}[H]
+\centering
+\caption{Các lỗi phát hiện trong khung mã ban đầu}
+\label{tab:legacy}
+\renewcommand{\arraystretch}{1.18}
+\small
+\begin{tabularx}{\textwidth}{@{}L L L@{}}
+\toprule
+\textbf{Lỗi} & \textbf{Hệ quả nếu chạy} & \textbf{Xử lý} \\
+\midrule
+Ba bộ số liệu kết quả khác nhau (README, slide, hằng \code{EXPECTED\_RESULTS}), không bộ nào có tệp nguồn & Báo cáo số không đo & Xoá toàn bộ; mọi số sinh từ \code{results/} \\
+\code{compute\_metrics} so sánh chuỗi \code{"span\_\{s\}\_\{e\}"} thay vì văn bản đáp án; F1 được ``ước lượng'' bằng \code{EM $\times$ 0,95} & EM/F1 vô nghĩa & Giải mã span thật từ offset (Mục~\ref{sec:segtok}) \\
+Giải mã PhoBERT giữ dấu ``\_'' của bước tách từ & Đáp án đúng bị chấm EM~0 & Cắt đáp án từ văn bản gốc; kiểm thử hồi quy \\
+Ghi đè \code{max\_position\_embeddings} của PhoBERT & Hỏng embedding vị trí khi nạp & Bỏ; \code{max\_length} = 256 \\
+\code{include\_stress\_test=True} mặc định: 60\% bộ stress-test bị trộn vào tập \emph{huấn luyện} & Rò rỉ: chấm trên dữ liệu đã học & Stress-test chỉ dùng để đánh giá \\
+Bộ sinh stress-test: \code{\_find\_answer\_start} trả về 0 khi không tìm thấy đáp án; \code{\_wrap\_into\_squad} gán lại ngữ cảnh theo vòng cho mẫu không có ngữ cảnh & \AuditAns{}$-$\AuditAnsInCtx{} câu có đáp án không nằm trong ngữ cảnh (Mục~\ref{sec:audit}) & Kiểm định; không dùng để xếp hạng \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Cấu trúc mã nguồn}
+\label{app:code}
+
+\begin{lstlisting}
+src/mrc/
+  data.py, normalize.py, metrics.py     # nạp SQuAD-2.0, chuẩn hoá, EM/F1      (CS116)
+  windowing.py, features.py, training.py, transformer_qa.py                     (CS116)
+  baseline_tfidf.py, evaluate.py, tagging.py                                   (CS116)
+  tokenization.py         # chọn tokenizer theo loại mô hình                   (CS221)
+  segmented_tokenizer.py  # PhoBERT: tách từ + BPE + offset về văn bản gốc     (CS221)
+  segmentation.py         # tương thích biên từ, trần EM                       (CS221)
+  stress_test.py          # nạp + kiểm định stress-test                        (CS221)
+  diagnosis.py            # phân loại lỗi, từ chối, McNemar, bootstrap         (CS221)
+  baselines.py            # luôn từ chối                                       (CS221)
+scripts/   finetune.py run_eval.py analyze_segmentation.py audit_stress_test.py
+           diagnose.py make_report_numbers.py make_figures.py
+tests/     218 kiểm thử không cần GPU
+results/   eval_*.json predictions_*.json training_curve_*.json diagnosis_*.json ...
+report/    mã LaTeX của báo cáo; generated/ do make_report_numbers.py sinh
+legacy/    khung mã ban đầu (không dùng; xem Phụ lục B)
+\end{lstlisting}
+
+\section{Bảng truy vết số liệu}
+\label{app:trace}
+
+\begin{table}[H]
+\centering
+\caption{Nguồn gốc các nhóm số liệu trong báo cáo}
+\label{tab:trace}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\textwidth}{@{}L L@{}}
+\toprule
+\textbf{Số liệu} & \textbf{Nguồn} \\
+\midrule
+Thống kê dữ liệu, kích thước train/dev & \code{data/raw/*.json} qua \code{compute\_stats}, \code{split\_by\_context} (seed 42) \\
+EM, F1, tách nhóm, độ trễ & \code{results/eval\_*\_validation.json} \\
+Điểm trên stress-test theo nhóm & \code{results/eval\_*\_stress.json} \\
+Kiểm định stress-test & \code{results/stress\_test\_audit.json} \\
+Tương thích biên từ, trần EM & \code{results/segmentation\_validation.json} \\
+Phân loại lỗi, từ chối, theo độ dài đáp án, so sánh cặp & \code{results/diagnosis\_validation.json} \\
+Ví dụ bất đồng, mẫu lỗi định tính & \code{results/disagreements\_phobert\_xlmr.json}, \code{results/error\_sample\_*.json} \\
+Đường cong huấn luyện, siêu tham số & \code{results/training\_curve\_*.json}; nhật ký \code{logs/train\_*.log} \\
+Mọi macro số và bảng sinh tự động & \code{scripts/make\_report\_numbers.py} $\to$ \code{report/generated/} \\
+Hình & \code{scripts/make\_figures.py} $\to$ \code{report/figures/} \\
+\bottomrule
+\end{tabularx}
+\end{table}

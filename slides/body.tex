@@ -1,0 +1,192 @@
+% ─────────────────────────────────────────────────────────────── 1 BÀI TOÁN
+\section{Bài toán và câu hỏi}
+
+\begin{frame}{Đọc hiểu trích xuất: chỉ ra đáp án \emph{trong} văn bản --- hoặc từ chối}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+\small
+\textbf{Đầu vào:} đoạn văn Wikipedia tiếng Việt + câu hỏi\\
+\textbf{Đầu ra:} một chuỗi \emph{con} của đoạn văn, hoặc $\varnothing$
+
+\vspace{0.6em}
+\begin{block}{Ví dụ}
+\footnotesize \emph{``\dots\ \textcolor{phobert}{\textbf{Hà Nội}} là thủ đô của nước Việt Nam \dots''}\\[2pt]
+Hỏi: Thủ đô của Việt Nam là gì? $\;\to\;$ \textbf{Hà Nội}\\
+Hỏi: GDP của Hà Nội năm 2030? $\;\to\;$ $\varnothing$ \textcolor{muted}{(không có đáp án)}
+\end{block}
+
+\vspace{0.4em}
+UIT-ViQuAD~2.0: \PctValImp\% câu validation \textbf{không có đáp án} $\Rightarrow$ mô hình phải biết \emph{từ chối}.
+\end{column}
+\begin{column}{0.44\textwidth}
+\small
+\textbf{Hai họ mô hình khác nhau đúng ở khâu tách từ} (Buổi 3)
+\vspace{0.4em}
+
+\begin{tabular}{@{}p{0.2\textwidth}p{0.68\textwidth}@{}}
+\textcolor{phobert}{\textbf{PhoBERT}} & đơn ngữ · đầu vào \emph{đã tách từ}\\
+& \code{Hà\_Nội là thủ\_đô} \\[4pt]
+\textcolor{xlmr}{\textbf{XLM-R}} & đa ngữ · \emph{subword} trên văn bản thô\\
+& \code{\_Hà \_Nội \_là \_thủ \_đô} \\
+\end{tabular}
+
+\vspace{0.6em}
+\alert{Mô hình word-level không thể trả lời \emph{nửa từ}.}\\
+\footnotesize Nếu đáp án cắt ngang ``Hà\_Nội'', PhoBERT không có cách nào khớp chính xác.
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Bốn câu hỏi nghiên cứu}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{@{}l X X@{}}
+\toprule
+& \textbf{Câu hỏi} & \textbf{Đo bằng} \\
+\midrule
+\textbf{RQ1} & PhoBERT (word-level) có nhạy với \textbf{ranh giới từ} hơn XLM-R (subword)? & trần EM do biên từ · loại lỗi · so sánh cặp McNemar \\
+\textbf{RQ2} & Suy giảm theo \textbf{độ dài} ngữ cảnh / đáp án có khác nhau? & tách nhóm theo độ dài \\
+\textbf{RQ3} & Mô hình \textbf{thật sự} nhận ra câu không có đáp án, hay chỉ thiên lệch về từ chối? & mức sàn ``luôn từ chối'' · precision/recall từ chối \\
+\textbf{RQ4} & Transformer có vượt baseline TF-IDF ở \textbf{mọi} nhóm? & so từng nhóm \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.8em}
+\textbf{Giả thuyết ghi trước (RQ1):} PhoBERT yếu hơn ở ranh giới từ ghép vì lỗi tách từ lan truyền vào mô hình.
+\end{frame}
+
+% ─────────────────────────────────────────────────────────────── 2 PHƯƠNG PHÁP
+\section{Phương pháp}
+
+\begin{frame}{Giao thức: validation chỉ được chấm \emph{một lần}}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\small
+\begin{tabular}{@{}l r l@{}}
+\toprule
+\textbf{Tập} & \textbf{Câu} & \textbf{Vai trò} \\
+\midrule
+fit (train) & \NFit & huấn luyện \\
+dev (5\% đoạn văn train) & \NDev & chọn epoch \\
+\textbf{validation} & \textbf{\NVal} & \textbf{test --- chấm 1 lần} \\
+test chính thức & 7.301 & \textcolor{badred}{ẩn nhãn, không chấm được} \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.6em}
+\footnotesize
+$\bullet$ Chia theo \emph{đoạn văn}; \code{assert} không đoạn văn nào dùng chung\\
+$\bullet$ Stress-test \emph{chỉ để đánh giá} (khung mã cũ trộn 60\% vào train)\\
+$\bullet$ 1 seed (42), không tìm siêu tham số
+\end{column}
+\begin{column}{0.46\textwidth}
+\small
+\textbf{Bốn hệ thống, cùng một harness}
+\vspace{0.3em}
+
+\begin{tabular}{@{}l l@{}}
+\textcolor{muted}{\textbf{Luôn từ chối}} & thước đo mức sàn \\
+\textcolor{tfidf}{\textbf{TF-IDF}} & truy hồi câu (Buổi 4) \\
+\textcolor{xlmr}{\textbf{XLM-R-base}} & fine-tune, 384 token \\
+\textcolor{phobert}{\textbf{PhoBERT-base-v2}} & fine-tune, 256 token \\
+\end{tabular}
+
+\vspace{0.6em}
+\footnotesize Cùng vòng lặp, lr $3\cdot10^{-5}$, batch 24, 3 epoch, đáp án tối đa 64 token.\\
+Chỉ khác những gì kiến trúc bắt buộc.
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Đưa PhoBERT vào bài toán trích xuất --- không cần Java}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\small
+PhoBERT chỉ có \emph{slow tokenizer} $\Rightarrow$ \textbf{không có offset} (vị trí ký tự).\\
+Không có offset thì không cắt được đáp án từ văn bản gốc.
+
+\vspace{0.5em}
+\textbf{Lớp \code{SegmentedTokenizer}:}
+\begin{enumerate}\footnotesize
+\item tách từ bằng \code{pyvi}
+\item căn mỗi từ về khoảng ký tự \emph{trong văn bản gốc}
+\item BPE từng từ; mọi mảnh mang chung khoảng của từ
+\end{enumerate}
+
+\vspace{0.3em}
+\footnotesize Kiểm thử: giải mã nhãn ra lại đúng đáp án vàng; 25/25 dự đoán là chuỗi con sạch của ngữ cảnh.
+\end{column}
+\begin{column}{0.42\textwidth}
+\begin{block}{Lỗi ``sai âm thầm'' đã tránh}
+\footnotesize
+\code{decode()} trả về \code{"Hà\_Nội"}\\
+chuẩn hoá xoá dấu câu $\Rightarrow$ \code{"hànội"}\\
+so với vàng \code{"hà nội"} $\Rightarrow$ \textbf{EM 0, F1 0}\\[3pt]
+Một đáp án \emph{đúng} bị chấm sai --- khung mã cũ mắc lỗi này.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ─────────────────────────────────────────────────────────────── 3 CÔNG CỤ ĐO
+\section{Kiểm định công cụ đo}
+
+\begin{frame}{Bộ stress-test 250 câu của nhóm: kiểm định \emph{trước} khi dùng}
+\begin{columns}[T]
+\begin{column}{0.56\textwidth}
+\includegraphics[width=\textwidth]{stress_audit.png}
+\end{column}
+\begin{column}{0.42\textwidth}
+\small
+\bignum{\AuditAnsInCtx/\AuditAns}{phobert}\\
+câu có đáp án chứa đáp án \emph{trong} ngữ cảnh
+
+\vspace{0.4em}
+\footnotesize
+$\bullet$ 250 câu dùng chung \AuditCtx{} đoạn văn\\
+$\bullet$ E5: 50 câu, \AuditEFiveDistinctQ{} câu hỏi khác nhau\\
+$\bullet$ ``Luôn từ chối'' đạt \textbf{\AbstainStressEM} điểm\\[4pt]
+\textbf{Nguyên nhân:} \code{\_find\_answer\_start} trả về 0 khi không tìm thấy; ngữ cảnh gán lại theo vòng.
+
+\vspace{0.3em}
+\alert{$\Rightarrow$ Không dùng để xếp hạng mô hình.}
+\end{column}
+\end{columns}
+\src{results/stress\_test\_audit.json}
+\end{frame}
+
+\begin{frame}{Trần EM do biên từ --- đo được mà không cần mô hình}
+\begin{columns}[T]
+\begin{column}{0.4\textwidth}
+\small
+Trên \SegN{} câu có đáp án của validation:
+
+\vspace{0.4em}
+\bignum{\SegMisPct\%}{phobert}\\
+đáp án cắt ngang một từ (\SegMis{} câu)
+
+\vspace{0.4em}
+\bignum{\SegOracle\%}{xlmr}\\
+EM tối đa của PhoBERT \emph{hoàn hảo}
+\end{column}
+\begin{column}{0.56\textwidth}
+\footnotesize
+\textbf{Đọc từng câu lệch biên:}\\[3pt]
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r@{}}
+\toprule
+\code{pyvi} dính dấu chấm: \code{CNN.} & \MisPeriod \\
+\code{pyvi} nối nhầm: \code{Mỹ\_Chú chuột} & \MisMerge \\
+Lỗi gán nhãn: ``o thời gian'' & \MisAnnot \\
+\textbf{Ranh giới từ ghép thật}: \code{bởi\_vì} & \textbf{\MisCompound} \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+\alert{Kênh ``không trả lời được nửa từ'' lấy đi tối đa \SegCeilingLoss{} điểm EM.}
+\end{column}
+\end{columns}
+\src{results/segmentation\_validation.json, results/misaligned\_labels.json}
+\end{frame}
+
+%SLIDES-RESULTS

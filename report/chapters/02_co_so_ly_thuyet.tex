@@ -1,0 +1,411 @@
+% ============================================================================
+\section{Cơ sở lý thuyết}
+\label{sec:theory}
+% ============================================================================
+
+\subsection{Bài toán đọc hiểu máy}
+
+\subsubsection{Phân loại}
+
+Đọc hiểu máy là nhóm bài toán yêu cầu mô hình trả lời câu hỏi dựa trên một văn bản cho
+trước. Theo dạng đầu ra, các bộ dữ liệu MRC thường được chia thành bốn loại
+(Bảng~\ref{tab:mrc-types}). Đồ án thuộc loại \emph{trích xuất đoạn} (span extraction).
+
+\begin{table}[htbp]
+\centering
+\caption{Các dạng bài toán đọc hiểu máy theo dạng đầu ra}
+\label{tab:mrc-types}
+\renewcommand{\arraystretch}{1.18}
+\small
+\begin{tabularx}{\textwidth}{@{}l L L@{}}
+\toprule
+\textbf{Dạng} & \textbf{Đầu ra} & \textbf{Đặc điểm đánh giá} \\
+\midrule
+Điền khuyết (cloze) & Một từ/cụm từ bị che trong văn bản & So khớp chính xác, dễ tự động hoá \\
+Trắc nghiệm & Chọn một trong $k$ phương án & Accuracy \\
+\textbf{Trích xuất đoạn} & \textbf{Đoạn con liên tục của văn bản} & \textbf{EM, F1 trên token} \\
+Tự do (free-form) & Văn bản sinh mới & Khó đánh giá; cần BLEU/ROUGE hoặc người chấm \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Dạng trích xuất có hai ưu điểm quan trọng cho một đồ án có yêu cầu nghiêm ngặt về đánh
+giá: không gian đầu ra bị chặn trong văn bản nên metric so khớp chuỗi có ý nghĩa, và
+câu trả lời luôn kiểm chứng được bằng cách chỉ ra vị trí của nó trong nguồn.
+
+\subsubsection{SQuAD và vấn đề câu hỏi không có đáp án}
+
+SQuAD~1.1 \cite{rajpurkar2016squad} gồm hơn 100.000 câu hỏi do con người đặt trên các
+bài viết Wikipedia; mọi câu hỏi đều có đáp án trong đoạn văn. Hệ quả là mô hình có thể
+đạt điểm cao bằng cách luôn chọn đoạn ``trông giống câu trả lời nhất'' mà không cần
+hiểu đoạn văn có thực sự trả lời câu hỏi hay không. SQuAD~2.0 \cite{rajpurkar2018know}
+khắc phục điều này bằng cách bổ sung hơn 50.000 câu hỏi \emph{không có đáp án} được
+người viết cố tình tạo cho giống câu hỏi có đáp án --- ví dụ thay một thực thể trong câu
+hỏi bằng một thực thể khác. Mô hình phải học thêm kỹ năng \emph{từ chối}: trả về chuỗi
+rỗng khi đoạn văn không chứa thông tin cần thiết.
+
+\subsubsection{UIT-ViQuAD và UIT-ViQuAD 2.0}
+
+UIT-ViQuAD \cite{nguyen2020viquad} là bộ dữ liệu MRC tiếng Việt quy mô lớn, gồm hơn
+23.000 cặp câu hỏi--câu trả lời do con người tạo trên 5.109 đoạn văn thuộc 174 bài viết
+Wikipedia tiếng Việt, theo định dạng SQuAD. UIT-ViQuAD~2.0 được công bố cho cuộc thi
+VLSP~2021 ViMRC \cite{nguyen2022vlsp}, bổ sung câu hỏi không có đáp án theo tinh thần
+SQuAD~2.0. Mỗi câu hỏi không có đáp án có trường \code{is\_impossible = True} và có thể
+kèm \code{plausible\_answers} --- một đáp án ``nghe hợp lý nhưng sai''. Trường này
+\emph{không bao giờ} được dùng làm nhãn đúng; dùng nhầm sẽ biến câu không có đáp án
+thành câu có đáp án và làm sai metric một cách âm thầm. Thống kê chi tiết của phiên bản
+dữ liệu dùng trong đồ án được trình bày ở Mục~\ref{sec:data}.
+
+\subsection{Tách từ tiếng Việt}
+\label{sec:vietnamese}
+
+Tiếng Việt là ngôn ngữ đơn lập: chữ viết tách theo \emph{âm tiết} bằng khoảng trắng, còn
+một \emph{từ} có thể gồm nhiều âm tiết (``Hà Nội'', ``thủ đô'', ``chủ nghĩa xã hội'').
+Khoảng trắng vì vậy không đánh dấu ranh giới từ, và \textbf{tách từ} (word segmentation) ---
+nội dung của Buổi~3 --- là bước tiền xử lý đặc thù: xác định âm tiết nào ghép thành từ.
+Các bộ tách từ phổ biến gồm RDRSegmenter trong VnCoreNLP \cite{vu2018vncorenlp} (dựa trên
+luật được học theo phương pháp Ripple Down Rules, cần Java) và \code{pyvi} \cite{pyvi}
+(mô hình CRF gán nhãn chuỗi, thuần Python). Đầu ra quy ước nối âm tiết trong từ bằng dấu
+gạch dưới:
+\begin{center}
+\code{Hà Nội là thủ đô của nước Việt Nam} $\;\longrightarrow\;$
+\code{Hà\_Nội là thủ\_đô của nước Việt\_Nam}
+\end{center}
+Ba hệ quả cho bài toán đọc hiểu trích xuất:
+
+\begin{enumerate}
+  \item \textbf{Tách từ là một mô hình, và nó có lỗi.} Bộ tách từ khác nhau cho kết quả
+        khác nhau trên cùng câu, đặc biệt với tên riêng nước ngoài, từ viết tắt và dấu câu.
+        Một mô hình dùng đầu vào đã tách từ \emph{thừa hưởng} các lỗi đó.
+  \item \textbf{Đơn vị đầu ra bị giới hạn bởi đơn vị đầu vào.} Mô hình trích xuất trả lời
+        bằng cách chọn token đầu và token cuối. Nếu token là từ đã tách, đáp án chỉ có thể
+        là một dãy từ nguyên vẹn (Mục~\ref{sec:alignment}).
+  \item \textbf{Dấu thanh là một phần của chữ.} ``hoà'' và ``hoa'' là hai từ khác nhau; mọi
+        bước chuẩn hoá hoặc giải mã làm mất dấu sẽ âm thầm làm sai kết quả.
+\end{enumerate}
+
+\subsection{Truy hồi câu bằng TF-IDF}
+\label{sec:tfidf}
+
+TF-IDF biểu diễn một văn bản $d$ thành vector trọng số trên từ vựng. Với
+\code{TfidfVectorizer} của scikit-learn \cite{pedregosa2011sklearn} ở cấu hình mặc định,
+trọng số của term $t$ trong văn bản $d$ thuộc tập gồm $N$ văn bản là
+\begin{equation}
+  w_{t,d} = \mathrm{tf}(t,d) \cdot \left( \ln\frac{1 + N}{1 + \mathrm{df}(t)} + 1 \right),
+  \label{eq:tfidf}
+\end{equation}
+trong đó $\mathrm{tf}(t,d)$ là số lần $t$ xuất hiện trong $d$ và $\mathrm{df}(t)$ là số
+văn bản chứa $t$. Mỗi vector sau đó được chuẩn hoá L2. Độ tương đồng giữa câu hỏi $q$
+và một câu $s$ là cosine của hai vector:
+\begin{equation}
+  \mathrm{sim}(q, s) = \frac{\mathbf{w}_q \cdot \mathbf{w}_s}{\lVert \mathbf{w}_q \rVert \, \lVert \mathbf{w}_s \rVert}.
+\end{equation}
+Baseline truy hồi chọn câu $s^\ast = \arg\max_s \mathrm{sim}(q, s)$ trong đoạn văn làm
+câu trả lời. Phương pháp này trả lời câu hỏi khoa học: \emph{bài toán có giải được bằng
+so khớp từ khoá thuần tuý không?} Vì nó trả về cả một câu trong khi đáp án vàng thường
+là cụm vài từ, có thể dự đoán trước rằng F1 của nó ở mức trung bình còn EM gần bằng 0.
+
+\subsection{Kiến trúc Transformer}
+
+Transformer \cite{vaswani2017attention} thay thế mạng hồi quy bằng cơ chế \emph{tự chú
+ý} (self-attention), cho phép mỗi token trực tiếp tổng hợp thông tin từ mọi token khác
+trong chuỗi. Với ma trận truy vấn $Q$, khoá $K$ và giá trị $V$ được chiếu tuyến tính từ
+biểu diễn đầu vào, attention được tính bằng
+\begin{equation}
+  \mathrm{Attention}(Q, K, V) = \mathrm{softmax}\!\left( \frac{Q K^\top}{\sqrt{d_k}} \right) V,
+\end{equation}
+trong đó $d_k$ là số chiều của khoá; phép chia cho $\sqrt{d_k}$ giữ cho tích vô hướng
+không quá lớn làm softmax bão hoà. \emph{Multi-head attention} chạy $h$ phép attention
+song song trên các không gian chiếu khác nhau rồi ghép kết quả:
+\begin{equation}
+  \begin{aligned}
+  \mathrm{MultiHead}(X) &= \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_h)\, W^O, \\
+  \mathrm{head}_i &= \mathrm{Attention}(X W_i^Q, X W_i^K, X W_i^V).
+  \end{aligned}
+\end{equation}
+Mỗi lớp encoder gồm một khối multi-head attention và một mạng truyền thẳng hai lớp, mỗi
+khối có kết nối tắt (residual) và chuẩn hoá lớp (layer normalization). Vì attention
+không có khái niệm thứ tự, vị trí được mã hoá bằng \emph{position embedding} với số vị
+trí tối đa cố định --- 512 với XLM-R nhưng chỉ 258 với PhoBERT (256 token hữu dụng). Đây là lý do
+văn bản dài phải được cắt thành nhiều cửa sổ (Mục~\ref{sec:windowing}).
+
+\subsection{Mô hình ngôn ngữ tiền huấn luyện}
+\label{sec:plm}
+
+\subsubsection{BERT và RoBERTa}
+
+BERT \cite{devlin2019bert} là chồng các lớp encoder Transformer được tiền huấn luyện trên
+văn bản không nhãn bằng \emph{masked language modeling} (dự đoán token bị che) và
+\emph{next sentence prediction}; biểu diễn thu được có tính hai chiều và được fine-tune cho
+tác vụ đích bằng cách thêm một lớp đầu ra nhỏ. RoBERTa \cite{liu2019roberta} giữ kiến trúc
+nhưng bỏ next sentence prediction, dùng nhiều dữ liệu hơn, batch lớn hơn và che token động.
+Cả hai mô hình của đồ án đều theo công thức RoBERTa, cỡ \emph{base}: 12 lớp, 768 chiều ẩn,
+12 đầu attention. Vì kiến trúc encoder giống nhau, khác biệt giữa chúng nằm ở \textbf{dữ liệu
+tiền huấn luyện} và \textbf{đơn vị token} --- đúng hai biến đồ án muốn tách ra.
+
+\subsubsection{PhoBERT --- đơn ngữ, word-level}
+
+PhoBERT \cite{nguyen2020phobert} là RoBERTa đơn ngữ tiếng Việt, tiền huấn luyện trên khoảng
+20~GB văn bản Wikipedia và tin tức \emph{đã tách từ bằng RDRSegmenter}, với bộ mã hoá BPE
+\cite{sennrich2016bpe} áp dụng \emph{trên từng từ đã tách}. Bản \code{vinai/phobert-base-v2}
+dùng trong đồ án có từ vựng 64.001 token và \textbf{258 vị trí} (256 token hữu dụng). Hai
+ràng buộc kỹ thuật định hình cách dùng nó:
+
+\begin{itemize}
+  \item Đầu vào \emph{phải} được tách từ trước; đưa văn bản thô vào vẫn chạy nhưng lệch khỏi
+        phân phối tiền huấn luyện.
+  \item Trên HuggingFace, PhoBERT chỉ có tokenizer dạng Python (``slow''), \emph{không} trả về
+        \emph{offset mapping} --- vị trí ký tự của mỗi token trong văn bản gốc. Thiếu thông
+        tin này thì không thể biến chỉ số token của đáp án thành chuỗi ký tự trong văn bản
+        (Mục~\ref{sec:offsets}). Đồ án giải quyết ràng buộc này ở Mục~\ref{sec:segtok}.
+\end{itemize}
+
+\subsubsection{XLM-RoBERTa --- đa ngữ, subword}
+
+XLM-R \cite{conneau2020xlmr} áp dụng công thức RoBERTa cho 100 ngôn ngữ trên khoảng 2,5~TB
+văn bản CommonCrawl, với từ vựng SentencePiece \cite{kudo2018sentencepiece} khoảng 250.000
+token dùng chung cho mọi ngôn ngữ, và 514 vị trí (512 hữu dụng). SentencePiece làm việc trên
+văn bản thô, coi khoảng trắng là một ký tự (``\code{\_}'' ở đầu mảnh), nên \emph{không cần} bộ
+tách từ và mọi mảnh đều có vị trí ký tự xác định. Bản \code{FacebookAI/xlm-roberta-base} dùng
+trong đồ án \emph{chưa} được fine-tune cho hỏi đáp --- nó được huấn luyện trên ViQuAD với cùng
+quy trình như PhoBERT, để so sánh là công bằng.
+
+\subsubsection{Offset mapping}
+\label{sec:offsets}
+
+Mô hình dự đoán vị trí đáp án theo \emph{chỉ số token}, trong khi đáp án cần trả về là
+\emph{chuỗi ký tự} trong văn bản gốc. Cầu nối là \textbf{offset mapping}: với mỗi token, cặp
+$(\text{start\_char}, \text{end\_char})$ trong chuỗi gốc. Cách thay thế --- ghép lại chuỗi bằng
+\code{tokenizer.decode()} --- không đảm bảo khôi phục đúng dấu tiếng Việt và khoảng trắng gốc,
+và với PhoBERT còn trả về dấu gạch dưới của bước tách từ (``Hà\_Nội''), khiến một đáp án đúng
+bị chấm EM~0 (Mục~\ref{sec:segtok}).
+
+\subsection{Mô hình hỏi đáp trích xuất trên encoder}
+\label{sec:qahead}
+
+\subsubsection{Đầu vào và lớp QA}
+
+Câu hỏi và đoạn văn được ghép thành một chuỗi
+\code{<s> câu~hỏi </s></s> đoạn~văn </s>} (định dạng RoBERTa, dùng cho cả hai mô hình; ở đây viết gọn là \code{[CLS]}\,/\,\code{[SEP]}) và đưa qua encoder, thu được biểu diễn
+$\mathbf{h}_i \in \mathbb{R}^{H}$ cho mỗi token $i$. Lớp QA là một phép chiếu tuyến tính
+$W \in \mathbb{R}^{2 \times H}$ sinh hai điểm cho mỗi token: điểm bắt đầu $S_i$ và điểm
+kết thúc $E_i$ (Hình~\ref{fig:qa-arch}). Xác suất token $i$ là vị trí bắt đầu là
+\begin{equation}
+  P_{\text{start}}(i) = \frac{\exp(S_i)}{\sum_j \exp(S_j)},
+\end{equation}
+và tương tự cho $P_{\text{end}}$.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\small,
+  tok/.style={draw=black!45,rounded corners=2pt,minimum width=1.05cm,minimum height=0.62cm,fill=white,inner sep=1pt},
+  qtok/.style={tok,fill=uitblue!12},
+  ctok/.style={tok,fill=okgreen!12},
+  stok/.style={tok,fill=black!8},
+  arr/.style={-{Latex[length=2mm]},black!60}]
+  \node[stok] (t0) at (0,0) {\footnotesize\code{[CLS]}};
+  \node[qtok,right=0.12cm of t0] (t1) {Hà};
+  \node[qtok,right=0.12cm of t1] (t2) {Nội};
+  \node[qtok,right=0.12cm of t2] (t3) {\dots};
+  \node[stok,right=0.12cm of t3] (t4) {\footnotesize\code{[SEP]}};
+  \node[ctok,right=0.12cm of t4] (t5) {vào};
+  \node[ctok,right=0.12cm of t5] (t6) {năm};
+  \node[ctok,right=0.12cm of t6] (t7) {1999};
+  \node[ctok,right=0.12cm of t7] (t8) {\dots};
+  \node[stok,right=0.12cm of t8] (t9) {\footnotesize\code{[SEP]}};
+  \node[draw=uitblue,fill=uitblue!6,rounded corners=4pt,minimum height=1.0cm,
+        minimum width=13.6cm] (enc) at ($(t0)!0.5!(t9)+(0,1.55)$)
+        {\bfseries\color{uitblue} Encoder Transformer 12 lớp --- PhoBERT / XLM-R};
+  \foreach \i in {0,...,9} { \draw[arr] (t\i.north) -- (t\i.north |- enc.south); }
+  \node[draw=warnorange,fill=orange!8,rounded corners=4pt,minimum height=0.7cm,
+        minimum width=13.6cm] (head) at ($(enc.center)+(0,1.45)$)
+        {\bfseries\color{warnorange} Lớp QA tuyến tính $W \in \mathbb{R}^{2\times H}$ $\rightarrow$ $(S_i, E_i)$ cho mọi token};
+  \foreach \i in {0,...,9} { \draw[arr] (t\i.north |- enc.north) -- (t\i.north |- head.south); }
+  \node[draw=black!40,rounded corners=3pt,fill=white,align=center] (out1) at ($(head.north)+(-3.6,1.15)$)
+        {Span tốt nhất trong vùng \emph{đoạn văn}\\$\max_{i \le j}\, S_i + E_j$};
+  \node[draw=black!40,rounded corners=3pt,fill=white,align=center] (out2) at ($(head.north)+(3.6,1.15)$)
+        {Điểm ``không có đáp án''\\$S_{\text{CLS}} + E_{\text{CLS}}$};
+  \draw[arr] (out1.south |- head.north) -- (out1.south);
+  \draw[arr] (out2.south |- head.north) -- (out2.south);
+  \node[qtok,minimum width=0.45cm,minimum height=0.35cm] (lq) at ($(t0)+(0.2,-0.95)$) {};
+  \node[right=0.1cm of lq,font=\footnotesize] (lqt) {câu hỏi};
+  \node[ctok,minimum width=0.45cm,minimum height=0.35cm,right=0.6cm of lqt] (lc) {};
+  \node[right=0.1cm of lc,font=\footnotesize] (lct) {đoạn văn (có offset mapping)};
+  \node[stok,minimum width=0.45cm,minimum height=0.35cm,right=0.6cm of lct] (ls) {};
+  \node[right=0.1cm of ls,font=\footnotesize] {token đặc biệt};
+\end{tikzpicture}}
+\caption{Kiến trúc hỏi đáp trích xuất: encoder dùng chung, lớp QA sinh điểm bắt đầu/kết thúc cho mỗi token; token \code{[CLS]} đại diện cho lựa chọn ``không có đáp án''}
+\label{fig:qa-arch}
+\end{figure}
+
+\subsubsection{Hàm mất mát}
+
+Với nhãn vị trí bắt đầu $y_s$ và kết thúc $y_e$ (chỉ số token), mô hình được huấn luyện
+bằng trung bình hai hàm cross-entropy:
+\begin{equation}
+  \mathcal{L} = -\frac{1}{2}\left( \log P_{\text{start}}(y_s) + \log P_{\text{end}}(y_e) \right).
+  \label{eq:qaloss}
+\end{equation}
+Theo quy ước SQuAD~2.0, với câu không có đáp án --- và với cửa sổ không chứa trọn đáp án
+--- nhãn được gán về token \code{[CLS]}: $y_s = y_e = \text{idx}_{\text{CLS}}$. Đây là
+cách mô hình học biểu đạt ``ở đây không có đáp án''. Với UIT-ViQuAD~2.0, nhánh này chiếm
+khoảng một phần ba dữ liệu huấn luyện, nên sai sót trong gán nhãn không phải trường hợp
+biên hiếm gặp.
+
+\subsubsection{Suy luận: chọn span và quyết định không trả lời}
+
+Khi suy luận, span được chọn là cặp $(i, j)$ có tổng điểm lớn nhất trong các ràng buộc:
+\begin{equation}
+  (i^\ast, j^\ast) = \mathop{\arg\max}_{\substack{i \le j,\;\; j - i + 1 \le L_{\max} \\ i,\, j \,\in\, \text{đoạn văn}}} \; S_i + E_j ,
+  \label{eq:span}
+\end{equation}
+trong đó $L_{\max}$ là độ dài đáp án tối đa tính theo token. Ràng buộc ``$i, j$ thuộc đoạn
+văn'' loại các token của câu hỏi và token đặc biệt; ràng buộc $i \le j$ loại span đảo
+ngược --- hai lỗi thường gặp khi lấy $\arg\max$ độc lập cho $S$ và $E$. Mô hình trả về
+chuỗi rỗng nếu
+\begin{equation}
+  S_{i^\ast} + E_{j^\ast} \;\le\; S_{\text{CLS}} + E_{\text{CLS}} + \tau ,
+  \label{eq:null}
+\end{equation}
+với $\tau$ là \emph{ngưỡng không trả lời}. Tăng $\tau$ làm mô hình dè dặt hơn (ít trả lời
+sai trên câu không có đáp án, nhưng bỏ sót câu có đáp án); giảm $\tau$ có tác dụng ngược
+lại. Trong mọi thực nghiệm chính, $\tau = 0$.
+
+\subsection{Cửa sổ trượt cho văn bản dài}
+\label{sec:windowing}
+
+Khi độ dài câu hỏi cộng đoạn văn vượt giới hạn \code{max\_length} token, đoạn văn được
+cắt thành các cửa sổ chồng lấp. Gọi $N$ là số token của đoạn văn, $|Q|$ là số token của
+câu hỏi và $n_{\text{sp}}$ là số token đặc biệt. Ngân sách token cho đoạn văn trong mỗi
+cửa sổ và bước trượt là
+\begin{equation}
+  B = \texttt{max\_length} - |Q| - n_{\text{sp}}, \qquad
+  \text{step} = B - \texttt{doc\_stride},
+\end{equation}
+và số cửa sổ cần thiết là
+\begin{equation}
+  n_{\text{win}} = 1 + \left\lceil \frac{\max(0,\, N - B)}{\text{step}} \right\rceil .
+  \label{eq:nwin}
+\end{equation}
+Phần chồng lấp \code{doc\_stride} đảm bảo đáp án nằm gần ranh giới cửa sổ vẫn xuất hiện
+trọn vẹn trong ít nhất một cửa sổ. Khi suy luận, span tốt nhất của từng cửa sổ được so
+sánh theo điểm $S_i + E_j$ để chọn đáp án cuối; nếu mọi cửa sổ đều chọn ``không có đáp
+án'', kết quả là chuỗi rỗng.
+
+\subsection{Tối ưu hoá khi fine-tune}
+\label{sec:optim}
+
+\paragraph{AdamW.} Đồ án dùng AdamW \cite{loshchilov2019adamw}, biến thể của Adam tách
+rời weight decay khỏi cập nhật gradient:
+\begin{equation}
+  \theta_{t} = \theta_{t-1} - \eta_t \left( \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon} + \lambda\, \theta_{t-1} \right),
+\end{equation}
+với $\hat{m}_t, \hat{v}_t$ là ước lượng moment bậc một và hai đã hiệu chỉnh độ lệch, và
+$\lambda$ là hệ số weight decay.
+
+\paragraph{Lịch học tuyến tính có warmup.} Tốc độ học tăng tuyến tính từ 0 trong $T_w$
+bước đầu rồi giảm tuyến tính về 0 tại bước cuối $T$:
+\begin{equation}
+  \eta_t =
+  \begin{cases}
+    \eta_{\max} \cdot t / T_w, & t < T_w, \\
+    \eta_{\max} \cdot (T - t) / (T - T_w), & t \ge T_w.
+  \end{cases}
+\end{equation}
+Warmup tránh việc gradient lớn ở những bước đầu --- khi lớp QA còn khởi tạo ngẫu nhiên
+--- phá hỏng biểu diễn đã tiền huấn luyện.
+
+\paragraph{Tích luỹ gradient và cắt gradient.} Tích luỹ gradient qua $k$ batch trước mỗi
+lần cập nhật cho batch hiệu dụng lớn hơn bộ nhớ cho phép. Khi đó một ``bước'' của lịch
+học là một lần cập nhật tham số, không phải một batch --- đếm nhầm đơn vị này làm tốc độ
+học giảm về 0 quá sớm. Chuẩn gradient được cắt ở ngưỡng 1,0 để ổn định huấn luyện.
+
+\subsection{Thang đo đánh giá}
+\label{sec:metrics-theory}
+
+\subsubsection{Chuẩn hoá chuỗi}
+
+Trước khi so khớp, dự đoán $p$ và đáp án vàng $g$ được chuẩn hoá bởi hàm
+$\mathrm{norm}(\cdot)$: chuyển chữ thường, bỏ ký tự dấu câu Unicode, gộp khoảng trắng.
+Hàm tách token $\mathrm{tok}(\cdot)$ tách chuỗi đã chuẩn hoá theo khoảng trắng thành
+danh sách âm tiết. Metric được tính trên \emph{âm tiết}, không trên từ đã tách: nếu tính trên từ, lỗi của bộ tách từ sẽ đi vào chính con số đánh giá, và hai mô hình dùng hai cách tách khác nhau sẽ bị chấm bằng hai thước đo khác nhau.
+
+\subsubsection{Exact Match}
+
+\begin{equation}
+  \mathrm{EM}(p, g) = \mathbb{1}\left[ \mathrm{norm}(p) = \mathrm{norm}(g) \right].
+\end{equation}
+
+\subsubsection{F1 trên token}
+
+Gọi $T_p = \mathrm{tok}(p)$ và $T_g = \mathrm{tok}(g)$ là \emph{đa tập} token (token lặp
+được đếm đúng số lần). Số token chung là $c = |T_p \cap T_g|$. Khi đó
+\begin{equation}
+  \mathrm{P} = \frac{c}{|T_p|}, \qquad
+  \mathrm{R} = \frac{c}{|T_g|}, \qquad
+  \mathrm{F1}(p, g) = \frac{2\,\mathrm{P}\,\mathrm{R}}{\mathrm{P} + \mathrm{R}} ,
+\end{equation}
+với quy ước $\mathrm{F1} = 0$ khi $c = 0$. Nếu một trong hai bên rỗng, $\mathrm{F1} = 1$
+khi và chỉ khi \emph{cả hai} cùng rỗng --- không có điểm bán phần.
+
+\subsubsection{Nhiều đáp án vàng và câu không có đáp án}
+
+Một câu hỏi có thể có nhiều đáp án vàng $G = \{g_1, \dots, g_m\}$; điểm được lấy theo đáp
+án thuận lợi nhất:
+\begin{equation}
+  \mathrm{score}(p, G) = \max_{g \in G} \mathrm{metric}(p, g).
+\end{equation}
+Với câu không có đáp án, $G = \varnothing$ và $p$ được so với chuỗi rỗng: chỉ dự đoán rỗng
+được điểm 1. Hệ quả quan trọng: \textbf{trên câu không có đáp án, EM và F1 luôn bằng
+nhau}. Điểm tổng hợp trên tập $n$ câu là trung bình nhân 100:
+\begin{equation}
+  \mathrm{EM}_{\text{tổng}} = \frac{100}{n} \sum_{k=1}^{n} \mathrm{score}_{\mathrm{EM}}(p_k, G_k),
+\end{equation}
+và tương tự cho F1. Vì vậy điểm tổng \emph{trộn hai kỹ năng}: tìm đúng span trên câu có
+đáp án và biết từ chối trên câu không có đáp án. Báo cáo luôn tách riêng hai nhóm này.
+
+\subsection{Đánh giá chẩn đoán}
+\label{sec:diag-theory}
+
+Một điểm tổng trên tập test trả lời ``mô hình nào tốt hơn'' nhưng không nói mô hình \emph{sai ở
+đâu}. Nhiều công trình đã đề xuất đánh giá có cấu trúc: \emph{stress test} cho suy luận ngôn
+ngữ tự nhiên \cite{naik2018stress}, câu hỏi đối kháng cho SQuAD \cite{jia2017adversarial},
+\emph{contrast set} --- biến đổi nhỏ có kiểm soát trên mẫu test \cite{gardner2020contrast} --- và
+CheckList, kiểm thử hành vi theo năng lực ngôn ngữ \cite{ribeiro2020checklist}. Điểm chung: bộ
+kiểm thử cô lập \emph{một} hiện tượng để thất bại quy được về nguyên nhân. Bowman và Dahl
+\cite{bowman2021fix} lưu ý rằng bộ chẩn đoán không thay thế benchmark: chúng có giá trị khi
+\emph{nhãn đúng} và \emph{đo đúng thứ chúng tuyên bố đo}. Điều kiện thứ hai là lý do đồ án kiểm
+định bộ stress-test của nhóm trước khi dùng (Mục~\ref{sec:audit}).
+
+Hai cách tạo nhóm chẩn đoán được dùng trong đồ án:
+\begin{itemize}
+  \item \textbf{Bộ dữ liệu xây riêng} cho từng hiện tượng (bộ stress-test E1--E5): kiểm soát tốt
+        hiện tượng nhưng nhỏ, và phụ thuộc hoàn toàn vào chất lượng của quy trình tạo dữ liệu.
+  \item \textbf{Chia nhóm tập chấm có sẵn} theo một thuộc tính đo tự động được (độ dài, loại
+        câu hỏi, tương thích biên từ): cỡ mẫu lớn và nhãn do người gán, nhưng hiện tượng không
+        được cô lập hoàn toàn.
+\end{itemize}
+
+\subsection{So sánh hai mô hình trên cùng tập chấm}
+\label{sec:stat-theory}
+
+Hai mô hình được chấm trên \emph{cùng} các câu hỏi, nên phép so sánh đúng là so sánh
+\emph{cặp}, không phải so hai con số tổng như hai mẫu độc lập \cite{dror2018hitchhiker}.
+
+\paragraph{Kiểm định McNemar.} Với EM là biến nhị phân, mỗi câu rơi vào một trong bốn ô: cả hai
+đúng, chỉ A đúng ($b$ câu), chỉ B đúng ($c$ câu), cả hai sai. Chỉ các câu bất đồng mang thông tin
+về chênh lệch. Dưới giả thuyết không (hai mô hình như nhau), $b \sim \mathrm{Binomial}(b+c, \tfrac12)$,
+cho p-value chính xác hai phía \cite{mcnemar1947}
+\begin{equation}
+  p = \min\!\left(1,\; 2 \sum_{k=0}^{\min(b,c)} \binom{b+c}{k} 2^{-(b+c)} \right).
+  \label{eq:mcnemar}
+\end{equation}
+
+\paragraph{Bootstrap.} Khoảng tin cậy 95\% cho chênh lệch EM được ước lượng bằng bootstrap
+phân vị \cite{efron1993bootstrap}: lấy mẫu có hoàn lại $n$ câu, tính chênh lệch EM trên mẫu đó,
+lặp 2.000 lần và lấy phân vị 2,5\% và 97,5\%. Khoảng không chứa 0 nghĩa là chênh lệch nhất quán
+qua các cách lấy mẫu câu hỏi. Cần lưu ý: cả hai phép này đo độ bất định do \emph{chọn câu hỏi},
+\emph{không} đo độ bất định do \emph{seed huấn luyện} --- đồ án chỉ huấn luyện một seed cho mỗi
+mô hình (Mục~\ref{sec:limitations}).

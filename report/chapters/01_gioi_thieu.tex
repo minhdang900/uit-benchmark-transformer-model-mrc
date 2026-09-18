@@ -1,0 +1,161 @@
+% ============================================================================
+\section{Giới thiệu}
+\label{sec:intro}
+% ============================================================================
+
+\subsection{Đặt vấn đề}
+
+\textbf{Đọc hiểu máy trích xuất} (extractive Machine Reading Comprehension --- MRC) là bài
+toán: cho một đoạn văn và một câu hỏi, chỉ ra đoạn chữ \emph{trong chính văn bản đó} trả
+lời câu hỏi, hoặc kết luận rằng văn bản không chứa câu trả lời. Đây là thành phần ``bộ
+đọc'' của các hệ thống hỏi đáp trên tài liệu và của các pipeline truy hồi--sinh hiện nay.
+Với tiếng Việt, bộ dữ liệu UIT-ViQuAD~2.0 \cite{nguyen2022vlsp} cung cấp nền tảng đánh giá
+chung theo định dạng SQuAD~2.0 \cite{rajpurkar2018know}, gồm cả câu hỏi \emph{không có đáp án}.
+
+Hai họ mô hình Transformer tiền huấn luyện thường được dùng cho bài toán này khác nhau ở
+một điểm mà môn học nhấn mạnh từ Buổi~3 --- \textbf{tách từ}:
+
+\begin{itemize}
+  \item \textbf{PhoBERT} \cite{nguyen2020phobert} là mô hình \emph{đơn ngữ} tiếng Việt,
+        tiền huấn luyện trên văn bản \emph{đã tách từ}: các âm tiết của một từ được nối
+        bằng dấu gạch dưới (``Hà\_Nội'', ``thủ\_đô''). Đơn vị đầu vào của nó là \emph{từ}.
+  \item \textbf{XLM-R} \cite{conneau2020xlmr} là mô hình \emph{đa ngữ} (100 ngôn ngữ), dùng
+        SentencePiece \cite{kudo2018sentencepiece} trên văn bản thô. Đơn vị đầu vào của nó
+        là \emph{mảnh từ con} (subword), không cần tách từ trước.
+\end{itemize}
+
+Khác biệt này không chỉ là chi tiết cài đặt. Một mô hình đọc hiểu \emph{trích xuất} trả
+lời bằng cách chọn token bắt đầu và token kết thúc. Nếu đơn vị nhỏ nhất là một \emph{từ đã
+tách}, mô hình không thể trả về nửa từ: khi ranh giới của đáp án vàng cắt ngang một từ ghép
+theo bộ tách từ, mô hình word-level \emph{không có cách nào} khớp chính xác. Ngược lại, mô
+hình subword có thể mất lợi thế khi đơn vị ngữ nghĩa của tiếng Việt là từ nhiều âm tiết.
+Luận điểm xuyên suốt của môn học --- \emph{``phải dựa trên đặc điểm dữ liệu để chọn phương
+pháp''} --- vì vậy có một phiên bản cụ thể, kiểm chứng được: \emph{đặc điểm tách từ của
+tiếng Việt ảnh hưởng thế nào đến việc chọn giữa mô hình word-level và subword cho MRC?}
+
+Các bảng xếp hạng MRC chỉ báo một điểm tổng EM/F1. Điểm tổng trả lời được câu hỏi ``mô hình
+nào cao hơn'' nhưng không trả lời được ``mô hình sai ở đâu, và vì sao''. Đồ án này đặt
+trọng tâm vào câu hỏi thứ hai.
+
+\subsection{Phát biểu bài toán}
+\label{sec:problem}
+
+Cho đoạn văn $C = (c_1, \dots, c_{|C|})$ là chuỗi ký tự và câu hỏi $Q$. Hệ thống cần tìm
+cặp chỉ số ký tự $(s, e)$, $0 \le s < e \le |C|$, sao cho đoạn con $C[s{:}e]$ trả lời $Q$;
+hoặc trả về chuỗi rỗng $\varnothing$ nếu $C$ không chứa câu trả lời.
+
+\begin{table}[htbp]
+\centering
+\caption{Đặc tả đầu vào, đầu ra}
+\label{tab:io}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+\toprule
+\textbf{Thành phần} & \textbf{Mô tả} \\
+\midrule
+Đầu vào & \code{context}: đoạn văn Wikipedia tiếng Việt; \code{question}: câu hỏi tự nhiên \\
+Đầu ra & \code{answer}: một chuỗi \emph{con} của \code{context}, hoặc chuỗi rỗng \\
+Loại bài toán & Trích xuất (extractive), không sinh văn bản \\
+Dữ liệu & UIT-ViQuAD~2.0 (định dạng SQuAD~2.0) \\
+Thang đo & Exact Match (EM), F1 trên token; cộng các phép đo chẩn đoán ở Mục~\ref{sec:method} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Câu hỏi nghiên cứu}
+\label{sec:rq}
+
+Theo hướng dẫn của môn học ở Buổi~3, câu hỏi nghiên cứu được đặt ở dạng kiểm chứng được.
+
+\begin{table}[htbp]
+\centering
+\caption{Bốn câu hỏi nghiên cứu và phép đo trả lời từng câu}
+\label{tab:rq}
+\renewcommand{\arraystretch}{1.22}
+\small
+\begin{tabularx}{\textwidth}{@{}l L L@{}}
+\toprule
+& \textbf{Câu hỏi} & \textbf{Phép đo (Mục)} \\
+\midrule
+\textbf{RQ1} & Mô hình word-level (PhoBERT) có nhạy với ranh giới từ hơn mô hình subword (XLM-R) không? & Trần EM do biên từ; điểm trên câu lệch/không lệch biên; loại lỗi biên (\ref{sec:res-rq1}) \\
+\textbf{RQ2} & Hiệu năng suy giảm theo độ dài ngữ cảnh và độ dài đáp án có khác nhau giữa hai họ mô hình không? & Tách nhóm theo độ dài (\ref{sec:res-rq2}) \\
+\textbf{RQ3} & Mô hình thật sự nhận ra câu không có đáp án, hay chỉ học thiên lệch về việc từ chối? & Mức sàn ``luôn từ chối''; precision/recall của hành vi từ chối (\ref{sec:res-rq3}) \\
+\textbf{RQ4} & Transformer có vượt baseline không-neural ở \emph{mọi} nhóm câu hỏi không? & So TF-IDF trên từng nhóm (\ref{sec:res-rq4}) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Giả thuyết ban đầu cho RQ1} (ghi trong đề cương trước khi chạy): PhoBERT yếu hơn ở
+các câu có ranh giới từ ghép phức tạp vì \emph{lỗi tách từ lan truyền} vào mô hình, còn
+XLM-R không phụ thuộc bước này. Hai mô hình được chọn vì chúng khác nhau \emph{đúng ở khâu
+tokenization} --- đây là một tương phản được thiết kế, không phải so sánh ngẫu nhiên.
+Mục~\ref{sec:res-rq1} đối chiếu giả thuyết này với số liệu.
+
+\subsection{Đối chiếu với yêu cầu môn học}
+\label{sec:requirements}
+
+Yêu cầu bắt buộc của đồ án CS221 là giải một bài toán NLP có đầu vào là văn bản hoặc tiếng
+nói; sản phẩm là mô hình được huấn luyện (``train model thôi, mọi người không cần làm
+app''), kèm báo cáo và thuyết trình. Bảng~\ref{tab:req} ánh xạ các yêu cầu và các chủ đề
+được nhấn mạnh trong môn học vào nội dung đồ án.
+
+\begin{table}[htbp]
+\centering
+\caption{Đối chiếu yêu cầu và nội dung môn học với đồ án}
+\label{tab:req}
+\renewcommand{\arraystretch}{1.18}
+\small
+\begin{tabularx}{\textwidth}{@{}L L c@{}}
+\toprule
+\textbf{Yêu cầu / nội dung môn học} & \textbf{Thực hiện trong đồ án} & \textbf{Mục} \\
+\midrule
+Bài toán NLP, đầu vào văn bản & Đọc hiểu trích xuất tiếng Việt & \ref{sec:problem} \\
+Huấn luyện mô hình & Fine-tune PhoBERT-base-v2 và XLM-R-base trên toàn bộ tập train & \ref{sec:finetune} \\
+Buổi 3 --- tiền xử lý, tách từ & Bộ tách từ cho PhoBERT; phép đo tương thích biên từ & \ref{sec:segtok}, \ref{sec:alignment} \\
+Buổi 3 --- quy trình nghiên cứu & Câu hỏi nghiên cứu dạng kiểm chứng; giả thuyết ghi trước & \ref{sec:rq} \\
+Buổi 4 --- TF-IDF & Baseline truy hồi câu bằng TF-IDF & \ref{sec:baselines} \\
+Buổi 5--7 --- phân tích lỗi & Phân loại lỗi tự động trên toàn bộ tập chấm; phân tích định tính & \ref{sec:taxonomy}, \ref{sec:qualitative} \\
+Buổi 7 --- giới hạn độ dài, từ vs âm tiết & Cửa sổ trượt; so sánh độ dài chuỗi token hai tokenizer & \ref{sec:windowing}, \ref{sec:res-rq2} \\
+Buổi 7 --- chất lượng nhãn & Kiểm định bộ stress-test của nhóm & \ref{sec:audit} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Phạm vi}
+
+Đồ án giới hạn trong hỏi đáp trích xuất trên \emph{một} đoạn văn cho trước. Nằm ngoài
+phạm vi: hỏi đáp sinh văn bản, truy hồi đoạn văn từ kho lớn, hỏi đáp hội thoại, và dữ liệu
+ngoài miền Wikipedia. Mọi kết luận chỉ có giá trị trên tập validation của UIT-ViQuAD~2.0,
+với một seed huấn luyện và cấu hình được mô tả.
+
+\subsection{Đóng góp chính}
+\label{sec:contrib}
+
+\begin{enumerate}
+  \item \textbf{Đưa PhoBERT vào đọc hiểu trích xuất mà không cần Java.} PhoBERT chỉ có
+        tokenizer ``chậm'', không trả về vị trí ký tự (offset). Nhóm cài một lớp bọc tự dựng
+        offset từ bước tách từ, được kiểm thử bằng bất biến ``giải mã nhãn phải ra lại đúng
+        đáp án vàng'' (Mục~\ref{sec:segtok}).
+  \item \textbf{Một phép đo chẩn đoán không cần chạy mô hình}: với mỗi câu hỏi, đo xem biên
+        đáp án vàng có trùng biên từ của bộ tách từ không, và tính \emph{trần EM} mà một mô
+        hình word-level hoàn hảo đạt được. Phép đo chạy trên toàn bộ \NValAns{} câu có đáp án
+        của validation, không phải trên vài chục câu (Mục~\ref{sec:alignment}).
+  \item \textbf{So sánh có kiểm soát} PhoBERT và XLM-R trên cùng dữ liệu, cùng lịch học, cùng
+        quy trình chọn epoch; chênh lệch được kiểm định bằng McNemar và bootstrap trên từng
+        câu thay vì so hai con số tổng (Mục~\ref{sec:paired}).
+  \item \textbf{Kiểm định bộ stress-test của chính nhóm} trước khi dùng nó. Kết quả là một
+        phát hiện âm tính quan trọng: chỉ \AuditAnsInCtx{}/\AuditAns{} câu có đáp án chứa đáp
+        án trong ngữ cảnh; nguyên nhân được truy tới hai hàm cụ thể trong mã sinh dữ liệu. Bộ
+        này vì vậy \emph{không} được dùng để xếp hạng mô hình (Mục~\ref{sec:audit}).
+  \item \textbf{Tái lập được}: mọi con số trong báo cáo được sinh từ tệp
+        \code{results/*.json} kèm commit; chính các bảng và con số trong văn bản của báo cáo
+        này được sinh tự động từ các tệp đó (Phụ lục~\ref{app:trace}).
+\end{enumerate}
+
+\subsection{Cấu trúc báo cáo}
+
+Mục~\ref{sec:theory} trình bày cơ sở lý thuyết. Mục~\ref{sec:method} mô tả phương pháp:
+pipeline, cách đưa PhoBERT vào bài toán trích xuất, các phép đo chẩn đoán và giao thức thực
+nghiệm. Mục~\ref{sec:experiments} trình bày kết quả và trả lời lần lượt bốn câu hỏi nghiên
+cứu. Mục~\ref{sec:conclusion} kết luận và nêu giới hạn. Phụ lục cung cấp hướng dẫn tái lập
+và bảng truy vết số liệu.

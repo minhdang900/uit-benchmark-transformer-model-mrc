@@ -1,0 +1,61 @@
+% ============================================================================
+%  PHẦN ĐẦU: Lời cảm ơn · Tóm tắt · Mục lục · Danh sách hình/bảng · Từ viết tắt
+% ============================================================================
+
+\section*{Lời cảm ơn}
+\addcontentsline{toc}{section}{Lời cảm ơn}
+
+Nhóm xin cảm ơn TS. Đặng Văn Thìn, giảng viên môn \emph{Xử lý ngôn ngữ tự nhiên} (CS221), đã định
+hướng đề tài và nhấn mạnh xuyên suốt môn học rằng phương pháp phải được chọn dựa trên đặc điểm của dữ
+liệu, và rằng phân tích lỗi là phần quan trọng nhất của một nghiên cứu NLP --- hai ý đã định hình cách
+nhóm đặt câu hỏi và trình bày đồ án này.
+
+Nhóm cũng cảm ơn Phòng thí nghiệm NLP@UIT đã công bố bộ dữ liệu UIT-ViQuAD~2.0, VinAI Research đã công
+bố PhoBERT, và cộng đồng mã nguồn mở HuggingFace, PyTorch, scikit-learn và \code{pyvi} đã cung cấp hạ tầng
+để một nhóm sinh viên có thể huấn luyện và đánh giá mô hình Transformer trên máy tính cá nhân.
+
+\vspace{1em}
+\hfill TP. Hồ Chí Minh, tháng 9 năm 2026
+
+\hfill Nhóm thực hiện
+
+\clearpage
+\input{chapters/00_tom_tat}
+
+\clearpage
+{\setstretch{1.1}
+\tableofcontents
+\clearpage
+\listoffigures
+\addcontentsline{toc}{section}{Danh sách hình vẽ}
+\vspace{1.5em}
+\listoftables
+\addcontentsline{toc}{section}{Danh sách bảng}
+}
+
+\vspace{1.5em}
+\section*{Danh mục từ viết tắt}
+\addcontentsline{toc}{section}{Danh mục từ viết tắt}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+\toprule
+\textbf{Viết tắt} & \textbf{Ý nghĩa} \\
+\midrule
+MRC       & Machine Reading Comprehension --- đọc hiểu máy \\
+EM        & Exact Match --- khớp chính xác \\
+F1        & Trung bình điều hoà của precision và recall (ở đây tính trên token âm tiết) \\
+TF-IDF    & Term Frequency -- Inverse Document Frequency \\
+BERT      & Bidirectional Encoder Representations from Transformers \\
+RoBERTa   & Robustly optimized BERT approach \\
+XLM-R     & XLM-RoBERTa --- mô hình đa ngữ của Conneau và cộng sự \\
+PhoBERT   & Mô hình RoBERTa đơn ngữ tiếng Việt của VinAI \\
+BPE       & Byte-Pair Encoding \\
+SQuAD     & Stanford Question Answering Dataset \\
+UIT-ViQuAD & UIT Vietnamese Question Answering Dataset \\
+MPS       & Metal Performance Shaders --- backend GPU của PyTorch trên Apple Silicon \\
+CI        & Confidence Interval --- khoảng tin cậy \\
+\bottomrule
+\end{tabularx}
+\end{center}

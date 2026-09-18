@@ -1,0 +1,51 @@
+% ============================================================================
+%  SLIDE THUYẾT TRÌNH — CS221 · Transformer cho đọc hiểu tiếng Việt
+%  Dùng CHUNG số liệu với báo cáo: ../report/generated/numbers.tex (sinh từ results/)
+%  Biên dịch:  cd slides && latexmk -xelatex main.tex
+% ============================================================================
+\documentclass[aspectratio=169,11pt]{beamer}
+\usetheme[progressbar=frametitle,numbering=fraction,block=fill]{metropolis}
+\usepackage{fontspec}
+\setsansfont{Nunito}[BoldFont={Nunito Bold}]
+\newfontfamily\headfont{Baloo 2}[BoldFont={Baloo 2 ExtraBold}]
+\usepackage{booktabs,tabularx,array,graphicx,xcolor,tikz,colortbl}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\definecolor{ink}{HTML}{1F1F1E}
+\definecolor{muted}{HTML}{6B6A64}
+\definecolor{xlmr}{HTML}{2A78D6}
+\definecolor{phobert}{HTML}{EB6834}
+\definecolor{tfidf}{HTML}{1BAF7A}
+\definecolor{uitblue}{HTML}{2F5BB7}
+\definecolor{badred}{HTML}{B3261E}
+\definecolor{okgreen}{HTML}{2E7D32}
+\definecolor{warnorange}{HTML}{B85C00}
+\definecolor{soft}{HTML}{F1F4FA}
+\setbeamercolor{frametitle}{bg=uitblue,fg=white}
+\setbeamercolor{progress bar}{fg=phobert,bg=uitblue!30}
+\setbeamercolor{normal text}{fg=ink}
+\setbeamercolor{alerted text}{fg=phobert}
+\setbeamercolor{block title}{bg=uitblue!12,fg=uitblue}
+\setbeamercolor{block body}{bg=soft}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\input{../report/generated/numbers}
+\makeatletter\newcommand{\tabinput}[1]{\@@input #1 }\makeatother
+\graphicspath{{../report/figures/}}
+\newcommand{\bignum}[2]{{\headfont\bfseries\fontsize{30}{32}\selectfont\color{#2}#1}}
+\newcommand{\src}[1]{\vfill{\scriptsize\color{muted}Nguồn: \code{#1}}}
+
+\title{Khảo sát và đánh giá hiệu năng các mô hình Transformer tiền huấn luyện\\trong bài toán đọc hiểu văn bản tiếng Việt}
+\subtitle{PhoBERT (word-level) vs XLM-R (subword) trên UIT-ViQuAD 2.0 --- một đánh giá chẩn đoán}
+\author{Nguyễn Quang Lâm \and Trần Trọng Tấn \and Lê Quang Thi \and Vỏ Cẩm Thu}
+\institute{CS221 --- Xử lý ngôn ngữ tự nhiên · GVHD: TS. Đặng Văn Thìn · Trường ĐH Công nghệ Thông tin, ĐHQG-HCM}
+\date{Tháng 9/2026}
+
+\begin{document}
+\maketitle
+
+%SLIDES-BODY
+\input{body}
+
+\end{document}
