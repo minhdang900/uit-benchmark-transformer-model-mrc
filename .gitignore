@@ -26,3 +26,8 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# Dataset (fetch with scripts/fetch_data.py) and model weights
+data/raw/
+models/
+logs/

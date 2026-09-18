@@ -1,0 +1,13 @@
+[project]
+name = "uit-benchmark-transformer-model-mrc"
+version = "0.2.0"
+description = "Vietnamese extractive MRC: PhoBERT vs XLM-R on UIT-ViQuAD 2.0 with a word-segmentation diagnostic (CS221)"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-q --strict-markers"
+markers = [
+  "slow: requires downloading a model or running training (deselect with -m 'not slow')",
+]
