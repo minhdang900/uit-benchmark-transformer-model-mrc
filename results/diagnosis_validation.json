@@ -1,5 +1,5 @@
 {
-  "commit": "4270dc8",
+  "commit": "c73f695",
   "n": 3814,
   "slices": {
     "answerable": 2653,
@@ -150,6 +150,199 @@
           "count": 540
         }
       }
+    },
+    "xlmr": {
+      "taxonomy_all": {
+        "n": 3814,
+        "n_errors": 1812,
+        "counts": {
+          "false_abstain": 635,
+          "false_answer": 539,
+          "boundary_superset": 258,
+          "boundary_subset": 181,
+          "boundary_overlap": 103,
+          "wrong_span": 96
+        },
+        "pct_of_errors": {
+          "false_abstain": 35.04,
+          "false_answer": 29.75,
+          "boundary_superset": 14.24,
+          "boundary_subset": 9.99,
+          "boundary_overlap": 5.68,
+          "wrong_span": 5.3
+        }
+      },
+      "abstention": {
+        "abstain_rate": 32.96,
+        "true_impossible_rate": 30.44,
+        "precision": 49.48,
+        "recall": 53.57,
+        "f1": 51.45,
+        "confusion": {
+          "tp": 622,
+          "fp": 635,
+          "fn": 539,
+          "tn": 2018
+        }
+      },
+      "by_alignment": {
+        "aligned": {
+          "EM": 52.1,
+          "F1": 64.82,
+          "count": 2620
+        },
+        "misaligned": {
+          "EM": 45.45,
+          "F1": 56.12,
+          "count": 33
+        }
+      },
+      "by_answer_length": {
+        "1-2": {
+          "EM": 57.99,
+          "F1": 64.11,
+          "count": 657
+        },
+        "11+": {
+          "EM": 46.1,
+          "F1": 65.26,
+          "count": 859
+        },
+        "3-5": {
+          "EM": 52.6,
+          "F1": 61.67,
+          "count": 597
+        },
+        "6-10": {
+          "EM": 53.52,
+          "F1": 67.94,
+          "count": 540
+        }
+      }
+    },
+    "phobert": {
+      "taxonomy_all": {
+        "n": 3814,
+        "n_errors": 1855,
+        "counts": {
+          "false_abstain": 32,
+          "false_answer": 977,
+          "boundary_superset": 354,
+          "boundary_subset": 223,
+          "boundary_overlap": 147,
+          "wrong_span": 122
+        },
+        "pct_of_errors": {
+          "false_abstain": 1.73,
+          "false_answer": 52.67,
+          "boundary_superset": 19.08,
+          "boundary_subset": 12.02,
+          "boundary_overlap": 7.92,
+          "wrong_span": 6.58
+        }
+      },
+      "abstention": {
+        "abstain_rate": 5.66,
+        "true_impossible_rate": 30.44,
+        "precision": 85.19,
+        "recall": 15.85,
+        "f1": 26.72,
+        "confusion": {
+          "tp": 184,
+          "fp": 32,
+          "fn": 977,
+          "tn": 2621
+        }
+      },
+      "by_alignment": {
+        "aligned": {
+          "EM": 67.37,
+          "F1": 83.93,
+          "count": 2620
+        },
+        "misaligned": {
+          "EM": 30.3,
+          "F1": 70.96,
+          "count": 33
+        }
+      },
+      "by_answer_length": {
+        "1-2": {
+          "EM": 73.82,
+          "F1": 83.4,
+          "count": 657
+        },
+        "11+": {
+          "EM": 59.72,
+          "F1": 83.82,
+          "count": 859
+        },
+        "3-5": {
+          "EM": 69.68,
+          "F1": 83.27,
+          "count": 597
+        },
+        "6-10": {
+          "EM": 66.85,
+          "F1": 84.72,
+          "count": 540
+        }
+      }
+    }
+  },
+  "phobert_primary": "phobert",
+  "paired_phobert_vs_xlmr": {
+    "all": {
+      "n": 3814,
+      "both_correct": 1386,
+      "only_a": 573,
+      "only_b": 616,
+      "neither": 1239,
+      "em_diff": -1.13,
+      "ci95": [
+        -2.88,
+        0.6
+      ],
+      "mcnemar_p": 0.22319650917417208
+    },
+    "answerable": {
+      "n": 2653,
+      "both_correct": 1231,
+      "only_a": 544,
+      "only_b": 149,
+      "neither": 729,
+      "em_diff": 14.89,
+      "ci95": [
+        13.08,
+        16.77
+      ],
+      "mcnemar_p": 1.1210589076876446e-53
+    },
+    "impossible": {
+      "n": 1161,
+      "both_correct": 155,
+      "only_a": 29,
+      "only_b": 467,
+      "neither": 510,
+      "em_diff": -37.73,
+      "ci95": [
+        -40.83,
+        -34.63
+      ],
+      "mcnemar_p": 7.547306548493351e-103
+    },
+    "misaligned": {
+      "n": 33,
+      "both_correct": 8,
+      "only_a": 2,
+      "only_b": 7,
+      "neither": 16,
+      "em_diff": -15.15,
+      "ci95": [
+        -33.33,
+        3.03
+      ],
+      "mcnemar_p": 0.1796875
     }
   }
 }

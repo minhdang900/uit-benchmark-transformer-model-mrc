@@ -19,7 +19,12 @@ for _p in (_ROOT, _ROOT / "src"):
 
 from mrc.data import compute_stats, load_squad_file, split_by_context  # noqa: E402
 
-RES = _ROOT / "results"
+sys.path.insert(0, str(_ROOT / "scripts"))
+from _runs import PHOBERT_RUNS, best_dev_f1, primary_phobert  # noqa: E402
+
+PHOBERT = primary_phobert(RES := _ROOT / "results")
+RUN_LABEL = {"phobert": "PhoBERT, lr $3\\cdot10^{-5}$", "phobert_lr2e5": "PhoBERT, lr $2\\cdot10^{-5}$"}
+
 OUT = _ROOT / "report" / "generated"
 MISSING: list[str] = []
 
@@ -27,7 +32,7 @@ SYSTEMS = [  # (khoá tệp, tiền tố macro, tên hiển thị)
     ("abstain", "Abstain", "Luôn từ chối"),
     ("baseline", "Tfidf", "TF-IDF (truy hồi câu)"),
     ("xlmr", "Xlmr", "XLM-R-base"),
-    ("phobert", "Phobert", "PhoBERT-base-v2"),
+    (PHOBERT, "Phobert", "PhoBERT-base-v2"),
 ]
 CAT_WORDS = {"E1": "EOne", "E2": "ETwo", "E3": "EThree", "E4": "EFour", "E5": "EFive"}
 CAT_NAMES = {"E1": "Ranh giới từ ghép", "E2": "Ngữ cảnh gây nhiễu", "E3": "Câu hỏi phủ định",
@@ -247,7 +252,8 @@ def main() -> None:
 
     # ── huấn luyện ────────────────────────────────────────────────────────────
     curve_rows = []
-    for key, P, label in SYSTEMS[2:]:
+    for key, P, label in [("xlmr", "Xlmr", "XLM-R-base")] + [
+            (r, "PhobertRun" + ("A" if r == "phobert" else "B"), RUN_LABEL[r]) for r in PHOBERT_RUNS]:
         c = load(f"training_curve_{key}.json")
         cfg = get(c, "config") or {}
         m(f"{P}BestEpoch", get(c, "best_epoch"), 0)
@@ -261,6 +267,25 @@ def main() -> None:
             curve_rows.append(f"{label} & {e['epoch']}{best} & {vi(e['train_loss'], 4)} & "
                               f"{vi(e['val_em'])} & {vi(e['val_f1'])} & {vi(e['seconds'] / 60, 1)} \\\\")
     table("tab_curves.tex", "\n".join(curve_rows) + "\n")
+
+    # ── hai lần chạy PhoBERT ─────────────────────────────────────────────────
+    run_rows = []
+    for r in PHOBERT_RUNS:
+        ev, c = load(f"eval_{r}_validation.json"), load(f"training_curve_{r}.json")
+        ab = get(diag, "models", r, "abstention", "abstain_rate")
+        w = "A" if r == "phobert" else "B"
+        m(f"PhobertRun{w}DevFone", best_dev_f1(RES, r))
+        m(f"PhobertRun{w}EM", get(ev, "overall", "EM"))
+        m(f"PhobertRun{w}AnsEM", get(ev, "answerable_only", "EM"))
+        m(f"PhobertRun{w}ImpEM", get(ev, "impossible_only", "EM"))
+        m(f"PhobertRun{w}AbsRate", ab)
+        if ev and c:
+            star = r" $\star$" if r == PHOBERT else ""
+            run_rows.append(f"{RUN_LABEL[r]}{star} & {c['best_epoch']} & {vi(best_dev_f1(RES, r))} & "
+                            f"{vi(ev['overall']['EM'])} & {vi(ev['overall']['F1'])} & "
+                            f"{vi(ev['answerable_only']['EM'])} & {vi(ev['impossible_only']['EM'])} & {vi(ab)} \\\\")
+    table("tab_phobert_runs.tex", "\n".join(run_rows) + "\n")
+    m("PhobertPrimaryLabel", RUN_LABEL[PHOBERT], raw=True)
 
     (OUT / "numbers.tex").write_text(
         "% SINH TỰ ĐỘNG bởi scripts/make_report_numbers.py — KHÔNG SỬA TAY\n" + "\n".join(m.lines) + "\n",

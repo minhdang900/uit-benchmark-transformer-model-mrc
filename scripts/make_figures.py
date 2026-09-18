@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 RES, OUT = ROOT / "results", ROOT / "report" / "figures"
+PREFIX = ""  # "slide_" khi vẽ bản cho slide (chữ lớn hơn)
 COLOR = {"xlmr": "#2a78d6", "phobert": "#eb6834", "baseline": "#1baf7a"}
 LABEL = {"xlmr": "XLM-R-base", "phobert": "PhoBERT-base-v2", "baseline": "TF-IDF", "abstain": "Luôn từ chối"}
 ERR_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]
@@ -61,7 +62,7 @@ def fig_main():
     ax.set_xticks(range(len(groups)), [g for g, _, _ in groups])
     ax.set_ylim(0, 105); ax.set_ylabel("Điểm (%)")
     ax.legend(ncol=len(ms), loc="upper left", bbox_to_anchor=(0, 1.13))
-    fig.savefig(OUT / "main_results.png"); plt.close(fig)
+    fig.savefig(OUT / (PREFIX + "main_results.png")); plt.close(fig)
 
 
 def fig_taxonomy():
@@ -86,7 +87,7 @@ def fig_taxonomy():
     ax.grid(axis="y", visible=False)
     ax.legend([plt.Rectangle((0, 0), 1, 1, color=c) for c in ERR_COLORS], names, ncol=6,
               loc="upper left", bbox_to_anchor=(0, 1.02 + 0.5 / len(ms)), fontsize=8)
-    fig.savefig(OUT / "error_taxonomy.png"); plt.close(fig)
+    fig.savefig(OUT / (PREFIX + "error_taxonomy.png")); plt.close(fig)
 
 
 def fig_lines(key, order, xlabel, fname, source):
@@ -107,7 +108,7 @@ def fig_lines(key, order, xlabel, fname, source):
         ax.set_xticks(range(len(xs)), [f"{b}\n(n={data[b]['count']})" for b in xs])
     ax.set_ylabel("EM (%)"); ax.set_xlabel(xlabel); ax.set_ylim(0, 100)
     ax.legend(loc="upper right")
-    fig.savefig(OUT / fname); plt.close(fig)
+    fig.savefig(OUT / (PREFIX + fname)); plt.close(fig)
 
 
 def fig_curves():
@@ -125,7 +126,7 @@ def fig_curves():
     for a in axes:
         a.set_xticks([1, 2, 3])
     axes[1].legend(fontsize=7.5, loc="lower right"); axes[0].legend(fontsize=8)
-    fig.savefig(OUT / "training_curves.png"); plt.close(fig)
+    fig.savefig(OUT / (PREFIX + "training_curves.png")); plt.close(fig)
 
 
 def fig_audit():
@@ -148,16 +149,25 @@ def fig_audit():
             bottom += v
     ax.set_xticks(range(len(cats)), cats); ax.set_ylabel("Số câu (mỗi nhóm 50)")
     ax.legend([plt.Rectangle((0, 0), 1, 1, color=c) for _, c, _ in parts], [n for n, _, _ in parts],
-              fontsize=7.5, loc="upper left", bbox_to_anchor=(1.0, 1.0))
+              loc="upper left", bbox_to_anchor=(1.0, 1.0))
     ax.grid(axis="x", visible=False)
-    fig.savefig(OUT / "stress_audit.png"); plt.close(fig)
+    fig.savefig(OUT / (PREFIX + "stress_audit.png")); plt.close(fig)
 
 
-def main():
-    OUT.mkdir(parents=True, exist_ok=True)
+def render():
     fig_main(); fig_taxonomy(); fig_curves(); fig_audit()
     fig_lines("by_answer_length", ["1-2", "3-5", "6-10", "11+"], "Độ dài đáp án vàng (âm tiết)", "by_answer_length.png", "diag")
     fig_lines("by_context_length", ["<100", "100-200", "200-300", "300+"], "Độ dài đoạn văn (âm tiết)", "by_context_length.png", "eval")
+
+
+def main():
+    global PREFIX
+    OUT.mkdir(parents=True, exist_ok=True)
+    render()
+    # Bản cho slide: cùng dữ liệu, chữ lớn hơn để đọc được trên màn chiếu.
+    PREFIX = "slide_"
+    with plt.rc_context({"font.size": 13, "legend.fontsize": 11}):
+        render()
     print(sorted(p.name for p in OUT.glob("*.png")))
 
 

@@ -32,6 +32,8 @@ NAMES = {
     "baseline": "TF-IDF sentence retrieval",
     "xlmr": "XLM-R-base (fine-tuned)",
     "phobert": "PhoBERT-base-v2 (fine-tuned)",
+    # Lần chạy lại với lr 2e-5 sau khi lần đầu (lr 3e-5) phân kỳ ở epoch 2.
+    "phobert_lr2e5": "PhoBERT-base-v2 (fine-tuned, lr 2e-5)",
 }
 
 

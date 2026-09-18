@@ -1,0 +1,984 @@
+[
+ {
+  "qid": "0014-0013-0004",
+  "question": "Chiến tranh Ba mươi năm đã gây ra hậu quả gì cho đế quốc?",
+  "gold": [
+   "khiến cho đế quốc này không bao giờ hồi phục hoàn toàn"
+  ],
+  "prediction": "tai họa cuối cùng cho Đế quốc La Mã thần Thánh của người Đức",
+  "type": "boundary_overlap",
+  "context": "Chiến tranh Ba mươi Năm và Hòa ước Westfalen năm 1648 mang đến tai họa cuối cùng cho Đế quốc La Mã thần Thánh của người Đức, khiến cho đế quốc này không bao giờ hồi phục hoàn toàn. Hòa ước Westfalen gây tai hại cho tương lai nước Đức ngang bằng với thiệt hại từ cuộc chiến. Các hoàng thân người Đức được công nhận để trị vì từng mảnh đất nhỏ – khoảng 350 mảnh đất như thế – trong khi Hoàng đế chỉ có hư vị. Trào lưu cải tổ quét qua Đức vào cuối thế kỷ 15 và đầu thế kỷ 16 bị dập tắt. Trong thời kỳ ấy, các thành phố lớn được hưởng nền độc lập, chế độ phong kiến đã ra đi, nghệ thuật và mậu dịch phát triển, nông dân Đức có nhiều quyền tự do hơn là ở Anh và Pháp. Thật ra, có thể nói vào đầu thế kỷ 16, Đức là một trong những cái nôi của nền văn minh châu Âu."
+ },
+ {
+  "qid": "0001-0080-0001",
+  "question": "Thời trang Paris có vị thế thế nào đối với phái mạnh?",
+  "gold": [],
+  "prediction": "trở thành chuẩn mực cho tất cả phụ nữ ở các thành phố lớn trên thế giới",
+  "type": "false_answer",
+  "context": "Tới thời kỳ Belle Époque, qua các tạp chí, thời trang Paris trở thành chuẩn mực cho tất cả phụ nữ ở các thành phố lớn trên thế giới. Giữa thế kỷ 19, thời trang may đo cao cấp Haute couture xuất hiện ở Paris mặc dù cha đẻ của nó là Charles Frederick Worth, một nhà may người Anh. Sau đó, Haute couture được các nhà tạo mẫu ở Paris như Lanvin, Chanel, Dior... nối tiếp. Vào thời kỳ hậu chiến, trong thập niên 1960, các nhà tạo mẫu của Paris thế hệ sau như Yves Saint Laurent, Pierre Cardin, Givenchy... tiếp tục ảnh hưởng lên toàn bộ ngành thời trang."
+ },
+ {
+  "qid": "0001-0015-0003",
+  "question": "Cuộc chiến tranh Attila và người Viking đã chấm dứt như thế nào?",
+  "gold": [],
+  "prediction": "Các cuộc tấn công này còn kéo dài tới đầu thế kỷ 10 và được kết thúc bởi hòa ước Saint-Clair-sur-Epte năm 911",
+  "type": "false_answer",
+  "context": "Thời kỳ Trung Cổ, thành phố thoát khỏi sự cai trị của những người Attila trong một thời gian ngắn rồi Childéric I tới chiếm vào năm 464. Năm 508, sau khi chiến thắng những người La Mã, Clovis I - con trai của Childéric I - lấy Paris làm thủ đô của vương quốc Franc và sống ở đây tới khi chết vào năm 511. Trong khoảng thời gian sau đó, thành phố cùng các công trình tôn giáo tiếp tục được xây dựng. Vào thế kỷ 9, các bức thành được dựng lên bên ở hữu ngạn để bảo vệ các giáo khu Saint-Gervais và Saint-Germain-l'Auxerrois. Năm 845, những người Viking tới đánh Paris lần đầu tiên, dân chúng phải rời bỏ thành phố. Các cuộc tấn công này còn kéo dài tới đầu thế kỷ 10 và được kết thúc bởi hòa ước Saint-Clair-sur-Epte năm 911."
+ },
+ {
+  "qid": "0017-0012-0004",
+  "question": "Kết quả của cuộc bầu của tổng thống giữa hai Đảng Dân chủ và phe Cộng hòa là như thế nào?",
+  "gold": [
+   "liên danh tranh cử của Cox-Roosevelt bị liên danh tranh cử của phe Cộng hòa là Warren G. Harding đánh bại thảm hại",
+   "liên danh tranh cử của Cox-Roosevelt bị liên danh tranh cử của phe Cộng hòa là Warren G. Harding đánh bại thảm hại trong cuộc bầu cử tổng thống",
+   "liên danh tranh cử của phe Cộng hòa là Warren G. Harding đánh bại thảm hại trong cuộc bầu cử tổng thống"
+  ],
+  "prediction": "đánh bại thảm hại",
+  "type": "boundary_subset",
+  "context": "Đại hội đảng toàn quốc năm 1920 của Đảng Dân chủ chọn Roosevelt là ứng viên Phó Tổng thống Hoa Kỳ trong liên danh tranh cử tổng thống của Thống đốc tiểu bang Ohio là James M. Cox. Tuy nhiên liên danh tranh cử của Cox-Roosevelt bị liên danh tranh cử của phe Cộng hòa là Warren G. Harding đánh bại thảm hại trong cuộc bầu cử tổng thống. Lúc đó Roosevelt trở về hành nghề pháp lý tại New York và gia nhập Câu lạc bộ Civitan New York vừa mới được thành lập, nhưng ít có ai nghĩ rằng một ngày không xa ông sẽ quay trở lại tranh cử vào một chức vụ công."
+ },
+ {
+  "qid": "0004-0022-0002",
+  "question": "Số tiền dùng để phá công ty Hill and Knowlton do ai tài trợ?",
+  "gold": [],
+  "prediction": "chính phủ Kuwait",
+  "type": "false_answer",
+  "context": "Dù những vụ vi phạm nhân quyền của chính quyền Iraq trước và sau khi xâm chiếm Kuwait được ghi chép rất nhiều, chính phủ Kuwait đã bị ảnh hưởng từ quan điểm của Hoa Kỳ trong một số vấn đề. Ngay sau khi Iraq chiếm Kuwait, tổ chức các công dân cho một nước Kuwait tự do đã được thành lập ở Mỹ. Nó thuê công ty quan hệ công chúng Hill and Knowlton với giá 11 triệu dollar do chính phủ Kuwait cung cấp. Công ty này bắt đầu tạo ra một chiến dịch miêu tả các binh sĩ Iraq là đã lôi những đứa trẻ ra khỏi lồng ấp trong các bệnh viện Kuwait và để chúng chết dưới sàn. Tuy nhiên, một năm sau luận điệu này đã bị khám phá ra là giả dối. Người đã làm chứng cho việc đó hoá ra là một thành viên của Gia đình hoàng gia Kuwait sống tại Paris khi xảy ra chiến tranh, và vì thế không thể có mặt ở Iraq vào thời điểm xảy ra cái gọi là tội ác. (Xem Nurse Nayirah.)"
+ },
+ {
+  "qid": "0004-0004-0004",
+  "question": "Lý do thứ hai mà tổng thống Iraq Saddam Hussein đưa ra để biện hộ cho chiến tranh là già?",
+  "gold": [
+   "Iraq sáp nhập Kuwait để bù \"phí tổn kinh tế\" khi họ phải bảo vệ Kuwait trước Iran cũng như việc Kuwait đã khoan nghiêng vào các giếng dầu của họ"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Trong Chiến tranh Iran-Iraq ở thập niên 1980, Kuwait là đồng minh của Iraq, phần lớn là để được Iraq bảo vệ khỏi những người Shi'ite ở Iran. Sau cuộc chiến, Iraq nợ các nước Ả Rập nhiều khoản tiền lớn, trong đó có 14 tỷ dollar nợ Kuwait. Iraq hy vọng sẽ trả được những khoản nợ đó khi làm tăng giá dầu mỏ thông qua việc cắt giảm sản lượng khai thác của OPEC, nhưng thay vào đó, Kuwait lại tăng lượng khai thác của mình khiến giá dầu giảm sút, trong một nỗ lực nhằm kích thích có được một giải pháp giải quyết tốt hơn cho việc tranh chấp lãnh thổ giữa hai nước. Ngoài ra, Iraq bắt đầu buộc tội Kuwait đã khoan nghiêng vào các giếng dầu của họ ở vùng biên giới và cho rằng vì Iraq là nước đệm chống lại Iran bảo vệ cho toàn bộ các nước Ả Rập nên Kuwait và Ả Rập Xê Út phải đàm phán hay hủy bỏ những khoản nợ cho chiến tranh của Iraq. Hai lý do ban đầu Tổng thống Iraq Saddam Hussein đưa ra để biện hộ cho cuộc chiến là để xác nhận việc Kuwait từng là một phần của lãnh thổ Iraq và đã bị chủ nghĩa thực dân tách ra một cách không công bằng, và Iraq sáp nhập Kuwait để bù \"phí tổn kinh tế\" khi họ phải bảo vệ Kuwait trước Iran cũng như việc Kuwait đã khoan nghiêng vào các giếng dầu của họ."
+ },
+ {
+  "qid": "0003-0045-0003",
+  "question": "Tôn giáo thịnh hành nhất ở Canada là tôn giáo nào?",
+  "gold": [
+   "Kitô giáo"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Canada là quốc gia đa tôn giáo, bao gồm nhiều tín ngưỡng và phong tục. Theo điều tra năm 2011, 67,3% người Canada nhận mình là tín hữu Kitô giáo; trong đó Công giáo Rôma là giáo hội lớn nhất với 38,7% dân số. Các giáo phái Tin Lành chiếm 27% dân số, lớn nhất trong số đó là Giáo hội Hiệp nhất Canada (6,1%), tiếp theo là Anh giáo (5,0%), và Báp-tít (1,9%). Năm 2011, khoảng 23,9% cư dân Canada coi rằng mình không tôn giáo, so với 16,5% vào năm 2001. Còn lại, 8,8% dân số Canada là tín đồ của các tôn giáo khác, lớn nhất trong đó là Hồi giáo (3,2%) và Ấn Độ giáo (1,5%)."
+ },
+ {
+  "qid": "0002-0009-0004",
+  "question": "Nguyên nhân giúp cho New Calesdonia có nhiệt đới ôn hòa là gì?",
+  "gold": [
+   "ảnh hưởng từ đại dương và gió mậu dịch làm giảm độ ẩm",
+   "ảnh hưởng từ đại dương và gió mậu dịch làm giảm độ ẩm vốn có thể lên đến gần 80%"
+  ],
+  "prediction": "ảnh hưởng từ đại dương và gió mậu dịch",
+  "type": "boundary_subset",
+  "context": "New Calesdonia có khí hậu nhiệt đới, mùa nóng ẩm kéo dài từ tháng 11 đến tháng 3 với nhiệt độ từ 27 °C đến 30 °C, mùa mát khô kéo dài từ tháng 6 đến tháng 8 với nhiệt độ từ 20 °C đến 23 °C. Khí hậu nhiệt đới tại đây ôn hoà cao độ nhờ ảnh hưởng từ đại dương và gió mậu dịch làm giảm độ ẩm vốn có thể lên đến gần 80%. Nhiệt độ trung bình năm là 23 °C, các cực độ về nhiệt độ là 2,3 °C và 39,1 °C. Dữ liệu về lượng mưa cho thấy có khác biệt lớn trên đảo chính, lượng mưa 3.000 mm ghi nhận tại Galarino cao gấp ba lần trung bình tại duyên hải phía tây. Ngoài ra còn có các giai đoạn khô hạn do tác động của El Niño. Từ tháng 12 đến tháng 4, áp thấp và bão nhiệt đới có thể gây ra gió có tốc độ lên đến 100 km/h, giật 250 km/h và mưa rất lớn."
+ },
+ {
+  "qid": "0017-0009-0003",
+  "question": "Trước Roosevelt, từ năm 1984 có những ai của đảng Dân chủ đắc cử vào Thượng viện ở quận Dutches?",
+  "gold": [
+   "chưa có một ứng viên đảng Dân chủ nào",
+   "chưa có một ứng viên đảng Dân chủ nào đắc cử ở đây"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Năm 1910, Roosevelt tranh cử vào Thượng viện tiểu bang New York, đại diện cho một khu vực thuộc Quận Dutchess. Đây là một khu vực bao quanh thị trấn Hyde Park mà từ năm 1884 chưa có một ứng viên đảng Dân chủ nào đắc cử ở đây. Tham gia cuộc đua, Roosevelt là hình ảnh gắn kết với sự giàu có, đặc quyền và ảnh hưởng tại Hudson Valley. Chiến thắng vang dội của đảng Dân chủ năm ấy đã đưa Roosevelt đến thủ phủ tiểu bang là Albany. Roosevelt nhậm chức ngày 1 tháng 1 năm 1911 và trở thành thủ lĩnh nhóm \"phản loạn\" chống đối bộ máy chính trị \"Tammany Hall\" (nhóm chính trị thuộc đảng Dân chủ luôn đóng vai trò chính kiểm soát chính trường thành phố New York) là nhóm đang chi phối đảng Dân chủ của tiểu bang. Cuộc bầu cử Thượng viện Hoa Kỳ được bắt đầu với việc bầu cử sơ bộ của đảng Dân chủ vào ngày 16 tháng 1 năm 1911 có kết quả bế tắc vì sự tranh giành của hai phe phái trong 74 ngày. Ngày 31 tháng 3, James A. O'Gorman được bầu và Roosevelt đạt được mục tiêu của mình: đó là chọc giận bộ máy chính trị Tammany Hall bằng cách ngăn chặn người mà nhóm này chọn lựa làm ứng cử viên là William F. Sheehan. Chẳng bao lâu sau đó, Roosevelt trở nên một khuôn mặt quen thuộc đối với các đảng viên Dân chủ New York. Ông tái đắc cử nhiệm kỳ hai trong cuộc bầu cử tiểu bang năm 1912 nhưng từ chức thượng nghị sĩ tiểu bang vào ngày 17 tháng 3 năm 1913 để nhận bổ nhiệm làm Trợ tá Bộ trưởng Hải quân Hoa Kỳ."
+ },
+ {
+  "qid": "0001-0074-0001",
+  "question": "Có sự kiện gì xảy ra vào ngày Quốc khánh trên Quốc lộ Champs-Élysées?",
+  "gold": [
+   "chặng đích của cuộc đua xe đạp Tour de France",
+   "dịp tổ chức duyệt binh truyền thống"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Ngày quốc khánh Pháp 14 tháng bảy là dịp tổ chức duyệt binh truyền thống tại đại lộ Champs-Élysées. Cũng vào cuối tháng này, Champs-Élysées là chặng đích của cuộc đua xe đạp Tour de France. Từ năm 2002, trong vòng hai tháng bảy và tám, thành phố tổ chức Paris-Plage, thay đổi một phần bờ sông Seine thành bãi biển nhân tạo với cát và các ghế vải gập. Một triển lãm về ô tô được tổ chức vào tháng mười các năm chẵn. Tháng mười còn có Hội chợ quốc tế nghệ thuật đương đại - FIAC, và từ 2002 thành phố bắt đầu tổ chức lễ hội Nuit Blanche - Đêm trắng - vào đêm thứ bảy đầu tiên của tháng với nhiều hoạt động nghệ thuật. Thứ bảy tuần thứ hai tháng mười, tại Montmartre còn có lễ hội hái nho."
+ },
+ {
+  "qid": "0015-0018-0006",
+  "question": "Chính phủ của Đảng Nhân dân Cách mạng Mông Cổ đã được ra đời vào thời gian nào?",
+  "gold": [
+   "2008",
+   "tháng 1 năm 2006"
+  ],
+  "prediction": "năm 2008,",
+  "type": "boundary_superset",
+  "context": "Trong bầu cử quốc hội năm 1996, Liên minh Dân chủ giành thắng lợi, dưới quyền đồng lãnh đạo của Tsakhiagiin Elbegdorj. Đảng Nhân dân Cách mạng Mông Cổ lần đầu để mất thế đa số. Ứng cử viên của Đảng Nhân dân Cách mạng là Natsagiin Bagabandi đắc cử làm tổng thống năm 1997, và tái đắc cử vào năm 2001. Trong các cuộc bầu cử quốc hội vào năm 2000, 2004, và 2008 Đảng Nhân dân Cách mạng Mông Cổ giành thắng lợi và lại trở thành đảng cầm quyền. Kết quả bầu cử năm 2004 buộc đảng này phải gia nhập một chính phủ liên minh, song họ rời bỏ liên minh vào tháng 1 năm 2006 và tự lập chính phủ. Đảng Nhân dân Cách mạng Mông Cổ thành lập một chính phủ liên minh với Đảng Dân chủ vào năm 2008, song chiến thắng đa số của Đảng Nhân dân Cách mạng phải đối diện với các cáo buộc gian lận phiếu và các cuộc náo loạn sau đó."
+ },
+ {
+  "qid": "0017-0011-0008",
+  "question": "Trong chuyến đi thị sát của nhân vật quan trọng nào, Roosevelt đã gặp được?",
+  "gold": [],
+  "prediction": "Winston Churchill",
+  "type": "false_answer",
+  "context": "Tình cảm đặc biệt của Roosevelt đối với Hải quân dần dần phát triển và kéo dài suốt cuộc đời ông. Tại Bộ Hải quân, ông đã thể hiện tài năng lớn trong kỹ năng quản trị cũng như mau chóng học biết cách đàm phán với giới lãnh đạo Quốc hội và các bộ ngành khác trong chính phủ để vận động thông qua ngân sách. Ông là người nhiệt tình ủng hộ phương sách sử dụng tàu ngầm như là một loại công cụ hữu hiệu nhằm đối phó với hiểm họa bị tấn công bởi tàu ngầm Đức nhắm vào tàu thủy của phe Đồng minh: ông đề xuất việc xây dựng hàng rào thủy lôi ở Biển Bắc từ Na Uy đến Scotland. Năm 1918, Roosevelt đến thăm hai nước Anh và Pháp để thị sát các căn cứ hải quân của Mỹ tại đây; cũng là lần đầu tiên ông có cơ hội gặp gỡ với Winston Churchill. Khi Chiến tranh thế giới thứ nhất kết thúc tháng 11 năm 1918, Roosevelt được giao nhiệm vụ giải ngũ quân nhân mặc dù ông chống lại kế hoạch giải thể hoàn toàn lực lượng Hải quân. Tháng 7 năm 1920, vì vụ tai tiếng tình dục ở Newport xảy ra giữa các thủy thủ Hải quân và dân đồng tình luyến ái địa phương được đăng tải trên Thời báo New York và Nhật báo Providence, Roosevelt từ chức trợ tá Bộ trưởng Hải quân để ra tranh cử chức vụ Phó Tổng thống Hoa Kỳ."
+ },
+ {
+  "qid": "0012-0007-0007",
+  "question": "Quan tòa thành phố Durban làm gì khi được Ông yêu cầu gỡ khăn xếp?",
+  "gold": [],
+  "prediction": "ông từ chối và hùng hồn bước ra khỏi tòa",
+  "type": "false_answer",
+  "context": "Vào thời điểm này, Gandhi là một người trầm tính, khiêm cung không chú tâm về chính trị. Ông đọc báo lần đầu tiên năm lên 18 và thường run sợ khi bước ra tòa thuyết trình. Nam Phi đã biến đổi ông một cách sâu sắc khi ông chứng kiến sự hạ nhục và đàn áp mà cộng đồng Ấn Độ thường phải chịu đựng nơi đây. Vào một ngày, khi quan tòa thành phố Durban yêu cầu Gandhi gỡ khăn xếp (turban) trên đầu, ông từ chối và hùng hồn bước ra khỏi tòa. Một bước ngoặt trong cuộc đời thường được các truyện ký thừa nhận - có thể xem là chất xúc tác cho chủ nghĩa hành động của ông - xảy ra ít lâu sau, khi ông bắt đầu một cuộc hành trình đến Pretoria. Ông bị vất ra khỏi xe lửa tại Pietermaritzburg sau khi từ chối chuyển từ toa xe hạng nhất đến toa hạng ba, vốn thường được những người da màu sử dụng mặc dù đã mua vé hạng nhất. Không lâu sau, trong cuộc hành trình bằng xe ngựa, ông bị người lái xe đánh vì từ khước nhường chỗ cho một du khách châu Âu. Ông cũng kham chịu nhiều khổ đau khác như bị loại ra nhiều khách sạn vì chỉ màu da của mình. Kinh nghiệm này khiến Gandhi quan sát kĩ hơn những thống khổ người đồng hương phải chịu đựng tại Nam Phi trong thời gian ông làm việc tại Pretoria. Chính trong thời gian tại Nam Phi, qua sự chứng kiến tận mắt chế độ kì thị chủng tộc, thành kiến và bất công, Gandhi bắt đầu thám vấn địa vị trong xã hội của những người đồng hương và của chính mình."
+ },
+ {
+  "qid": "0001-0062-0004",
+  "question": "Công viên xanh lớn nhất nội thành Paris được cải tạo từ nơi nào?",
+  "gold": [
+   "khu vực lò mổ cũ",
+   "một khu vực lò mổ cũ"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Từ những năm 1980, nhiều khu vực mang các chức năng khác được cải tạo thành không gian xanh. Theo thiết kế của kiến trúc sư Bernard Tschumi, một khu vực lò mổ cũ đã trở thành công viên La Villette - công viên lớn nhất trong nội ô Paris hiện nay. Tiếp tục, trong những năm 1990 là công viên Bercy, công viên Belleville cùng một số khác. Kế đến là những khu vườn gia đình hoặc giáo dục nằm bên vành đai dọc tuyến đường sắt cũ Petite Ceinture. Vườn Éole hoàn thành năm 2007 là công viên quan trọng nhất của Paris vào những năm 2000. Một trong những công viên mới nhất, Promenade des Berges de la Seine được khánh thành vào năm 2013."
+ },
+ {
+  "qid": "0012-0033-0004",
+  "question": "Một số nguồn ghi lại những lời cuối của Rama là gì?",
+  "gold": [],
+  "prediction": "He Ram, He Ram\" hoặc \"Rama, Rama\",",
+  "type": "false_answer",
+  "context": "Tương truyền câu nói trước khi chết của Gandhi là \"Ô kìa Rama!\" (Hey Rama!) và nó được xem là câu tôn kính hướng đến thần Rama, là một dấu hiệu gợi cảm tâm linh Gandhi cũng như lý tưởng đạt sự thống nhất với hòa bình vĩnh hằng của ông. Câu này được khắc vào đài tưởng niệm của ông tại New Delhi. Có người nghi vấn về tính có thật của câu này nhưng một số người đã chứng kiến và xác nhận ông đã nói như thế. Một vài nguồn ghi lại những lời cuối của ông là \"He Ram, He Ram\" hoặc \"Rama, Rama\", và nó cũng tường thuật rằng ông lăn xuống đất, chắp hai tay trước ngực ở tư thế chào."
+ },
+ {
+  "qid": "0008-0002-0009",
+  "question": "Sự xuất hiện của loài kiến được tìm thấy vào thời điểm nào?",
+  "gold": [],
+  "prediction": "đầu kỷ Paleogen",
+  "type": "false_answer",
+  "context": "Trong suốt kỷ Creta, một vài loài kiến nguyên thủy phân bố rộng khắp trên siêu lục địa Laurasia (bán cầu bắc). Chúng hiếm gặp so với các loài côn trùng khác, và chỉ chiếm 1% trong tổng các cá thể côn trùng. Kiến trở nên phổ biến sau sự kiện tỏa nhánh thích nghi vào đầu kỷ Paleogen. Vao Oligocene và Miocene kiến chiếm 20-40% tất cả các côn trùng được tìm thấy trong hầu hết các trầm tích hóa thạch chính. Một trong số các loài sống trong Eocene thì còn khoảng 1/10 các chi hiện còn tồn tại đến ngày nay. Các chi còn tồn tại đến ngày nay chiếm 56% trong các chi được phát hiện trong hổ phách vùng Baltic (đầu Oligocene), và 92% các chi trong hổ phách ở Dominica (xuất hiện đầu Miocene)."
+ },
+ {
+  "qid": "0001-0020-0001",
+  "question": "Cung điện Tuileries nằm ở đâu?",
+  "gold": [
+   "Palais-Royal",
+   "Paris"
+  ],
+  "prediction": "Palais-Royal trong Paris",
+  "type": "boundary_superset",
+  "context": "Kể từ Louis XIII, và tiếp đó là Louis XIV, các vị vua Pháp chuyển đến sống tại cung điện Versailles. Năm 1682 triều đình cũng chuyển về Versailles, Jean-Baptiste Colbert trở thành người quản lý Paris. Mặc dù Versailles nằm rất gần Paris, nhưng trong suốt thời gian trị vì Louis XIV chỉ đến Paris 24 lần để dự các buổi lễ chính thức. Năm 1715, công tước Philippe II, khi đó là nhiếp chính, rời Versailles về Palais-Royal trong Paris. Tiếp đó vị vua trẻ Louis XV sống tại cung điện Tuileries. Một lần nữa, triều đình quay về Paris. Nhưng từ 1722, Louis XV lại trở lại cung điện Versailles."
+ },
+ {
+  "qid": "0001-0018-0003",
+  "question": "Trong chiến tranh trăm năm ai đã nổi dậy gây nên biến động lịch sử?",
+  "gold": [
+   "quan thái thú Étienne Marcel",
+   "Étienne Marcel"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Năm 1337 nổ ra cuộc chiến tranh Trăm năm. Sự bất mãn của dân chúng đã nuôi tham vọng của quan thái thú Étienne Marcel gây nên chính biến lớn đầu tiên trong lịch sử Pháp vào năm 1358. Điều này khiến các vị vua không còn ở trong trung tâm thành mà tới Hôtel Saint-Pol, rồi Hôtel des Tournelles, nơi dễ dàng thoát khi có binh biến. Năm 1407 nổ ra cuộc nội chiến giữa hai phe Armagnacs và Bourguignons, tới 1420 mới kết thúc. Chiến tranh Trăm năm vẫn tiếp tục, Paris nằm trong phần lãnh thổ do người Anh kiểm soát. Năm 1429, Jeanne d'Arc thất bại trong việc đánh đổ người Anh và đồng minh là Bourguignons rồi bị thiêu sống năm 1431. Tới năm 1453, thời vua Charles VII, chiến tranh kết thúc. Nhưng Charles VII và con trai là Louis XI lại chuyển đến Val de Loire."
+ },
+ {
+  "qid": "0001-0066-0004",
+  "question": "Trong thư viện lịch sử Paris có những gì?",
+  "gold": [
+   "một triệu cuốn sách, ảnh, bản đồ liên quan tới lịch sử thành phố",
+   "một triệu cuốn sách, ảnh, bản đồ liên quan tới lịch sử thành phố. Hoặc thư viện điện ảnh François-Truffaut với nhiều tài liệu điện ảnh quan trọng"
+  ],
+  "prediction": "lưu trữ một triệu cuốn sách, ảnh, bản đồ liên quan tới lịch sử thành phố",
+  "type": "boundary_superset",
+  "context": "Chính quyền thành phố Paris quản lý 55 thư viện phổ thông và khoảng 10 thư viện chuyên đề, là những nơi công chúng có thể tự do mượn tài liệu. Trong số đó có một vài thư viện được nhiều người biết tới như thư viện Lịch sử Paris, khánh thành năm 1871, nơi lưu trữ một triệu cuốn sách, ảnh, bản đồ liên quan tới lịch sử thành phố. Hoặc thư viện điện ảnh François-Truffaut với nhiều tài liệu điện ảnh quan trọng. Ngược lại với Thư viện quốc gia Pháp hay thư viện Mazarine, các thư viện của chính quyền thành phố đều miễn phí, kể cả các thư viện chuyên đề có thể cấm vị thành viên. Những sách, tạp chí, truyện tranh... được mượn tự do, còn các đĩa nhạc, video thì cần trả một số tiền trung bình hàng năm. Còn có một số thư viện cho công chúng khác, như thư viện trong trung tâm Georges-Pompidou. Rất nhiều thư viện của các đại học cũng mở cửa cho người ngoài."
+ },
+ {
+  "qid": "0003-0041-0006",
+  "question": "Lãnh thổ Canada được phân chia về địa hình như thế nào?",
+  "gold": [],
+  "prediction": "Canada là một liên bang gồm có mười tỉnh và ba lãnh thổ. Các đơn vị hành chính này có thể được nhóm thành bốn vùng chính: Tây bộ Canada, Trung bộ Canada, Canada Đại Tây Dương, và Bắc bộ Canada",
+  "type": "false_answer",
+  "context": "Canada là một liên bang gồm có mười tỉnh và ba lãnh thổ. Các đơn vị hành chính này có thể được nhóm thành bốn vùng chính: Tây bộ Canada, Trung bộ Canada, Canada Đại Tây Dương, và Bắc bộ Canada (\"Đông bộ Canada\" nói chung Trung bộ Canada và Canada Đại Tây Dương). Các tỉnh có quyền tự trị lớn hơn các lãnh thổ, chịu trách nhiệm đối với các chương trình xã hội như chăm sóc y tế, giáo dục, và phúc lợi. Tổng thu nhập của các tỉnh nhiều hơn của chính phủ liên bang. Sử dụng quyền hạn chi tiêu của mình, chính phủ liên bang có thể bắt đầu các chính sách quốc gia tại các tỉnh, như Đạo luật Y tế Canada; các tỉnh có thể chọn ở ngoài chúng, song hiếm khi làm vậy trên thực tế. Chính phủ liên bang thực thi thanh toán cân bằng nhằm bảo đảm các tiêu chuẩn thống nhất hợp lý về các dịch vụ và thuế được thi hành giữa các tỉnh giàu hơn và nghèo hơn."
+ },
+ {
+  "qid": "0003-0051-0003",
+  "question": "Chính phủ đã làm gì mà việc đó thể hiện chính phủ ủng hộ việc phát triển một Canada có văn hóa đặc trưng?",
+  "gold": [
+   "Việc duy trì một văn hóa Canada riêng biệt được chính phủ ủng hộ thông qua các chương trình, các đạo luật, và các thể chế như Công ty Phát thanh-Truyền hình Canada (CBC), Cục Điện ảnh Quốc gia Canada (NFB), và Ủy ban Phát thanh-Truyền hình và Viễn thông Canada (CRTC)",
+   "chính phủ ủng hộ thông qua các chương trình, các đạo luật, và các thể chế như Công ty Phát thanh-Truyền hình Canada (CBC), Cục Điện ảnh Quốc gia Canada (NFB), và Ủy ban Phát thanh-Truyền hình và Viễn thông Canada (CRTC)"
+  ],
+  "prediction": "các chương trình, các đạo luật, và các thể chế như Công ty Phát thanh-Truyền hình Canada (CBC), Cục Điện ảnh Quốc gia Canada (NFB), và Ủy ban Phát thanh-Truyền hình và Viễn thông Canada (CRTC).",
+  "type": "boundary_subset",
+  "context": "Về mặt lịch sử, Canada chịu ảnh hưởng của các văn hóa và truyền thống Anh Quốc, Pháp, và thổ dân. Thông qua ngôn ngữ, nghệ thuật và âm nhạc, các dân tộc thổ dân tiếp tục có ảnh hưởng đến bản sắc Canada. Nhiều người Canada xem trọng đa nguyên văn hóa và nhìn nhận Canada vốn đã đa nguyên văn hóa. Truyền thông và giải trí Mỹ phổ biến, nếu không nói là chi phối, tại Canada Anh ngữ; ngược lại, nhiều văn hóa phẩm và nghệ sĩ giải trí của Canada thành công tại Hoa Kỳ và toàn cầu. Việc duy trì một văn hóa Canada riêng biệt được chính phủ ủng hộ thông qua các chương trình, các đạo luật, và các thể chế như Công ty Phát thanh-Truyền hình Canada (CBC), Cục Điện ảnh Quốc gia Canada (NFB), và Ủy ban Phát thanh-Truyền hình và Viễn thông Canada (CRTC)."
+ },
+ {
+  "qid": "0010-0004-0006",
+  "question": "Người Việt Nam chăn nuôi vịt rộng rãi từ lúc nào?",
+  "gold": [
+   "khoảng vài ngàn năm trước"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Vịt nhà được chăn nuôi tại nhiều nước Đông Nam Á khoảng vài ngàn năm trước, trong đó có Việt Nam. Vịt có rất nhiều giá trị kinh tế, chúng cung cấp cho con người thịt vịt, trứng, lông. Ngoài ra, vịt còn được dùng để nuôi nhốt như một loài chim kiểng, hay phục vụ các màn xiếc trong Sở thú. Hầu hết các loài vịt đều được thuần hóa từ loài vịt cổ xanh (Anas platyrhynchos) ở vùng Mallard. Nhiều loài vịt ngày nay có kích cỡ lớn hơn so với thủy tổ của chúng (chiều dài từ cổ đến đuôi của chúng vào khoảng 12 inch tức khoảng 30 cm). Năm 2002, theo báo cáo của Tổ chức Lương - Nông Thế giới (FAO), Trung Quốc là thị trường tiêu thụ vịt dẫn đầu thế giới, kế đến là Việt Nam và các quốc gia Đông Nam Á khác."
+ },
+ {
+  "qid": "0013-0001-0004",
+  "question": "Vì sao mà quốc hội phản đối các quyết đinh của nhà vua để có tiền chi phí cho chiến tranh?",
+  "gold": [
+   "các chính sách này vi phạm đến các tự do hiến định của nhân dân",
+   "vị họ cho rằng các chính sách này vi phạm đến các tự do hiến định của nhân dân"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Cũng như đối với vua James, vấn đề trọng đại được đặt ra là quốc vương Anh có thể là vị vua có quyền lực tuyệt đối như các vương triều châu Âu khác, hay các quyền làm luật và đánh thuế của nhà vua đều bị giới hạn bởi Quốc hội. Ngoài ra, còn có vấn đề tôn giáo nữa. Nhiều cận thần của vua Charles I theo Thanh giáo (Puritans) muốn huỷ bỏ một số lễ nghi của nhà thờ Công giáo La Mã và e ngại nhà vua sẽ phục hồi Công giáo (Catholic). Như vậy, giữa nhà vua và quốc hội có sự bất tín nhiệm lẫn nhau. Do cuộc chiến tranh với Tây Ban Nha và Pháp, vua Charles rất cần tiền chi phí chiến tranh nhưng quốc hội lại không chịu bỏ phiếu phê chuẩn số tiền mà ông cần đến. Vua Charles đành phải tiết kiệm tiền bằng cách cho quân sĩ sống nhờ nhà dân và buộc các nhà giàu phải cho triều đình vay tiền, những người từ chối sẽ bị tống giam vào ngục. Hành động này của vua Charles I và các quyết định bất thường khác đã khiến cho các vị lãnh đạo quốc hội Anh phản đối, vị họ cho rằng các chính sách này vi phạm đến các tự do hiến định của nhân dân. Sự tranh chấp lên tới mức độ căng thẳng khiến cho nhà vua phải giải tán quốc hội hai lần."
+ },
+ {
+  "qid": "0001-0016-0002",
+  "question": "Paris đã phát triển lớn mạnh hơn Orléans vào lúc nào?",
+  "gold": [
+   "thế kỷ 11"
+  ],
+  "prediction": "Năm 987",
+  "type": "wrong_span",
+  "context": "Năm 987, dòng họ Capet lên trị vì. Khi đó, Paris và Orléans là hai thành phố lớn nhất trong lãnh thổ và vương triều Capet đã chọn Orléans. Hugues Capet, mặc dù cung điện ở Île de la Cité nhưng ít khi sống ở đây. Robert II thì đến Paris thường xuyên hơn. Từ thế kỷ 11, Paris trở thành một trung tâm quan trọng của giáo dục tôn giáo. Quyền lực hoàng gia dần được tập trung ở Paris và thành phố trở lại thành thủ đô của vương quốc từ thời vua Louis VI, rồi Philippe Auguste. Là điểm giao của các con đường buôn bán lớn, Paris trở nên giàu có nhờ thương mại. Lúa mì vào thành phố từ phố Saint-Honoré, dạ ở phố Saint-Denis, và cá từ biển Bắc và biển Manche đến Paris ở phố Poissonniers... Vào năm 1150, dân số Paris ước tính khoảng 50.000 người."
+ },
+ {
+  "qid": "0012-0017-0008",
+  "question": "Vì sao Gandhi lại ngồi tù ít hơn thời gian xét xử?",
+  "gold": [
+   "ca mổ viêm ruột thừa",
+   "một ca mổ viêm ruột thừa",
+   "sau một ca mổ viêm ruột thừa"
+  ],
+  "prediction": "gây loạn và kết án sáu năm tù",
+  "type": "wrong_span",
+  "context": "Thêm vào việc tẩy chay các sản phẩm Anh, Gandhi cũng khuyến khích dân chúng tẩy chay các cơ quan giáo dục và pháp tòa Anh, từ chức không làm cho chính quyền, từ chối không đóng thuế và huỷ bỏ những danh hiệu, huy chương Anh. Chương trình mới này đã đạt được sức lôi cuốn và thành công rộng lớn, gia lực cho người Ấn chưa từng có từ xưa nay. Nhưng khi phong trào vừa đạt đỉnh điểm thì đã chấm dứt một cách đột ngột vì một cuộc xung đột bạo lực tại thị xã Chauri Chaura, bang Uttar Pradesh vào tháng 2 năm 1922. Lo ngại phong trào sẽ quay về phương tiện bạo lực và tin chắc rằng sự việc này có thể lật đổ tất cả những công trình của mình, Gandhi liền huỷ bỏ chiến dịch bất phục tòng. Giờ đây, như một người đã phô bày nhược điểm của mình, Gandhi bị bắt bỏ tù ngày 10 tháng 3 năm 1922, bị đưa ra tòa vì lý do gây loạn và kết án sáu năm tù. Đây không phải lần đầu Gandhi vị bỏ tù nhưng là lần bị giam cầm lâu nhất. Bắt đầu từ ngày 18 tháng 3 năm 1922, ông ngồi tù khoảng hai năm và được thả tháng 2 năm 1924 sau một ca mổ viêm ruột thừa."
+ },
+ {
+  "qid": "0003-0027-0005",
+  "question": "Thu nhập kinh tế của Canada như thế nào trong năm 2008?",
+  "gold": [
+   "Năm 2008, lượng hàng hóa nhập khẩu của Canada có giá trị trên 442,9 tỷ CAD, trong đó 280,8 tỷ CAD bắt nguồn từ Hoa Kỳ, 11,7 tỷ CAD bắt nguồn từ Nhật Bản, và 11,3 tỷ CAD bắt nguồn từ Anh Quốc",
+   "lượng hàng hóa nhập khẩu của Canada có giá trị trên 442,9 tỷ CAD"
+  ],
+  "prediction": "Canada có một nền kinh tế hỗn hợp, xếp hạng trên Hoa Kỳ và hầu hết các quốc gia Tây Âu về chỉ số tự do kinh tế của Heritage Foundation (Tổ chức Di sản), và trải qua bất bình đẳng thu nhập ở mức tương đối thấp",
+  "type": "boundary_overlap",
+  "context": "Ngân hàng Canada là ngân hàng trung ương của quốc gia. Ngoài ra, Bộ trưởng Tài chính và Bộ trưởng Công nghiệp sử dụng hệ thống cục Thống kê Canada để lập kế hoạch tài chính. Sở giao dịch chứng khoán Toronto là sở giao dịch chứng khoán lớn thứ bảy trên thế giới với 1.577 công ty niêm yết vào năm 2012. Canada là nền kinh tế lớn thứ 10 trên thế giới, với GDP danh nghĩa năm 2012 là khoảng 1.532.340 tỷ đô la Mỹ. Đây là một thành viên của Tổ chức Hợp tác và Phát triển kinh tế (OECD) và G8, và là một trong mười quốc gia mậu dịch đứng đầu thế giới, với một nền kinh tế toàn cầu hóa cao độ. Canada có một nền kinh tế hỗn hợp, xếp hạng trên Hoa Kỳ và hầu hết các quốc gia Tây Âu về chỉ số tự do kinh tế của Heritage Foundation (Tổ chức Di sản), và trải qua bất bình đẳng thu nhập ở mức tương đối thấp. Năm 2008, lượng hàng hóa nhập khẩu của Canada có giá trị trên 442,9 tỷ CAD, trong đó 280,8 tỷ CAD bắt nguồn từ Hoa Kỳ, 11,7 tỷ CAD bắt nguồn từ Nhật Bản, và 11,3 tỷ CAD bắt nguồn từ Anh Quốc. Tổng thâm hụt thương mại của Canada vào năm 2009 là 4,8 tỷ CAD, trong khi vào năm 2008 quốc gia này thặng dư 46,9 tỷ CAD."
+ },
+ {
+  "qid": "0016-0007-0005",
+  "question": "Chợ Le Marche des Saveurs du Quebe ở Montreal nổi tiếng là một trong những nơi nổi tiếng về đặc sản nào?",
+  "gold": [
+   "phô mai tươi, thịt hun khói, xi-rô, rượu vang, rượu táo và một lượng lớn quà tặng"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Một điểm mua sắm đặc sắc không kém các trung tâm thương mại lớn là các khu chợ địa phương. Tại các khu chợ này, bạn có thể gặp, nói chuyện với người dân địa phương cũng như mua các mặt hàng phổ biển có chất lượng ngon và giá rẻ ở đây, đặc biệt là vào mùa hè các mặt hàng có sẵn hơn cả. Ở Montreal có đặc sản dâu tây Quebec nổi tiếng thế giới. Thành phố là nơi cung cấp dâu tây lớn nhất nhất cho thị trường Bắc Mỹ. Nổi bật là chợ Marche Jean Talon, một chợ có các mặt hàng thực phẩm tươi ngon hơn cả. Trong chợ có nhiều dãy hàng dài với các quầy hàng bán trái cây, rau, hoa, bánh nướng. Bên ngoài có nhiều nhà hàng, quán cà phê với hàng hiên ấm cúng bên cạnh chợ và chợ Le Marche des Saveurs du Quebec, một trong những nơi ở Montreal có các đặc sản vùng như phô mai tươi, thịt hun khói, xi-rô, rượu vang, rượu táo và một lượng lớn quà tặng."
+ },
+ {
+  "qid": "0015-0002-0005",
+  "question": "Liên Xô đã có động thái như thế nào trước sự biến động tại Đông Âu và Mông Cổ?",
+  "gold": [],
+  "prediction": "Mông Cổ tiến hành cách mạng dân chủ hòa bình vào đầu năm 1990.",
+  "type": "false_answer",
+  "context": "Đến thế kỷ XVI, Phật giáo Tây Tạng bắt đầu truyền đến Mông Cổ. Nhà Thanh do người Mãn lập ra sáp nhập Mông Cổ trong thế kỷ XVII. Đến đầu thập niên 1900, khoảng một phần ba nam giới trưởng thành tại Mông Cổ là tăng nhân. Sau khi nhà Thanh sụp đổ vào năm 1911, Ngoại Mông Cổ tuyên bố độc lập từ nhà Thanh, và đến năm 1921 thiết lập nền độc lập thực tế từ Trung Hoa Dân Quốc. Ngay sau đó, quốc gia nằm dưới quyền kiểm soát của Liên Xô, là thế lực giúp đỡ họ độc lập khỏi Trung Quốc. Năm 1924, Cộng hòa Nhân dân Mông Cổ được tuyên bố thành lập, trở thành một quốc gia vệ tinh của Liên Xô. Trước biến động tại Liên Xô và Đông Âu, Mông Cổ tiến hành cách mạng dân chủ hòa bình vào đầu năm 1990. Kết quả là một hệ thống đa đảng, một bản hiến pháp mới năm 1992, và chuyển đổi sang kinh tế thị trường."
+ },
+ {
+  "qid": "0015-0036-0006",
+  "question": "Những danh hiệu nào đã được thêm vào kể từ năm 2003?",
+  "gold": [
+   "danh hiệu iarudi và Khartsaga",
+   "iarudi và Khartsaga"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Những người thắng cuộc được vinh danh bằng những danh hiệu cổ: người thắng ở vòng thứ năm được danh hiệu nachin (chim ưng), ở vòng bảy và tám là zaan (voi), và vòng mười và mười một là arslan (sư tử). Đô vật trở thành vô địch tuyệt đối được trao danh hiệu avarga (Người khổng lồ). Mọi thắng lợi sau đó tại lễ hội quốc gia Naadam sẽ được thêm một tính ngữ cho danh hiệu avarga, như \"Người Khổng lồ Bất bại được mọi người nhớ đến\". Bắt đầu từ năm 2003, nghị viện Mông Cổ đã thông qua một luật mới về Naadam, đưa ra những sửa đổi với một số danh hiệu vật. Các danh hiệu iarudi và Khartsaga (Chim ưng) được thêm vào những quy định đã đề cập ở trên."
+ },
+ {
+  "qid": "0007-0015-0007",
+  "question": "Khu vực Nam Ossetia có địa thế như thế nào?",
+  "gold": [
+   "nhiều núi non"
+  ],
+  "prediction": "đông đúc dân cư và trải dài về phía nam đến tận cong sông Mtkvari bên trong Gruzia. Vùng này đặc biệt nhiều núi non, đa số diện tích nằm ở độ cao 1.000 m (3.300 ft) trên mực nước biển",
+  "type": "boundary_superset",
+  "context": "Nam Ossetia bao phủ khoảng 3.900 km² ở phần phía nam Kavkaz, bị chia cắt bởi những dãy núi với vùng Bắc Ossetia (một phần của Nga) đông đúc dân cư và trải dài về phía nam đến tận cong sông Mtkvari bên trong Gruzia. Vùng này đặc biệt nhiều núi non, đa số diện tích nằm ở độ cao 1.000 m (3.300 ft) trên mực nước biển. Kinh tế chủ yếu là nông nghiệp, dù chưa tới 10% đất đai Nam Ossetia có thể canh tác. Ngũ cốc, hoa quả, rượu là các sản phẩm chủ yếu. Công nghiệp rừng và gia súc cũng tồn tại, đặc biệt xung quanh thủ đô Tskhinvali."
+ },
+ {
+  "qid": "0003-0043-0006",
+  "question": "Tổng sản lượng nông nghiệp của các dân tộc thiểu số hữu hình Canada đã phát triển như thế nào trong khoảng năm 2011-2016?",
+  "gold": [],
+  "prediction": "tăng trưởng 18,4%",
+  "type": "false_answer",
+  "context": "Dân số thổ dân của Canada đang tăng trưởng gần gấp hai lần tỷ lệ bình quân toàn quốc, và 4% dân số Canada tuyên bố họ có đặc tính thổ dân trong năm 2006. 16,2% dân số khác thuộc một nhóm thiểu số hữu hình (visible minority) phi thổ dân. Năm 2016, các nhóm thiểu số hữu hình lớn nhất là người Nam Á (5,6%), người Hoa (5%) và người Da đen (3,5%) . Từ năm 2011 đến năm 2016, dân số dân tộc thiểu số hữu hình tăng trưởng 18,4% . Năm 1961, dưới 2% dân số Canada (khoảng 300.000 người) có thể được phân loại thuộc một nhóm dân tộc thiểu số hữu hình, và dưới 1% là thổ dân. Năm 2007, gần một phần năm (19,8%) người Canada sinh ra tại nước ngoài, với gần 60% tân di dân đến từ châu Á (gồm cả Trung Đông). Các nguồn nhập cư dẫn đầu đến Canada hiện là Trung Quốc, Philippines và Ấn Độ. Theo cục Thống kê Canada, các nhóm thiểu số hữu hình có thể chiếm một phần ba dân số Canada vào năm 2031."
+ },
+ {
+  "qid": "0009-0010-0005",
+  "question": "Mitterrand dùng tên gì để ngụy trang?",
+  "gold": [
+   "Morland"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Tháng 11 năm 1943 Sicherheitsdienst (SD) lục soát một căn hộ tại Vichy nơi họ hy vọng bắt giữ được François Morland, một thành viên kháng chiến.. \"Morland\" là tên vỏ bọc của Mitterrand. Ông cũng sử dụng các tên vỏ bọc khác như Purgon, Monnier, Laroche, đại uý François, Arnaud et Albre. Người đàn ông bị bắt giữ là Pol Pilven, một thành viên kháng chiến đã sống sót qua cuộc chiến tranh trong một trại tập trung. Thời điểm đó Mitterrand đang ở Paris. Được những người bạn cảnh báo, ông bỏ trốn tới London trên chiếc máy bay Lysander ngày 15 tháng 11 năm 1943. Từ đó ông tới Algiers, nơi ông gặp gỡ Charles de Gaulle, người lúc ấy đã là một lãnh đạo đương nhiên của Pháp Tự do. Hai người không hợp tác cùng nhau. Mitterrand từ chối sáp nhập nhóm của ông với các phong trào tù binh chiến tranh khác nếu Cailliau sẽ là người lãnh đạo. Dưới ảnh hưởng của Henri Frenay, de Gaulle cuối cùng đồng ý sáp nhập mạng lưới của cháu mình và RNPG với Mitterrand là người lãnh đạo. Sau đó ông qua Anh về Pháp trên một chiếc tàu thuỷ. Tại Paris, ba nhóm kháng chiến của người tù binh chiến tranh (cộng sản, de Gaulle, RNPG) cuối cùng sáp nhập trở thành Phong trào Quốc gia của các Tù binh chiến tranh và Người bị trục xuất (Mouvement national des prisonniers de guerre et déportés hay MNPGD) và Mitterrand là người lãnh đạo. Trong hồi ký ông nói rằng ông đã bắt đầu tổ chức này khi vẫn đang làm việc chính thức cho Chế độ Vichy. Từ ngày 27 tháng 113 năm 1943 Mitterrand điều hành Bureau central de renseignements et d'action .. Tháng 12 năm 1943 Mitterrand ra lệnh xử tử Henri Marlin (người định ra lệnh tấn công vào \"maquis\") bởi Jacques Paris et Jean Munier người sau này bỏ trốn với cha của Mitterrand. Sau một chuyến viếng thăm thứ hai tới London trong tháng 2 năm 1944 Mitterrand tham gia vào việc giải phóng Paris. Khi de Gaulle tiến vào Paris sau sự Liberation, ông được giới thiệu với nhiều người từng là một phần của chính phủ lâm thời. Trong số đó có Mitterrand, với tư cách tổng thư ký tù binh chiến tranh. Khi họ đối mặt, de Gaulle được cho là đã thì thầm: \"Lại ông à!\" Mitterrand bị bãi chức 2 tuần sau đó."
+ },
+ {
+  "qid": "0012-0032-0006",
+  "question": "Ai bị bắn chết bởi Gandhi?",
+  "gold": [],
+  "prediction": "Nathuram Godse",
+  "type": "false_answer",
+  "context": "Ngày 30 tháng 1 năm 1948, trên đường đến một nơi thờ tụng, Gandhi bị bắn chết bởi Nathuram Godse tại tòa nhà Birla ở New Delhi. Godse là một môn đồ Ấn giáo cực đoan được người đương thời cho là có mối quan hệ với cánh cực hữu của các tổ chức Ấn Độ giáo như Hindu Mahasabha. Tổ chức này cho Gandhi là người chịu trách nhiệm cho việc chính quyền suy nhược vì đã khăng khăng bắt buộc nộp một khoản tiền cho Pakistan. Godse và người cùng âm mưu là Narayan Apte sau bị đưa ra tòa kết án, và bị xử tử ngày 15 tháng 11 năm 1949. Vinayak Damodar Savarkar, chủ tịch của Hindu Mahasabha, một nhà cách mạng và môn đồ Ấn giáo cực đoan bị tố cáo là người nắm đầu dây của mưu đồ này, nhưng sau được giải tội vì thiếu bằng chứng."
+ },
+ {
+  "qid": "0004-0023-0006",
+  "question": "Những quốc gia nào không đồng ý với thoả thuận của Iraq?",
+  "gold": [
+   "Syria, Israel và liên minh chống Iraq"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Nhiều sáng kiến hòa bình đã được đưa ra nhưng không được chấp nhận. Hoa Kỳ nhấn mạnh rằng những giải pháp duy nhất có thể chấp nhận được để có hòa bình toàn diện với Iraq, là việc rút quân không điều kiện ra khỏi Kuwait. Iraq nhấn mạnh rằng việc rút quân khỏi Kuwait phải được \"gắn liền với\" sự rút quân đồng thời của quân đội Syria ra khỏi Liban và quân đội Israel ra khỏi Bờ Tây, Dải Gaza, Cao nguyên Golan, và Nam Liban. Maroc và Jordan đã bị thuyết phục bởi đề xuất này, nhưng Syria, Israel và liên minh chống Iraq phản đối rằng không hề có một mối liên hệ nào giữa những việc trên với vấn đề Kuwait. Syria đã tham gia vào liên quân chống lại Saddam nhưng Israel vẫn chính thức giữ thái độ trung lập dù đã có những cuộc tấn công tên lửa vào thường dân Israel. Chính quyền Bush đã thuyết phục Israel đứng ngoài cuộc chiến với những hứa hẹn về việc tăng cường viện trợ, trong khi Tổ chức Giải phóng Palestine dưới quyền lãnh đạo của Yasser Arafat hoàn toàn ủng hộ Saddam Hussein, sau này dẫn tới một sự tuyệt giao trong quan hệ giữa Palestine-Kuwait, dẫn tới sự trục xuất nhiều người Palestine ra khỏi Kuwait."
+ },
+ {
+  "qid": "0017-0056-0004",
+  "question": "Tại hội nghị của Roosevelta, Tehran, Churchill và Stalin đã bàn luận với nhau những vấn đề gì?",
+  "gold": [],
+  "prediction": "kế hoạch xâm chiếm nước Pháp năm 1944",
+  "type": "false_answer",
+  "context": "Cuối năm 1943, thời điểm rõ ràng cho thấy rằng Đồng minh cuối cùng sẽ đánh bại hoặc ít nhất kìm chế được Đức Quốc xã. Mỗi ngày càng cho thấy những quyết định chính trị cấp cao càng trở nên quan trọng đối với diễn biến của cuộc chiến và tương lai của châu Âu thời hậu chiến. Roosevelt họp mặt với Churchill và lãnh tụ Trung Quốc Quốc dân đảng Tưởng Giới Thạch tại Hội nghị Cairo vào tháng 11 năm 1943, và rồi sau đó đến Tehran để bàn thảo với Churchill và Stalin. Trong lúc Churchill xem Stalin là một bạo chúa khi ông cảnh báo về một mối thống trị tiềm năng độc tài của Stalin đối với châu Âu thì Roosevelt đáp lời bằng một lời tuyên bố tóm tắt lý lẽ quan hệ của ông đối với Stalin như sau: \"Tôi thì có một linh cảm rằng Stalin không phải là hạng người như thế.... Tôi nghĩ rằng nếu tôi cho ông ta mọi thứ mà tôi có thể cho và không đòi hỏi ông ta cho lại cái gì, theo nghĩa vụ quý phái, ông ta sẽ không tìm cách thôn tính bất cứ mọi thứ và sẽ làm việc với tôi vì một thế giới dân chủ và hòa bình.\" Tại Hội nghị Tehran, Roosevelt và Churchill nói với Stalin về kế hoạch xâm chiếm nước Pháp năm 1944. Roosevelt cũng thảo luận các kế hoạch của ông nhằm thành lập một tổ chức quốc tế thời hậu chiến. Về phần mình, Stalin cứ khăng khăng đòi vẽ lại các ranh giới của Ba Lan. Stalin ủng hộ kế hoạch của Roosevelt về việc thành lập Liên Hiệp Quốc và hứa tham chiến chống Nhật Bản 90 ngày sau khi Đức bị đánh bại."
+ },
+ {
+  "qid": "0019-0024-0002",
+  "question": "Có bao nhiêu thanh niên đã ở lại phục vụ tại Texas trong Chiến tranh thế giới thứ hai?",
+  "gold": [
+   "750.000 thanh niên"
+  ],
+  "prediction": "750.000",
+  "type": "boundary_subset",
+  "context": "Chiến tranh thế giới thứ hai có tác động đáng kể đến Texas, liên bang đổ tiền vào việc xây dựng các căn cứ quân sự, các nhà máy vũ khí, các trại giam giữ tù binh chiến tranh và viện quân y; 750.000 thanh niên ở lại phục vụ; các thành phố bùng nổ với ngành công nghiệp mới, các cơ sở bậc đại học nắm giữ các vai trò mới; và hàng trăm nghìn nông dân nghèo rời đi để tìm kiếm các công việc phục vụ chiến tranh với mức lương cao hơn, và họ không bao giờ còn quay trở lại làm nông nghiệp. Texas chế tạo ra 3,1 phần trăm tổng số quân giới do Hoa Kỳ sản xuất trong Chiến tranh thế giới thứ hai, xếp hạng thứ 11 trong số 48 tiểu bang đương thời."
+ },
+ {
+  "qid": "0001-0004-0003",
+  "question": "Thành phố nào được gọi là thành phố của Hai tình yêu?",
+  "gold": [],
+  "prediction": "Venezia",
+  "type": "false_answer",
+  "context": "Cùng với Venezia, Paris còn được ví là \"Thành phố của tình yêu\". Những người yêu thích Paris cũng nói: Chỉ cần thêm hai chữ cái, Paris trở thành thiên đường. Trong tiếng Pháp, thêm hai chữ a và d, Paris thành Paradis, có nghĩa là thiên đường. Từ \"parisien\" trong tiếng Pháp là tính từ của Paris, cũng là danh từ để chỉ những người dân của thành phố này. Ngoài ra, \"parisien\" còn là một từ lóng được các nhà văn của thế kỷ 19 như Victor Hugo, Eugène Sue hay Balzac sử dụng rộng rãi và còn phổ biến cho tới thập niên 1950."
+ },
+ {
+  "qid": "0017-0023-0006",
+  "question": "Một trong những câu nói ít nổi tiếng của Roosevelt là gì?",
+  "gold": [],
+  "prediction": "\"Điều duy nhất mà chúng ta nên sợ hãi là nỗi sợ của chính mình",
+  "type": "false_answer",
+  "context": "Lễ nhậm chức của Roosevelt vào ngày 4 tháng 3 năm 1933 diễn ra khi nước Mỹ đang trong tình trạng hốt hoảng vì sự sụp đổ của hệ thống ngân hàng. Tình huống này cho ra đời câu nói nổi tiếng của ông: \"Điều duy nhất mà chúng ta nên sợ hãi là nỗi sợ của chính mình\". Ngay hôm sau, Quốc hội Hoa Kỳ thông qua Đạo luật Ngân hàng Khẩn cấp (Emergency Banking Act) tuyên bố một \"ngày lễ ngân hàng\" và thông báo một chương trình cho phép các ngân hàng mở cửa lại. Tuy nhiên, con số các ngân hàng mở cửa sau \"ngày lễ\" ít hơn con số ngân hàng từng mở cửa trước đây. Đây là bước đề nghị đầu tiên của ông về phục hồi kinh tế. Để tạo lòng tin của dân chúng Mỹ đối với hệ thống ngân hàng, Roosevelt ký Đạo luật Glass-Steagall để lập ra Federal Deposit Insurance Corporation gọi tắt là FDIC (tạm dịch là Công ty Bảo hiểm Tiền gửi ngân hàng Liên bang)."
+ },
+ {
+  "qid": "0017-0054-0002",
+  "question": "Các cuộc tiến công của Đồng minh diễn ra như thế nào?",
+  "gold": [
+   "Đồng minh tiến hành xâm chiếm Maroc và Algérie thuộc Pháp (Chiến dịch Torch) vào tháng 11 năm 1942, xâm chiếm Sicilia (Chiến dịch Husky) vào tháng 7 năm 1943, và xâm chiếm lục địa Ý (Chiến dịch Avalanche) vào tháng 9 năm 1943",
+   "Đồng minh tiến hành xâm chiếm Maroc và Algérie thuộc Pháp (Chiến dịch Torch) vào tháng 11 năm 1942, xâm chiếm Sicilia (Chiến dịch Husky) vào tháng 7 năm 1943, và xâm chiếm lục địa Ý (Chiến dịch Avalanche) vào tháng 9 năm 1943. Chiến dịch ném bom chiến lược leo thang vào năm 1944 đã cày nát tất cả các thành phố chính của Đức và cắt đứt các nguồn tiếp tế dầu"
+  ],
+  "prediction": "xâm chiếm Maroc và Algérie thuộc Pháp (Chiến dịch Torch) vào tháng 11 năm 1942, xâm chiếm Sicilia (Chiến dịch Husky) vào tháng 7 năm 1943, và xâm chiếm lục địa Ý (Chiến dịch Avalanche) vào tháng 9 năm 1943",
+  "type": "boundary_subset",
+  "context": "Đồng minh tiến hành xâm chiếm Maroc và Algérie thuộc Pháp (Chiến dịch Torch) vào tháng 11 năm 1942, xâm chiếm Sicilia (Chiến dịch Husky) vào tháng 7 năm 1943, và xâm chiếm lục địa Ý (Chiến dịch Avalanche) vào tháng 9 năm 1943. Chiến dịch ném bom chiến lược leo thang vào năm 1944 đã cày nát tất cả các thành phố chính của Đức và cắt đứt các nguồn tiếp tế dầu. Đây là một chiến dịch Anh-Mỹ phối hợp 50-50% lực lượng. Roosevelt chọn Dwight D. Eisenhower chứ không phải George Marshall để chỉ huy cuộc tiến công xâm chiếm của Đồng minh ngang eo biển với tên gọi là Chiến dịch Overlord bắt đầu vào ngày D-Day, 6 tháng 6 năm 1944. Một số trận đánh đẫm máu nhất trong cuộc chiến đã xảy ra theo sau cuộc tiến công ngang qua eo biển. Quân Đồng Minh gặp một số thất bại khi quân Đức phản kích đánh Ardennes và Alsace tháng 12 năm 1944 – tháng 1 năm 1945. Tuy nhiên, lực lượng Anh-Mỹ-Pháp đã chặn được đà tiến công của quân Đức và tràn vào lãnh thổ Đức. Roosevelt qua đời ngày 12 tháng 4 năm 1945 vào lúc các lực lượng Đồng Minh gần tiến vào Berlin."
+ },
+ {
+  "qid": "0003-0001-0007",
+  "question": "Canada nằm về phía nào của Châu Mỹ nào?",
+  "gold": [
+   "cực bắc",
+   "cực bắc của Bắc Mỹ"
+  ],
+  "prediction": "Bắc Mỹ",
+  "type": "boundary_subset",
+  "context": "Canada (phiên âm tiếng Việt: Ca-na-đa; phát âm tiếng Anh: /ˈkænədə/, tiếng Pháp: [kanadɑ]) hay Gia Nã Đại (加拿大), là quốc gia có diện tích lớn thứ hai trên thế giới, và nằm ở cực bắc của Bắc Mỹ. Lãnh thổ Canada gồm mười tỉnh bang và ba vùng lãnh thổ liên bang, trải dài từ Đại Tây Dương ở phía đông sang Thái Bình Dương ở phía tây, và giáp Bắc Băng Dương ở phía bắc. Về phía nam, Canada giáp với Hoa Kỳ liền kề; về phía tây bắc, Canada giáp với tiểu bang Alaska của Hoa Kỳ. Ở phía đông bắc của Canada là đảo Greenland thuộc Vương quốc Đan Mạch. Ở ngoài khơi phía nam đảo Newfoundland của Canada có quần đảo Saint-Pierre và Miquelon thuộc Pháp. Biên giới chung của Canada với Hoa Kỳ về phía nam và phía tây bắc là đường biên giới dài nhất thế giới."
+ },
+ {
+  "qid": "0015-0034-0001",
+  "question": "Vào năm nào thì sự tan rã của các tôn giáo đã diễn ra?",
+  "gold": [],
+  "prediction": "thập niên 1990",
+  "type": "false_answer",
+  "context": "Sự sụp đổ của chủ nghĩa cộng sản năm 1991 đã giúp tái lập tính pháp lý của việc thực thi tôn giáo, và Phật giáo Tây Tạng, vốn từng là tôn giáo phổ biến nhất trước đây trong vùng trước sự trỗi dậy của chủ nghĩa cộng sản, một lần nữa nổi lên trở thành tôn giáo có số tín đồ đông nhất tại Mông Cổ. Sự chấm dứt đàn áp tôn giáo trong thập niên 1990 cũng cho phép các tôn giáo khác, như Hồi giáo và Thiên chúa giáo, phát triển ở nước này. Theo Nhóm truyền giáo Thiên chúa giáo Barnabas Fund, số lượng tín đồ Thiên chúa đã tăng từ chỉ 4 người năm 1989 lên khoảng 40.000 vào thời điểm năm 2008.[cần dẫn nguồn]"
+ },
+ {
+  "qid": "0008-0003-0004",
+  "question": "Nguồn dinh dưỡng của loài kiến được lấy từ những loài động vật nào?",
+  "gold": [
+   "các động vật ăn cỏ, săn mồi",
+   "các động vật ăn cỏ, săn mồi và ăn xác chết gián tiếp",
+   "động vật ăn cỏ, săn mồi và ăn xác chết"
+  ],
+  "prediction": "ăn cỏ, săn mồi và ăn xác chết gián tiếp. Hầu hết các loài kiến là động vật ăn tạp nhưng một vài loài chỉ ăn một thứ đặc trưng",
+  "type": "boundary_overlap",
+  "context": "Kiến được tìm thấy trên tất cả các lục địa trừ Nam Cực, và chỉ có một vài quần đảo lớn như Greenland, Iceland, các phần của Polynesia và Hawaii thì không có các loài kiến bản địa. Kiến chiếm một dải các hốc sinh thái rộng, và có thể khai thác một dải rộng các nguồn thực phẩm hoặc trực tiếp hoặc là các động vật ăn cỏ, săn mồi và ăn xác chết gián tiếp. Hầu hết các loài kiến là động vật ăn tạp nhưng một vài loài chỉ ăn một thứ đặc trưng. Sự thống trị sinh thái của chúng có thể đo đạc thông qua sinh khối của chúng, và theo ước tính trong các môi trường khác nhau cho thấy rằng chúng đóng góp khoảng 15-20% (trung bình gần 25% ở các vùng nhiệt đới) trong tổng sinh khối động vật đất liền, cao hơn cả sinh khối của động vật có xương sống."
+ },
+ {
+  "qid": "0005-0007-0006",
+  "question": "Ở Hồng Công, nước biển được khuyến khích sử dụng để làm gì?",
+  "gold": [
+   "dội rửa nhà vệ sinh",
+   "dội rửa nhà vệ sinh trên phạm vi cả thành phố"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Hồng Kông đang sử dụng một cách tích cực nước biển để dội rửa nhà vệ sinh trên phạm vi cả thành phố. Hơn 90% các nhà vệ sinh ở Hồng Kông được dội rửa bằng nước biển, như là một biện pháp để bảo tồn các nguồn nước ngọt. Sự phát triển của ý tưởng này đã bắt đầu từ những năm thập niên 1960 và 1970 khi sự thiếu nước ngọt đã trở thành một vấn đề nghiêm trọng do dân số của thuộc địa này của Anh (thời điểm đó) tăng lên. Một khía cạnh thú vị của ý tưởng này là xử lý nước thải như thế nào. Nước mặn không thể xử lý (trong các xí nghiệp xử lý nước thải) bằng các phương pháp thông thường."
+ },
+ {
+  "qid": "0002-0022-0005",
+  "question": "Cùng với việc vận hành Réseau Outre-Mer 1re thì Hãng buôn bán công cộng France Télévision còn truyền phát các kênh nào?",
+  "gold": [],
+  "prediction": "France 2, France 3, France 4, France 5, France Ô, France 24 và Arte",
+  "type": "false_answer",
+  "context": "Les Nouvelles Calédoniennes là nhật báo duy nhất tại quần đảo. Một nguyệt san là Le Chien bleu nhại lại các tin tức từ Nouvelle-Calédonie. Quần đảo có năm đài phát thanh: RFO radio Nouvelle-Calédonie, Océane FM, NRJ, Radio Djiido, và Radio Rythmes Bleus. Hai đài cuối có mục tiêu chính là các nhóm người Kanak. Hãng truyền thông công cộng France Télévision vận hành một kênh truyền hình địa phương mang tên Réseau Outre-Mer 1re, cùng với truyền phát các kênh France 2, France 3, France 4, France 5, France Ô, France 24 và Arte. Canal Plus Calédonie vận hành 17 kênh kỹ thuật số bằng tiếng Pháp, bao gồm Canal+ và TF1. Phát sóng truyền hình analogue kết thúc vào tháng 9 năm 2011, hoàn thành chuyển đổi truyền hình số tại New Nouvelle-Calédonie. Truyền thông được cho là có thể hoạt động tự do, song Phóng viên không biên giới nêu quan ngại vào năm 2006 về việc các thành viên một nhóm ủng hộ độc lập đe doạ nhân viên RFO."
+ },
+ {
+  "qid": "0003-0039-0004",
+  "question": "Điều khó khăn của Canada khi tham gia vào các sứ mệnh nỗ lực bảo vệ quyền trẻ em là gì?",
+  "gold": [],
+  "prediction": "Canada thỉnh thoảng phải đối mặt với các tranh luận về sự dính líu của họ đến các quốc gia khác",
+  "type": "false_answer",
+  "context": "Trong Khủng hoảng Kênh đào Suez năm 1956, Thủ tướng tương lai Lester B. Pearson làm giảm căng thẳng bằng đề xuất triển khai Lực lượng gìn giữ hòa bình Liên Hiệp Quốc, do hành động này mà ông nhận được Giải Nobel Hòa bình năm 1957. Đây là sứ mệnh gìn giữ hòa bình đầu tiên của Liên Hiệp Quốc, do vậy Lester B. Pearson thường được công nhận là người sáng tạo ra khái niệm này. Kể từ đó, Canada tham gia trong 50 sứ mệnh gìn giữ hòa bình, bao gồm mọi nỗ lực gìn giữ hòa bình của Liên Hiệp Quốc cho đến năm 1989, và từ đó duy trì lực lượng trong các sứ mệnh quốc tế tại Rwanda, Nam Tư cũ, và những nơi khác; Canada thỉnh thoảng phải đối mặt với các tranh luận về sự dính líu của họ đến các quốc gia khác, đáng chú ý là trong Vụ việc Somalia năm 1993."
+ },
+ {
+  "qid": "0017-0026-0007",
+  "question": "Lực lượng nào được sự hỗ trợ Roosevelt ở các cuộc tranh cử?",
+  "gold": [],
+  "prediction": "các công đoàn",
+  "type": "false_answer",
+  "context": "Trong khi New Deal lần thứ nhất năm 1933 được đa số thành phần xã hội rộng rãi ủng hộ, New Deal lần thứ hai phải đối mặt với cộng đồng thương mại. Các đảng viên Dân chủ bảo thủ, do Al Smith lãnh đạo, đánh trả bằng cách thành lập Liên đoàn Tự do Mỹ (American Liberty League). Họ tấn công Roosevelt một cách điên cuồng và so sánh ông với Marx và Lênin. Ngược lại, các công đoàn, được thêm năng lực nhờ vào Đạo luật Wagner, đã ký tên hàng triệu thành viên mới và trở thành lực lượng hậu thuẫn lớn cho các cuộc tái tranh cử của Roosevelt vào năm 1936, 1940 và 1944."
+ },
+ {
+  "qid": "0005-0005-0003",
+  "question": "Từ khi nào natri không còn được lọc từ đáy đại dương nữa?",
+  "gold": [
+   "Kể từ khi các đại dương hình thành",
+   "từ khi các đại dương hình thành"
+  ],
+  "prediction": "khi các đại dương hình thành",
+  "type": "boundary_subset",
+  "context": "Độ mặn của nước biển đã ổn định trong nhiều triệu năm, phần lớn có lẽ là do hệ quả của các hệ thống hóa học/kiến tạo làm cho muối bị trầm lắng, chẳng hạn các trầm lắng natri và clorua bao gồm các trầm tích evaporit và các phản ứng với bazan đáy biển. Kể từ khi các đại dương hình thành thì natri không còn được lọc ra từ đáy đại dương mà nó bị giữ lại trong các lớp trầm tích che phủ lên trên đáy đại dương. Một giả thuyết khác cho rằng các mảng kiến tạo đã làm cho muối bị giam hãm phía dưới các khối đất của lục địa và ở đó nó một lần nữa lại được thấm lọc dần tới bề mặt."
+ },
+ {
+  "qid": "0001-0065-0003",
+  "question": "Hai thư viện Richelieu và François-Mitterrand có giá trị gì?",
+  "gold": [
+   "lưu trữ tư liệu quan trọng bậc nhất thế giới với khoảng 30 triệu cuốn sách gồm nhiều phiên bản gốc giá trị",
+   "nơi lưu trữ tư liệu quan trọng bậc nhất thế giới với khoảng 30 triệu cuốn sách gồm nhiều phiên bản gốc giá trị"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Thư viện quốc gia Pháp được nằm chủ yếu ở Paris, với hai địa điểm chính: \" Richelieu \" ở Quận 2 và \" François-Mitterrand \" ở Quận 13. Trong đó \" Richelieu \" là thư viện cổ, nhỏ hơn, nằm ở trung tâm, còn \" François-Mitterrand \" là một công trình kiến trúc hiện đại gồm bốn tòa nhà cao tầng ở khu Paris Rive Gauche. Đây là nơi lưu trữ tư liệu quan trọng bậc nhất thế giới với khoảng 30 triệu cuốn sách gồm nhiều phiên bản gốc giá trị. Cơ sở này trở thành nơi lưu trữ hợp pháp của nước Pháp kể từ triều vua François Đệ nhất."
+ },
+ {
+  "qid": "0006-0017-0006",
+  "question": "Các ngành kinh tế trọng điểm của Puerto Rico là gì?",
+  "gold": [],
+  "prediction": "nông nghiệp chỉ chiếm 1%, công nghiệp chiếm 45% và dịch vụ chiếm 54%",
+  "type": "false_answer",
+  "context": "Ngày nay Puerto Rico là một quốc gia có nền kinh tế cơ cấu hiện đại với nông nghiệp chỉ chiếm 1%, công nghiệp chiếm 45% và dịch vụ chiếm 54%. Ngành trồng mía đường nay đã nhường lại cho ngành chăn nuôi lấy sản phẩm từ thịt và sữa. Công nghiệp của Puerto Rico phát triển đa dạng và nhấn mạnh các ngành hóa dầu, dược phẩm và khoa học công nghệ. Du lịch là một trong những ngành dịch vụ chủ đạo của Puerto Rico với việc nước này đón tiếp 5,9 triệu lượt du khách vào năm 2007, đem lại một nguồn doanh thu lớn cho hòn đảo. Nhiều khách sạn, các khu nghỉ dưỡng, trung tâm hội thảo lớn như Trung tâm Hội nghị Puerto Rico được xây dựng đã tận dụng triệt để ưu thế du lịch của đất nước tươi đẹp này."
+ },
+ {
+  "qid": "0001-0069-0003",
+  "question": "Vị thế của phim Hollywood như thế nào tại châu Âu?",
+  "gold": [
+   "chiếm một thị phần lớn tại các rạp",
+   "chiếm một thị phần lớn tại các rạp của Paris"
+  ],
+  "prediction": "phim Hollywood chiếm một thị phần lớn tại các rạp của Paris",
+  "type": "boundary_superset",
+  "context": "Giống như những thành phố khác ở châu Âu, phim Hollywood chiếm một thị phần lớn tại các rạp của Paris. Nhưng cùng với đó là những bộ phim Pháp, những phim châu Âu khác, và cả điện ảnh châu Á cũng được trình chiếu phổ biến. Năm 2007, Paris có hơn 374 phòng chiếu phim. Số lượt người xem đã đạt tới con số hơn 30 triệu vào năm 2004. Những tập đoàn như UGC, Gaumont sở hữu các rạp ở khắp Paris. Từ 1990, các công ty này xây dựng những trung tâm chiếu phim lớn, từ 10 đến hơn 20 phòng chiếu. UGC có ba trung tâm quan trọng, tại Les Halles, Bercy và La Défense. Gaumont từng có một trong những phòng chiếu lớn nhất Paris ở quảng trường Italie, nhưng đã đóng cửa. Phòng chiếu rộng nhất thành phố hiện nay là Le Grand Rex với 2.800 chỗ ngồi. Các phòng chiếu còn lại đều nhỏ hơn 1.000 chỗ. Các địa điểm như Opéra, Champs-Élysées, Montparnasse là những trung tâm của rạp chiếu phim."
+ },
+ {
+  "qid": "0006-0007-0004",
+  "question": "Cơ quan nào cho phép Puerto Rico gửi người đại diện đến Pháp?",
+  "gold": [],
+  "prediction": "quốc hội Tây Ban Nha",
+  "type": "false_answer",
+  "context": "Cuộc chiến tranh Iberia nổ ra giữa Tây Ban Nha, Bồ Đào Nha và Anh với quân Pháp đã tạo điều kiện cho nhiều thuộc địa của Tây Ban Nha ly khai đòi độc lập. Năm 1809, Ủy ban Trung ương Tối cao tại Cadiz ra quyết định công nhận Puerto Rico là một tỉnh hải ngoại của Tây Ban Nha và đảo này có quyền gửi đại diện đến quốc hội Tây Ban Nha. Tuy nhiên chính sách tiến bộ này chỉ được thực thi trong khoảng các năm 1810-1814 và 1820-1823 rồi bãi bỏ do sự trở lại nắm quyền của triều đình quân chủ của vua Ferdinand VII. Tuy nhiên nó cũng đã góp phần nâng cao tính dân tộc của người dân hòn đảo."
+ },
+ {
+  "qid": "0018-0006-0003",
+  "question": "Thách thức của kinh tế Uganda vào năm 2011 là gì?",
+  "gold": [
+   "sự bất ổn định ở Nam Sudan"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Gần đây Uganda đã bắt đầu phát hiện ra dầu mỏ. Tuy nhiên Uganda vẫn chưa tiến hành một cuộc khảo sát khoáng sản có quy mô nào. Nông nghiệp là ngành quan trọng nhất trong nền kinh tế thu hút 80% lao động. Cà phê là nguồn thu xuất khẩu chính. Với sự trợ giúp của các nước và tổ chức nước ngoài, chính phủ Uganda đã nỗ lực phục hồi và ổn định nền kinh tế thông qua các biện pháp như cải cách chính sách tiền tệ, tăng giá các sản phẩm xăng dầu và cải thiện lương công chức nhà nước. Các thay đổi về chính sách này nhằm mục đích kiểm soát lạm phát, thúc đẩy xuất khẩu và tăng nguồn thu từ xuất khẩu. Trong giai đoạn 1900 – 2001, nền kinh tế Uganda tăng trưởng khá ổn định, tiếp tục đầu tư vào cơ sở hạ tầng, thúc đẩy sản xuất phục vụ xuất khẩu, ổn định an ninh trong nước…Khoản tiền Uganda đã được các nước cam kết xóa nợ là khoảng 2 tỷ USD. Khủng hoảng kinh tế toàn cầu đã ảnh hưởng đến xuất khẩu của Uganda nhưng tăng trưởng GDP của quốc gia này vẫn tương đối cao nhờ một loạt cải cách và khả năng kiểm soát khủng hoảng. Doanh thu từ dầu và thuế sẽ là các nguồn thu quan trọng của Uganda khi mà dầu sẽ được đi vào khai thác trong một vài năm tới. Tuy nhiên sự bất ổn định ở Nam Sudan sẽ là một trở ngại đối với nền kinh tế Uganda trong năm 2011 do đối tác xuất khẩu chính của Uganda là Sudan và đây còn là một địa điểm quan trọng của các trại tị nạn cho người dân Sudan."
+ },
+ {
+  "qid": "0006-0001-0003",
+  "question": "Peurto Rico thuộc về cường quốc nào?",
+  "gold": [
+   "Hoa Kỳ"
+  ],
+  "prediction": "Thịnh vượng chung",
+  "type": "wrong_span",
+  "context": "Puerto Rico (phiên âm tiếng Việt: Pu-éc-tô Ri-cô), tên gọi chính thức là Thịnh vượng chung Puerto Rico (tiếng Tây Ban Nha: Estado Libre Asociado de Puerto Rico) là một vùng quốc hải thuộc chủ quyền của Hoa Kỳ nhưng chưa được hợp nhất vào Hoa Kỳ. Puerto Rico nằm ở phía đông bắc vùng biển Caribbean, phía đông nước Cộng hòa Dominicana và phía tây Quần đảo Virgin. Lãnh thổ Puerto Rico bao gồm một quần đảo trong đó bao gồm đảo chính Puerto Rico và nhiều đảo nhỏ hơn xung quanh, lớn nhất là các đảo Vieques, Culebra và Mona. Trong nhóm 4 đảo Đại Antilles (bao gồm các đảo Cuba, Hispaniola, Jamaica và Puerto Rico), Puerto Rico là hòn đảo có diện tích nhỏ nhất nhưng lại đứng thứ ba về dân số. Tính đến năm 2008, dân số của Puerto Rico ước tính khoảng gần 4 triệu người."
+ },
+ {
+  "qid": "0013-0002-0003",
+  "question": "Các đề nghị có trong đơn thỉnh nguyện cho nhà vua là gì?",
+  "gold": [
+   "huỷ bỏ việc bắt buộc vay tiền và đóng quân tại nhà dân, đồng thời cũng xác nhận rằng quốc hội có quyền giới hạn các quyền lực của nhà vua"
+  ],
+  "prediction": "huỷ bỏ việc bắt buộc vay tiền và đóng quân tại nhà dân",
+  "type": "boundary_subset",
+  "context": "Năm 1628, vua Charles triệu tập quốc hội thứ ba và sự thù nghịch giữa nhà vua với quốc hội càng tăng thêm rõ ràng. Quốc hội thứ ba đã xác nhận lời trách cứ của họ đối với các yêu sách bất hợp pháp của nhà vua, buộc ông phải nhận đơn thỉnh nguyện trong đó liệt kê \"các quyền lợi khác nhau và các tự do của thần dân\". Đơn thỉnh nguyện về quyền lợi này đề nghị huỷ bỏ việc bắt buộc vay tiền và đóng quân tại nhà dân, đồng thời cũng xác nhận rằng quốc hội có quyền giới hạn các quyền lực của nhà vua. Để có tiền, vua Charles I đã ký nhận đơn thỉnh nguyện rồi về sau, do cảm thấy bị mất thể diện, ông đã giải tán quốc hội thứ ba năm 1629 và trong vòng 11 năm tiếp theo, ông trị vì mà không triệu tập quốc hội nữa. Cũng trong thời gian này, ông không thèm đếm xỉa tới các lời thỉnh cầu và với một số cận thần. Ông còn nghĩ đền nhiều cách gây quỹ làm mất lòng dân, chẳng hạn như để trang bị một hạm đội, nhà vua đòi thần dân nộp \"tiền đóng tàu\" (ship money) và coi đây không phải là một thứ thuế. Thần dân Anh đã phản kháng việc này và trong số đó có ông John Hampden đã từ chối nộp 20 bảng Anh và đã táo bạo đưa vấn đề ra toà án để tranh cãi."
+ },
+ {
+  "qid": "0004-0014-0004",
+  "question": "Những thông tin trong văn bản được Iraq nhận định là những chứng cứ cho sự việc nào?",
+  "gold": [
+   "một âm mưu của CIA và Kuwait nhằm làm mất ổn định kinh tế và chính trị Iraq",
+   "âm mưu của CIA và Kuwait nhằm làm mất ổn định kinh tế và chính trị Iraq"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Tháng 11 năm 1989, giám đốc CIA William Webster gặp gỡ lãnh đạo cơ quan an ninh Kuwait, Thiếu tướng Fahd Ahmed Al-Fahd. Sau khi Iraq xâm chiếm Kuwait, Iraq tuyên bố đã tìm thấy một bản ghi nhớ liên quan tới cuộc trao đổi giữa họ. Tờ The Washington Post đã thông báo rằng Bộ trưởng Ngoại giao Kuwait đã ngất xỉu khi trông thấy tài liệu này trong một cuộc họp thượng đỉnh Ả Rập vào tháng 8. Sau này, Iraq cho rằng bản ghi nhớ này là bằng chứng về một âm mưu của CIA và Kuwait nhằm làm mất ổn định kinh tế và chính trị Iraq. CIA và Kuwait đã miêu tả cuộc gặp gỡ này là một cuộc gặp thông thường và bản ghi nhớ chỉ là một sự giả mạo. Một phần của văn bản đó như sau:"
+ },
+ {
+  "qid": "0017-0055-0002",
+  "question": "Mục tiêu của chiến lược \"nhảy đảo\" trong vùng Hoa Kỳ là gì?",
+  "gold": [],
+  "prediction": "giành lấy các căn cứ mà từ đó không lực chiến lược có thể được đưa vào phục vụ để oanh tạc đất Nhật Bản, và từ đó có thể tiến công xâm chiếm Nhật Bản sau này",
+  "type": "false_answer",
+  "context": "Trong khi đó tại Thái Bình Dương, cuộc tiến công của Nhật Bản đã lên đến phạm vi cực điểm vào tháng 6 năm 1942 khi Hải quân Hoa Kỳ đã ghi được một chiến thắng mang tính định đoạt trong Trận Midway. Khi đó, các lực lượng Úc và Mỹ bắt đầu có tiến bộ tuy đắt giá và chậm chạp bằng chiến thuật được gọi là \"nhảy đảo\" trong vùng Thái Bình Dương. Mục tiêu của chiến thuật này là giành lấy các căn cứ mà từ đó không lực chiến lược có thể được đưa vào phục vụ để oanh tạc đất Nhật Bản, và từ đó có thể tiến công xâm chiếm Nhật Bản sau này. Roosevelt đã nhượng bộ một phần đối với những đòi hỏi trước sau như một của công chúng và Quốc hội là phải tận lực hơn trong việc chống Nhật Bản trong khi ông luôn một mực muốn đánh bại Đức trước."
+ },
+ {
+  "qid": "0001-0028-0003",
+  "question": "Hình ảnh Paris đối với các nước trên thế giới như thế nào sau thế chiến II?",
+  "gold": [
+   "một biểu tượng của sự hòa giải"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Năm 1956, Paris trở thành thành phố sinh đôi của Roma, như một biểu tượng của sự hòa giải sau Chiến tranh thế giới thứ hai. Trong nhiệm kỳ của tổng thống Charles de Gaulle, từ 1958 tới 1969, nhiều sự kiện chính trị đã diễn ra ở thủ đô. Ngày 17 tháng 10 năm 1961, một cuộc biểu tình cho nền độc lập của Algérie bị cảnh sát đàn áp, ước tính 32 tới 325 người chết. Từ ngày 22 tháng 3 năm 1968, một phong trào sinh viên, bắt đầu từ Đại học Nanterre lan dần tới khu phố La Tinh trở thành một vụ bạo loạn. Đỉnh điểm ngay 13 tháng 5, một cuộc biểu tình với 800.000 người chống lại cảnh sát. Phải sau hai tháng, tình hình mới yên tĩnh trở lại."
+ },
+ {
+  "qid": "0017-0006-0002",
+  "question": "Tại hôn lễ của Fraklin và Eleanor, Theodore xuất hiện với vai trò gì?",
+  "gold": [
+   "người thay mặt người cha đã quá cố của cô dâu",
+   "như là người thay mặt người cha đã quá cố của cô dâu"
+  ],
+  "prediction": "thay mặt người cha đã quá cố của cô dâu",
+  "type": "boundary_subset",
+  "context": "Roosevelt quyết định kết hôn với Eleanor trước sự chống đối quyết liệt của mẹ FDR. Hôn lễ tổ chức ngày 17 tháng 3 năm 1905 có sự hiện diện của Theodore Roosevelt như là người thay mặt người cha đã quá cố của cô dâu. Cặp vợ chồng mới cưới dọn đến sống trong ngôi nhà do mẹ của Roosevelt mua tặng. Bà thường xuyên đến thăm họ, nhiều đến nỗi khiến Eleanor mệt mỏi. Roosevelt là một chàng trai tuấn tú, tài hoa và giỏi giao tiếp. Ngược lại, Eleanor kín đáo và không thích đời sống xã hội, lúc đầu cô chỉ muốn chăm sóc nhà cửa và nuôi dạy con cái. Họ có sáu người con:"
+ },
+ {
+  "qid": "0009-0018-0001",
+  "question": "Gaston Defferre là ai?",
+  "gold": [
+   "đối thủ của ông trong SFIO"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Năm 1965, Mitterrand là chính trị gia cánh tả đầu tiên coi cuộc bầu cử tổng thống theo phổ thông đầu phiếu là một cách thức để đánh bại lãnh đạo đối lập. Không phải là một thành viên của bất kỳ một đảng chính trị rõ ràng nào, tư cách ứng viên tổng thống của ông được mọi đảng cánh tả chấp nhận (Quốc tế Công nhân Pháp (SFIO), Đảng Cộng sản Pháp (PCF), Đảng Xã hội cấp tiến (PR) và Đảng Xã hội Thống nhất (PSU)). Ông chấm dứt cordon sanitaire của PCF mà đảng là một đối tượng từ năm 1947. Với lãnh đạo SFIO Guy Mollet, tư cách ứng cử viên tổng thống của Mitterrand đã ngăn cản được Gaston Defferre, đối thủ của ông trong SFIO, khỏi chạy đua chức tổng thống. Hơn nữa, Mitterrand là một nhân vật đơn độc nên ông không có vẻ là một mối đe doạ với các thành viên của các đảng cánh tả."
+ },
+ {
+  "qid": "0012-0004-0005",
+  "question": "Gandhi sinh ra và lớn lên trong một môi trường như thế nào?",
+  "gold": [
+   "Lớn lên với một bà mẹ sùng tín Tì-thấp-nô trong một môi trường được ảnh hưởng bởi những người theo Kì-na giáo tại Gujarat",
+   "môi trường được ảnh hưởng bởi những người theo Kì-na giáo"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Lớn lên với một bà mẹ sùng tín Tì-thấp-nô trong một môi trường được ảnh hưởng bởi những người theo Kì-na giáo tại Gujarat, Gandhi sớm cảm nhận nguyên tắc bất hại, ăn chay, phương pháp nhịn ăn để thanh lọc tâm thức cũng như sự khoan dung lẫn nhau của các tín đồ và tông phái. Ông sinh ra trong giai cấp thứ ba của xã hội Ấn là Phệ-xá (sa. vaiśya, giai cấp thương gia). Tháng 5 năm 1882, vào tuổi 13, ông cưới cô Kasturba Makharji, 14 tuổi, qua một sự mai mối. Hai ông bà sau có bốn con trai: Harilal Gandhi, sinh năm 1888; Manilal Gandhi, sinh năm 1892; Ramdas Gandhi; sinh năm 1897 và Devdas Gandhi, sinh năm 1900."
+ },
+ {
+  "qid": "0002-0001-0006",
+  "question": "Trước khi ông Jean-Francois de Galaup phát hiện ra Nouvelle-Calédonie thì ai đã tìm thấy nó?",
+  "gold": [
+   "James Cook"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Nhà thám hiểm người Anh James Cook là người châu Âu đầu tiên trông thấy Nouvelle-Calédonie, đó là vào ngày 4 tháng 9 năm 1774 trong hành trình thứ nhì của ông. Ông đặt tên cho đảo là \"New Caledonia\", do phần đông bắc của đảo khiến ông nhớ đến Scotland. Nhà thám hiểm người Pháp Jean-François de Galaup tiếp cận duyên hải phía tây của Grande Terre vào năm 1788, ngay trước khi ông mất tích, còn quần đảo Loyauté có người châu Âu lần đầu đến thăm vào năm 1796. Từ sau đó cho đến năm 1840, chỉ ghi nhận được một vài tiếp xúc không thường xuyên với quần đảo. Tiếp xúc trở nên thường xuyên hơn sau năm 1840, do mối quan tâm đến gỗ đàn hương từ Nouvelle-Calédonie."
+ },
+ {
+  "qid": "0006-0017-0001",
+  "question": "Để khai thác tối ta tiềm năng du lịch thì chính quyền đã đầu tư xây dựng những công trình gì?",
+  "gold": [
+   "Nhiều khách sạn, các khu nghỉ dưỡng, trung tâm hội thảo lớn"
+  ],
+  "prediction": "Nhiều khách sạn, các khu nghỉ dưỡng, trung tâm hội thảo lớn như Trung tâm Hội nghị Puerto Rico",
+  "type": "boundary_superset",
+  "context": "Ngày nay Puerto Rico là một quốc gia có nền kinh tế cơ cấu hiện đại với nông nghiệp chỉ chiếm 1%, công nghiệp chiếm 45% và dịch vụ chiếm 54%. Ngành trồng mía đường nay đã nhường lại cho ngành chăn nuôi lấy sản phẩm từ thịt và sữa. Công nghiệp của Puerto Rico phát triển đa dạng và nhấn mạnh các ngành hóa dầu, dược phẩm và khoa học công nghệ. Du lịch là một trong những ngành dịch vụ chủ đạo của Puerto Rico với việc nước này đón tiếp 5,9 triệu lượt du khách vào năm 2007, đem lại một nguồn doanh thu lớn cho hòn đảo. Nhiều khách sạn, các khu nghỉ dưỡng, trung tâm hội thảo lớn như Trung tâm Hội nghị Puerto Rico được xây dựng đã tận dụng triệt để ưu thế du lịch của đất nước tươi đẹp này."
+ },
+ {
+  "qid": "0001-0054-0004",
+  "question": "Điểm ít nổi bật trong cảnh quan thành phố Paris là gì?",
+  "gold": [],
+  "prediction": "các công trình quan trọng, cả cổ và hiện đại",
+  "type": "false_answer",
+  "context": "Có thể nhận thấy ở Paris, các công trình quan trọng, cả cổ và hiện đại, đều là những điểm nhấn trong quang cảnh của thành phố. Quy hoạch đô thị của Paris cho phép có thể ngắm nhìn các công trình này từ rất xa. Đứng ở quảng trường Italie, nhìn dọc theo đại lộ Gobelins có thể thấy điện Panthéon. Từ điện Panthéon nhìn dọc phố Soufflot về phía vườn Luxembourg sẽ thấy tháp Eiffel. Khu vực tốt nhất để ngắm nhìn tháp Eiffel là sân giữa của Palais de Chaillot, cạnh quảng trường Trocadéro. Nếu đứng ở chân tháp Eiffel, bãi cỏ Champ-de-Mars, nhìn về phía École militaire sẽ thấy tháp Montparnasse. Đứng trước nhà thờ Madeleine nhìn về phía sông Seine sẽ thấy cột đá Obélisque ở giữa quảng trường Concorde, và bên kia sông là Palais Bourbon. Từ điện Invalides nhìn dọc cầu Alexandre-III có thể thấy Grand Palais và Petit Palais ở hai bên đại lộ Winston-Churchill..."
+ },
+ {
+  "qid": "0012-0011-0005",
+  "question": "Ai là lãnh đạo được tôn kính nhất của đảng Quốc dân Nam Phi lúc bấy giờ?",
+  "gold": [],
+  "prediction": "Gopal Krishna Gokhale",
+  "type": "false_answer",
+  "context": "Như đã thực hiện trong cuộc chiến Nam Phi, Gandhi khuyến khích việc ủng hộ người Anh trong cuộc chiến (Chiến tranh thế giới thứ nhất) và chủ động khích lệ người Ấn tham gia quân đội. Khác với quan niệm của nhiều người khác, cách biện luận duy lý của ông cho trường hợp này là quyền công dân đầy đủ, tự do và quyền lợi trong Đế quốc Anh, và như vậy thì việc giúp nó phòng vệ không có gì sai. Ông thuyết trình trước Quốc dân Đại hội Ấn Độ, nhưng phần lớn là chính ông được hướng dẫn vào những chủ đề Ấn Độ, chính trị và công chúng Ấn qua Gopal Krishna Gokhale, nhà lãnh đạo được tôn trọng nhất của đảng Quốc dân Đại hội bấy giờ."
+ },
+ {
+  "qid": "0004-0031-0004",
+  "question": "Quân Taliban đã sử dụng chiến lược gì trong Chiến tranh Afghanistan?",
+  "gold": [
+   "quân Taliban rút lui khỏi những vùng đất rộng lớn về giữ những cứ điểm mạnh của họ",
+   "rút lui khỏi những vùng đất rộng lớn về giữ những cứ điểm mạnh"
+  ],
+  "prediction": "rút lui khỏi những vùng đất rộng lớn về giữ những cứ điểm mạnh của họ. Điều này giúp tăng cường tập trung quân đội và giảm bớt khoảng cách tiếp tế",
+  "type": "boundary_overlap",
+  "context": "Chiến dịch không quân có một tác động rõ nét trên các mưu mẹo mà các bên xung đột về sau này sử dụng. Họ không tập trung quân đội để đối mặt với quân Mỹ mà phân tán các sư đoàn ra, ví dụ Các lực lượng Serbia tại Kosovo. Các bên tham chiến cũng giảm bớt khoảng cách tiếp tế hậu cần và diện tích vùng bảo vệ. Điều này đã được thấy trong Chiến tranh Afghanistan khi quân Taliban rút lui khỏi những vùng đất rộng lớn về giữ những cứ điểm mạnh của họ. Điều này giúp tăng cường tập trung quân đội và giảm bớt khoảng cách tiếp tế. Chiến thuật này cũng được sử dụng trong cuộc tấn công của Iraq khi các lực lượng Iraq rút lui khỏi miền bắc Kurdistan thuộc Iraq vào trong các thành phố."
+ },
+ {
+  "qid": "0017-0066-0003",
+  "question": "Paul Joseph Göbbels đã làm gì sau khi hay tin Roosevelt qua đời?",
+  "gold": [
+   "nghĩ rằng năm 1945 sẽ là năm phát xít Đức lấy lại thế thượng phong",
+   "ra lệnh cho mang rượu sâm-banh đến và còn gọi điện đến Quốc trưởng Adolf Hitler",
+   "Ông ta ra lệnh cho mang rượu sâm-banh đến và còn gọi điện đến Quốc trưởng Adolf Hitler"
+  ],
+  "prediction": "Bộ trưởng Bộ Tuyên truyền Đức Quốc xã là Paul Joseph Göbbels trở nên vui sướng",
+  "type": "boundary_overlap",
+  "context": "Cái chết của Roosevelt đã gây sốc và thương tiếc khắp toàn quốc Hoa Kỳ cũng như khắp thế giới. Công chúng đã không hay biết gì về sức khỏe ngày càng sa sút của ông trước đó. Roosevelt đã làm tổng thống trên 12 năm, dài hơn hẳn bất cứ vị tổng thống nào. Ông đã dẫn dắt Hoa Kỳ vượt qua một số các cuộc khủng hoảng lớn nhất của Hoa Kỳ cho đến khi Đức Quốc xã gần như bị đánh bại và sự bại trận của Nhật Bản cũng đang trong tầm nhìn thấy được. Khi hay tin Roosevelt qua đời thì Bộ trưởng Bộ Tuyên truyền Đức Quốc xã là Paul Joseph Göbbels trở nên vui sướng, ông ta nghĩ rằng năm 1945 sẽ là năm phát xít Đức lấy lại thế thượng phong (xem thêm bài Phép lạ của Nhà Brandenburg). Ông ta ra lệnh cho mang rượu sâm-banh đến và còn gọi điện đến Quốc trưởng Adolf Hitler:"
+ },
+ {
+  "qid": "0014-0008-0003",
+  "question": "Hoàng đế nào được sinh ra sớm nhất?",
+  "gold": [
+   "Leopold I"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Trong thâm tâm, Leopold I (1640-1705) và hai người con kế vị ông, Joseph I (1705-1711 - người đương thời với hai vị vua nổi tiếng ở châu Âu: Pyotr I của Nga tức Pyotr Đại đế và vua Louis XIV của Pháp) và Karl VI (1711-1740), đều không tin rằng nền hành chính hỗn độn là khiếm khuyết cốt lõi của đế quốc họ trị vì. Trải qua gần một thế kỷ, cả ba vị hoàng đế đều cho rằng việc quản trị hành chính chỉ là thứ yếu so với đức tin vào Thượng đế và sự ủng hộ của Công giáo. Nếu Thượng đế hài lòng với họ, Người sẽ phù hộ cho Hoàng tộc này mãi trường tồn và phồn vinh. Đây là cơ sở cho lý thuyết chính trị và phương thức quản trị khác đời của họ: ngai vàng và đế quốc đã được Thượng đế định đoạt. Đây là một trong những nguyên nhân chính khiến đế quốc suy thoái sau này. [cần dẫn nguồn]"
+ },
+ {
+  "qid": "0014-0003-0001",
+  "question": "Hình thức tổ chức của đế quốc La Mã Thần thánh là gì?",
+  "gold": [
+   "không phải là một quốc gia liên bang và cũng không phải là một liên minh của nhiều quốc gia"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Quyền lực cai trị của đế quốc không nằm hoàn toàn trong tay của hoàng đế mà cũng không nằm hoàn toàn trong tay của các tuyển hầu tước hay của một tập thể như Quốc hội Đế chế. Đế quốc không phải là một quốc gia liên bang và cũng không phải là một liên minh của nhiều quốc gia. Đế quốc không phải là một đất nước do tầng lớp quý tộc cai trị nhưng cũng không nằm trong tay của một tập đoàn cai trị. Mặc dù vậy, Đế quốc lại kết hợp những đặc điểm của các hình thức quốc gia này. Lịch sử của Đế quốc mang nhiều ảnh hưởng của cuộc tranh cãi về tính chất của nó."
+ },
+ {
+  "qid": "0019-0010-0002",
+  "question": "Những loại người đi quanh bình nguyên cùng những con bò mà được Francisco Vasquez de Coronado miêu tả là những loại người nào?",
+  "gold": [
+   "một được gọi là Querechos và dân tộc kia là Teyas"
+  ],
+  "prediction": "họ rất cường tráng, hóa trang, và là những kẻ thù của nhau",
+  "type": "boundary_overlap",
+  "context": "Francisco Vasquez de Coronado miêu tả cuộc chạm trán vào năm 1541 của ông với \"Hai loại người đi quanh các bình nguyên này cùng những con bò; một được gọi là Querechos và dân tộc kia là Teyas; họ rất cường tráng, hóa trang, và là những kẻ thù của nhau. Họ không có khu định cư hay khu đất chuẩn bị sẵn mà chỉ đi vòng quanh cùng những con bò. Họ sát hại tất cả những thứ mà họ muốn, và thuộc da dùng để che thân và làm lều, và họ ăn thịt, thậm chí đôi khi là ăn sống, họ thậm chí cũng uống máu khi khát...\""
+ },
+ {
+  "qid": "0006-0009-0001",
+  "question": "Trong Thế chiến I, tầng lớp nào ở Puerto Rico cùng với quân đội Mỹ chiến đấu?",
+  "gold": [
+   "thanh niên",
+   "thanh niên Puerto"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Đầu thế kỉ 20, Puerto Rico nằm dưới sự cai trị của quân đội Mỹ và thống đốc Puerto Rico đều là người được Tổng thống Mỹ chỉ định. Năm 1900, Đạo luật Foraker cho phép Puerto Rico có một số quyền lập chính phủ dân sự gồm có hạ viện do dân bầu. Đến năm 1917, Đạo luật Jones-Shafroth trao quyền công dân Mỹ cho người Puerto Rico cũng như cho phép lập ra thượng viện do dân bầu để Puerto Rico có đầy đủ một quốc hội lưỡng viện của riêng mình. Với quyền công dân Mỹ, nhiều thanh niên Puerto Rico đã tham gia quân đội Mỹ trong Chiến tranh thế giới thứ nhất và những cuộc chiến của Mỹ sau đó nữa."
+ },
+ {
+  "qid": "0012-0026-0003",
+  "question": "Gandhi bị những ai phản đối?",
+  "gold": [
+   "một số người trong Quốc hội và một số nhóm chính trị khác - thuộc cả hai mặt, theo Anh và chống Anh"
+  ],
+  "prediction": "một số người trong Quốc hội và một số nhóm chính trị khác - thuộc cả hai mặt, theo Anh và chống Anh - chỉ trích",
+  "type": "boundary_superset",
+  "context": "Đây là sự phản đối quyết định nhất, cực lực nhất của Gandhi và đảng Quốc dân Đại hội với mục tiêu xác nhận việc người Anh rời nước Ấn. Gandhi bị một số người trong Quốc hội và một số nhóm chính trị khác - thuộc cả hai mặt, theo Anh và chống Anh - chỉ trích. Một số người cho rằng, đối lập người Anh trong thời đoạn chiến đấu sinh tử của họ là một việc phi đạo đức trong khi một số người khác lại cho rằng Gandhi chưa thực hiện đủ yêu cầu. Nhiều đảng chính trị phản đối lời kêu gọi của Gandhi. Ngoài sức khoẻ và tuổi tác ra, đây có lẽ là bước tiến dẫn cuối cùng của Gandhi."
+ },
+ {
+  "qid": "0003-0022-0004",
+  "question": "Kể tên các cuộc khủng hoàng quy mô lớn làm xáo trộn xã hội Canada vào cuối thập niên 1980?",
+  "gold": [
+   "Chúng gồm có Chuyến bay 182 của Air India phát nổ vào năm 1985, vụ mưu sát hàng loạt lớn nhất trong lịch sử Canada; Thảm sát trường Bách khoa École vào năm 1989, một vụ xả súng đại học với mục tiêu là các nữ sinh; và Khủng hoảng Oka năm 1990",
+   "Khủng hoảng Oka"
+  ],
+  "prediction": "Chuyến bay 182 của Air India phát nổ vào năm 1985, vụ mưu sát hàng loạt lớn nhất trong lịch sử Canada; Thảm sát trường Bách khoa École vào năm 1989, một vụ xả súng đại học với mục tiêu là các nữ sinh; và Khủng hoảng Oka năm 1990",
+  "type": "boundary_subset",
+  "context": "Ngoài vấn đề chủ quyền của Québec, một số cuộc khủng hoảng làm náo động xã hội Canada vào cuối thập niên 1980 và đầu thập niên 1960. Chúng gồm có Chuyến bay 182 của Air India phát nổ vào năm 1985, vụ mưu sát hàng loạt lớn nhất trong lịch sử Canada; Thảm sát trường Bách khoa École vào năm 1989, một vụ xả súng đại học với mục tiêu là các nữ sinh; và Khủng hoảng Oka năm 1990, là diễn biến đầu tiên trong một loạt các xung đột bạo lực giữa chính phủ và các nhóm Thổ dân. Canada tham gia trong Chiến tranh Vùng Vịnh năm 1990 với vị thế là một phần trong lực lượng liên minh do Hoa Kỳ lãnh đạo, và hoạt động trong một số sứ mệnh gìn giữ hòa bình trong thập kỷ 1990, bao gồm sứ mệnh UNPROFOR tại Nam Tư cũ. Canada cử quân đến Afghanistan vào năm 2001, song từ chối tham gia cuộc xâm chiếm Iraq do Hoa Kỳ dẫn đầu vào năm 2003. Năm 2009, kinh tế Canada chịu tổn thất trong Đại suy thoái toàn cầu, song đã phục hồi một cách khiêm tốn. Năm 2011, các lực lượng của Canada tham gia vào cuộc can thiệp do NATO dẫn đầu trong Nội chiến Libya."
+ },
+ {
+  "qid": "0015-0038-0005",
+  "question": "Hiện nay thì lama Choijing Lamiin Sume đang được sử dụng làm gì?",
+  "gold": [
+   "bảo tàng"
+  ],
+  "prediction": "một bảo tàng",
+  "type": "boundary_superset",
+  "context": "Chultem phân biệt ba kiểu kiến trúc truyền thống Mông Cổ: Mông Cổ, Tây Tạng và Trung Quốc và kiểu kết hợp. Trong số những đền dạng bậc hai đầu tiên có Batu-Tsagaan (1654) được thiết kế bởi Zanabazar. Một ví dụ về phong cách kiến trúc yurt là lama Dashi-Choiling tại Ulan Bator. Đền Lavrin (thế kỷ XVIII) tại lama Erdene Zuu được xây dựng theo truyền thống Tây Tạng. Một ví dụ về đền được xây dựng theo truyền thống Trung Quốc là lama Choijing Lamiin Sume (1904), ngày nay là một bảo tàng. Đền bậc hai Tsogchin tại lama Gandan ở Ulan Bator là một sự tổng hợp truyền thống Mông Cổ và Trung Quốc. Đền Maitreya (đã bị dỡ ra năm 1938) là một ví dụ về kiến trúc Tây Tạng-Mông Cổ. Tu viện Dashi-Choiling đã bắt đầu motọ dự án xây dựng lại đền và 80 ft điêu khắc Maitreya."
+ },
+ {
+  "qid": "0001-0048-0001",
+  "question": "Số lượng sinh viên tập trung ở vùng Île-de-France lớn cỡ nào?",
+  "gold": [
+   "600.000 sinh viên, chiếm hơn một phần tư số sinh viên ở Pháp",
+   "chiếm hơn một phần tư số sinh viên ở Pháp"
+  ],
+  "prediction": "khoảng 600.000 sinh viên",
+  "type": "boundary_overlap",
+  "context": "Năm 2004, toàn vùng Île-de-France có tổng cộng khoảng 600.000 sinh viên, chiếm hơn một phần tư số sinh viên ở Pháp. Trong đó, một nửa sinh viên thuộc các trường nội thành Paris. Cơ quan về đời sống sinh viên, CROUS của Paris có 600 nhân viên làm việc, với ngân sách 70 triệu euro. CROUS Paris quản lý 30 ký túc xá, 16 căng tin và 20 quán cà phê sinh viên cùng một trung tâm thể thao, một trung tâm văn hóa và một phòng triển lãm. Cư xá đại học lớn nhất Paris là Cité internationale universitaire gồm 40 tòa nhà với 5.000 chỗ. Ngoài ra, các khu vực còn lại của Île-de-France do CROUS Créteil và CROUS Versailles quản lý."
+ },
+ {
+  "qid": "0001-0030-0002",
+  "question": "Đặc điểm nổi bật của kinh tế Los Angeles là gì?",
+  "gold": [
+   "ngành công nghiệp giải trí"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Hoạt động kinh tế ở khu vực Paris cũng đa dạng, không đặc trưng giống các thành phố kinh tế lớn khác như Los Angeles với ngành công nghiệp giải trí, hay Luân Đôn và New York với lĩnh vực tài chính. Theo số liệu của INSEE vào 31 tháng 12 năm 2004, vùng Île-de-France có 18.548 người làm việc trong lĩnh vực nông nghiệp, công nghiệp có 847.802 lao động, còn các ngành dịch vụ chiếm đến 4.476.415 người. Tuy nông nghiệp chiếm tới 50% diện tích đất của toàn vùng, nhưng số nông dân chỉ là 7.600 người. Vào năm 2002, tổng sản phẩm nông nghiệp của Île-de-France đạt 750 triệu euro. Ở công nghiệp, con số đó là 67,25 tỷ euro với các lĩnh vực chủ yếu như: sản xuất hàng tiêu dùng, xây dựng, xe hơi, năng lượng... Còn ngành dịch vụ lên tới 328,225 tỷ euro, tương đương 82,8%."
+ },
+ {
+  "qid": "0015-0009-0007",
+  "question": "Sự tranh chấp quyền lực tại Mông Cổ với điển hình là sự tranh chấp của các thế lực nào?",
+  "gold": [
+   "dòng hậu duệ Thành Cát Tư Hãn và người Ngõa Lạt không phải hậu duệ của ông",
+   "giữa dòng hậu duệ Thành Cát Tư Hãn và người Ngõa Lạt không phải hậu duệ của ông (người Mông Cổ Tây)"
+  ],
+  "prediction": "dòng hậu duệ Thành Cát Tư Hãn và người Ngõa Lạt không phải hậu duệ của ông (người Mông Cổ Tây),",
+  "type": "boundary_subset",
+  "context": "Sau khi các quân chủ nhà Nguyên bị trục xuất khỏi Trung Quốc, người Mông Cổ tiếp tục cai trị quê hương Mông Cổ, gọi là Bắc Nguyên. Trong các thế kỷ sau, diễn ra tranh chấp quyền lực bạo lực giữa các phái khác nhau, đáng chú ý là giữa dòng hậu duệ Thành Cát Tư Hãn và người Ngõa Lạt không phải hậu duệ của ông (người Mông Cổ Tây), ngoài ra còn có một số cuộc xâm chiếm của Trung Quốc như Minh Thành Tổ từng tiến hành năm cuộc chinh phạt người Mông Cổ. Đến đầu thế kỷ XV, người Ngõa Lạt dưới quyền Dã Tiên thái sư giành được ưu thế, và tấn công Trung Quốc vào năm 1449. Quân của Dã Tiên từng bắt được Minh Anh Tông trong sự biến Thổ Mộc bảo. Đến khi Dã Tiên bị ám sát vào năm 1454, dòng hậu duệ của Thành Cát Tư Hãn giành lại quyền lực."
+ },
+ {
+  "qid": "0003-0048-0003",
+  "question": "Tỉnh nào có số người sử dụng tiếng anh đứng thứ hai Canada?",
+  "gold": [
+   "Ontario"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Hiến chương Pháp ngữ 1977 xác định tiếng Pháp là ngôn ngữ chính thức của Québec. Mặc dù hơn 85% số người Canada nói tiếng Pháp sống tại Québec, song cũng có dân số Pháp ngữ đáng kể tại Ontario, Alberta, và nam bộ Manitoba; Ontario là tỉnh có nhiều dân số Pháp ngữ nhất bên ngoài Québec. New Brunswick là tỉnh chính thức song ngữ duy nhất, có cộng đồng thiểu số Acadia nói tiếng Pháp chiếm 33% dân số. Cũng có các nhóm người Acadia tại tây nam bộ Nova Scotia, trên đảo Cape Breton, và qua trung bộ và tây bộ đảo Prince Edward."
+ },
+ {
+  "qid": "0017-0033-0006",
+  "question": "Trong cuộc tranh cử tổng thống năm 1936, Roosevelt đã dựa vào lợi thế gì để tranh cử với Alf Landon?",
+  "gold": [
+   "các chương trình New Deal",
+   "các chương trình New Deal của ông",
+   "dựa vào các chương trình New Deal của ông"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Trong cuộc bầu cử tổng thống năm 1936, Roosevelt vận động tranh cử dựa vào các chương trình New Deal của ông chống lại đối thủ Alf Landon, Thống đốc tiểu bang Kansas, là người chấp nhận phần lớn chương trình New Deal nhưng phản bác rằng nó không có lợi cho doanh nghiệp và quá nhiều lãng phí. Roosevelt và Garner chiến thắng với tỉ lệ 60,8% phiếu bầu phổ thông và chiến thắng gần như ở tất cả các tiểu bang, trừ Maine và Vermont. Các đảng viên Dân chủ cũng thắng lớn, thậm chí trở thành khối đa số lớn hơn tại cả hai viện lập pháp của Quốc hội. Roosevelt được hậu thuẫn bởi một liên minh cử tri gồm các đảng viên Dân chủ truyền thống trên toàn quốc, các nông gia nhỏ, cư dân miền Nam Hoa Kỳ, người công giáo La Mã, các cỗ máy thành phố lớn, các liên đoàn lao động, người Mỹ gốc châu Phi ở miền bắc, người Do Thái, giới trí thức và người theo chủ nghĩa tự do chính trị. Liên minh này thường được gọi là Liên minh New Deal, phần lớn không thay đổi sự hậu thuẫn cho đảng Dân chủ cho đến thập niên 1960."
+ },
+ {
+  "qid": "0004-0029-0001",
+  "question": "Lô cốt Amiriyah được trang bị những gì để tạo các loại sát thương thông thường?",
+  "gold": [],
+  "prediction": "vô tuyến, vòi nước uống, máy phát điện riêng, và trông đủ vững chắc",
+  "type": "false_answer",
+  "context": "Chúng tôi đã tìm người trú ẩn nhiều lần tại lô cốt.... Nhưng nó luôn bị bịt kín.... Lô cốt có vô tuyến, vòi nước uống, máy phát điện riêng, và trông đủ vững chắc để chống lại các loại vũ khí thông thường. Nhưng tôi đã thôi tìm cách vào trong, bởi một đêm tôi đã nhận ra vài chiếc limousine đen chạy ra chạy vào qua cánh cổng ngầm ở phía sau. Tôi hỏi những người ở xung quanh và được trả lời rằng đó là một trung tâm chỉ huy. Sau khi xem xét nó kỹ càng hơn, tôi đã cho rằng có thể nó là căn cứ điều hành riêng của Xát-đam."
+ },
+ {
+  "qid": "0001-0055-0005",
+  "question": "Điểm cuối của Axe lúc dài nhất là nơi nào?",
+  "gold": [],
+  "prediction": "khu đô thị hiện đại La Défense",
+  "type": "false_answer",
+  "context": "Nhưng trục quan trọng nhất trong quy hoạch đô thị Paris là Axe historique. Bắt đầu từ bức tượng vua Louis XIV cưỡi ngựa trong sân Napoléon của bảo tàng Louvre, trục này đi qua rất nhiều công trình quan trọng của thành phố: Khải hoàn môn Carrousel, vườn Tuileries, quảng trường Concorde với cột đá Obélisque, đại lộ Champs Élysées, quảng trường Étoile với Khải Hoàn Môn, đại lộ Grande Armée. Vào thập niên 1960, Axe historique còn được tiếp tục kéo dài tới tận khu đô thị hiện đại La Défense với công trình Grande Arche. Kim tự tháp kính Louvre không nằm trên đường thẳng này, mà được xây lệnh sang một bên."
+ },
+ {
+  "qid": "0019-0004-0001",
+  "question": "Nguyên nhân dẫn đến sự ra đời của thuật ngữ \"six flags over Texas\" là gì?",
+  "gold": [
+   "bắt nguồn từ việc lãnh thổ này từng nằm dưới quyền quản lý của một vài quốc gia"
+  ],
+  "prediction": "lãnh thổ này từng nằm dưới quyền quản lý của một vài quốc gia",
+  "type": "boundary_subset",
+  "context": "Thuật ngữ \"six flags over Texas\" (sáu quốc kỳ bay trên đất Texas) bắt nguồn từ việc lãnh thổ này từng nằm dưới quyền quản lý của một vài quốc gia. Tây Ban Nha là quốc gia châu Âu đầu tiên tuyên bố chủ quyền đối với khu vực Texas. Pháp cũng từng nắm giữ một thuộc địa tồn tại ngắn ngủi ở Texas. México kiểm soát lãnh thổ này cho đến khi Texas giành độc lập vào năm 1836, Texas khi đó trở thành một nước Cộng hòa. Năm 1845, nước Cộng hòa Texas gia nhập vào Hợp chúng quốc Hoa Kỳ, trở thành bang thứ 28 của Liên bang. Việc Hoa Kỳ sáp nhập Texas nổi bật trong chuỗi sự kiện dẫn đến Chiến tranh Hoa Kỳ-México vào năm 1846. Do là một tiểu bang duy trì chế độ nô lệ, Texas tuyên bố thoát ly khỏi Hợp chúng quốc vào đầu năm 1861, và gia nhập vào Liên minh miền Nam trong Nội chiến Hoa Kỳ. Sau khi kết thúc chiến tranh và tái gia nhập Liên bang, Texas bước vào một giai đoạn đình trệ kéo dài về mặt kinh tế."
+ },
+ {
+  "qid": "0019-0018-0004",
+  "question": "Thế lực đối đầu với dân tộc chủ nghĩa có chủ trương như thế nào?",
+  "gold": [
+   "sáp nhập Texas và Hợp chúng quốc Hoa Kỳ và cùng tồn tại hòa bình với người da đỏ"
+  ],
+  "prediction": "chủ trương sáp nhập Texas và Hợp chúng quốc Hoa Kỳ và cùng tồn tại hòa bình với người da đỏ",
+  "type": "boundary_superset",
+  "context": "Mặc dù giành thắng lợi trong cuộc chiến giành độc lập, song tại Texas lại nổ ra các trận chiến chính trị giữa hai phe. Phe dân tộc chủ nghĩa do Mirabeau B. Lamar lãnh đạo, chủ trương Texas tiếp tục độc lập, trục xuất người da đỏ, và mở rộng nước Cộng hòa về phía Thái Bình Dương. Các đối thủ của họ do Sam Houston lãnh đạo, chủ trương sáp nhập Texas và Hợp chúng quốc Hoa Kỳ và cùng tồn tại hòa bình với người da đỏ. Một tình tiết đặc trưng cho cuộc xung đột giữa hai phe được gọi là Chiến tranh Lưu trữ Texas."
+ },
+ {
+  "qid": "0001-0073-0004",
+  "question": "Khách sạn Crillon đại diện cho quảng trường nào?",
+  "gold": [
+   "Concorde"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Vào cuối thế kỷ 19, Paris xây dựng thêm rất nhiều khách sạn bởi những cuộc Triển lãm thế giới được tổ chức ở đây đã kéo theo một số lượng lớn du khách từ khắp nơi tới thành phố. Trong số đó có thể kể tới khách sạn Ritz trên quảng trường Vendôme mở cửa năm 1898 và khách sạn Crillon trên quảng trường Concorde năm 1909. Ngày nay hai khách sạn này được xếp vào hạng \" palace \" - đặc biệt sang trọng - cùng năm khách sạn khác: Bristol, George V, Meurice, Plaza Athénée và Fouquet's Barrière. Ngoài ra, các tập đoàn lớn như Hilton, Accor cũng sở hữu các khách sạn ở khắp Paris."
+ },
+ {
+  "qid": "0009-0013-0006",
+  "question": "Ông đã phải làm gì để có thể đắc cử?",
+  "gold": [
+   "giành một ghế với cái giá là Đảng Cộng sản Pháp (PCF)",
+   "Đảng Cộng sản Pháp"
+  ],
+  "prediction": "ông phải giành một ghế với cái giá là Đảng Cộng sản Pháp (PCF).",
+  "type": "boundary_superset",
+  "context": "Trong cuộc bầu cử lập pháp tháng 11 năm 1946, ông giành được một ghế đại biểu tại Nièvre département. Để được bầu, ông phải giành một ghế với cái giá là Đảng Cộng sản Pháp (PCF). Với tư cách lãnh đạo phái bầu cử RGR, ông thực hiện một chiến dịch tranh cử rất chống cộng. Sau đó ông trở thành một thành viên của đảng UDSR. Tháng 1 năm 1947, ông gia nhập nội các với chức vụ Bộ trưởng cựu chiến binh chiến tranh. Ông giữ nhiều chức vụ trong Đệ tứ cộng hoà với tư cách Đại biểu và Bộ trưởng (tổng cộng giữ 11 chức vụ bộ trưởng)."
+ },
+ {
+  "qid": "0014-0010-0008",
+  "question": "Trong lịch sử, hoàng đế đã từng phong vương cho ai?",
+  "gold": [
+   "Friedrich III",
+   "tuyển hầu Friedrich III"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Bình thường Hoàng đế không cho phép lãnh chúa nào xưng làm vua, vì như thế có ý nghĩa vị trí gần ngang bằng Hoàng đế. Tuy thế, khi một lãnh chúa cảm thấy mình đủ mạnh thì muốn xưng vương, chỉ có điều còn e ngại nên vẫn phải xin hoàng đế phong cho. Đây là trường hợp của tuyển hầu Friedrich III (1657-1713), người có tham vọng rộng lớn nhằm biến công quốc của ông thành một vương quốc, sau này gọi là nước Phổ, và ông xưng là vua Friedrich I của Phổ năm 1701. Để được Hoàng đế phong làm vua, Friedrich dựa trên lý lẽ đất đai ông chiếm được là từ Thụy Điển,[cần dẫn nguồn] và cũng dựa trên sức ép của nước ngoài, như Pyotr Đại đế. [cần dẫn nguồn]"
+ },
+ {
+  "qid": "0017-0068-0005",
+  "question": "Những thường trú nhân gốc Ý đã phải chịu nghịch cảnh gì khi Ý chiến tranh với Hoa Kỳ?",
+  "gold": [],
+  "prediction": "bị giới hạn việc đi lại",
+  "type": "false_answer",
+  "context": "Những công dân thuộc quốc gia thù địch đang sống tại Hoa Kỳ và những người có tổ tiên Nhật Bản có cuộc sống rất bấp bênh. Ngày 19 tháng 2 năm 1942, Roosevelt đưa ra Lệnh Hành pháp số 9066, được áp dụng đối với mọi người bị xếp loại là những người thuộc quốc gia thù địch, bao gồm những người có hai quốc tịch đang sống trong những vùng được cho là có nguy cơ cao mà bao trùm phần lớn các thành phố tại Tây Duyên hải Hoa Kỳ. Khi Hoa Kỳ đang có chiến tranh với Ý, khoảng 600.000 thường trú nhân gốc Ý (công dân Ý không có quốc tịch Mỹ) bị giới hạn việc đi lại; sự giới hạn này được bãi bỏ vào tháng 10 năm 1942."
+ },
+ {
+  "qid": "0006-0010-0006",
+  "question": "Yếu tố thiên nhiên nào đã tác động xấu đến tình hình phát triển của Puerto Rico?",
+  "gold": [
+   "động đất, sóng thần, các cơn bão nhiệt đới"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Những thập niên đầu tiên dưới sự cai trị của Mỹ, nhiều thảm họa tự nhiên liên tiếp xảy ra như động đất, sóng thần, các cơn bão nhiệt đới cũng như cuộc Đại khủng hoảng 1929 đã tàn phá nền kinh tế của đảo Puerto Rico. Trong nhân dân bắt đầu xuất hiện tư tưởng chống lại sự cai trị của Mỹ. Ngày 30 tháng 10 năm 1950, Pedro Albizu Campos, lãnh đạo Đảng Dân tộc Puerto Rico đã phát động cuộc khởi nghĩa Jayuya chống Mỹ. Hoa Kỳ tuyên bố tình trạng thiết quân luật và chấm dứt cuộc khởi nghĩa sau 3 ngày với việc sử dụng nhiều bộ binh, pháo binh và máy bay ném bom vào thị trấn Jayuya. Pedro Albizu Campos sau đó bị bắt giam vì tội âm mưu phản loạn nhằm lật độ chính phủ Mỹ tại Puerto Rico. Bên cạnh đó, những âm mưu ám sát tổng thống Harry Truman trong cùng năm 1950 cũng được những người dân tộc chủ nghĩa Puerto Rico thực hiện nhưng thất bại."
+ },
+ {
+  "qid": "0003-0004-0004",
+  "question": "Canada có mối quan hệ gì với tổ chức NATO?",
+  "gold": [
+   "Canada là một thành viên của Tổ chức Hiệp ước Bắc Đại Tây Dương (NATO)",
+   "thành viên"
+  ],
+  "prediction": "Canada là một thành viên",
+  "type": "boundary_superset",
+  "context": "Canada là một quốc gia phát triển và nằm trong số các quốc gia giàu có nhất trên thế giới, với thu nhập bình quân đầu người cao thứ tám toàn cầu, và chỉ số phát triển con người cao thứ 11. Canada được xếp vào hàng cao nhất trong các so sánh quốc tế về giáo dục, độ minh bạch của chính phủ, tự do dân sự, chất lượng sinh hoạt, và tự do kinh tế. Canada tham gia vào nhiều tổ chức quốc tế và liên chính phủ về kinh tế: G8, G20, Hiệp định Thương mại Tự do Bắc Mỹ, Diễn đàn Hợp tác Kinh tế châu Á - Thái Bình Dương. Canada là một thành viên của Tổ chức Hiệp ước Bắc Đại Tây Dương (NATO)."
+ },
+ {
+  "qid": "0006-0012-0009",
+  "question": "Chủ tịch của nhánh hành pháp là ai?",
+  "gold": [],
+  "prediction": "Anibal Acevedo Vila",
+  "type": "false_answer",
+  "context": "Puerto Rico là một lãnh thổ chưa hợp nhất của Hoa Kỳ theo thể chế cộng hòa. Tất cả các quyền lực hiện tại của Puerto Rico là do Quốc hội Hoa Kỳ ủy quyền. Puerto Rico thiếu sự bảo vệ toàn phần từ Hiến pháp Hoa Kỳ vì không phải là một tiểu bang của Hoa Kỳ. Người đứng đầu nhà nước của Puerto Rico là tổng thống Mỹ. Chính quyền Puerto Rico theo chế độ cộng hòa, được tổ chức theo hệ thống tam quyền phân lập gồm ba nhánh: lập pháp, hành pháp và tư pháp. Nhánh hành pháp được đứng đầu bởi thống đốc Puerto Rico, hiện nay là ngài Anibal Acevedo Vila. Nhánh lập pháp bao gồm Quốc hội Puerto Rico được chia làm hai viện: Thượng viện và Hạ viện. Người đứng đầu Thượng viện Puerto Rico là Chủ tịch Thượng viện, còn người đứng đầu Hạ viện là Chủ tịch Hạ viện (Speaker of the House) Puerto Rico. Nhánh tư pháp đứng đầu bởi Thấm phán trưởng Tòa án Tối cao Puerto Rico. Chức thống đốc và các đại biểu quốc hội được nhân dân bầu ra bốn năm một lần. Những thành viên của tòa án tối cao được thống đốc chỉ định với sự thông qua của Thượng viện."
+ },
+ {
+  "qid": "0006-0005-0008",
+  "question": "Nhà thám hiểm Christopher Columbus đã đổi tên hòn đảo Puerto Rico thành San Juan Bautista vào năm nào?",
+  "gold": [
+   "năm 1493"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Ngày 19 tháng 11 năm 1493, Christopher Columbus trong chuyến thám hiểm lần thứ hai của mình đã phát hiện ra đảo Puerto Rico. Lúc này, cư dân của hòn đảo là những người da đỏ châu Mỹ thuộc nền văn hóa Taino và họ gọi hòn đảo của mình là \"Borikén\", hay trong tiếng Tây Ban Nha là \"Boriquen\". Columbus đã đặt cái tên mới cho hòn đảo là San Juan Bautista để tưởng niệm thánh John Baptist. Sau đó, hòn đảo được đổi tiên thành Puerto Rico còn San Juan thì trở thành tên thủ phủ của hòn đảo. Năm 1508, Juan Ponce de Leon trở thành thống đốc đầu tiên của đảo Puerto Rico."
+ },
+ {
+  "qid": "0003-0033-0003",
+  "question": "Giới hạn về độ tuổi của các nghị viện là bao nhiêu tuổi?",
+  "gold": [
+   "75"
+  ],
+  "prediction": "tuổi 75",
+  "type": "boundary_superset",
+  "context": "Mỗi một trong số 308 nghị sĩ tại Chúng nghị viện được bầu theo đa số giản đơn trong một khu vực tuyển cử. Tổng tuyển cử phải do toàn quyền yêu cầu, theo cố vấn của thủ tướng trong vòng bốn năm tính từ cuộc bầu cử trước đó, hoặc nếu chính phủ thất bại trong một cuộc bỏ phiếu tín nhiệm tại nghị viện. 105 thành viên của Tham nghị viện, với số ghế được phân chia theo một cơ sở vùng miền, họ phục vụ cho đến tuổi 75. Năm chính đảng có đại biểu được bầu vào nghị viện liên bang trong cuộc bầu cử năm 2011: Đảng Bảo thủ (đảng cầm quyèn), Đảng Tân Dân chủ (đối lập chính thức), Đảng Tự do, Khối Người Québec, và Đảng Xanh."
+ },
+ {
+  "qid": "0015-0014-0003",
+  "question": "Kết quả dành cho những người lãnh đạo Mông Cổ không chịu thi hành khủng bố Nga theo lệnh người Mông Cổ là gì?",
+  "gold": [],
+  "prediction": "bị người Nga hành quyết",
+  "type": "false_answer",
+  "context": "Năm 1930, Nga ngăn chặn người Buryat (một phân nhóm Mông Cổ) di cư sang Mông Cổ nhằm đề phòng tái thống nhất liên Mông Cổ. Toàn bộ các nhà lãnh đạo của Mông Cổ không thực hiện yêu cầu của Nga về thi hành khủng bố người Mông Cổ đều bị người Nga hành quyết, trong số họ có cựu chủ tịch và thủ tướng Peljidiin Genden và cựu thủ tướng Anandyn Amar. Thanh trừng kiểu Stalin tại Mông Cổ bắt đầu vào năm 1937, sát hại trên 30.000 người. Năm 1952, Choibalsan chết một cách khả nghi tại Liên Xô. Nhà lãnh đạo Quốc tế cộng sản Bohumír Šmeral nói rằng \"Nhân dân Mông Cổ không quan trọng, đất mới quan trọng. Đất Mông Cổ lớn hơn Anh, Pháp và Đức\"."
+ },
+ {
+  "qid": "0004-0016-0007",
+  "question": "Quốc gia đã cùng với Iraq đề nghị Liên Hợp Quốc bàn bạc về cuộc xâm chiếm của Kuwait là gì?",
+  "gold": [],
+  "prediction": "Nghị quyết 660",
+  "type": "false_answer",
+  "context": "Chỉ vài giờ sau cuộc tấn công đầu tiên, các phái đoàn Kuwait và Hoa Kỳ đã yêu cầu Hội đồng Bảo an Liên Hiệp Quốc nhóm họp, thông qua Nghị quyết 660, lên án cuộc xâm lược và yêu cầu Iraq rút quân. Ngày 3 tháng 8, Liên đoàn Ả Rập thông qua nghị quyết của riêng mình lên án cuộc xâm lược và đòi Iraq rút quân. Nghị quyết của Liên đoàn Ả Rập cũng kêu gọi tìm ra một giải pháp cho cuộc xung đột từ bên trong Liên đoàn Ả Rập, và cảnh báo chống lại sự can thiệp từ bên ngoài. Ngày 6 tháng 8, Hội đồng Bảo an thông qua Nghị quyết 661, áp đặt trừng phạt kinh tế lên Iraq."
+ },
+ {
+  "qid": "0015-0037-0001",
+  "question": "Các công trình có cấu trúc như yurt cần được mở rộng cho đủ số lượng tín đồ thì các nhà sư Mông Cổ đã làm gì?",
+  "gold": [],
+  "prediction": "sử dụng các cấu trúc với 6 và 12 góc với các mái kiểu kim tự tháp để thích hợp với hình dáng tròn của yurt",
+  "type": "false_answer",
+  "context": "Nơi cư ngụ truyền thống Mông Cổ được gọi là một yurt (Tiếng Mông Cổ: ger). Theo nghệ sĩ và nhà phê bình nghệ thuật Mông Cổ N. Chultem, các yurt và lều trại là căn bản cho sự phát triển của kiến trúc truyền thống Mông Cổ. Ở thế kỷ XVI và XVII, các tu viện lama đã được xây dựng trên khắp đất nước. Nhiều công trình trong số đó khởi đầu như những đền yurt. Khi chúng cần được mở rộng để đủ chỗ cho số lượng tín đồ ngày càng đông đảo thêm, các kiến trúc sư Mông Cổ đã sử dụng các cấu trúc với 6 và 12 góc với các mái kiểu kim tự tháp để thích hợp với hình dáng tròn của yurt. Việc mở rộng thêm nữa dẫn tới hình dạng bậc hai của các đền. Các mái được làm theo hình dạng những lều lớn. Các bức tường kiểu lưới mắt cáo, các cột chống mái và các lớp nỉ được thay bằng đá, gạch, các dầm và những tấm ván và trở thành cấu trúc vĩnh cửu."
+ },
+ {
+  "qid": "0015-0024-0001",
+  "question": "Kỷ lục nào thuộc thủ đô Ulan Bator?",
+  "gold": [
+   "nhiệt độ trung bình thấp nhất",
+   "nhiệt độ trung bình thấp nhất so với bất kỳ thủ đô nào khác trên thế giới"
+  ],
+  "prediction": "khí hậu lục địa cực đoan",
+  "type": "wrong_span",
+  "context": "Nước này cũng thỉnh thoảng gặp phải những đợt thời tiết khắc nghiệt được gọi là zud. Ulan Bator có nhiệt độ trung bình thấp nhất so với bất kỳ thủ đô nào khác trên thế giới. Mông Cổ cao, lạnh và nhiều gió. Nước này có khí hậu lục địa cực đoan với mùa đông dài và lạnh, mùa hè ngắn, và đa phần lượng mưa trong năm cũng diễn ra vào mùa hè. Nước này trung bình có 257 ngày không mây mỗi năm, và thường ở trung tâm của một vùng có áp lực khí quyển cao. Lượng mưa cao nhất ở phía bắc (trung bình 20 tới 35 centimét một năm) và thấp nhất ở phía nam, với lượng mưa hàng năm 10 tới 20 centimét. Vùng cư cực nam là Sa mạc Gobi, một số vùng tại đó có hầu như không có mưa trong nhiều năm."
+ },
+ {
+  "qid": "0015-0001-0006",
+  "question": "Ông nội của Hốt Tất Liệt có công lớn gì đối với Mông Cổ?",
+  "gold": [
+   "lập ra Đế quốc Mông Cổ"
+  ],
+  "prediction": "lập ra nhà Nguyên và chinh phục miền Nam Trung Quốc",
+  "type": "boundary_overlap",
+  "context": "Khu vực nay là Mông Cổ từng nằm dưới quyền cai trị của nhiều đế quốc du mục, như Hung Nô, Tiên Ti, Nhu Nhiên. Năm 1206, Thành Cát Tư Hãn lập ra Đế quốc Mông Cổ, sau đó nó phát triển thành đế quốc lục địa liền kề lớn nhất trong lịch sử nhân loại. Cháu nội của ông là Hốt Tất Liệt lập ra nhà Nguyên và chinh phục miền Nam Trung Quốc. Sau khi nhà Nguyên sụp đổ, người Mông Cổ triệt thoái về Mông Cổ và lại tiếp tục xung đột phe phái như trước, ngoại trừ trong thời kỳ Đạt Diên Hãn và Trát Tát Khắc Đồ Hãn."
+ },
+ {
+  "qid": "0001-0050-0002",
+  "question": "Có những làn đường nào người đi xe đạp có thể chạy ở Paris?",
+  "gold": [
+   "Cùng với các làn đường được phép chạy chung với xe buýt, ở nhiều phố những người đi xe đạp còn có làn đường riêng, tổng cộng dài 371 km",
+   "các làn đường được phép chạy chung với xe buýt, ở nhiều phố những người đi xe đạp còn có làn đường riêng"
+  ],
+  "prediction": "các làn đường được phép chạy chung với xe buýt",
+  "type": "boundary_subset",
+  "context": "Từ những năm cuối 1990, chính quyền thành phố thực hiện chính sách khuyến khích giao thông công cộng và xe đạp. Cùng với các làn đường được phép chạy chung với xe buýt, ở nhiều phố những người đi xe đạp còn có làn đường riêng, tổng cộng dài 371 km. Và tiếp theo Rennes và Lyon, từ ngày 15 tháng 7 năm 2007, chính quyền Paris đưa ra hệ thống dịch vụ xe đạp tự do với tên Vélib'. Đây là mạng lưới xe đạp dày đặc nhất châu Âu, với 20.000 chiếc vào cuối 2007, 1.400 điểm đỗ trong Paris cách nhau trung bình 300 m."
+ },
+ {
+  "qid": "0013-0004-0007",
+  "question": "Vào năm 1645 ai là người bị hành quyết trong số những người bị quốc hội Dài hạn tống giam?",
+  "gold": [
+   "Tổng Giám mục Laud"
+  ],
+  "prediction": "",
+  "type": "false_abstain",
+  "context": "Ngay sau đó quốc hội Dài hạn đã tống giam Thomas Wentworth, Bá tước Strafford thứ nhất cùng với Tổng Giám mục Laud vào Tháp Luân Đôn (The Tower of London). Năm 1641, Bá tước Strafford bị hành quyết và Tổng Giám mục Laud phải chịu chung số phận vào 4 năm sau. Đồng thời, quốc hội Anh phổ biến tới toàn dân \"Bài khiển trách lớn lao\" (the Grand Remonstrace), trong đó liệt kê lỗi lầm của nhà vua và đòi hỏi các bộ trưởng phải chịu trách nhiệm trước quốc hội, đòi hỏi nhà vua không được đánh thuế dân chúng nếu không có sự đồng ý của quốc hội. Vua Charles I lúc đấy đã không muốn từ bỏ một uy quyền nào. Năm 1642, ông đã nổi giận, dẫn một toán binh sĩ trang bị đầy đủ khí giới, xông vào Toà Nhà Quốc hội để bắt 5 dân biểu hàng đầu, thường tỏ ra chống đối Charles I. Nhưng 5 người này đã được báo trước và trốn chạy. Hành động của Charles đã nhanh chóng gây ra cuộc nội chiến, và ông đã bỏ chạy lên mạn bắc nước Anh chuẩn bị lực lượng chống lại Quốc hội và nhân dân."
+ },
+ {
+  "qid": "0014-0010-0006",
+  "question": "Vua có vị trí như thế nào trong bộ máy chính quyền?",
+  "gold": [
+   "không cho phép lãnh chúa nào xưng làm vua",
+   "vị trí gần ngang bằng Hoàng đế"
+  ],
+  "prediction": "gần ngang bằng Hoàng đế",
+  "type": "boundary_subset",
+  "context": "Bình thường Hoàng đế không cho phép lãnh chúa nào xưng làm vua, vì như thế có ý nghĩa vị trí gần ngang bằng Hoàng đế. Tuy thế, khi một lãnh chúa cảm thấy mình đủ mạnh thì muốn xưng vương, chỉ có điều còn e ngại nên vẫn phải xin hoàng đế phong cho. Đây là trường hợp của tuyển hầu Friedrich III (1657-1713), người có tham vọng rộng lớn nhằm biến công quốc của ông thành một vương quốc, sau này gọi là nước Phổ, và ông xưng là vua Friedrich I của Phổ năm 1701. Để được Hoàng đế phong làm vua, Friedrich dựa trên lý lẽ đất đai ông chiếm được là từ Thụy Điển,[cần dẫn nguồn] và cũng dựa trên sức ép của nước ngoài, như Pyotr Đại đế. [cần dẫn nguồn]"
+ },
+ {
+  "qid": "0003-0009-0001",
+  "question": "Khi nào thì Pháp đánh dấu quyền sở hữu sông St.Lawrence?",
+  "gold": [
+   "ngày 24 tháng 7"
+  ],
+  "prediction": "Năm 1534",
+  "type": "wrong_span",
+  "context": "Nỗ lực đầu tiên được biết đến nhằm thuộc địa hóa lãnh thổ nay là Canada của người châu Âu bắt đầu khi người Norse định cư trong một thời gian ngắn tại L'Anse aux Meadows thuộc Newfoundland vào khoảng năm 1000 CN. Không có thêm hành động thám hiểm của người châu Âu cho đến năm 1497, khi đó thủy thủ người Ý John Cabot khám phá ra vùng duyên hải Đại Tây Dương của Canada cho Vương quốc Anh. Các thủy thủ người Basque và người Bồ Đào Nha thiết lập các tiền đồn săn bắt cá voi và cá dọc theo vùng duyên hải Đại Tây Dương của Canada vào đầu thế kỷ XVI. Năm 1534, nhà thám hiểm người Pháp Jacques Cartier khám phá ra sông St. Lawrence, vào ngày 24 tháng 7 ông cắm một thánh giá cao 10 mét (33 ft) mang dòng chữ \"Pháp quốc quốc vương vạn tuế\", và đoạt quyền chiếm hữu lãnh thổ nhân danh Quốc vương François I."
+ }
+]

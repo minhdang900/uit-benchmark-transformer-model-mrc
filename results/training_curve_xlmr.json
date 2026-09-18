@@ -1,0 +1,52 @@
+{
+  "config": {
+    "model": "FacebookAI/xlm-roberta-base",
+    "out": "models/xlmr",
+    "data_dir": "data/raw",
+    "train_size": null,
+    "epochs": 3,
+    "batch_size": 12,
+    "grad_accum": 2,
+    "lr": 3e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "max_length": 384,
+    "doc_stride": 128,
+    "max_answer_len": 64,
+    "eval_limit": 500,
+    "dev_frac": 0.05,
+    "word_segmented": false,
+    "seed": 42
+  },
+  "curve": [
+    {
+      "epoch": 1,
+      "train_loss": 2.3401,
+      "val_em": 40.6,
+      "val_f1": 48.25,
+      "seconds": 2155.6
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.3411,
+      "val_em": 42.4,
+      "val_f1": 52.34,
+      "seconds": 2088.9
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.0751,
+      "val_em": 46.4,
+      "val_f1": 58.98,
+      "seconds": 2120.6
+    }
+  ],
+  "best_epoch": 3,
+  "diagnosis": {
+    "overfitting": false,
+    "still_improving": true,
+    "degenerate_collapse": false,
+    "best_epoch": 3,
+    "reason": "val_f1 vẫn tăng tới epoch cuối (58.98) — model còn THIẾU epoch, chưa overfit. Cân nhắc huấn luyện thêm."
+  }
+}

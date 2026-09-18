@@ -163,7 +163,7 @@ Số epoch tối đa & 3 & 3 \\
 Batch $\times$ tích luỹ gradient & $12 \times 2 = 24$ & $12 \times 2 = 24$ \\
 Tốc độ học, warmup, weight decay & $3\cdot10^{-5}$; 10\%; 0,01 & $3\cdot10^{-5}$; 10\%; 0,01 \\
 Tối ưu, cắt gradient & AdamW; 1,0 & AdamW; 1,0 \\
-Chọn epoch & EM trên dev (500 câu ngẫu nhiên) & EM trên dev (500 câu ngẫu nhiên) \\
+Chọn epoch & F1 cao nhất trên dev (500 câu) & F1 cao nhất trên dev (500 câu) \\
 Ngưỡng không trả lời $\tau$ & 0 & 0 \\
 Seed & 42 & 42 \\
 \bottomrule

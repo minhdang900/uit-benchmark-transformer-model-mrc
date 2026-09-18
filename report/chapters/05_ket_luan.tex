@@ -1,5 +1,44 @@
+% ============================================================================
 \section{Kết luận}
 \label{sec:conclusion}
+% ============================================================================
+
+%CONCLUSION-BODY
+
 \subsection{Giới hạn}
 \label{sec:limitations}
-%CONCLUSION
+
+Các giới hạn dưới đây quyết định phạm vi mà mọi kết luận ở trên có giá trị.
+
+\begin{enumerate}
+  \item \textbf{Một seed huấn luyện cho mỗi mô hình.} Kiểm định McNemar và bootstrap đo độ bất định do
+        \emph{chọn câu hỏi}, không đo độ bất định do \emph{seed}. Với mô hình cỡ base trên SQuAD, chênh
+        lệch giữa các seed có thể lên tới một vài điểm EM; một chênh lệch nhỏ hơn cỡ đó không nên được
+        hiểu là khác biệt giữa hai \emph{kiến trúc}.
+  \item \textbf{Không tìm kiếm siêu tham số.} Cả hai mô hình dùng cùng một cấu hình phổ biến; mỗi mô
+        hình có thể đạt điểm cao hơn ở cấu hình riêng của nó. So sánh ở đây là ``cùng điều kiện'', không
+        phải ``mỗi bên ở trạng thái tốt nhất''.
+  \item \textbf{Bộ tách từ khác với lúc tiền huấn luyện.} PhoBERT được tiền huấn luyện trên văn bản tách
+        bởi RDRSegmenter; đồ án dùng \code{pyvi} để không phụ thuộc Java. Lệch phân phối này có thể làm
+        PhoBERT kém hơn khả năng thật của nó, và Mục~\ref{sec:alignment-res} cho thấy \code{pyvi} có những
+        lỗi hệ thống (dính dấu chấm, nối nhầm âm tiết).
+  \item \textbf{Validation đóng vai tập test.} Test chính thức ẩn nhãn nên không chấm được. Validation
+        không được dùng cho bất kỳ quyết định nào trước khi chấm (Mục~\ref{sec:protocol}), nhưng kết quả
+        không so sánh trực tiếp được với các con số công bố trên test của cuộc thi VLSP.
+  \item \textbf{Giới hạn vị trí khác nhau là một phần của so sánh.} PhoBERT dùng 256 token, XLM-R 384
+        token. Đây là ràng buộc kiến trúc chứ không phải lựa chọn, nhưng nó có nghĩa là ``PhoBERT vs XLM-R''
+        không cô lập riêng biến tokenization.
+  \item \textbf{Bộ stress-test không dùng được làm thước đo} (Mục~\ref{sec:audit}). Các nhóm hiện tượng
+        E2--E5 vì vậy không có bằng chứng định lượng đáng tin cậy trong đồ án này; phân tích theo độ dài và
+        theo loại lỗi trên validation chỉ thay thế được một phần.
+  \item \textbf{Phân loại thủ công 33 câu lệch biên} do một người thực hiện, chưa đo độ đồng thuận giữa
+        các người gán. Phân loại lỗi tự động (Mục~\ref{sec:taxonomy}) dựa trên quan hệ tập hợp token nên
+        tái lập được, nhưng không phân biệt được lỗi ``hiểu sai câu hỏi'' với ``chọn nhầm thực thể cùng loại''.
+  \item \textbf{Miền dữ liệu.} Toàn bộ dữ liệu là Wikipedia; kết luận không tự động mở rộng sang văn bản
+        mạng xã hội, nơi lỗi tách từ được dự đoán còn nặng hơn.
+\end{enumerate}
+
+\subsection{Hướng phát triển}
+\label{sec:future}
+
+%FUTURE-BODY
