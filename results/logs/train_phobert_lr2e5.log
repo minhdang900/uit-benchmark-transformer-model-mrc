@@ -1,0 +1,51 @@
+device=mps  model=vinai/phobert-base-v2
+assert_no_leakage OK — train 3896 ctx / dev 205 ctx / validation(test) 557 ctx, giao nhau = 0
+27049 câu hỏi -> 31039 feature (12s)
+lịch học: 1293 bước/epoch, 3879 tổng, 387 warmup
+[transformers] [1mRobertaForQuestionAnswering LOAD REPORT[0m from: vinai/phobert-base-v2
+--------------------------+------------+-
+
+Notes:
+  epoch 1 step 200/2587 loss 5.2631 (92s)
+  epoch 1 step 400/2587 loss 4.5963 (191s)
+  epoch 1 step 600/2587 loss 3.9817 (295s)
+  epoch 1 step 800/2587 loss 3.5473 (398s)
+  epoch 1 step 1000/2587 loss 3.2335 (499s)
+  epoch 1 step 1200/2587 loss 2.9961 (602s)
+  epoch 1 step 1400/2587 loss 2.8079 (704s)
+  epoch 1 step 1600/2587 loss 2.6582 (807s)
+  epoch 1 step 1800/2587 loss 2.5361 (910s)
+  epoch 1 step 2000/2587 loss 2.4320 (1012s)
+  epoch 1 step 2200/2587 loss 2.3444 (1114s)
+  epoch 1 step 2400/2587 loss 2.2721 (1217s)
+epoch 1: loss 2.2123  val_EM 42.00  val_F1 54.71  (n=500, 1326s)
+  epoch 2 step 200/2587 loss 1.2501 (107s)
+  epoch 2 step 400/2587 loss 1.2531 (213s)
+  epoch 2 step 600/2587 loss 1.2418 (319s)
+  epoch 2 step 800/2587 loss 1.2300 (424s)
+  epoch 2 step 1000/2587 loss 1.2227 (529s)
+  epoch 2 step 1200/2587 loss 1.2184 (641s)
+  epoch 2 step 1400/2587 loss 1.2132 (756s)
+  epoch 2 step 1600/2587 loss 1.2195 (869s)
+  epoch 2 step 1800/2587 loss 1.2994 (977s)
+  epoch 2 step 2000/2587 loss 1.3904 (1085s)
+  epoch 2 step 2200/2587 loss 1.4875 (1191s)
+  epoch 2 step 2400/2587 loss 1.5680 (1298s)
+epoch 2: loss 1.6339  val_EM 39.80  val_F1 58.36  (n=500, 1404s)
+  epoch 3 step 200/2587 loss 2.4107 (109s)
+  epoch 3 step 400/2587 loss 2.3887 (217s)
+  epoch 3 step 600/2587 loss 2.3804 (323s)
+  epoch 3 step 800/2587 loss 2.3892 (427s)
+  epoch 3 step 1000/2587 loss 2.3970 (531s)
+  epoch 3 step 1200/2587 loss 2.3728 (634s)
+  epoch 3 step 1400/2587 loss 2.3741 (738s)
+  epoch 3 step 1600/2587 loss 2.3701 (843s)
+  epoch 3 step 1800/2587 loss 2.3699 (949s)
+  epoch 3 step 2000/2587 loss 2.3666 (1054s)
+  epoch 3 step 2200/2587 loss 2.3701 (1158s)
+  epoch 3 step 2400/2587 loss 2.3768 (1261s)
+epoch 3: loss 2.3729  val_EM 38.20  val_F1 57.67  (n=500, 1365s)
+
+epoch tốt nhất = 2 -> sao chép vào models/phobert_lr2e5
+chẩn đoán: val_f1 đạt đỉnh 58.36 ở epoch 2 rồi giảm còn 57.67 ở epoch 3, trong khi train_loss vẫn giảm (2.2123 -> 2.3729). Dừng ở epoch 2.
+curve -> results/training_curve_phobert_lr2e5.json

@@ -1,0 +1,13 @@
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (750 > 512). Running this sequence through the model will result in indexing errors
+xlmr 1 {'cls': 0.7405, 'span': 1.5894}
+xlmr 2 {'cls': 0.6127, 'span': 1.1758}
+xlmr 3 {'cls': 0.7248, 'span': 0.8755}
+xlmr features 3208 cls_fraction 0.3656
+phobert 1 {'cls': 0.5587, 'span': 1.3532}
+phobert 2 {'cls': 4.1841, 'span': 0.8797}
+phobert 3 {'cls': 4.2809, 'span': 0.6338}
+phobert features 3445 cls_fraction 0.3962
+phobert_lr2e5 1 {'cls': 0.5791, 'span': 1.5028}
+phobert_lr2e5 2 {'cls': 4.3335, 'span': 1.0168}
+phobert_lr2e5 3 {'cls': 4.4199, 'span': 0.821}
+phobert_lr2e5 features 3445 cls_fraction 0.3962

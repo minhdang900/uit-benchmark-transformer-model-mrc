@@ -46,3 +46,4 @@ logs/
 *.snm
 *.synctex.gz
 !results/logs/
+!results/logs/*.log
