@@ -395,7 +395,9 @@ một biến:
   \item \textbf{Dữ liệu đầu vào hỏng --- bị loại.} Quét toàn bộ \ScanPhobertFeatures{} feature huấn luyện của
         PhoBERT (\code{scripts/scan\_features.py}): \ScanPhobertViolations{} vi phạm về id ngoài từ vựng, vị trí
         vượt bảng position embedding, nhãn ``không có đáp án'' không trỏ về \code{<s>}, hay span nằm ngoài ngữ
-        cảnh. Tỉ lệ feature mang nhãn ``không có đáp án'' tương đương giữa hai tokenizer
+        cảnh. (Riêng \ScanPhobertMismatchPct\% span có văn bản không khớp tuyệt đối với đáp án vàng sau chuẩn
+        hoá --- hệ quả của biên từ, so với \ScanXlmrMismatchPct\% ở XLM-R --- nhưng đó là nhãn lệch vài âm tiết,
+        không phải dữ liệu hỏng.) Tỉ lệ feature mang nhãn ``không có đáp án'' tương đương giữa hai tokenizer
         (\ScanPhobertClsFrac\% và \ScanXlmrClsFrac\%), nên mất cân bằng lớp cũng không giải thích được.
   \item \textbf{Đây là sự kiện trong huấn luyện, không phải tính chất của PhoBERT.} Checkpoint epoch 1 --- trước
         khi sụp đổ --- từ chối \DevEpochOneAbsRate\% số câu trên dev, sát tỉ lệ thật; checkpoint epoch 3 chỉ

@@ -118,6 +118,7 @@ def main(argv=None) -> None:
         curve = Path("models") / kind / "training_curve.json"
         if curve.exists():
             tc = json.loads(curve.read_text())
+            result["seed"] = (tc.get("config") or {}).get("seed")
             result["training"] = {"config": tc.get("config"), "best_epoch": tc.get("best_epoch"),
                                   "stability": tc.get("stability"),
                                   "provenance": tc.get("provenance")}
