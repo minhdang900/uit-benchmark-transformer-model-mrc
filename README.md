@@ -18,37 +18,40 @@
 
 ## Kết quả chính
 
-UIT-ViQuAD 2.0, **toàn bộ validation (3.814 câu)**, chấm một lần. Test chính thức ẩn nhãn nên không
-chấm được; epoch được chọn trên tập dev tách từ train. Nguồn: `results/eval_*_validation.json`,
-`results/diagnosis_validation.json`.
+UIT-ViQuAD 2.0, **toàn bộ validation (3.814 câu)** — chính là public test của VLSP 2021 — chấm một lần.
+Epoch, lần chạy và ngưỡng từ chối τ đều được chọn trên dev tách từ train. Nguồn:
+`results/eval_*_validation.json`, `results/thresholds.json`, `results/diagnosis_validation.json`.
 
-| Hệ thống | EM | F1 | EM câu có đáp án | EM câu không có đáp án | Tỉ lệ từ chối |
-|---|---:|---:|---:|---:|---:|
-| Luôn từ chối | 30,44 | 30,44 | 0,00 | 100,00 | 100,00 |
-| TF-IDF (truy hồi câu) | 1,05 | 22,11 | 1,51 | 0,00 | 0,00 |
-| XLM-R-base (fine-tune) | 52,49 | 61,32 | 52,02 | 53,57 | 32,96 |
-| PhoBERT-base-v2 (fine-tune) | 51,36 | 63,10 | **66,91** | 15,85 | 5,66 |
+| Hệ thống | τ | EM / F1 ở τ = 0 | EM / F1 ở τ chọn trên dev | EM có đáp án | EM không đáp án | Từ chối |
+|---|---:|---:|---:|---:|---:|---:|
+| Luôn từ chối | — | 30,44 / 30,44 | — | 0,00 | 100,00 | 100% |
+| TF-IDF (truy hồi câu) | — | 1,05 / 22,11 | — | 1,51 | 0,00 | 0% |
+| XLM-R-base | −0,47 | 52,49 / 61,32 | 52,49 / 61,99 | 54,62 | 47,63 | 27,8% |
+| PhoBERT-base-v2 | +7,86 | 51,36 / 63,10 | **58,31 / 68,54** | 60,57 | 53,14 | 25,0% |
 
-**Điều bảng này nói ra mà điểm tổng thì không:**
+1. **Ở τ = 0, hai mô hình bằng nhau về tổng** (chênh EM −1,13, CI theo bài viết [−3,53; 0,91],
+   p = 0,223) và trông như hai hồ sơ ngược nhau (PhoBERT +14,89 EM có đáp án, XLM-R +37,73 không đáp án).
+   Nhưng PhoBERT chỉ từ chối 5,7%, XLM-R 33%: trên 2.011 câu cả hai cùng trả lời, khoảng cách "đọc" chỉ +4,1.
+2. **Ở τ chọn trên dev, PhoBERT tốt hơn trên cả hai loại câu**: +5,82 EM tổng (CI theo bài viết
+   [3,60; 7,72], p < 0,001), +5,96 trên câu có đáp án, +5,51 trên câu không có đáp án.
+3. **PhoBERT "không từ chối" là một sự kiện khi huấn luyện**, tái hiện được: huấn luyện tiếp từ epoch 1
+   ở lr 2,2e-5 → chuẩn gradient vọt tới 12.880, loss "không có đáp án" 0,71 → 4,35; cùng batch ở lr 1e-5
+   thì không (`results/probe_resume.json`). Dữ liệu sạch: 0 vi phạm trên 31.039 feature.
+   Khả năng phân biệt còn nguyên — chỉ điểm [CLS] bị dịch ~8 logit.
+4. **Tách từ không phải yếu tố quyết định** — chỉ 1,24% đáp án cắt ngang một từ của `pyvi` (trần thiệt hại
+   0,75 EM), phần lớn do lỗi của bộ tách từ.
+5. **Bộ stress-test 250 câu của nhóm không dùng được làm thước đo** — chỉ 15/120 câu có đáp án chứa đáp án
+   trong ngữ cảnh (`results/stress_test_audit.json`).
 
-1. **Điểm tổng như nhau** — chênh lệch EM cặp −1,13, CI 95% [−2,88; 0,60], McNemar p = 0,223.
-2. **Hai hồ sơ kỹ năng ngược nhau** — PhoBERT hơn **+14,89** EM trên câu có đáp án; XLM-R hơn
-   **37,73** EM trên câu không có đáp án.
-3. **Tách từ không phải yếu tố quyết định** — chỉ 1,24% đáp án validation cắt ngang một từ của
-   `pyvi` (trần EM của mô hình word-level hoàn hảo: 99,25%), và phần lớn các trường hợp đó là lỗi
-   của bộ tách từ. Khi đã trả lời, tỉ lệ lỗi biên của hai mô hình như nhau (27,62% và 26,86%).
-4. **PhoBERT bỏ lớp "không có đáp án"** — loss trên nhãn "không có đáp án" tăng ~7 lần sau epoch 1
-   trong khi loss trên vị trí đáp án vẫn giảm; lặp lại ở lr 3e-5 và 2e-5 (`results/loss_probe.json`).
-5. **Bộ stress-test 250 câu của nhóm không dùng được làm thước đo** — chỉ 15/120 câu có đáp án chứa
-   đáp án trong ngữ cảnh; "luôn từ chối" đứng đầu bảng điểm trên bộ này
-   (`results/stress_test_audit.json`).
+Mốc tham chiếu (VLSP 2021 public test, Nguyen et al. 2022): baseline mBERT F1 63,03; đội cao nhất 84,24;
+người 87,34. Độ dao động theo seed và XLM-R ở 256/96: xem mục "seed" trong báo cáo.
 
 ## Tái lập
 
 ```bash
 uv venv .venv --python 3.12 && uv pip install --python .venv/bin/python -r requirements.txt
 python scripts/fetch_data.py                      # UIT-ViQuAD 2.0 -> data/raw/
-python -m pytest -m "not slow"                    # 218 kiểm thử, không cần GPU
+python -m pytest -m "not slow"                    # 244 kiểm thử, không cần GPU
 
 python scripts/analyze_segmentation.py            # biên từ + trần EM (không cần mô hình)
 python scripts/audit_stress_test.py               # kiểm định stress-test
@@ -60,6 +63,10 @@ python scripts/finetune.py --model vinai/phobert-base-v2 --out models/phobert --
 
 python scripts/run_eval.py --models abstain baseline xlmr phobert
 python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress
+python scripts/scan_features.py --model vinai/phobert-base-v2 --word-segmented \
+    --max-length 256 --doc-stride 96 --name phobert          # quét feature
+bash scripts/queue_score_windows.sh                         # điểm từng cửa sổ (dev + validation)
+python scripts/calibrate_thresholds.py --runs xlmr phobert  # τ chọn trên dev, chấm validation 1 lần
 python scripts/diagnose.py && python scripts/probe_loss.py
 python scripts/make_report_numbers.py && python scripts/make_figures.py
 ```
