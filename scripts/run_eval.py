@@ -34,6 +34,11 @@ NAMES = {
     "phobert": "PhoBERT-base-v2 (fine-tuned)",
     # Lần chạy lại với lr 2e-5 sau khi lần đầu (lr 3e-5) phân kỳ ở epoch 2.
     "phobert_lr2e5": "PhoBERT-base-v2 (fine-tuned, lr 2e-5)",
+    # Lần chạy ổn định sau chẩn đoán (results/probe_resume.json) và các seed/cấu hình phụ.
+    "phobert_stable": "PhoBERT-base-v2 (fine-tuned, lr 1e-5, stable)",
+    "phobert_seed13": "PhoBERT-base-v2 (fine-tuned, seed 13)",
+    "xlmr_seed13": "XLM-R-base (fine-tuned, seed 13)",
+    "xlmr_256": "XLM-R-base (fine-tuned, 256/96)",
 }
 
 
@@ -109,6 +114,18 @@ def main(argv=None) -> None:
         result["config"] = {k: getattr(predictor, k) for k in
                             ("max_length", "doc_stride", "max_answer_len", "word_segmented")
                             if hasattr(predictor, k)}
+        # Provenance huấn luyện: seed, lr, cửa sổ, thiết bị, phiên bản thư viện.
+        curve = Path("models") / kind / "training_curve.json"
+        if curve.exists():
+            tc = json.loads(curve.read_text())
+            result["training"] = {"config": tc.get("config"), "best_epoch": tc.get("best_epoch"),
+                                  "stability": tc.get("stability"),
+                                  "provenance": tc.get("provenance")}
+        import torch
+        import transformers
+
+        result["library_versions"] = {"torch": torch.__version__,
+                                      "transformers": transformers.__version__}
         if meta is not None:
             result["by_category"] = stress_breakdown(predictions, examples, meta)
 
