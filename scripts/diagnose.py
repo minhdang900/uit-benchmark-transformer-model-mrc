@@ -27,7 +27,8 @@ from mrc.metrics import exact_match  # noqa: E402
 sys.path.insert(0, str(_ROOT / "scripts"))
 from _runs import primary_phobert  # noqa: E402
 
-MODELS = ["abstain", "baseline", "xlmr", "phobert", "phobert_lr2e5"]
+MODELS = ["abstain", "baseline", "xlmr", "phobert", "phobert_lr2e5", "phobert_stable",
+          "xlmr_seed13", "phobert_seed13", "xlmr_256"]
 
 
 def answer_length_bucket(n_syllables: int) -> str:
@@ -109,6 +110,25 @@ def main() -> None:
             "misaligned": paired_comparison({q: em[P][q] for q in misaligned},
                                             {q: em["xlmr"][q] for q in misaligned}),
         }
+        # Cùng phép so sánh ở τ chọn trên dev (scripts/calibrate_thresholds.py): tách
+        # "đọc giỏi" khỏi "sẵn lòng trả lời".
+        tuned = {}
+        for mdl in ("xlmr", P):
+            tp = Path(f"results/predictions_{mdl}_tuned_validation.json")
+            if tp.exists():
+                t = json.loads(tp.read_text())
+                tuned[mdl] = {q: max((exact_match(t.get(q, ""), g) for g in refs[q]),
+                                     default=float(not t.get(q, "").strip())) for q in refs}
+        if len(tuned) == 2:
+            report["paired_phobert_vs_xlmr_tuned"] = {
+                "all": paired_comparison(tuned[P], tuned["xlmr"], groups=article),
+                "answerable": paired_comparison({q: tuned[P][q] for q in answerable},
+                                                {q: tuned["xlmr"][q] for q in answerable},
+                                                groups=article),
+                "impossible": paired_comparison({q: tuned[P][q] for q in refs if not refs[q]},
+                                                {q: tuned["xlmr"][q] for q in refs if not refs[q]},
+                                                groups=article),
+            }
         # Câu PhoBERT sai mà XLM-R đúng, và ngược lại: nguyên liệu cho phân tích định tính.
         disagree = []
         for q in refs:

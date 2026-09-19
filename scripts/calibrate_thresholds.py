@@ -82,6 +82,9 @@ def main(argv=None) -> None:
         chosen = best_threshold(dev_w, dev_refs)
         tau = chosen["tau"]
         val_preds[run] = predictions_at(val_w, tau)
+        # Dự đoán ở τ đã chọn — cho diagnose.py so sánh cặp ở τ hiệu chỉnh.
+        (Path("results") / f"predictions_{run}_tuned_validation.json").write_text(
+            json.dumps(val_preds[run], ensure_ascii=False, indent=0), encoding="utf-8")
         systems[run] = {
             "tau": tau,
             "dev_at_tau0": scores(predictions_at(dev_w, 0.0), dev_refs),

@@ -20,10 +20,13 @@ for _p in (_ROOT, _ROOT / "src"):
 from mrc.data import compute_stats, load_squad_file, split_by_context  # noqa: E402
 
 sys.path.insert(0, str(_ROOT / "scripts"))
-from _runs import PHOBERT_RUNS, best_dev_f1, primary_phobert  # noqa: E402
+from _runs import PHOBERT_RUNS, best_dev_f1, full_dev_f1, primary_phobert  # noqa: E402
 
 PHOBERT = primary_phobert(RES := _ROOT / "results")
-RUN_LABEL = {"phobert": "PhoBERT, lr $3\\cdot10^{-5}$", "phobert_lr2e5": "PhoBERT, lr $2\\cdot10^{-5}$"}
+RUN_LABEL = {"phobert": "PhoBERT, lr $3\\cdot10^{-5}$", "phobert_lr2e5": "PhoBERT, lr $2\\cdot10^{-5}$",
+             "phobert_stable": "PhoBERT, lr $10^{-5}$ (ổn định)"}
+RUN_LETTER = {"phobert": "A", "phobert_lr2e5": "B", "phobert_stable": "C"}
+ALL_PHOBERT_RUNS = PHOBERT_RUNS + ("phobert_stable",)
 
 OUT = _ROOT / "report" / "generated"
 MISSING: list[str] = []
@@ -79,6 +82,12 @@ def get(d, *keys):
             return None
         d = d.get(k) if isinstance(d, dict) else None
     return d
+
+
+def ci(r: dict) -> str:
+    """CI 95% theo BÀI nếu có (trung thực hơn), không thì theo câu."""
+    lo, hi = r.get("ci95_article") or r["ci95"]
+    return f"[{vi(lo)}; {vi(hi)}]"
 
 
 def table(path: str, body: str) -> None:
@@ -248,6 +257,8 @@ def main() -> None:
         m(f"Pair{w}Diff", get(r, "em_diff"))
         m(f"Pair{w}Lo", (get(r, "ci95") or [None])[0])
         m(f"Pair{w}Hi", (get(r, "ci95") or [None, None])[1])
+        m(f"Pair{w}ArtLo", (get(r, "ci95_article") or [None])[0])
+        m(f"Pair{w}ArtHi", (get(r, "ci95_article") or [None, None])[1])
         m(f"Pair{w}P", pval(get(r, "mcnemar_p")) if r else None, raw=True)
         m(f"Pair{w}OnlyP", get(r, "only_a"), 0)
         m(f"Pair{w}OnlyX", get(r, "only_b"), 0)
@@ -257,14 +268,14 @@ def main() -> None:
             name = {"all": "Toàn bộ", "answerable": "Có đáp án", "impossible": "Không có đáp án",
                     "misaligned": "Lệch biên từ"}[part]
             pair_rows.append(f"{name} & {vi(r['n'])} & {vi(r['both_correct'])} & {vi(r['only_a'])} & {vi(r['only_b'])} & "
-                             f"{vi(r['neither'])} & {vi(r['em_diff'])} & [{vi(r['ci95'][0])}; {vi(r['ci95'][1])}] & "
+                             f"{vi(r['neither'])} & {vi(r['em_diff'])} & {ci(r)} & "
                              f"{pval(r['mcnemar_p'])} \\\\")
     table("tab_paired.tex", "\n".join(pair_rows) + "\n")
 
     # ── huấn luyện ────────────────────────────────────────────────────────────
     curve_rows = []
     for key, P, label in [("xlmr", "Xlmr", "XLM-R-base")] + [
-            (r, "PhobertRun" + ("A" if r == "phobert" else "B"), RUN_LABEL[r]) for r in PHOBERT_RUNS]:
+            (r, "PhobertRun" + RUN_LETTER[r], RUN_LABEL[r]) for r in ALL_PHOBERT_RUNS]:
         c = load(f"training_curve_{key}.json")
         cfg = get(c, "config") or {}
         m(f"{P}BestEpoch", get(c, "best_epoch"), 0)
@@ -281,18 +292,21 @@ def main() -> None:
 
     # ── hai lần chạy PhoBERT ─────────────────────────────────────────────────
     run_rows = []
-    for r in PHOBERT_RUNS:
+    for r in ALL_PHOBERT_RUNS:
         ev, c = load(f"eval_{r}_validation.json"), load(f"training_curve_{r}.json")
         ab = get(diag, "models", r, "abstention", "abstain_rate")
-        w = "A" if r == "phobert" else "B"
+        w = RUN_LETTER[r]
         m(f"PhobertRun{w}DevFone", best_dev_f1(RES, r))
+        m(f"PhobertRun{w}FullDevFone", full_dev_f1(RES, r))
+        m(f"PhobertRun{w}Stable", ("ổn định" if get(c, "stability", "stable") else "sụp đổ")
+          if get(c, "stability") else "sụp đổ", raw=True)
         m(f"PhobertRun{w}EM", get(ev, "overall", "EM"))
         m(f"PhobertRun{w}AnsEM", get(ev, "answerable_only", "EM"))
         m(f"PhobertRun{w}ImpEM", get(ev, "impossible_only", "EM"))
         m(f"PhobertRun{w}AbsRate", ab)
         if ev and c:
             star = r" $\star$" if r == PHOBERT else ""
-            run_rows.append(f"{RUN_LABEL[r]}{star} & {c['best_epoch']} & {vi(best_dev_f1(RES, r))} & "
+            run_rows.append(f"{RUN_LABEL[r]}{star} & {c['best_epoch']} & {vi(full_dev_f1(RES, r))} & "
                             f"{vi(ev['overall']['EM'])} & {vi(ev['overall']['F1'])} & "
                             f"{vi(ev['answerable_only']['EM'])} & {vi(ev['impossible_only']['EM'])} & {vi(ab)} \\\\")
     table("tab_phobert_runs.tex", "\n".join(run_rows) + "\n")
@@ -314,6 +328,119 @@ def main() -> None:
             probe_rows.append(f"{label} & {vi(100 * r['cls_fraction'], 1)}\\% & " + " & ".join(
                 f"{vi(ep[e]['cls'])} / {vi(ep[e]['span'])}" for e in ("1", "2", "3")) + " \\\\")
     table("tab_loss_probe.tex", "\n".join(probe_rows) + "\n")
+
+
+    # ── ngưỡng τ chọn trên dev (scripts/calibrate_thresholds.py) ─────────────
+    thr = load("thresholds.json") or {}
+    thr_rows = []
+    for key, P, label in [("xlmr", "Xlmr", "XLM-R-base")] + [
+            (r, "PhobertRun" + RUN_LETTER[r], RUN_LABEL[r]) for r in ALL_PHOBERT_RUNS]:
+        t = get(thr, "systems", key)
+        z, v = get(t, "validation_at_tau0") or {}, get(t, "validation_at_tau") or {}
+        m(f"Thr{P}Tau", get(t, "tau"))
+        for k, w in (("EM", "EM"), ("F1", "Fone"), ("EM_answerable", "AnsEM"),
+                     ("EM_impossible", "ImpEM"), ("abstain_rate", "AbsRate")):
+            m(f"Thr{P}{w}Zero", z.get(k))
+            m(f"Thr{P}{w}", v.get(k))
+        if t:
+            star = r" $\star$" if key == PHOBERT else ""
+            thr_rows.append(f"{label}{star} & {vi(t['tau'])} & {vi(z['EM'])} / {vi(z['F1'])} & "
+                            f"{vi(v['EM'])} / {vi(v['F1'])} & {vi(v['EM_answerable'])} & "
+                            f"{vi(v['EM_impossible'])} & {vi(v['abstain_rate'])} \\\\")
+    table("tab_threshold.tex", "\n".join(thr_rows) + "\n")
+    # Tên gọn cho hệ thống chính: \ThrPhobert... trỏ về lần chạy PhoBERT chính.
+    tp = get(thr, "systems", PHOBERT) or {}
+    for k, w in (("EM", "EM"), ("F1", "Fone"), ("EM_answerable", "AnsEM"),
+                 ("EM_impossible", "ImpEM"), ("abstain_rate", "AbsRate")):
+        m(f"ThrPhobert{w}", get(tp, "validation_at_tau", k))
+        m(f"ThrPhobert{w}Zero", get(tp, "validation_at_tau0", k))
+    m("ThrPhobertTau", tp.get("tau"))
+
+    both = get(thr, "both_answered") or {}
+    for label, w in (("tau0", ""), ("tuned", "Tuned")):
+        r = both.get(f"xlmr__{PHOBERT}__{label}") or both.get(f"{PHOBERT}__xlmr__{label}")
+        m(f"Both{w}N", get(r, "n_both_answered"), 0)
+        m(f"Both{w}Phobert", get(r, PHOBERT))
+        m(f"Both{w}Xlmr", get(r, "xlmr"))
+        m(f"Both{w}Gap", r[PHOBERT] - r["xlmr"] if r else None)
+
+    pt = get(diag, "paired_phobert_vs_xlmr_tuned") or {}
+    ptrows = []
+    for part, w in (("all", ""), ("answerable", "Ans"), ("impossible", "Imp")):
+        r = pt.get(part)
+        m(f"PairT{w}Diff", get(r, "em_diff"))
+        m(f"PairT{w}ArtLo", (get(r, "ci95_article") or [None])[0])
+        m(f"PairT{w}ArtHi", (get(r, "ci95_article") or [None, None])[1])
+        m(f"PairT{w}P", pval(get(r, "mcnemar_p")) if r else None, raw=True)
+        if r:
+            name = {"all": "Toàn bộ", "answerable": "Có đáp án", "impossible": "Không có đáp án"}[part]
+            ptrows.append(f"{name} & {vi(r['n'])} & {vi(r['both_correct'])} & {vi(r['only_a'])} & "
+                          f"{vi(r['only_b'])} & {vi(r['neither'])} & {vi(r['em_diff'])} & {ci(r)} & "
+                          f"{pval(r['mcnemar_p'])} \\\\")
+    table("tab_paired_tuned.tex", "\n".join(ptrows) + "\n")
+
+    # ── chẩn đoán sụp đổ: dev đầy đủ, quét feature, probe resume ─────────────
+    for run, w in (("phobert_epoch1", "EpochOne"), ("phobert", "RunA"), ("phobert_lr2e5", "RunB"),
+                   ("phobert_stable", "RunC"), ("xlmr", "Xlmr")):
+        z = get(load(f"windows_{run}_dev.json"), "at_tau0")
+        m(f"Dev{w}EM", get(z, "EM")); m(f"Dev{w}Fone", get(z, "F1"))
+        m(f"Dev{w}AbsRate", get(z, "abstain_rate"))
+    m("NDevFull", get(load("windows_phobert_dev.json"), "at_tau0", "n"), 0)
+    for model, w in (("phobert", "Phobert"), ("xlmr", "Xlmr")):
+        sc = load(f"feature_scan_{model}.json") or {}
+        cnt = sc.get("counts", {})
+        viol = sum(cnt.get(k, 0) for k in ("id_out_of_vocab", "too_long", "position_out_of_range",
+                                           "mask_mismatch", "cls_not_at_0", "impossible_not_cls",
+                                           "span_index_invalid", "span_on_non_context_token")) if sc else None
+        m(f"Scan{w}Features", sc.get("n_features"), 0)
+        m(f"Scan{w}Violations", viol, 0)
+        m(f"Scan{w}MismatchPct", sc.get("span_text_mismatch_pct"))
+        m(f"Scan{w}ClsFrac", 100 * sc["cls_label_fraction"] if sc else None)
+    pr = load("probe_resume.json") or {}
+    probe_rows = []
+    for name, w in (("probe_phobert_lr2.2e-5", "High"), ("probe_phobert_lr1e-5", "Low")):
+        r = get(pr, "probes", name) or {}
+        st = r.get("stability") or {}
+        spikes = r.get("grad_spikes_over_100") or []
+        m(f"Resume{w}Stable", ("ổn định" if st.get("stable") else "sụp đổ") if st else None, raw=True)
+        m(f"Resume{w}MaxRise", st.get("max_rise"))
+        m(f"Resume{w}FirstViolation", st.get("first_violation_step"), 0)
+        m(f"Resume{w}NSpikes", len(spikes) if r else None, 0)
+        m(f"Resume{w}MaxSpike", max((g for _, g in spikes), default=0) if r else None, 0)
+        m(f"Resume{w}MaxSpikeStep", max(spikes, key=lambda x: x[1])[0] if spikes else None, 0)
+        m(f"Resume{w}FirstSpikeStep", spikes[0][0] if spikes else None, 0)
+        blocks = r.get("blocks") or []
+        if blocks:
+            m(f"Resume{w}ClsStart", blocks[0]["cls_loss"])
+            m(f"Resume{w}ClsEnd", blocks[-1]["cls_loss"])
+            m(f"Resume{w}SpanEnd", blocks[-1]["span_loss"])
+            for b in blocks:
+                probe_rows.append((b["steps"], w, b))
+    lr_rows = []
+    for steps in dict.fromkeys(s for s, _, _ in probe_rows):
+        cells = {w: b for s, w, b in probe_rows if s == steps}
+        lr_rows.append(f"{steps} & " + " & ".join(
+            f"{vi(cells[w]['cls_loss'])} & {vi(cells[w]['grad_norm_max'], 0)}" if w in cells else r"\missing{} & \missing{}"
+            for w in ("High", "Low")) + " \\\\")
+    table("tab_probe_resume.tex", "\n".join(lr_rows) + "\n")
+
+    # ── seed thứ hai và cấu hình cửa sổ khớp ─────────────────────────────────
+    seed_rows = []
+    for key, label, seed, win in (("xlmr", "XLM-R-base", 42, "384/128"), ("xlmr_seed13", "XLM-R-base", 13, "384/128"),
+                                  ("xlmr_256", "XLM-R-base", 42, "256/96"),
+                                  (PHOBERT, "PhoBERT (chính)", 42, "256/96"),
+                                  ("phobert_seed13", "PhoBERT (chính)", 13, "256/96")):
+        ev = load(f"eval_{key}_validation.json")
+        t = get(thr, "systems", key)
+        w = {"xlmr": "XlmrS", "xlmr_seed13": "XlmrSThirteen", "xlmr_256": "XlmrTwoFiftySix",
+             "phobert_seed13": "PhobertSThirteen"}.get(key, "PhobertS")
+        m(f"Seed{w}EM", get(ev, "overall", "EM")); m(f"Seed{w}Fone", get(ev, "overall", "F1"))
+        m(f"Seed{w}TunedFone", get(t, "validation_at_tau", "F1"))
+        if ev:
+            seed_rows.append(f"{label} & {seed} & {win} & {vi(ev['overall']['EM'])} / {vi(ev['overall']['F1'])} & "
+                             + (f"{vi(t['validation_at_tau']['EM'])} / {vi(t['validation_at_tau']['F1'])}" if t else r"\missing{}")
+                             + " \\\\")
+    table("tab_seeds.tex", "\n".join(seed_rows) + "\n")
 
     (OUT / "numbers.tex").write_text(
         "% SINH TỰ ĐỘNG bởi scripts/make_report_numbers.py — KHÔNG SỬA TAY\n" + "\n".join(m.lines) + "\n",
