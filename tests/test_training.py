@@ -272,3 +272,51 @@ def test_evaluate_checkpoint_empty_predictor_scores_0_on_answerable():
 def test_evaluate_checkpoint_limit_none_uses_everything():
     from mrc.training import evaluate_checkpoint
     assert evaluate_checkpoint(_mk_examples(15), _StubPredictor({}), limit=None)["n"] == 15
+
+
+# ── loss tăng KHÔNG phải overfitting (đường cong thật PhoBERT lr 2e-5) ──
+def test_rising_train_loss_is_instability_not_overfitting():
+    # val_f1 đỉnh ở epoch 2 rồi giảm, nhưng train_loss cũng TĂNG (1.63 -> 2.37):
+    # model không học thuộc train, nó đang hỏng. Không được gọi là overfitting.
+    d = detect_overfitting(_curve((2.2123, 42.0, 54.71), (1.6339, 39.8, 58.36),
+                                  (2.3729, 38.2, 57.67)))
+    assert d["overfitting"] is False
+    assert d["train_loss_rising"] is True
+    assert "vẫn giảm" not in d["reason"]
+
+
+def test_overfitting_flag_unchanged_when_loss_keeps_falling():
+    d = detect_overfitting(_curve((4.64, 28, 28.00), (3.57, 28, 28.44), (2.78, 23, 24.47)))
+    assert d["train_loss_rising"] is False
+
+
+# ── ổn định huấn luyện theo từng bước (định nghĩa "stable" của spec) ───
+from mrc.training import is_stable, stability_report  # noqa: E402
+
+
+def test_steady_decline_is_stable():
+    losses = [3.0 - 0.001 * i for i in range(2000)]
+    assert is_stable(losses, window=200, tolerance=0.2) is True
+
+
+def test_jump_that_never_recovers_is_unstable():
+    # giống PhoBERT: ~1.2 rồi nhảy lên ~2.4 và nằm đó
+    losses = [1.2] * 1500 + [2.4] * 1000
+    assert is_stable(losses, window=200, tolerance=0.2) is False
+
+
+def test_noise_within_tolerance_is_stable():
+    losses = [1.0 + (0.3 if i % 2 else -0.3) for i in range(2000)]
+    assert is_stable(losses, window=200, tolerance=0.2) is True
+
+
+def test_stability_report_locates_the_jump():
+    losses = [1.2] * 1500 + [2.4] * 1000
+    r = stability_report(losses, window=200, tolerance=0.2)
+    assert r["stable"] is False
+    assert r["max_rise"] == pytest.approx(1.2, abs=1e-6)
+    assert 1500 <= r["first_violation_step"] < 1700
+
+
+def test_stability_needs_a_full_window():
+    assert is_stable([5.0, 1.0], window=200, tolerance=0.2) is True

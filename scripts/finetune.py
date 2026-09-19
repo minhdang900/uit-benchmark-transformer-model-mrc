@@ -79,8 +79,33 @@ def parse_args(argv=None) -> argparse.Namespace:
                     help="tỉ lệ CONTEXT của train tách ra làm dev để chọn epoch")
     ap.add_argument("--word-segmented", action="store_true",
                     help="model word-level (PhoBERT): tách từ bằng pyvi trước khi tokenize")
-    ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--seed", type=int, default=42,
+                    help="seed khởi tạo head + thứ tự batch")
+    ap.add_argument("--split-seed", type=int, default=42,
+                    help="seed tách dev khỏi train — GIỮ CỐ ĐỊNH giữa các seed huấn luyện "
+                         "để điểm dev của mọi lần chạy so sánh được")
+    ap.add_argument("--resume-from", default=None,
+                    help="khởi tạo trọng số từ checkpoint này thay vì --model (probe)")
+    ap.add_argument("--max-steps", type=int, default=None,
+                    help="dừng sau N bước optimizer, bỏ qua chấm dev (probe)")
     return ap.parse_args(argv)
+
+
+def per_label_losses(start_logits, end_logits, start_positions, end_positions):
+    """Loss QA từng mẫu, giống hệt công thức của HF, để tách theo loại nhãn.
+
+    HF: ``(CE(start) + CE(end)) / 2`` lấy trung bình trên batch. Tính lại từng mẫu
+    thì trung bình vẫn là đúng loss đó, nhưng tách được mẫu có nhãn [CLS]
+    ("không có đáp án" — vị trí 0) với mẫu có span.
+    """
+    import torch.nn.functional as F
+
+    ignored = start_logits.size(1)
+    sp = start_positions.clamp(0, ignored)
+    ep = end_positions.clamp(0, ignored)
+    per = (F.cross_entropy(start_logits, sp, ignore_index=ignored, reduction="none")
+           + F.cross_entropy(end_logits, ep, ignore_index=ignored, reduction="none")) / 2
+    return per, start_positions == 0
 
 
 def main(argv=None) -> None:
@@ -102,7 +127,7 @@ def main(argv=None) -> None:
 
     # Dev để chọn epoch: tách từ train THEO CONTEXT. Validation không được nhìn
     # thấy trong lúc huấn luyện — nó là tập test của đồ án.
-    train_ex, dev_ex = split_by_context(train_ex, val_frac=args.dev_frac, seed=args.seed)
+    train_ex, dev_ex = split_by_context(train_ex, val_frac=args.dev_frac, seed=args.split_seed)
 
     # Cổng chống leakage chạy TRƯỚC khi tốn giờ GPU.
     assert_no_leakage(train_ex, val_ex)
@@ -127,7 +152,8 @@ def main(argv=None) -> None:
     print(f"lịch học: {schedule.steps_per_epoch} bước/epoch, "
           f"{schedule.total_steps} tổng, {schedule.warmup_steps} warmup")
 
-    model = AutoModelForQuestionAnswering.from_pretrained(args.model).to(device)
+    model = AutoModelForQuestionAnswering.from_pretrained(
+        args.resume_from or args.model).to(device)
     loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
     optimiser = torch.optim.AdamW(model.parameters(), lr=args.lr,
                                   weight_decay=args.weight_decay)
@@ -138,6 +164,15 @@ def main(argv=None) -> None:
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     curve: list[EpochRecord] = []
+    # Nhật ký TỪNG bước optimizer. Trung bình tích luỹ theo epoch che mất cú nhảy
+    # loss của PhoBERT; ở đây thấy được loss, grad norm TRƯỚC khi cắt, và loss tách
+    # theo nhãn "không có đáp án" / span tại đúng bước xảy ra.
+    steps_path = out_dir / "steps.jsonl"
+    steps_file = steps_path.open("w", encoding="utf-8")
+    opt_step = 0
+    acc = {"loss": 0.0, "cls_sum": 0.0, "cls_n": 0, "span_sum": 0.0, "span_n": 0}
+    step_losses: list[float] = []
+    stop = False
 
     for epoch in range(1, args.epochs + 1):
         model.train()
@@ -146,19 +181,51 @@ def main(argv=None) -> None:
 
         for step, batch in enumerate(loader, start=1):
             batch = {k: v.to(device) for k, v in batch.items()}
-            loss = model(**batch).loss / args.grad_accum
+            out = model(input_ids=batch["input_ids"], attention_mask=batch["attention_mask"])
+            per, is_cls = per_label_losses(out.start_logits, out.end_logits,
+                                           batch["start_positions"], batch["end_positions"])
+            loss = per.mean() / args.grad_accum
             loss.backward()
+            per = per.detach()
+            acc["loss"] += loss.item()
+            acc["cls_sum"] += per[is_cls].sum().item(); acc["cls_n"] += int(is_cls.sum())
+            acc["span_sum"] += per[~is_cls].sum().item(); acc["span_n"] += int((~is_cls).sum())
             if step % args.grad_accum == 0:
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0).item()
+                lr_now = scheduler.get_last_lr()[0]
                 optimiser.step()
                 scheduler.step()
                 optimiser.zero_grad()
+                opt_step += 1
+                rec = {
+                    "step": opt_step, "epoch": epoch, "loss": round(acc["loss"], 5),
+                    "cls_loss": round(acc["cls_sum"] / acc["cls_n"], 5) if acc["cls_n"] else None,
+                    "span_loss": round(acc["span_sum"] / acc["span_n"], 5) if acc["span_n"] else None,
+                    "grad_norm": round(grad_norm, 5), "lr": lr_now,
+                }
+                steps_file.write(json.dumps(rec) + "\n")
+                step_losses.append(acc["loss"])
+                acc = {"loss": 0.0, "cls_sum": 0.0, "cls_n": 0, "span_sum": 0.0, "span_n": 0}
+                if args.max_steps and opt_step >= args.max_steps:
+                    stop = True
             total_loss += loss.item() * args.grad_accum
             n_batches += 1
             if step % 200 == 0:
                 print(f"  epoch {epoch} step {step}/{len(loader)} "
                       f"loss {total_loss / n_batches:.4f} "
                       f"({time.time() - t_epoch:.0f}s)", flush=True)
+            if stop:
+                break
+
+        steps_file.flush()
+        if stop:
+            # Probe: chỉ cần nhật ký từng bước + checkpoint cuối, không chấm dev.
+            model.save_pretrained(out_dir / "probe_final")
+            tokenizer.save_pretrained(out_dir / "probe_final")
+            write_tokenization_config(out_dir / "probe_final", word_segmented=args.word_segmented,
+                                      max_length=args.max_length, doc_stride=args.doc_stride,
+                                      max_answer_len=args.max_answer_len)
+            break
 
         checkpoint = out_dir / f"epoch{epoch}"
         model.save_pretrained(checkpoint)
@@ -183,6 +250,21 @@ def main(argv=None) -> None:
               f"val_EM {scored['em']:.2f}  val_F1 {scored['f1']:.2f}  "
               f"(n={scored['n']}, {curve[-1].seconds:.0f}s)", flush=True)
 
+    steps_file.close()
+    from mrc.training import stability_report
+
+    stability = stability_report(step_losses)
+    logs_dir = Path("results") / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    (logs_dir / f"steps_{out_dir.name}.jsonl").write_text(
+        steps_path.read_text(encoding="utf-8"), encoding="utf-8")
+    print(f"ổn định: {stability}")
+    if not curve:  # probe: không có epoch hoàn chỉnh để chọn
+        (Path("results") / f"probe_{out_dir.name}.json").write_text(json.dumps(
+            {"config": vars(args), "steps": opt_step, "stability": stability},
+            ensure_ascii=False, indent=2), encoding="utf-8")
+        return
+
     # Early stopping thực chất: chỉ epoch tốt nhất được lưu làm model cuối.
     best = select_best_epoch(curve)
     best_ckpt = out_dir / f"epoch{best}"
@@ -190,7 +272,14 @@ def main(argv=None) -> None:
         (out_dir / name.name).write_bytes(name.read_bytes())
     print(f"\nepoch tốt nhất = {best} -> sao chép vào {out_dir}")
 
+    import platform
+    import transformers
+
     summary = summarise_curve(curve, config=vars(args))
+    summary["stability"] = stability
+    summary["provenance"] = {"device": str(device), "torch": torch.__version__,
+                             "transformers": transformers.__version__,
+                             "platform": platform.platform()}
     print(f"chẩn đoán: {summary['diagnosis']['reason']}")
     if summary["diagnosis"]["degenerate_collapse"]:
         print("  *** CẢNH BÁO: EM ≈ F1 ở mọi epoch — model có thể đã suy sụp về "

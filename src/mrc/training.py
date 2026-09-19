@@ -21,6 +21,8 @@ __all__ = [
     "compute_schedule",
     "select_best_epoch",
     "detect_overfitting",
+    "is_stable",
+    "stability_report",
     "summarise_curve",
 ]
 
@@ -128,6 +130,7 @@ def detect_overfitting(curve: list[EpochRecord]) -> dict:
     if len(curve) < 2:
         return {
             "overfitting": False,
+            "train_loss_rising": False,
             "still_improving": False,
             "degenerate_collapse": _is_degenerate(curve),
             "best_epoch": curve[0].epoch if curve else None,
@@ -138,10 +141,21 @@ def detect_overfitting(curve: list[EpochRecord]) -> dict:
     last = curve[-1]
     best = next(r for r in curve if r.epoch == best_epoch)
 
-    overfitting = best_epoch < last.epoch and last.val_f1 < best.val_f1
+    val_declined = best_epoch < last.epoch and last.val_f1 < best.val_f1
+    # Overfitting chỉ khi train_loss GIẢM trong lúc val giảm. Nếu loss cũng TĂNG thì
+    # model không học thuộc train mà đang hỏng — gọi là overfitting là sai bản chất.
+    train_loss_rising = last.train_loss > min(r.train_loss for r in curve)
+    overfitting = val_declined and not train_loss_rising
     still_improving = last.epoch == best_epoch and last.val_f1 >= curve[-2].val_f1
 
-    if overfitting:
+    if val_declined and train_loss_rising:
+        reason = (
+            f"val_f1 đạt đỉnh {best.val_f1:.2f} ở epoch {best_epoch} rồi giảm còn "
+            f"{last.val_f1:.2f}, và train_loss cũng TĂNG "
+            f"({min(r.train_loss for r in curve):.4f} -> {last.train_loss:.4f}) — "
+            f"dấu hiệu huấn luyện mất ổn định, không phải overfitting. Dừng ở epoch {best_epoch}."
+        )
+    elif overfitting:
         reason = (
             f"val_f1 đạt đỉnh {best.val_f1:.2f} ở epoch {best_epoch} rồi giảm còn "
             f"{last.val_f1:.2f} ở epoch {last.epoch}, trong khi train_loss vẫn giảm "
@@ -157,11 +171,52 @@ def detect_overfitting(curve: list[EpochRecord]) -> dict:
 
     return {
         "overfitting": overfitting,
+        "train_loss_rising": train_loss_rising,
         "still_improving": still_improving,
         "degenerate_collapse": _is_degenerate(curve),
         "best_epoch": best_epoch,
         "reason": reason,
     }
+
+
+def stability_report(
+    step_losses: list[float], window: int = 200, tolerance: float = 0.2
+) -> dict:
+    """Loss theo từng bước có lúc nào "nhảy lên và nằm đó" không.
+
+    Làm mượt bằng trung bình trượt ``window`` bước, rồi so mỗi điểm với mức thấp
+    nhất đã đạt trước đó. Huấn luyện ỔN ĐỊNH khi loss mượt không bao giờ vượt mức
+    thấp nhất quá ``tolerance``. Trung bình tích luỹ theo epoch (cái finetune.py
+    in ra) che mất cú nhảy, nên phải đo trên từng bước.
+    """
+    if window <= 0:
+        raise ValueError(f"window phải > 0, nhận {window}")
+    max_rise, first_violation, run_min = 0.0, None, float("inf")
+    total = 0.0
+    for i, loss in enumerate(step_losses):
+        total += loss
+        if i >= window:
+            total -= step_losses[i - window]
+        if i < window - 1:
+            continue
+        smooth = total / window
+        run_min = min(run_min, smooth)
+        rise = smooth - run_min
+        if rise > max_rise:
+            max_rise = rise
+        if rise > tolerance and first_violation is None:
+            first_violation = i
+    return {
+        "stable": first_violation is None,
+        "max_rise": round(max_rise, 6),
+        "first_violation_step": first_violation,
+        "window": window,
+        "tolerance": tolerance,
+    }
+
+
+def is_stable(step_losses: list[float], window: int = 200, tolerance: float = 0.2) -> bool:
+    return stability_report(step_losses, window, tolerance)["stable"]
 
 
 def _is_degenerate(curve: list[EpochRecord]) -> bool:
