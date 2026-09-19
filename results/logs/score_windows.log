@@ -8,3 +8,7 @@ xlmr validation: {'tau': 0.0, 'EM': 52.4908, 'F1': 61.3225, 'abstain_rate': 32.9
 phobert_lr2e5 dev: {'tau': 0.0, 'EM': 40.5694, 'F1': 57.7416, 'abstain_rate': 5.7651, 'n': 1405}  (20.6s) -> results/windows_phobert_lr2e5_dev.json
 phobert_lr2e5 validation: {'tau': 0.0, 'EM': 49.5543, 'F1': 61.1286, 'abstain_rate': 5.4274, 'n': 3814}  (59.2s) -> results/windows_phobert_lr2e5_validation.json
 DONE
+phobert_stable dev: {'tau': 0.0, 'EM': 44.1993, 'F1': 60.5615, 'abstain_rate': 20.9253, 'n': 1405}  (19.3s) -> results/windows_phobert_stable_dev.json
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (859 > 512). Running this sequence through the model will result in indexing errors
+xlmr_seed13 dev: {'tau': 0.0, 'EM': 46.0498, 'F1': 59.6651, 'abstain_rate': 29.6085, 'n': 1405}  (22.0s) -> results/windows_xlmr_seed13_dev.json
+NIGHT1_DONE

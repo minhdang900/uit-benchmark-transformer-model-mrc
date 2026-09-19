@@ -139,9 +139,11 @@ từ không trùng nhau hoàn toàn; đây là một nguồn lệch phân phối
 \label{sec:finetune}
 
 Hai mô hình được huấn luyện bằng \emph{cùng} vòng lặp, cùng lịch học và cùng seed
-(Bảng~\ref{tab:hparams}); chỉ các tham số buộc phải khác do kiến trúc được thay đổi. PhoBERT
-chỉ có 256 vị trí hữu dụng nên \code{max\_length} = 256 thay vì 384; phần chồng lấp giữa hai
-cửa sổ được giảm tương ứng. Độ dài đáp án tối đa được đặt 64 token cho cả hai, lớn hơn phân vị
+(Bảng~\ref{tab:hparams}). Cần tách rõ hai loại khác biệt. PhoBERT chỉ có 256 vị trí hữu dụng nên
+\code{max\_length} = 256 là \emph{bắt buộc}. Ngược lại, việc cho XLM-R dùng 384 token và chồng lấp
+128 là \emph{lựa chọn} của nhóm (giá trị mặc định cho SQuAD), không phải ràng buộc kiến trúc --- XLM-R
+hoàn toàn chạy được ở 256/96. Vì mô hình trả lời khi \emph{có} một cửa sổ vượt ngưỡng, số cửa sổ
+khác nhau cũng ảnh hưởng nhẹ tới hành vi từ chối; Mục~\ref{sec:seeds} đo lại XLM-R ở đúng 256/96. Độ dài đáp án tối đa được đặt 64 token cho cả hai, lớn hơn phân vị
 95 của độ dài đáp án vàng theo cả hai tokenizer (đo trên 400 câu train: 30 token PhoBERT, 38
 token XLM-R), để tham số này không trở thành một yếu tố gây nhiễu.
 
@@ -164,7 +166,7 @@ Batch $\times$ tích luỹ gradient & $12 \times 2 = 24$ & $12 \times 2 = 24$ \\
 Tốc độ học, warmup, weight decay & $3\cdot10^{-5}$; 10\%; 0,01 & $3\cdot10^{-5}$; 10\%; 0,01 \\
 Tối ưu, cắt gradient & AdamW; 1,0 & AdamW; 1,0 \\
 Chọn epoch & F1 cao nhất trên dev (500 câu) & F1 cao nhất trên dev (500 câu) \\
-Ngưỡng không trả lời $\tau$ & 0 & 0 \\
+Ngưỡng không trả lời $\tau$ & 0; và chọn trên dev (Mục~\ref{sec:threshold}) & 0; và chọn trên dev \\
 Seed & 42 & 42 \\
 \bottomrule
 \end{tabular}
