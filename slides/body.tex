@@ -189,7 +189,7 @@ Lỗi gán nhãn: ``o thời gian'' & \MisAnnot \\
 % ─────────────────────────────────────────────────────────────── 4 KẾT QUẢ
 \section{Kết quả}
 
-\begin{frame}{Kết quả tổng --- validation, \NVal{} câu, chấm một lần}
+\begin{frame}{Kết quả tổng ở ngưỡng mặc định $\tau = 0$ --- validation, \NVal{} câu}
 \begin{columns}[T]
 \begin{column}{0.58\textwidth}
 \includegraphics[width=\textwidth]{slide_main_results.png}
@@ -208,14 +208,15 @@ TF-IDF & \TfidfEM & \TfidfFone \\
 \end{tabular}
 
 \vspace{0.6em}
-\footnotesize Chênh lệch EM tổng (cặp): \textbf{\PairDiff}, CI 95\% [\PairLo; \PairHi], $p$ = \PairP\\[3pt]
-\alert{$\Rightarrow$ Về tổng: không khác nhau có ý nghĩa.}
+\footnotesize Chênh lệch EM tổng (cặp): \textbf{\PairDiff}, CI 95\% theo bài [\PairArtLo; \PairArtHi], $p$ = \PairP\\[3pt]
+\alert{$\Rightarrow$ Ở $\tau = 0$: không khác nhau có ý nghĩa.}\\[3pt]
+\scriptsize Mốc: validation = public test VLSP 2021; baseline mBERT F1 \PubBaseFone, người F1 \PubHumanFone
 \end{column}
 \end{columns}
 \src{results/eval\_*\_validation.json, results/diagnosis\_validation.json}
 \end{frame}
 
-\begin{frame}{Nhưng điểm tổng che hai hồ sơ kỹ năng \emph{ngược nhau}}
+\begin{frame}{Ở $\tau = 0$: hai hồ sơ kỹ năng \emph{ngược nhau}?}
 \begin{columns}[T]
 \begin{column}{0.48\textwidth}
 \centering
@@ -234,11 +235,44 @@ TF-IDF & \TfidfEM & \TfidfFone \\
 \end{columns}
 
 \vspace{1.2em}
-\begin{block}{PhoBERT đọc giỏi hơn nhiều --- nhưng gần như không biết từ chối}
-\small Hai chênh lệch lớn, ngược dấu, triệt tiêu nhau trong điểm tổng. Lặp lại ở lần chạy PhoBERT thứ hai
-(lr $2\cdot10^{-5}$): EM có đáp án \PhobertRunBAnsEM, không đáp án \PhobertRunBImpEM.
+\begin{block}{Nhưng PhoBERT từ chối \PhobertAbsRate\%, XLM-R từ chối \XlmrAbsRate\%}
+\small Hai chênh lệch phần lớn là \emph{một}: mô hình nào sẵn lòng trả lời hơn. Trên \BothN{} câu có đáp án
+mà \emph{cả hai} cùng trả lời, khoảng cách ``đọc'' chỉ còn \textbf{\BothGap} điểm EM.
 \end{block}
-\src{results/diagnosis\_validation.json (McNemar + bootstrap 2.000 lần)}
+\src{results/diagnosis\_validation.json, results/thresholds.json}
+\end{frame}
+
+\begin{frame}{So đúng cách: chọn ngưỡng $\tau$ cho từng mô hình trên dev}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\small $\tau$ chọn trên dev (\NDevFull{} câu tách từ train), áp \textbf{một lần} lên validation\\[4pt]
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l r r r@{}}
+\toprule
+& $\tau$ & \textbf{F1} & \textbf{Từ chối} \\
+\midrule
+\textcolor{xlmr}{\textbf{XLM-R}} & \ThrXlmrTau & \ThrXlmrFone & \ThrXlmrAbsRate\% \\
+\textcolor{phobert}{\textbf{PhoBERT}} & \ThrPhobertTau & \ThrPhobertFone & \ThrPhobertAbsRate\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\scriptsize Kiểm tra: dựng lại dự đoán từ điểm từng cửa sổ khớp \NVal/\NVal{} dự đoán đã lưu ở $\tau = 0$.
+\end{column}
+\begin{column}{0.46\textwidth}
+\centering
+\bignum{+\PairTDiff}{phobert}\\
+\small EM cho PhoBERT, CI theo bài [\PairTArtLo; \PairTArtHi]\\[6pt]
+\footnotesize Có đáp án: \textbf{+\PairTAnsDiff} · Không đáp án: \textbf{+\PairTImpDiff}
+\end{column}
+\end{columns}
+
+\vspace{0.3em}
+\begin{block}{``Hai hồ sơ ngược nhau'' là do hiệu chỉnh, không phải năng lực}
+\small Ở ngưỡng đúng, PhoBERT tốt hơn trên \emph{cả hai} loại câu. Cần đọc cùng độ dao động theo seed (phụ lục).
+\end{block}
+\src{results/thresholds.json, results/diagnosis\_validation.json}
 \end{frame}
 
 \begin{frame}{RQ1 --- Word-level có yếu ở ranh giới từ? \alert{Không.}}
@@ -272,7 +306,7 @@ $\bullet$ Khi đã trả lời, tỉ lệ lỗi biên \textbf{như nhau}
 \src{results/diagnosis\_validation.json, results/segmentation\_validation.json}
 \end{frame}
 
-\begin{frame}{RQ3 --- Nhận ra câu không có đáp án? \alert{Chưa.}}
+\begin{frame}{RQ3 --- Nhận ra câu không có đáp án? \alert{Một phần.}}
 \begin{columns}[T]
 \begin{column}{0.5\textwidth}
 \small
@@ -300,35 +334,49 @@ PhoBERT \PhobertTrapPct\%, XLM-R \XlmrTrapPct\%
 \src{results/diagnosis\_validation.json}
 \end{frame}
 
-\begin{frame}{Vì sao PhoBERT không từ chối? Tách loss theo loại nhãn}
+\begin{frame}{Vì sao PhoBERT không từ chối? Một sự kiện khi huấn luyện}
 \begin{columns}[T]
-\begin{column}{0.52\textwidth}
-\small Loss trên 3.000 câu fit, từng checkpoint:\\[4pt]
-\footnotesize
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{@{}l r r r@{}}
+\begin{column}{0.5\textwidth}
+\small Huấn luyện tiếp từ epoch 1, \textbf{cùng batch}, chỉ khác lr:\\[3pt]
+\scriptsize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}l r r r r@{}}
 \toprule
-& \textbf{Ep 1} & \textbf{Ep 2} & \textbf{Ep 3} \\
+& \multicolumn{2}{c}{\textbf{lr $2{,}2\cdot10^{-5}$}} & \multicolumn{2}{c}{\textbf{lr $10^{-5}$}} \\
+\textbf{Bước} & \textbf{loss} & \textbf{grad} & \textbf{loss} & \textbf{grad} \\
 \midrule
-XLM-R ``không đ.án'' & \ProbeXlmrClsOne & \ProbeXlmrClsTwo & \ProbeXlmrClsThree \\
-XLM-R vị trí đ.án & \ProbeXlmrSpanOne & \ProbeXlmrSpanTwo & \ProbeXlmrSpanThree \\
-\textcolor{phobert}{\textbf{PhoBERT ``không đ.án''}} & \ProbePhobertRunAClsOne & \textbf{\ProbePhobertRunAClsTwo} & \textbf{\ProbePhobertRunAClsThree} \\
-PhoBERT vị trí đ.án & \ProbePhobertRunASpanOne & \ProbePhobertRunASpanTwo & \ProbePhobertRunASpanThree \\
+\tabinput{../report/generated/tab_probe_resume_slide.tex}
 \bottomrule
-\end{tabular}
+\end{tabular}\\[2pt]
+loss: ``không có đáp án'' (TB khối 100 bước); grad: chuẩn lớn nhất
 \end{column}
-\begin{column}{0.44\textwidth}
+\begin{column}{0.46\textwidth}
 \small
-$\bullet$ Loss ``không có đáp án'' của PhoBERT \textbf{tăng $\sim$7 lần} sau epoch 1\\
-$\bullet$ Loss vị trí đáp án vẫn \textbf{giảm}\\
-$\bullet$ Lặp lại ở lr $2\cdot10^{-5}$ (\ProbePhobertRunBClsOne{} $\to$ \ProbePhobertRunBClsThree)\\
-$\bullet$ Không phải mất cân bằng lớp (\ProbePhobertRunAClsFrac\% vs \ProbeXlmrClsFrac\%)
-
-\vspace{0.4em}
-\footnotesize Nguyên nhân gốc: \emph{chưa xác định} --- cần nhiều seed.
+$\bullet$ Dữ liệu hỏng? \textbf{Không}: \ScanPhobertViolations{} vi phạm / \ScanPhobertFeatures{} feature\\[3pt]
+$\bullet$ Tính chất của PhoBERT? \textbf{Không}: epoch 1 từ chối \DevEpochOneAbsRate\% (dev)\\[3pt]
+$\bullet$ Bất ổn tối ưu hoá: gradient vọt \textbf{\ResumeHighMaxSpike}, loss ``không đ.án'' kẹt ở \ResumeHighClsEnd; lr $10^{-5}$ thì không\\[3pt]
+$\bullet$ Khả năng phân biệt \textbf{còn}: điểm \code{[CLS]} chỉ dịch $\approx$ \ThrPhobertTau{} logit
 \end{column}
 \end{columns}
-\src{results/loss\_probe.json (scripts/probe\_loss.py)}
+\src{results/probe\_resume.json, results/feature\_scan\_phobert.json, results/windows\_*\_dev.json}
+\end{frame}
+
+\begin{frame}{Huấn luyện lại ổn định (lr $10^{-5}$) --- có thay lần chạy chính?}
+\small Quy tắc định trước: thay khi \textbf{ổn định} \emph{và} F1 toàn bộ dev \textbf{cao hơn}.\\[4pt]
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l l r r r r r@{}}
+\toprule
+& & \multicolumn{2}{c}{\textbf{$\tau = 0$}} & \multicolumn{3}{c}{\textbf{$\tau$ chọn trên dev}} \\
+\textbf{Lần chạy} & & \textbf{F1} & \textbf{Từ chối} & $\tau$ & \textbf{F1} & \textbf{Từ chối} \\
+\midrule
+\tabinput{../report/generated/tab_dev_runs.tex}
+\bottomrule
+\end{tabular}
+
+\vspace{0.6em}
+\small \alert{Không thay}: lần chạy lr $3\cdot10^{-5}$ ``sụp đổ'' nhưng học vị trí đáp án tốt hơn, và ngưỡng đúng khôi phục khả năng từ chối.
+\src{results/thresholds.json, results/training\_curve\_*.json}
 \end{frame}
 
 \begin{frame}{RQ2 độ dài · RQ4 baseline · và bộ stress-test}
@@ -361,23 +409,23 @@ TF-IDF & \TfidfStressEM \\
 \begin{frame}{Kết luận}
 \small
 \begin{enumerate}
-\item \textbf{Điểm tổng như nhau, hồ sơ kỹ năng ngược nhau.} PhoBERT: đọc giỏi hơn \PairAnsDiff{} điểm EM, gần như không từ chối. XLM-R: từ chối đúng tần suất, sai đối tượng.
-\item \textbf{Tách từ không phải yếu tố quyết định} trên UIT-ViQuAD~2.0: chỉ \SegMisPct\% đáp án cắt ngang từ, phần lớn do lỗi \code{pyvi}.
-\item \textbf{Yếu tố quyết định là một phần ba câu hỏi không có đáp án} --- phải đo riêng.
+\item \textbf{So ở $\tau$ cố định là so hiệu chỉnh, không phải năng lực.} Ở $\tau = 0$: ``bằng nhau, hồ sơ ngược nhau''. Ở $\tau$ chọn trên dev: PhoBERT hơn \PairTDiff{} điểm EM trên \emph{cả hai} loại câu.
+\item \textbf{PhoBERT ``không từ chối'' là một sự kiện khi huấn luyện}, tái hiện được, kèm gradient vọt; lr $10^{-5}$ tránh được.
+\item \textbf{Tách từ không phải yếu tố quyết định}: chỉ \SegMisPct\% đáp án cắt ngang từ; khoảng cách ``đọc'' thuần \BothGap{} điểm.
 \item \textbf{Kiểm định công cụ đo trước khi dùng}: bộ stress-test của chính nhóm xếp ``không làm gì'' đứng đầu.
 \end{enumerate}
 
 \vspace{0.4em}
 \begin{block}{Giới hạn}
-\footnotesize 1 seed · không tìm siêu tham số · \code{pyvi} thay RDRSegmenter · validation làm test (test chính thức ẩn nhãn) · 256 vs 384 token
+\footnotesize 2 seed · 3 epoch, không tìm siêu tham số · \code{pyvi} thay RDRSegmenter · nguyên nhân sụp đổ mới xác định đến mức ``đủ để khắc phục'' · validation = public test VLSP (private test ẩn nhãn)
 \end{block}
 \end{frame}
 
 \begin{frame}{Hướng phát triển}
 \small
 \begin{itemize}
-\item Hiệu chỉnh ngưỡng từ chối $\tau$ trên dev --- khôi phục khả năng từ chối của PhoBERT
-\item Tìm nguyên nhân gốc: nhiều seed, gradient theo loại nhãn, trọng số lớp, XLM-R ở 256 token
+\item Vì sao sự kiện sụp đổ chỉ xảy ra với PhoBERT; có lặp lại trên CUDA không; warmup dài hơn thay vì hạ lr
+\item Huấn luyện thêm epoch (XLM-R và PhoBERT lr $10^{-5}$ còn đang cải thiện); từ 3 seed trở lên
 \item PhoBERT với RDRSegmenter; sửa luật dính dấu chấm của \code{pyvi}
 \item Xây lại bộ stress-test có kiểm định tự động và câu hỏi do người viết
 \end{itemize}
@@ -399,9 +447,24 @@ TF-IDF & \TfidfStressEM \\
 Chọn epoch theo \textbf{F1 trên dev} (tách từ train).\\[3pt]
 XLM-R: epoch \XlmrBestEpoch, \XlmrTrainMin{} phút.\\
 PhoBERT lr $3\cdot10^{-5}$: epoch \PhobertRunABestEpoch, \PhobertRunATrainMin{} phút.\\
-PhoBERT lr $2\cdot10^{-5}$: epoch \PhobertRunBBestEpoch.\\[3pt]
-Lần chạy PhoBERT chính chọn theo F1 dev cao nhất.
+PhoBERT lr $2\cdot10^{-5}$: epoch \PhobertRunBBestEpoch.\\
+PhoBERT lr $10^{-5}$ (ổn định): epoch \PhobertRunCBestEpoch.\\[3pt]
+Lần chạy PhoBERT chính: quy tắc ``ổn định \emph{và} tốt hơn trên dev''.
 \end{column}
 \end{columns}
+\end{frame}
+
+\begin{frame}{Phụ lục --- Độ dao động theo seed và cửa sổ}
+\small Validation, EM / F1. Seed tách dev cố định (42) để điểm dev so sánh được.\\[4pt]
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l r l r r@{}}
+\toprule
+\textbf{Mô hình} & \textbf{Seed} & \textbf{Cửa sổ} & \textbf{$\tau = 0$} & \textbf{$\tau$ dev} \\
+\midrule
+\tabinput{../report/generated/tab_seeds.tex}
+\bottomrule
+\end{tabular}
+\src{results/eval\_*\_validation.json, results/thresholds.json}
 \end{frame}
 

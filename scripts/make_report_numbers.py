@@ -437,6 +437,9 @@ def main() -> None:
             f"{vi(cells[w]['cls_loss'])} & {vi(cells[w]['grad_norm_max'], 0)}" if w in cells else r"\missing{} & \missing{}"
             for w in ("High", "Low")) + " \\\\")
     table("tab_probe_resume.tex", "\n".join(lr_rows) + "\n")
+    # Bản gọn cho slide: trước, lúc và sau sự kiện.
+    keep = ("1-100", "401-500", "501-600", "601-700", "901-1000")
+    table("tab_probe_resume_slide.tex", "\n".join(r for r in lr_rows if r.split(" & ")[0] in keep) + "\n")
 
     # ── kết quả đã công bố trên cùng tập (VLSP 2021 public test = validation) ──
     pub = load("published_viquad2.json") or {}
