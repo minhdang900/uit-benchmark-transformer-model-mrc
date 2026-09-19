@@ -1,0 +1,144 @@
+{
+  "model": "vinai/phobert-base-v2",
+  "max_length": 256,
+  "doc_stride": 96,
+  "n_features": 31039,
+  "vocab_size": 64001,
+  "max_position_embeddings": 258,
+  "unk_rate_pct": 0.0,
+  "counts": {
+    "n_span": 18889,
+    "n_impossible": 10044,
+    "answerable_answer_outside_window": 2106,
+    "span_text_mismatch": 314
+  },
+  "cls_label_fraction": 0.3914,
+  "span_text_mismatch_pct": 1.6623,
+  "mismatch_examples": [
+    {
+      "qid": "0138-0150-0004",
+      "gold": "mang một hình thức thô sơ, vừa du kích, vừa cổ điển đối",
+      "labelled": "mang một hình thức thô sơ, vừa du kích, vừa cổ điển đối với"
+    },
+    {
+      "qid": "0138-0026-0002",
+      "gold": "yêu cầu Việt Minh thảo luận với tất cả các đảng phái để thành lập chính phủ lâm thờ",
+      "labelled": "yêu cầu Việt Minh thảo luận với tất cả các đảng phái để thành lập chính phủ lâm thời"
+    },
+    {
+      "qid": "0138-0003-0008",
+      "gold": "Cảng Đà Nẵn",
+      "labelled": "Cảng Đà Nẵng"
+    },
+    {
+      "qid": "0007-0007-0003",
+      "gold": "iễn tả dịch chuyển thời gian hoặc thời gian trôi qua",
+      "labelled": "diễn tả dịch chuyển thời gian hoặc thời gian trôi qua"
+    },
+    {
+      "qid": "0011-0016-0002",
+      "gold": "ịch sử loài người có đặc trưng bởi sự di chuyển từ sự tan rã tới tổng thể và thực tế",
+      "labelled": "lịch sử loài người có đặc trưng bởi sự di chuyển từ sự tan rã tới tổng thể và thực tế"
+    },
+    {
+      "qid": "0126-0033-0004",
+      "gold": "ác vụ tấn công Paris tháng 11 năm 2015 đã làm 130 người thiệt mạng",
+      "labelled": "Các vụ tấn công Paris tháng 11 năm 2015 đã làm 130 người thiệt mạng"
+    },
+    {
+      "qid": "0047-0007-0005",
+      "gold": "nhiều ngôn ngữ khác không phân biệt rõ các dạng so sánh hơn và so sánh nhấ",
+      "labelled": "nhiều ngôn ngữ khác không phân biệt rõ các dạng so sánh hơn và so sánh nhất"
+    },
+    {
+      "qid": "0006-0050-0003",
+      "gold": "2",
+      "labelled": "2002"
+    },
+    {
+      "qid": "0053-0037-0001",
+      "gold": "65 triệu đô-la Mỹ",
+      "labelled": "165 triệu đô-la Mỹ"
+    },
+    {
+      "qid": "0057-0038-0002",
+      "gold": "ừng lá rụng và lá kim",
+      "labelled": "rừng lá rụng và lá kim"
+    },
+    {
+      "qid": "0123-0035-0003",
+      "gold": "Sở Quy hoạch Kiến trúc Hà Nội với sự giúp đỡ của vùng Île-de-France",
+      "labelled": "Hiện Sở Quy hoạch Kiến trúc Hà Nội với sự giúp đỡ của vùng Île-de-France"
+    },
+    {
+      "qid": "0126-0006-0005",
+      "gold": "ừ khoảng 7.000 TCN",
+      "labelled": "từ khoảng 7.000 TCN"
+    },
+    {
+      "qid": "0086-0004-0003",
+      "gold": "khoảng 130.000 km",
+      "labelled": "vào khoảng 130.000 km"
+    },
+    {
+      "qid": "0086-0004-0009",
+      "gold": "khoảng 130.000 km",
+      "labelled": "vào khoảng 130.000 km"
+    },
+    {
+      "qid": "0022-0043-0002",
+      "gold": "à đài tưởng niệm liệt sĩ Vittorio Emanuele II",
+      "labelled": "là đài tưởng niệm liệt sĩ Vittorio Emanuele II"
+    },
+    {
+      "qid": "0017-0007-0004",
+      "gold": "là bên cạnh những khu đất đang canh tác còn có những khu đất để hoang để phục hồi sự màu mỡ",
+      "labelled": "tức là bên cạnh những khu đất đang canh tác còn có những khu đất để hoang để phục hồi sự màu mỡ"
+    },
+    {
+      "qid": "0006-0044-0001",
+      "gold": "Hán",
+      "labelled": "Hán tự"
+    },
+    {
+      "qid": "0057-0027-0005",
+      "gold": "heo đuổi các chương trình ổn định do IMF giám sát vào năm 1977–78 và 1983–85",
+      "labelled": "theo đuổi các chương trình ổn định do IMF giám sát vào năm 1977–78 và 1983–85"
+    },
+    {
+      "qid": "0095-0010-0005",
+      "gold": "Hành động trục xuất thành viên cộng sản và cố vấn Liên Xô của Tưởng Giới Thạch",
+      "labelled": "Hành động trục xuất thành viên cộng sản và cố vấn Liên Xô của Tưởng Giới Thạch dẫn"
+    },
+    {
+      "qid": "0095-0010-0005",
+      "gold": "Hành động trục xuất thành viên cộng sản và cố vấn Liên Xô của Tưởng Giới Thạch",
+      "labelled": "Hành động trục xuất thành viên cộng sản và cố vấn Liên Xô của Tưởng Giới Thạch dẫn"
+    },
+    {
+      "qid": "0077-0001-0004",
+      "gold": "bản số",
+      "labelled": "bản số là"
+    },
+    {
+      "qid": "0138-0191-0002",
+      "gold": "bộ miền Bắc Việt Nam (trừ một số thành phố, thị xã như Hà Nội, Hải Phòng, Vĩnh Yên, Móng Cái...), hầu hết Bắc Trung Bộ (trừ duyên hải nhỏ Quảng Bình đến Quảng Nam), hầu hết Trung Trung Bộ (gồm cả Quảng Ngãi, Quy Nhơn...), vùng Bắc Tây Nguyên, một phần nhỏ Nam Tây Nguyên, một phần cực Nam Trung Bộ và Nam Bộ",
+      "labelled": "toàn bộ miền Bắc Việt Nam (trừ một số thành phố, thị xã như Hà Nội, Hải Phòng, Vĩnh Yên, Móng Cái...), hầu hết Bắc Trung Bộ (trừ duyên hải nhỏ Quảng Bình đến Quảng Nam), hầu hết Trung Trung Bộ (gồm cả Quảng Ngãi, Quy Nhơn...), vùng Bắc Tây Nguyên, một phần nhỏ Nam Tây Nguyên, một phần cực Nam Trung Bộ và Nam Bộ"
+    },
+    {
+      "qid": "0136-0013-0003",
+      "gold": "phần ngôn ngữ",
+      "labelled": "thêm phần ngôn ngữ"
+    },
+    {
+      "qid": "0102-0017-0004",
+      "gold": "Arago",
+      "labelled": "Vành Arago"
+    },
+    {
+      "qid": "0125-0003-0008",
+      "gold": "lớn nhất và đa văn hóa nhất trong tất cả các quốc gia Bắc Phi",
+      "labelled": "đất nước lớn nhất và đa văn hóa nhất trong tất cả các quốc gia Bắc Phi"
+    }
+  ]
+}

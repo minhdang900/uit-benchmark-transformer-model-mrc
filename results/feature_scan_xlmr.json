@@ -1,0 +1,144 @@
+{
+  "model": "FacebookAI/xlm-roberta-base",
+  "max_length": 384,
+  "doc_stride": 128,
+  "n_features": 28887,
+  "vocab_size": 250002,
+  "max_position_embeddings": 514,
+  "unk_rate_pct": 0.0028,
+  "counts": {
+    "n_span": 18499,
+    "n_impossible": 9375,
+    "answerable_answer_outside_window": 1013,
+    "span_text_mismatch": 92
+  },
+  "cls_label_fraction": 0.3596,
+  "span_text_mismatch_pct": 0.4973,
+  "mismatch_examples": [
+    {
+      "qid": "0138-0026-0002",
+      "gold": "yêu cầu Việt Minh thảo luận với tất cả các đảng phái để thành lập chính phủ lâm thờ",
+      "labelled": "yêu cầu Việt Minh thảo luận với tất cả các đảng phái để thành lập chính phủ lâm thời"
+    },
+    {
+      "qid": "0138-0003-0008",
+      "gold": "Cảng Đà Nẵn",
+      "labelled": "Cảng Đà Nẵng"
+    },
+    {
+      "qid": "0007-0007-0003",
+      "gold": "iễn tả dịch chuyển thời gian hoặc thời gian trôi qua",
+      "labelled": "diễn tả dịch chuyển thời gian hoặc thời gian trôi qua"
+    },
+    {
+      "qid": "0011-0016-0002",
+      "gold": "ịch sử loài người có đặc trưng bởi sự di chuyển từ sự tan rã tới tổng thể và thực tế",
+      "labelled": "lịch sử loài người có đặc trưng bởi sự di chuyển từ sự tan rã tới tổng thể và thực tế"
+    },
+    {
+      "qid": "0126-0033-0004",
+      "gold": "ác vụ tấn công Paris tháng 11 năm 2015 đã làm 130 người thiệt mạng",
+      "labelled": "Các vụ tấn công Paris tháng 11 năm 2015 đã làm 130 người thiệt mạng"
+    },
+    {
+      "qid": "0047-0007-0005",
+      "gold": "nhiều ngôn ngữ khác không phân biệt rõ các dạng so sánh hơn và so sánh nhấ",
+      "labelled": "nhiều ngôn ngữ khác không phân biệt rõ các dạng so sánh hơn và so sánh nhất"
+    },
+    {
+      "qid": "0006-0050-0003",
+      "gold": "2",
+      "labelled": "2002"
+    },
+    {
+      "qid": "0053-0037-0001",
+      "gold": "65 triệu đô-la Mỹ",
+      "labelled": "165 triệu đô-la Mỹ"
+    },
+    {
+      "qid": "0057-0038-0002",
+      "gold": "ừng lá rụng và lá kim",
+      "labelled": "rừng lá rụng và lá kim"
+    },
+    {
+      "qid": "0126-0006-0005",
+      "gold": "ừ khoảng 7.000 TCN",
+      "labelled": "từ khoảng 7.000 TCN"
+    },
+    {
+      "qid": "0022-0043-0002",
+      "gold": "à đài tưởng niệm liệt sĩ Vittorio Emanuele II",
+      "labelled": "là đài tưởng niệm liệt sĩ Vittorio Emanuele II"
+    },
+    {
+      "qid": "0057-0027-0005",
+      "gold": "heo đuổi các chương trình ổn định do IMF giám sát vào năm 1977–78 và 1983–85",
+      "labelled": "theo đuổi các chương trình ổn định do IMF giám sát vào năm 1977–78 và 1983–85"
+    },
+    {
+      "qid": "0022-0047-0001",
+      "gold": "rở thành phương tiện truyền tải những lời diễn thuyết về các thảo luận chính trị và xã hội, là nơi để mọi người cất lên tiếng nói về quan điểm của họ (thông thường là châm biếm trào phúng)",
+      "labelled": "trở thành phương tiện truyền tải những lời diễn thuyết về các thảo luận chính trị và xã hội, là nơi để mọi người cất lên tiếng nói về quan điểm của họ (thông thường là châm biếm trào phúng)."
+    },
+    {
+      "qid": "0006-0048-0002",
+      "gold": "ừ những năm 2000 Nhật Bãn đã thực hiện Happy Monday System, đưa một số ngày lễ rơi vào cuối tuần lên thứ hai để có một ngày nghỉ dài",
+      "labelled": "Từ những năm 2000 Nhật Bãn đã thực hiện Happy Monday System, đưa một số ngày lễ rơi vào cuối tuần lên thứ hai để có một ngày nghỉ dài"
+    },
+    {
+      "qid": "0075-0050-0003",
+      "gold": "iết lộ một số các chức danh quân sự ban cho những chỉ huy",
+      "labelled": "tiết lộ một số các chức danh quân sự ban cho những chỉ huy"
+    },
+    {
+      "qid": "0126-0069-0001",
+      "gold": "ỗ lực xúc tiến sử dụng tiếng Pháp trong Liên minh châu Âu và toàn cầu",
+      "labelled": "nỗ lực xúc tiến sử dụng tiếng Pháp trong Liên minh châu Âu và toàn cầu"
+    },
+    {
+      "qid": "0006-0049-0003",
+      "gold": "5",
+      "labelled": "/05"
+    },
+    {
+      "qid": "0071-0031-0001",
+      "gold": "o khí quyển quá dày",
+      "labelled": "Do khí quyển quá dày"
+    },
+    {
+      "qid": "0057-0003-0007",
+      "gold": "Brasi",
+      "labelled": "Brasil"
+    },
+    {
+      "qid": "0033-0034-0004",
+      "gold": "Tào Tháo",
+      "labelled": "Tào Thá"
+    },
+    {
+      "qid": "0075-0008-0003",
+      "gold": "uân đội của ông ta đang phải tham gia vào việc dập tắt cuộc nổi loạn của Molon ở Media",
+      "labelled": "quân đội của ông ta đang phải tham gia vào việc dập tắt cuộc nổi loạn của Molon ở Media"
+    },
+    {
+      "qid": "0057-0086-0005",
+      "gold": "osé Mourinho và Fernando Santos",
+      "labelled": "José Mourinho và Fernando Santos"
+    },
+    {
+      "qid": "0075-0040-0003",
+      "gold": "ừ Estakhr bắt đầu chinh phục các vùng lãnh thổ xung quanh",
+      "labelled": "từ Estakhr bắt đầu chinh phục các vùng lãnh thổ xung quanh"
+    },
+    {
+      "qid": "0102-0001-0009",
+      "gold": "Sao Hải Vươn",
+      "labelled": "Sao Hải Vương"
+    },
+    {
+      "qid": "0116-0019-0001",
+      "gold": "nhiều hệ thống rộng lớn bao gồm hàng rào kẽm gai, hào, vật cản xe tăng, đường tuần tra và tháp canh",
+      "labelled": "nhiều hệ thống rộng lớn bao gồm hàng rào kẽm gai, hào, vật cản xe tăng, đường tuần tra và tháp can"
+    }
+  ]
+}

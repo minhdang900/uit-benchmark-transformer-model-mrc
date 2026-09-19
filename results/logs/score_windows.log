@@ -1,0 +1,10 @@
+phobert validation: {'tau': 0.0, 'EM': 51.3634, 'F1': 63.0967, 'abstain_rate': 5.6633, 'n': 3814}  (46.7s) -> results/windows_phobert_validation.json
+phobert_epoch1 dev: {'tau': 0.0, 'EM': 46.7616, 'F1': 60.5878, 'abstain_rate': 37.8648, 'n': 1405}  (18.7s) -> results/windows_phobert_epoch1_dev.json
+phobert dev: {'tau': 0.0, 'EM': 44.3416, 'F1': 61.155, 'abstain_rate': 7.4733, 'n': 1405}  (18.5s) -> results/windows_phobert_dev.json
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (859 > 512). Running this sequence through the model will result in indexing errors
+xlmr dev: {'tau': 0.0, 'EM': 48.1851, 'F1': 60.7767, 'abstain_rate': 32.3132, 'n': 1405}  (20.6s) -> results/windows_xlmr_dev.json
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (542 > 512). Running this sequence through the model will result in indexing errors
+xlmr validation: {'tau': 0.0, 'EM': 52.4908, 'F1': 61.3225, 'abstain_rate': 32.9575, 'n': 3814}  (52.8s) -> results/windows_xlmr_validation.json
+phobert_lr2e5 dev: {'tau': 0.0, 'EM': 40.5694, 'F1': 57.7416, 'abstain_rate': 5.7651, 'n': 1405}  (20.6s) -> results/windows_phobert_lr2e5_dev.json
+phobert_lr2e5 validation: {'tau': 0.0, 'EM': 49.5543, 'F1': 61.1286, 'abstain_rate': 5.4274, 'n': 3814}  (59.2s) -> results/windows_phobert_lr2e5_validation.json
+DONE
