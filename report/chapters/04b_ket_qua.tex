@@ -68,7 +68,7 @@ tách từ train) và áp \emph{một lần} lên validation (\code{scripts/cali
 
 \begin{table}[htbp]
 \centering
-\caption{Validation ở $\tau = 0$ và ở $\tau$ chọn trên dev. $\star$: lần chạy PhoBERT chính (nguồn: \code{results/thresholds.json})}
+\caption{Validation ở $\tau = 0$ và ở $\tau$ chọn trên dev, mọi lần chạy (nguồn: \code{results/thresholds.json})}
 \label{tab:threshold}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
@@ -86,15 +86,15 @@ tách từ train) và áp \emph{một lần} lên validation (\code{scripts/cali
 
 \begin{table}[htbp]
 \centering
-\caption{So sánh cặp PhoBERT (A) và XLM-R (B) ở $\tau$ chọn trên dev. CI 95\% lấy mẫu lại theo bài viết}
+\caption{So sánh cặp PhoBERT (A) và XLM-R (B) cùng seed, ở $\tau$ chọn trên dev. CI 95\% lấy mẫu lại theo bài viết}
 \label{tab:paired-tuned}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}l r r r r r r l r@{}}
+\begin{tabular}{@{}c l r r r r r r l r@{}}
 \toprule
-& & \textbf{Cả hai} & \textbf{Chỉ} & \textbf{Chỉ} & \textbf{Cả hai} & \textbf{Chênh} & & \\
-\textbf{Nhóm câu} & $n$ & \textbf{đúng} & \textbf{A} & \textbf{B} & \textbf{sai} & \textbf{lệch} & \textbf{CI 95\%} & \textbf{$p$} \\
+& & & \textbf{Cả hai} & \textbf{Chỉ} & \textbf{Chỉ} & \textbf{Cả hai} & \textbf{Chênh} & & \\
+\textbf{Seed} & \textbf{Nhóm câu} & $n$ & \textbf{đúng} & \textbf{A} & \textbf{B} & \textbf{sai} & \textbf{lệch} & \textbf{CI 95\%} & \textbf{$p$} \\
 \midrule
 \tabinput{generated/tab_paired_tuned.tex}
 \bottomrule
@@ -126,7 +126,7 @@ nhau''; so ở ngưỡng chọn trên dev --- cách so sánh đúng cho SQuAD~2.
 
 \begin{table}[htbp]
 \centering
-\caption{Các lần chạy PhoBERT, validation ở $\tau = 0$. F1 dev: toàn bộ dev (\NDevFull{} câu). $\star$: lần chạy chính}
+\caption{Các lần chạy PhoBERT, validation ở $\tau = 0$. F1 dev: toàn bộ dev (\NDevFull{} câu)}
 \label{tab:runs}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
@@ -186,15 +186,15 @@ nhau''; so ở ngưỡng chọn trên dev --- cách so sánh đúng cho SQuAD~2.
 
 \begin{table}[htbp]
 \centering
-\caption{So sánh cặp PhoBERT (A) và XLM-R (B) theo EM từng câu. Chênh lệch = EM(A) $-$ EM(B), điểm \%}
+\caption{So sánh cặp PhoBERT (A) và XLM-R (B) cùng seed, theo EM từng câu, ở $\tau = 0$. Chênh lệch = EM(A) $-$ EM(B), điểm \%; CI 95\% lấy mẫu lại theo bài viết}
 \label{tab:paired}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}l r r r r r r l r@{}}
+\begin{tabular}{@{}c l r r r r r r l r@{}}
 \toprule
-& & \textbf{Cả hai} & \textbf{Chỉ} & \textbf{Chỉ} & \textbf{Cả hai} & \textbf{Chênh} & & \\
-\textbf{Nhóm câu} & $n$ & \textbf{đúng} & \textbf{A} & \textbf{B} & \textbf{sai} & \textbf{lệch} & \textbf{CI 95\%} & \textbf{$p$} \\
+& & & \textbf{Cả hai} & \textbf{Chỉ} & \textbf{Chỉ} & \textbf{Cả hai} & \textbf{Chênh} & & \\
+\textbf{Seed} & \textbf{Nhóm câu} & $n$ & \textbf{đúng} & \textbf{A} & \textbf{B} & \textbf{sai} & \textbf{lệch} & \textbf{CI 95\%} & \textbf{$p$} \\
 \midrule
 \tabinput{generated/tab_paired.tex}
 \bottomrule

@@ -23,10 +23,12 @@ sys.path.insert(0, str(_ROOT / "scripts"))
 from _runs import PHOBERT_RUNS, best_dev_f1, full_dev_f1, primary_phobert  # noqa: E402
 
 PHOBERT = primary_phobert(RES := _ROOT / "results")
-RUN_LABEL = {"phobert": "PhoBERT, lr $3\\cdot10^{-5}$", "phobert_lr2e5": "PhoBERT, lr $2\\cdot10^{-5}$",
-             "phobert_stable": "PhoBERT, lr $10^{-5}$ (ổn định)"}
-RUN_LETTER = {"phobert": "A", "phobert_lr2e5": "B", "phobert_stable": "C"}
-ALL_PHOBERT_RUNS = PHOBERT_RUNS + ("phobert_stable",)
+RUN_LABEL = {"phobert": "PhoBERT, lr $3\\cdot10^{-5}$, seed 42", "phobert_lr2e5": "PhoBERT, lr $2\\cdot10^{-5}$, seed 42",
+             "phobert_stable": "PhoBERT, lr $10^{-5}$, seed 42", "phobert_seed13": "PhoBERT, lr $3\\cdot10^{-5}$, seed 13"}
+RUN_LETTER = {"phobert": "A", "phobert_lr2e5": "B", "phobert_stable": "C", "phobert_seed13": "D"}
+ALL_PHOBERT_RUNS = PHOBERT_RUNS + ("phobert_stable", "phobert_seed13")
+# Hai seed được báo cáo NGANG NHAU (quyết định của nhóm): seed 42 và seed 13 cho cả hai mô hình.
+PIVOT_KEYS = ("abstain", "baseline", "xlmr", "phobert")  # bảng pivot giữ 4 cột như cũ
 
 OUT = _ROOT / "report" / "generated"
 MISSING: list[str] = []
@@ -34,8 +36,10 @@ MISSING: list[str] = []
 SYSTEMS = [  # (khoá tệp, tiền tố macro, tên hiển thị)
     ("abstain", "Abstain", "Luôn từ chối"),
     ("baseline", "Tfidf", "TF-IDF (truy hồi câu)"),
-    ("xlmr", "Xlmr", "XLM-R-base"),
-    (PHOBERT, "Phobert", "PhoBERT-base-v2"),
+    ("xlmr", "Xlmr", "XLM-R-base, seed 42"),
+    ("xlmr_seed13", "XlmrThirteen", "XLM-R-base, seed 13"),
+    (PHOBERT, "Phobert", "PhoBERT-base-v2, seed 42"),
+    ("phobert_seed13", "PhobertThirteen", "PhoBERT-base-v2, seed 13"),
 ]
 CAT_WORDS = {"E1": "EOne", "E2": "ETwo", "E3": "EThree", "E4": "EFour", "E5": "EFive"}
 CAT_NAMES = {"E1": "Ranh giới từ ghép", "E2": "Ngữ cảnh gây nhiễu", "E3": "Câu hỏi phủ định",
@@ -198,11 +202,12 @@ def main() -> None:
             main_rows.append(f"{label} & {vi(ev['overall']['EM'])} & {vi(ev['overall']['F1'])} & "
                              f"{vi(ev['answerable_only']['EM'])} & {vi(ev['answerable_only']['F1'])} & "
                              f"{vi(ev['impossible_only']['EM'])} & {vi(a)} & {vi(ev['avg_latency_ms'])} \\\\")
-            for bucket, v in ev.get("by_context_length", {}).items():
-                ctx_rows.append((bucket, label, v))
-            for qt, v in ev.get("by_question_type", {}).items():
-                if isinstance(v, dict):
-                    qt_rows.append((qt, label, v))
+            if key in PIVOT_KEYS:
+                for bucket, v in ev.get("by_context_length", {}).items():
+                    ctx_rows.append((bucket, label, v))
+                for qt, v in ev.get("by_question_type", {}).items():
+                    if isinstance(v, dict):
+                        qt_rows.append((qt, label, v))
         if st:
             cells = []
             for code in CAT_WORDS:
@@ -232,7 +237,7 @@ def main() -> None:
         m(f"NLen{w}", lens.get(b), 0)
 
     def pivot(rows, order):
-        labels = [lab for _, _, lab in SYSTEMS if any(r[1] == lab for r in rows)]
+        labels = [lab for k, _, lab in SYSTEMS if k in PIVOT_KEYS and any(r[1] == lab for r in rows)]
         out = []
         for bucket in order:
             vals = {r[1]: r[2] for r in rows if r[0] == bucket}
@@ -248,29 +253,38 @@ def main() -> None:
     table("tab_context_length.tex", pivot(ctx_rows, ["<100", "100-200", "200-300", "300+"]))
     table("tab_qtype.tex", pivot(qt_rows, ["single-sentence", "multi-sentence"]))
 
-    # ── so sánh cặp PhoBERT vs XLM-R ─────────────────────────────────────────
-    pair = get(diag, "paired_phobert_vs_xlmr") or {}
-    pair_rows = []
-    for part, w in (("all", ""), ("answerable", "Ans"), ("impossible", "Imp"), ("misaligned", "Mis")):
-        r = pair.get(part)
-        m(f"Pair{w}N", get(r, "n"), 0)
-        m(f"Pair{w}Diff", get(r, "em_diff"))
-        m(f"Pair{w}Lo", (get(r, "ci95") or [None])[0])
-        m(f"Pair{w}Hi", (get(r, "ci95") or [None, None])[1])
-        m(f"Pair{w}ArtLo", (get(r, "ci95_article") or [None])[0])
-        m(f"Pair{w}ArtHi", (get(r, "ci95_article") or [None, None])[1])
-        m(f"Pair{w}P", pval(get(r, "mcnemar_p")) if r else None, raw=True)
-        m(f"Pair{w}OnlyP", get(r, "only_a"), 0)
-        m(f"Pair{w}OnlyX", get(r, "only_b"), 0)
-        m(f"Pair{w}Both", get(r, "both_correct"), 0)
-        m(f"Pair{w}Neither", get(r, "neither"), 0)
-        if r:
-            name = {"all": "Toàn bộ", "answerable": "Có đáp án", "impossible": "Không có đáp án",
-                    "misaligned": "Lệch biên từ"}[part]
-            pair_rows.append(f"{name} & {vi(r['n'])} & {vi(r['both_correct'])} & {vi(r['only_a'])} & {vi(r['only_b'])} & "
-                             f"{vi(r['neither'])} & {vi(r['em_diff'])} & {ci(r)} & "
-                             f"{pval(r['mcnemar_p'])} \\\\")
-    table("tab_paired.tex", "\n".join(pair_rows) + "\n")
+    # ── so sánh cặp PhoBERT vs XLM-R, từng seed (cùng seed so với cùng seed) ──
+    PART_NAME = {"all": "Toàn bộ", "answerable": "Có đáp án", "impossible": "Không có đáp án",
+                 "misaligned": "Lệch biên từ"}
+
+    def paired_block(report_key: str, prefix: str, parts, seed: str) -> list[str]:
+        block, rows = get(diag, report_key) or {}, []
+        for part, w in parts:
+            r = block.get(part)
+            m(f"{prefix}{w}N", get(r, "n"), 0)
+            m(f"{prefix}{w}Diff", get(r, "em_diff"))
+            m(f"{prefix}{w}Lo", (get(r, "ci95") or [None])[0])
+            m(f"{prefix}{w}Hi", (get(r, "ci95") or [None, None])[1])
+            m(f"{prefix}{w}ArtLo", (get(r, "ci95_article") or [None])[0])
+            m(f"{prefix}{w}ArtHi", (get(r, "ci95_article") or [None, None])[1])
+            m(f"{prefix}{w}P", pval(get(r, "mcnemar_p")) if r else None, raw=True)
+            m(f"{prefix}{w}OnlyP", get(r, "only_a"), 0)
+            m(f"{prefix}{w}OnlyX", get(r, "only_b"), 0)
+            m(f"{prefix}{w}Both", get(r, "both_correct"), 0)
+            m(f"{prefix}{w}Neither", get(r, "neither"), 0)
+            if r:
+                rows.append(f"{seed} & {PART_NAME[part]} & {vi(r['n'])} & {vi(r['both_correct'])} & "
+                            f"{vi(r['only_a'])} & {vi(r['only_b'])} & {vi(r['neither'])} & "
+                            f"{vi(r['em_diff'])} & {ci(r)} & {pval(r['mcnemar_p'])} \\\\")
+        return rows
+
+    P3 = (("all", ""), ("answerable", "Ans"), ("impossible", "Imp"))
+    rows42 = paired_block("paired_phobert_vs_xlmr", "Pair", P3 + (("misaligned", "Mis"),), "42")
+    rows13 = paired_block("paired_seed13", "PairS", P3, "13")
+    table("tab_paired.tex", "\n".join(rows42) + "\n\\midrule\n" + "\n".join(rows13) + "\n")
+    rows42t = paired_block("paired_phobert_vs_xlmr_tuned", "PairT", P3, "42")
+    rows13t = paired_block("paired_seed13_tuned", "PairST", P3, "13")
+    table("tab_paired_tuned.tex", "\n".join(rows42t) + "\n\\midrule\n" + "\n".join(rows13t) + "\n")
 
     # ── huấn luyện ────────────────────────────────────────────────────────────
     curve_rows = []
@@ -305,8 +319,7 @@ def main() -> None:
         m(f"PhobertRun{w}ImpEM", get(ev, "impossible_only", "EM"))
         m(f"PhobertRun{w}AbsRate", ab)
         if ev and c:
-            star = r" $\star$" if r == PHOBERT else ""
-            run_rows.append(f"{RUN_LABEL[r]}{star} & {c['best_epoch']} & {vi(full_dev_f1(RES, r))} & "
+            run_rows.append(f"{RUN_LABEL[r]} & {c['best_epoch']} & {vi(full_dev_f1(RES, r))} & "
                             f"{vi(ev['overall']['EM'])} & {vi(ev['overall']['F1'])} & "
                             f"{vi(ev['answerable_only']['EM'])} & {vi(ev['impossible_only']['EM'])} & {vi(ab)} \\\\")
     table("tab_phobert_runs.tex", "\n".join(run_rows) + "\n")
@@ -333,7 +346,8 @@ def main() -> None:
     # ── ngưỡng τ chọn trên dev (scripts/calibrate_thresholds.py) ─────────────
     thr = load("thresholds.json") or {}
     thr_rows = []
-    for key, P, label in [("xlmr", "Xlmr", "XLM-R-base")] + [
+    for key, P, label in [("xlmr", "Xlmr", "XLM-R-base, seed 42"),
+                          ("xlmr_seed13", "XlmrThirteen", "XLM-R-base, seed 13")] + [
             (r, "PhobertRun" + RUN_LETTER[r], RUN_LABEL[r]) for r in ALL_PHOBERT_RUNS]:
         t = get(thr, "systems", key)
         z, v = get(t, "validation_at_tau0") or {}, get(t, "validation_at_tau") or {}
@@ -346,14 +360,14 @@ def main() -> None:
             m(f"Thr{P}{w}Zero", z.get(k))
             m(f"Thr{P}{w}", v.get(k))
         if t:
-            star = r" $\star$" if key == PHOBERT else ""
+            star = ""
             thr_rows.append(f"{label}{star} & {vi(t['tau'])} & {vi(z['EM'])} / {vi(z['F1'])} & "
                             f"{vi(v['EM'])} / {vi(v['F1'])} & {vi(v['EM_answerable'])} & "
                             f"{vi(v['EM_impossible'])} & {vi(v['abstain_rate'])} \\\\")
     table("tab_threshold.tex", "\n".join(thr_rows) + "\n")
     dev_rows = []
     for key, label in [("xlmr", "XLM-R-base, seed 42"), ("xlmr_seed13", "XLM-R-base, seed 13")] + [
-            (r, RUN_LABEL[r]) for r in ALL_PHOBERT_RUNS] + [("phobert_seed13", "PhoBERT, lr $3\\cdot10^{-5}$, seed 13")]:
+            (r, RUN_LABEL[r]) for r in ALL_PHOBERT_RUNS]:
         t = get(thr, "systems", key)
         if t:
             c = load(f"training_curve_{key}.json") or {}
@@ -371,31 +385,18 @@ def main() -> None:
     m("ThrPhobertTau", tp.get("tau"))
 
     both = get(thr, "both_answered") or {}
-    for label, w in (("tau0", ""), ("tuned", "Tuned")):
-        r = both.get(f"xlmr__{PHOBERT}__{label}") or both.get(f"{PHOBERT}__xlmr__{label}")
-        m(f"Both{w}N", get(r, "n_both_answered"), 0)
-        m(f"Both{w}Phobert", get(r, PHOBERT))
-        m(f"Both{w}Xlmr", get(r, "xlmr"))
-        m(f"Both{w}Gap", r[PHOBERT] - r["xlmr"] if r else None)
-
-    pt = get(diag, "paired_phobert_vs_xlmr_tuned") or {}
-    ptrows = []
-    for part, w in (("all", ""), ("answerable", "Ans"), ("impossible", "Imp")):
-        r = pt.get(part)
-        m(f"PairT{w}Diff", get(r, "em_diff"))
-        m(f"PairT{w}ArtLo", (get(r, "ci95_article") or [None])[0])
-        m(f"PairT{w}ArtHi", (get(r, "ci95_article") or [None, None])[1])
-        m(f"PairT{w}P", pval(get(r, "mcnemar_p")) if r else None, raw=True)
-        if r:
-            name = {"all": "Toàn bộ", "answerable": "Có đáp án", "impossible": "Không có đáp án"}[part]
-            ptrows.append(f"{name} & {vi(r['n'])} & {vi(r['both_correct'])} & {vi(r['only_a'])} & "
-                          f"{vi(r['only_b'])} & {vi(r['neither'])} & {vi(r['em_diff'])} & {ci(r)} & "
-                          f"{pval(r['mcnemar_p'])} \\\\")
-    table("tab_paired_tuned.tex", "\n".join(ptrows) + "\n")
+    for (ph, xl, sp) in ((PHOBERT, "xlmr", ""), ("phobert_seed13", "xlmr_seed13", "S")):
+        for label, w in (("tau0", ""), ("tuned", "Tuned")):
+            r = both.get(f"{xl}__{ph}__{label}") or both.get(f"{ph}__{xl}__{label}")
+            m(f"Both{sp}{w}N", get(r, "n_both_answered"), 0)
+            m(f"Both{sp}{w}Phobert", get(r, ph))
+            m(f"Both{sp}{w}Xlmr", get(r, xl))
+            m(f"Both{sp}{w}Gap", r[ph] - r[xl] if r else None)
 
     # ── chẩn đoán sụp đổ: dev đầy đủ, quét feature, probe resume ─────────────
     for run, w in (("phobert_epoch1", "EpochOne"), ("phobert", "RunA"), ("phobert_lr2e5", "RunB"),
-                   ("phobert_stable", "RunC"), ("xlmr", "Xlmr")):
+                   ("phobert_stable", "RunC"), ("phobert_seed13", "RunD"), ("xlmr", "Xlmr"),
+                   ("xlmr_seed13", "XlmrThirteen")):
         z = get(load(f"windows_{run}_dev.json"), "at_tau0")
         m(f"Dev{w}EM", get(z, "EM")); m(f"Dev{w}Fone", get(z, "F1"))
         m(f"Dev{w}AbsRate", get(z, "abstain_rate"))
@@ -455,8 +456,8 @@ def main() -> None:
     seed_rows = []
     for key, label, seed, win in (("xlmr", "XLM-R-base", 42, "384/128"), ("xlmr_seed13", "XLM-R-base", 13, "384/128"),
                                   ("xlmr_256", "XLM-R-base", 42, "256/96"),
-                                  (PHOBERT, "PhoBERT (chính)", 42, "256/96"),
-                                  ("phobert_seed13", "PhoBERT (chính)", 13, "256/96")):
+                                  (PHOBERT, "PhoBERT-base-v2", 42, "256/96"),
+                                  ("phobert_seed13", "PhoBERT-base-v2", 13, "256/96")):
         ev = load(f"eval_{key}_validation.json")
         t = get(thr, "systems", key)
         w = {"xlmr": "XlmrS", "xlmr_seed13": "XlmrSThirteen", "xlmr_256": "XlmrTwoFiftySix",

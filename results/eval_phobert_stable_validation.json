@@ -1,0 +1,242 @@
+{
+  "model": "PhoBERT-base-v2 (fine-tuned, lr 1e-5, stable)",
+  "dataset": "UIT-ViQuAD 2.0",
+  "split": "validation",
+  "n": 3814,
+  "timestamp": "2026-09-19T10:57:03+00:00",
+  "commit": "32a6c5a",
+  "device": "mps",
+  "env": {
+    "device": "mps",
+    "torch": "2.14.0",
+    "mps_available": true,
+    "platform": "macOS-26.4.1-arm64-arm-64bit",
+    "machine": "arm64"
+  },
+  "overall": {
+    "EM": 54.0902,
+    "F1": 64.3752,
+    "count": 3814
+  },
+  "answerable_only": {
+    "EM": 57.859,
+    "F1": 72.6449,
+    "count": 2653
+  },
+  "impossible_only": {
+    "EM": 45.478,
+    "count": 1161
+  },
+  "avg_latency_ms": 12.249,
+  "by_context_length": {
+    "100-200": {
+      "EM": 54.2254,
+      "F1": 64.9767,
+      "count": 2982,
+      "unreliable": false
+    },
+    "200-300": {
+      "EM": 52.5253,
+      "F1": 60.8416,
+      "count": 693,
+      "unreliable": false
+    },
+    "300+": {
+      "EM": 58.1395,
+      "F1": 67.9402,
+      "count": 129,
+      "unreliable": false
+    },
+    "<100": {
+      "EM": 70.0,
+      "F1": 83.8824,
+      "count": 10,
+      "unreliable": true
+    }
+  },
+  "by_question_type": {
+    "multi-sentence": {
+      "EM": 53.7377,
+      "F1": 68.5814,
+      "count": 1632,
+      "unreliable": false
+    },
+    "single-sentence": {
+      "EM": 64.4466,
+      "F1": 79.1401,
+      "count": 1021,
+      "unreliable": false
+    },
+    "_note": "Tổng của bảng này là 2653 chứ không phải n=3814, vì 1161 câu impossible không được gán question_type (chúng không có phạm vi suy luận để phân loại). question_type là HEURISTIC tự gán, không phải nhãn có sẵn của ViQuAD."
+  },
+  "sample_predictions": [
+    {
+      "qid": "0001-0001-0001",
+      "question": "Paris đạt được thành quả gì sau khoảng 4 thế kỷ tính từ ngày Cách mạng Pháp diễn ra?",
+      "gold": [
+        "trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí"
+      ],
+      "prediction": "Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu",
+      "context": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có. Vào thế kỷ 10, Paris đã là một trong những thành phố chính của Pháp cùng các cung điện hoàng gia, các tu viện và nhà thờ. Từ thế kỷ 12, Paris trở thành một trong những trung tâm của châu Âu về giáo dục và nghệ thuật. Thế kỷ 14, Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu. Đến thế kỷ 19 và 20, thành phố trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí.",
+      "em": 0.0,
+      "f1": 0.2,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0001-0002",
+      "question": "Vị trí địa lý của Pháp có gì đặc biệt?",
+      "gold": [],
+      "prediction": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có",
+      "context": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có. Vào thế kỷ 10, Paris đã là một trong những thành phố chính của Pháp cùng các cung điện hoàng gia, các tu viện và nhà thờ. Từ thế kỷ 12, Paris trở thành một trong những trung tâm của châu Âu về giáo dục và nghệ thuật. Thế kỷ 14, Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu. Đến thế kỷ 19 và 20, thành phố trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": true
+    },
+    {
+      "qid": "0001-0001-0003",
+      "question": "Kinh tế xung quanh kinh đô ánh sáng mạnh về gì?",
+      "gold": [
+        "giáo dục và nghệ thuật",
+        "nông nghiệp"
+      ],
+      "prediction": "nông nghiệp giàu có",
+      "context": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có. Vào thế kỷ 10, Paris đã là một trong những thành phố chính của Pháp cùng các cung điện hoàng gia, các tu viện và nhà thờ. Từ thế kỷ 12, Paris trở thành một trong những trung tâm của châu Âu về giáo dục và nghệ thuật. Thế kỷ 14, Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu. Đến thế kỷ 19 và 20, thành phố trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí.",
+      "em": 0.0,
+      "f1": 0.6667,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0001-0004",
+      "question": "Cuộc cách mạng Pháp diễn ra ở đâu?",
+      "gold": [
+        "Paris"
+      ],
+      "prediction": "Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu",
+      "context": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có. Vào thế kỷ 10, Paris đã là một trong những thành phố chính của Pháp cùng các cung điện hoàng gia, các tu viện và nhà thờ. Từ thế kỷ 12, Paris trở thành một trong những trung tâm của châu Âu về giáo dục và nghệ thuật. Thế kỷ 14, Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu. Đến thế kỷ 19 và 20, thành phố trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí.",
+      "em": 0.0,
+      "f1": 0.0488,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0001-0005",
+      "question": "Kinh đô ánh sáng nổi tiếng về lĩnh vực gì?",
+      "gold": [
+        "nghệ thuật và giải trí",
+        "trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí"
+      ],
+      "prediction": "",
+      "context": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có. Vào thế kỷ 10, Paris đã là một trong những thành phố chính của Pháp cùng các cung điện hoàng gia, các tu viện và nhà thờ. Từ thế kỷ 12, Paris trở thành một trong những trung tâm của châu Âu về giáo dục và nghệ thuật. Thế kỷ 14, Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu. Đến thế kỷ 19 và 20, thành phố trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0001-0006",
+      "question": "Paris là một thành phố quan trọng của nước Pháp bắt đầu từ thời gian nào?",
+      "gold": [
+        "thế kỷ 10"
+      ],
+      "prediction": "thế kỷ 10",
+      "context": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có. Vào thế kỷ 10, Paris đã là một trong những thành phố chính của Pháp cùng các cung điện hoàng gia, các tu viện và nhà thờ. Từ thế kỷ 12, Paris trở thành một trong những trung tâm của châu Âu về giáo dục và nghệ thuật. Thế kỷ 14, Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu. Đến thế kỷ 19 và 20, thành phố trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí.",
+      "em": 1.0,
+      "f1": 1.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0001-0007",
+      "question": "Vị trí địa lý của Paris có gì đặc biệt?",
+      "gold": [
+        "nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông",
+        "điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có"
+      ],
+      "prediction": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có",
+      "context": "Paris nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông, và là trung tâm của một vùng nông nghiệp giàu có. Vào thế kỷ 10, Paris đã là một trong những thành phố chính của Pháp cùng các cung điện hoàng gia, các tu viện và nhà thờ. Từ thế kỷ 12, Paris trở thành một trong những trung tâm của châu Âu về giáo dục và nghệ thuật. Thế kỷ 14, Paris là thành phố quan trọng bậc nhất của Cơ Đốc giáo và trong các thế kỷ 16, 17, đây là nơi diễn ra Cách mạng Pháp cùng nhiều sự kiện lịch sử quan trọng của Pháp và châu Âu. Đến thế kỷ 19 và 20, thành phố trở thành một trong những trung tâm văn hóa của thế giới, thủ đô của nghệ thuật và giải trí.",
+      "em": 0.0,
+      "f1": 0.9434,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0002-0001",
+      "question": "Điều gì đã nói lên Paris là thành phố lý tưởng để khách du lịch?",
+      "gold": [
+        "Kinh đô ánh sáng",
+        "mỗi năm có đến 30 triệu khách nước ngoài"
+      ],
+      "prediction": "Sự nhộn nhịp, các công trình kiến trúc và không khí nghệ sĩ",
+      "context": "Nổi tiếng với tên gọi Kinh đô ánh sáng, Paris là một trung tâm văn hóa lớn của thế giới và cũng là một trong những thành phố du lịch thu hút nhất. Sự nhộn nhịp, các công trình kiến trúc và không khí nghệ sĩ đã giúp Paris mỗi năm có đến 30 triệu khách nước ngoài. Thành phố còn được xem như kinh đô của thời trang cao cấp với nhiều khu phố xa xỉ cùng các trung tâm thương mại lớn. Là nơi đặt trụ sở chính của các tổ chức quốc tế như OECD, UNESCO... cộng với những hoạt động đa dạng về tài chính, kinh doanh, chính trị và du lịch đã khiến Paris trở thành một trong những trung tâm trung chuyển lớn nhất trên thế giới và được coi như một trong bốn \"thành phố toàn cầu\" cùng với New York, Luân Đôn và Tokyo.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0002-0002",
+      "question": "Người ta đến với Paris vì điều gì?",
+      "gold": [
+        "Sự nhộn nhịp, các công trình kiến trúc và không khí nghệ sĩ"
+      ],
+      "prediction": "Sự nhộn nhịp, các công trình kiến trúc và không khí nghệ sĩ",
+      "context": "Nổi tiếng với tên gọi Kinh đô ánh sáng, Paris là một trung tâm văn hóa lớn của thế giới và cũng là một trong những thành phố du lịch thu hút nhất. Sự nhộn nhịp, các công trình kiến trúc và không khí nghệ sĩ đã giúp Paris mỗi năm có đến 30 triệu khách nước ngoài. Thành phố còn được xem như kinh đô của thời trang cao cấp với nhiều khu phố xa xỉ cùng các trung tâm thương mại lớn. Là nơi đặt trụ sở chính của các tổ chức quốc tế như OECD, UNESCO... cộng với những hoạt động đa dạng về tài chính, kinh doanh, chính trị và du lịch đã khiến Paris trở thành một trong những trung tâm trung chuyển lớn nhất trên thế giới và được coi như một trong bốn \"thành phố toàn cầu\" cùng với New York, Luân Đôn và Tokyo.",
+      "em": 1.0,
+      "f1": 1.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "0001-0002-0003",
+      "question": "Điều gì đã nói lên New York là thành phố lý tưởng để khách du lịch?",
+      "gold": [],
+      "prediction": "",
+      "context": "Nổi tiếng với tên gọi Kinh đô ánh sáng, Paris là một trung tâm văn hóa lớn của thế giới và cũng là một trong những thành phố du lịch thu hút nhất. Sự nhộn nhịp, các công trình kiến trúc và không khí nghệ sĩ đã giúp Paris mỗi năm có đến 30 triệu khách nước ngoài. Thành phố còn được xem như kinh đô của thời trang cao cấp với nhiều khu phố xa xỉ cùng các trung tâm thương mại lớn. Là nơi đặt trụ sở chính của các tổ chức quốc tế như OECD, UNESCO... cộng với những hoạt động đa dạng về tài chính, kinh doanh, chính trị và du lịch đã khiến Paris trở thành một trong những trung tâm trung chuyển lớn nhất trên thế giới và được coi như một trong bốn \"thành phố toàn cầu\" cùng với New York, Luân Đôn và Tokyo.",
+      "em": 1.0,
+      "f1": 1.0,
+      "is_impossible": true
+    }
+  ],
+  "config": {
+    "max_length": 256,
+    "doc_stride": 96,
+    "max_answer_len": 64,
+    "word_segmented": true
+  },
+  "training": {
+    "config": {
+      "model": "vinai/phobert-base-v2",
+      "out": "models/phobert_stable",
+      "data_dir": "data/raw",
+      "train_size": null,
+      "epochs": 3,
+      "batch_size": 12,
+      "grad_accum": 2,
+      "lr": 1e-05,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.1,
+      "max_length": 256,
+      "doc_stride": 96,
+      "max_answer_len": 64,
+      "eval_limit": 500,
+      "dev_frac": 0.05,
+      "word_segmented": true,
+      "seed": 42,
+      "split_seed": 42,
+      "resume_from": null,
+      "max_steps": null
+    },
+    "best_epoch": 3,
+    "stability": {
+      "stable": true,
+      "max_rise": 0.066411,
+      "first_violation_step": null,
+      "window": 200,
+      "tolerance": 0.2
+    },
+    "provenance": {
+      "device": "mps",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "platform": "macOS-26.4.1-arm64-arm-64bit"
+    }
+  },
+  "library_versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0"
+  }
+}

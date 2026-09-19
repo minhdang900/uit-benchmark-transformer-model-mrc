@@ -129,6 +129,29 @@ def main() -> None:
                                                 {q: tuned["xlmr"][q] for q in refs if not refs[q]},
                                                 groups=article),
             }
+        # Cặp seed 13 (PhoBERT seed 13 vs XLM-R seed 13): báo cáo hai seed NGANG NHAU, nên mọi
+        # kết luận ở seed 42 phải được kiểm lại ở seed 13 — cùng tập câu, cùng phép kiểm định.
+        def em_of(path: Path):
+            t = json.loads(path.read_text())
+            return {q: max((exact_match(t.get(q, ""), g) for g in refs[q]),
+                           default=float(not t.get(q, "").strip())) for q in refs}
+
+        def pairs(a: dict, b: dict) -> dict:
+            imp = [q for q in refs if not refs[q]]
+            return {
+                "all": paired_comparison(a, b, groups=article),
+                "answerable": paired_comparison({q: a[q] for q in answerable},
+                                                {q: b[q] for q in answerable}, groups=article),
+                "impossible": paired_comparison({q: a[q] for q in imp},
+                                                {q: b[q] for q in imp}, groups=article),
+            }
+
+        pa, pb = "phobert_seed13", "xlmr_seed13"
+        if {pa, pb} <= set(preds):
+            report["paired_seed13"] = pairs(em[pa], em[pb])
+            ta, tb = (Path(f"results/predictions_{m}_tuned_validation.json") for m in (pa, pb))
+            if ta.exists() and tb.exists():
+                report["paired_seed13_tuned"] = pairs(em_of(ta), em_of(tb))
         # Câu PhoBERT sai mà XLM-R đúng, và ngược lại: nguyên liệu cho phân tích định tính.
         disagree = []
         for q in refs:

@@ -1,0 +1,62 @@
+device=mps  model=vinai/phobert-base-v2
+assert_no_leakage OK — train 3896 ctx / dev 205 ctx / validation(test) 557 ctx, giao nhau = 0
+27049 câu hỏi -> 31039 feature (14s)
+lịch học: 1293 bước/epoch, 3879 tổng, 387 warmup
+[transformers] [1mRobertaForQuestionAnswering LOAD REPORT[0m from: vinai/phobert-base-v2
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.bias              | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+qa_outputs.bias           | MISSING    | 
+qa_outputs.weight         | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  epoch 1 step 200/2587 loss 5.1603 (104s)
+  epoch 1 step 400/2587 loss 4.4171 (200s)
+  epoch 1 step 600/2587 loss 3.7680 (294s)
+  epoch 1 step 800/2587 loss 3.3415 (388s)
+  epoch 1 step 1000/2587 loss 3.0405 (484s)
+  epoch 1 step 1200/2587 loss 2.8144 (582s)
+  epoch 1 step 1400/2587 loss 2.6487 (681s)
+  epoch 1 step 1600/2587 loss 2.5143 (778s)
+  epoch 1 step 1800/2587 loss 2.4048 (876s)
+  epoch 1 step 2000/2587 loss 2.3088 (972s)
+  epoch 1 step 2200/2587 loss 2.2315 (1068s)
+  epoch 1 step 2400/2587 loss 2.1620 (1165s)
+epoch 1: loss 2.1055  val_EM 45.00  val_F1 58.53  (n=500, 1265s)
+  epoch 2 step 200/2587 loss 1.1847 (103s)
+  epoch 2 step 400/2587 loss 1.1538 (202s)
+  epoch 2 step 600/2587 loss 1.1485 (300s)
+  epoch 2 step 800/2587 loss 1.1484 (399s)
+  epoch 2 step 1000/2587 loss 1.1397 (498s)
+  epoch 2 step 1200/2587 loss 1.1356 (596s)
+  epoch 2 step 1400/2587 loss 1.1335 (695s)
+  epoch 2 step 1600/2587 loss 1.1315 (793s)
+  epoch 2 step 1800/2587 loss 1.1285 (892s)
+  epoch 2 step 2000/2587 loss 1.1260 (991s)
+  epoch 2 step 2200/2587 loss 1.1217 (1090s)
+  epoch 2 step 2400/2587 loss 1.1175 (1190s)
+epoch 2: loss 1.1156  val_EM 49.80  val_F1 64.21  (n=500, 1292s)
+  epoch 3 step 200/2587 loss 0.8371 (100s)
+  epoch 3 step 400/2587 loss 0.8348 (201s)
+  epoch 3 step 600/2587 loss 0.8273 (301s)
+  epoch 3 step 800/2587 loss 0.8313 (402s)
+  epoch 3 step 1000/2587 loss 0.8374 (502s)
+  epoch 3 step 1200/2587 loss 0.8330 (603s)
+  epoch 3 step 1400/2587 loss 0.8306 (703s)
+  epoch 3 step 1600/2587 loss 0.8304 (803s)
+  epoch 3 step 1800/2587 loss 0.8284 (904s)
+  epoch 3 step 2000/2587 loss 0.8210 (1006s)
+  epoch 3 step 2200/2587 loss 0.8216 (1108s)
+  epoch 3 step 2400/2587 loss 0.8220 (1209s)
+epoch 3: loss 0.8224  val_EM 53.60  val_F1 66.51  (n=500, 1312s)
+ổn định: {'stable': True, 'max_rise': 0.065169, 'first_violation_step': None, 'window': 200, 'tolerance': 0.2}
+
+epoch tốt nhất = 3 -> sao chép vào models/phobert_seed13
+chẩn đoán: val_f1 vẫn tăng tới epoch cuối (66.51) — model còn THIẾU epoch, chưa overfit. Cân nhắc huấn luyện thêm.
+curve -> results/training_curve_phobert_seed13.json

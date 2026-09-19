@@ -1,0 +1,22 @@
+dataset=validation  n=3814  impossible=1161 (30.44%)
+
+=== phobert_stable ===
+  overall    EM  54.09  F1  64.38  (n=3814)
+  answerable EM  57.86  F1  72.64  (n=2653)
+  impossible EM  45.48  (n=1161)   12.249 ms/câu
+
+=== xlmr_seed13 ===
+  overall    EM  53.64  F1  62.18  (n=3814)
+  answerable EM  55.07  F1  67.35  (n=2653)
+  impossible EM  50.39  (n=1161)   14.022 ms/câu
+dataset=stress  n=250  impossible=130 (52.0%)
+
+=== phobert_stable ===
+  overall    EM  52.40  F1  52.98  (n=250)
+  answerable EM   4.17  F1   5.37  (n=120)
+  impossible EM  96.92  (n=130)   11.329 ms/câu
+
+=== xlmr_seed13 ===
+  overall    EM  51.20  F1  53.31  (n=250)
+  answerable EM   1.67  F1   6.07  (n=120)
+  impossible EM  96.92  (n=130)   13.942 ms/câu
