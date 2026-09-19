@@ -12,16 +12,18 @@ trích xuất, nhóm cài một lớp tokenizer dựng offset từ bước tách
 EM do biên từ (không cần mô hình), phân loại lỗi tự động, precision/recall của hành vi từ chối, và kiểm định
 cặp McNemar/bootstrap.
 
-\textbf{Kết quả.} Điểm tổng của hai mô hình không khác nhau có ý nghĩa (EM \PhobertEM{} so với \XlmrEM; chênh
-lệch \PairDiff, CI 95\% [\PairLo; \PairHi]), nhưng che hai hồ sơ ngược nhau: PhoBERT hơn \PairAnsDiff{} điểm EM
-trên câu có đáp án, còn XLM-R hơn \,$-$\PairImpDiff{}\, điểm trên câu không có đáp án. Giả thuyết ban đầu
-(PhoBERT yếu vì lỗi tách từ) \emph{sai} ở dạng tổng quát: chỉ \SegMisPct\% đáp án cắt ngang một từ, nên hiệu
-ứng này bị chặn ở \SegCeilingLoss{} điểm EM, và phần lớn các trường hợp đó là lỗi của bộ tách từ. Điều quyết
-định là hành vi từ chối: PhoBERT chỉ từ chối \PhobertAbsRate\% số câu, vì loss trên lớp ``không có đáp án''
-của nó tăng khoảng 7 lần sau epoch 1 trong khi loss trên vị trí đáp án vẫn giảm --- hiện tượng lặp lại ở hai
-tốc độ học. Cuối cùng, kiểm định bộ stress-test 250 câu của nhóm cho thấy chỉ \AuditAnsInCtx/\AuditAns{} câu có
-đáp án chứa đáp án trong ngữ cảnh, và hệ thống luôn từ chối đứng đầu bảng điểm trên bộ này; bộ được giữ làm
-đối tượng phân tích, không dùng để xếp hạng.
+\textbf{Kết quả.} Ở ngưỡng từ chối mặc định ($\tau = 0$), điểm tổng của hai mô hình không khác nhau có ý
+nghĩa (EM \PhobertEM{} so với \XlmrEM) và che hai hồ sơ ngược nhau: PhoBERT hơn \PairAnsDiff{} điểm EM trên
+câu có đáp án, XLM-R hơn \,$-$\PairImpDiff{}\, điểm trên câu không có đáp án. Chẩn đoán cho thấy đó chủ yếu
+là vấn đề \emph{hiệu chỉnh}: khi fine-tune ở tốc độ học $3\cdot10^{-5}$, PhoBERT gặp một sự kiện bất ổn tối ưu
+hoá --- tái hiện được, kèm chuẩn gradient vọt tới \ResumeHighMaxSpike{} --- làm điểm ``không có đáp án'' dịch
+xuống, nên nó gần như không từ chối; ở tốc độ học $10^{-5}$ hiện tượng không xảy ra. Khả năng phân biệt vẫn
+còn: khi mỗi mô hình dùng ngưỡng chọn trên dev, PhoBERT tốt hơn XLM-R \PairTDiff{} điểm EM (CI 95\% theo bài
+viết [\PairTArtLo; \PairTArtHi]), trên cả câu có và không có đáp án. Giả thuyết ban đầu (PhoBERT yếu vì lỗi
+tách từ) \emph{sai} ở dạng tổng quát: chỉ \SegMisPct\% đáp án cắt ngang một từ, nên hiệu ứng này bị chặn ở
+\SegCeilingLoss{} điểm EM. Cuối cùng, kiểm định bộ stress-test 250 câu của nhóm cho thấy chỉ
+\AuditAnsInCtx/\AuditAns{} câu có đáp án chứa đáp án trong ngữ cảnh; bộ được giữ làm đối tượng phân tích,
+không dùng để xếp hạng.
 
 Mọi con số trong báo cáo được sinh tự động từ tệp \code{results/*.json} kèm commit.
 

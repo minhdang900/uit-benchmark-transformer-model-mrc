@@ -3,7 +3,7 @@
 
 \begin{table}[htbp]
 \centering
-\caption{Kết quả trên toàn bộ validation (\NVal{} câu; nguồn: \code{results/eval\_*\_validation.json})}
+\caption{Kết quả trên toàn bộ validation (\NVal{} câu) ở ngưỡng mặc định $\tau = 0$ (nguồn: \code{results/eval\_*\_validation.json})}
 \label{tab:main}
 \renewcommand{\arraystretch}{1.18}
 \footnotesize
@@ -26,36 +26,107 @@
 \label{fig:main}
 \end{figure}
 
-Bảng~\ref{tab:main} cho ba quan sát.
+Bảng~\ref{tab:main} là kết quả \emph{ở ngưỡng mặc định} $\tau = 0$ --- đúng như mô hình ra khỏi huấn
+luyện. Nó cho ba quan sát; quan sát thứ ba hoá ra là một ảo ảnh, và Mục~\ref{sec:threshold} giải thích vì sao.
 
 \begin{enumerate}
   \item \textbf{Hai Transformer vượt xa hai baseline.} TF-IDF có F1 \TfidfFone{} nhưng EM chỉ
         \TfidfEM{} --- thấp hơn cả hệ thống luôn từ chối (\AbstainEM) --- vì nó luôn trả về cả một câu
         và không bao giờ từ chối.
-  \item \textbf{Điểm tổng của PhoBERT và XLM-R gần như bằng nhau}: EM \PhobertEM{} so với \XlmrEM,
-        F1 \PhobertFone{} so với \XlmrFone. Kiểm định cặp trên \PairN{} câu cho chênh lệch EM
-        \PairDiff{} điểm, khoảng tin cậy 95\% [\PairLo; \PairHi], $p$ McNemar = \PairP{}
-        (Bảng~\ref{tab:paired}): \emph{không đủ bằng chứng} để nói mô hình nào tốt hơn về tổng.
-  \item \textbf{Nhưng điểm tổng che hai hồ sơ kỹ năng ngược nhau.} Trên câu có đáp án, PhoBERT hơn
-        XLM-R \PairAnsDiff{} điểm EM ([\PairAnsLo; \PairAnsHi]); trên câu không có đáp án, XLM-R hơn
-        PhoBERT \,$-$\PairImpDiff{}\, điểm. Hai chênh lệch lớn, ngược dấu, gần như triệt tiêu nhau trong
-        điểm tổng. Đây là minh hoạ trực tiếp nhất cho khoảng trống mà đồ án đặt ra: một điểm tổng
-        không cho biết mô hình sai ở đâu.
+  \item \textbf{Ở $\tau = 0$, điểm tổng của PhoBERT và XLM-R gần như bằng nhau}: EM \PhobertEM{} so với
+        \XlmrEM, F1 \PhobertFone{} so với \XlmrFone. Chênh lệch EM cặp \PairDiff{} điểm, khoảng tin cậy
+        95\% lấy mẫu lại theo \emph{bài viết} [\PairArtLo; \PairArtHi], $p$ McNemar = \PairP{}
+        (Bảng~\ref{tab:paired}).
+  \item \textbf{Điểm tổng đó che hai hồ sơ ngược nhau:} PhoBERT hơn \PairAnsDiff{} điểm EM trên câu có đáp
+        án, XLM-R hơn \,$-$\PairImpDiff{}\, điểm trên câu không có đáp án. Nhưng PhoBERT chỉ từ chối
+        \PhobertAbsRate\% số câu, XLM-R từ chối \XlmrAbsRate\% --- nên hai chênh lệch này phần lớn là
+        \emph{một} khác biệt được đếm hai lần: mô hình nào sẵn lòng trả lời hơn.
 \end{enumerate}
 
 PhoBERT cũng nhanh hơn khi suy luận (\PhobertLat{} so với \XlmrLat{} ms/câu trên MPS), nhất quán với
 chuỗi token ngắn hơn khoảng 22\% (Mục~\ref{sec:data}), dù phải tốn thêm bước tách từ.
 
+\paragraph{So với các kết quả đã công bố.} Tập validation của đồ án chính là tập \emph{public test} của
+VLSP~2021 (cùng 557 đoạn văn, 19 bài viết)~\cite{nguyen2022vlsp}, nên có một mốc tham chiếu --- dù khác
+thiết lập. Baseline mBERT của ban tổ chức đạt F1 \PubBaseFone{} / EM \PubBaseEM; trung bình \emph{mọi} lần
+nộp là F1 \PubMeanFone; đội cao nhất đạt F1 \PubBestFone{} với XLM-R cỡ \emph{large}, ensemble và tới 10 lần
+nộp mỗi ngày lên chính tập này; con người đạt F1 \PubHumanFone. Ở $\tau = 0$, XLM-R-base của nhóm
+(F1 \XlmrFone) còn \emph{thấp hơn} baseline mBERT --- một dấu hiệu nữa rằng ngưỡng mặc định không phải điểm
+làm việc tốt; ở ngưỡng hiệu chỉnh (Mục~\ref{sec:threshold}), PhoBERT-base đạt F1 \ThrPhobertFone, vượt
+baseline nhưng còn xa các hệ thống thi đấu. Mục tiêu của đồ án là chẩn đoán, không phải xếp hạng.
+
+\subsection{Ngưỡng từ chối: tách ``đọc'' khỏi ``sẵn lòng trả lời''}
+\label{sec:threshold}
+
+Mô hình trả lời khi điểm span tốt nhất vượt điểm của \code{[CLS]} cộng một ngưỡng $\tau$
+(công thức~\ref{eq:null}). Với $\tau = 0$ cho cả hai, tỉ lệ từ chối là sản phẩm phụ của quá trình huấn
+luyện, không phải lựa chọn. SQuAD~2.0 xử lý việc này bằng cách chọn $\tau$ riêng cho từng mô hình trên dữ
+liệu giữ lại~\cite{rajpurkar2018know}. Đồ án làm đúng như vậy: điểm của \emph{từng cửa sổ} được lưu
+(\code{scripts/score\_windows.py}) để dựng lại chính xác dự đoán ở mọi $\tau$ --- kiểm tra: ở $\tau = 0$ khớp
+\emph{toàn bộ} \NVal{} dự đoán đã lưu --- rồi $\tau$ được chọn để cực đại F1 trên \emph{dev} (\NDevFull{} câu
+tách từ train) và áp \emph{một lần} lên validation (\code{scripts/calibrate\_thresholds.py}).
+
+\begin{table}[htbp]
+\centering
+\caption{Validation ở $\tau = 0$ và ở $\tau$ chọn trên dev. $\star$: lần chạy PhoBERT chính (nguồn: \code{results/thresholds.json})}
+\label{tab:threshold}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l r r r r r r@{}}
+\toprule
+& & \textbf{$\tau = 0$} & \multicolumn{4}{c}{\textbf{$\tau$ chọn trên dev}} \\
+\cmidrule(lr){3-3}\cmidrule(lr){4-7}
+\textbf{Hệ thống} & $\tau$ & \textbf{EM / F1} & \textbf{EM / F1} & \textbf{EM có đ.án} & \textbf{EM không đ.án} & \textbf{Từ chối (\%)} \\
+\midrule
+\tabinput{generated/tab_threshold.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{So sánh cặp PhoBERT (A) và XLM-R (B) ở $\tau$ chọn trên dev. CI 95\% lấy mẫu lại theo bài viết}
+\label{tab:paired-tuned}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l r r r r r r l r@{}}
+\toprule
+& & \textbf{Cả hai} & \textbf{Chỉ} & \textbf{Chỉ} & \textbf{Cả hai} & \textbf{Chênh} & & \\
+\textbf{Nhóm câu} & $n$ & \textbf{đúng} & \textbf{A} & \textbf{B} & \textbf{sai} & \textbf{lệch} & \textbf{CI 95\%} & \textbf{$p$} \\
+\midrule
+\tabinput{generated/tab_paired_tuned.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{PhoBERT cần $\tau$ lớn, XLM-R gần như không cần.} $\tau$ chọn trên dev là \ThrPhobertTau{} cho
+PhoBERT và \ThrXlmrTau{} cho XLM-R. Với $\tau$ đó, tỉ lệ từ chối của PhoBERT tăng từ \ThrPhobertAbsRateZero\%
+lên \ThrPhobertAbsRate\% và EM trên câu không có đáp án từ \ThrPhobertImpEMZero{} lên \ThrPhobertImpEM{}; điểm
+của XLM-R gần như không đổi (Bảng~\ref{tab:threshold}).
+
+\paragraph{Ở ngưỡng hiệu chỉnh, PhoBERT tốt hơn trên \emph{cả hai} loại câu.} Chênh lệch EM tổng là
+\PairTDiff{} điểm (CI theo bài viết [\PairTArtLo; \PairTArtHi], $p$ = \PairTP): \PairTAnsDiff{} điểm trên câu
+có đáp án và \PairTImpDiff{} điểm trên câu không có đáp án (Bảng~\ref{tab:paired-tuned}). ``Hai hồ sơ ngược
+nhau'' ở $\tau = 0$ vì vậy chủ yếu là hệ quả của \emph{hiệu chỉnh}, không phải của năng lực: PhoBERT không mất
+khả năng phân biệt câu không có đáp án, chỉ có điểm \code{[CLS]} của nó bị dịch xuống (Mục~\ref{sec:res-rq3}).
+
+\paragraph{Khả năng ``đọc'' thuần.} Trên \BothN{} câu có đáp án mà \emph{cả hai} mô hình đều trả lời ở
+$\tau = 0$ --- tức loại bỏ hoàn toàn quyết định từ chối --- PhoBERT đạt EM \BothPhobert, XLM-R \BothXlmr:
+chênh \BothGap{} điểm, nhỏ hơn nhiều so với \PairAnsDiff{} điểm ở Bảng~\ref{tab:paired}. Ở ngưỡng hiệu chỉnh
+con số tương ứng là \BothTunedPhobert{} và \BothTunedXlmr{} trên \BothTunedN{} câu.
+
 \begin{keybox}
-\textbf{Kết quả hai lần chạy PhoBERT.} PhoBERT được huấn luyện hai lần (Mục~\ref{sec:curves}); lần
-chính (\PhobertPrimaryLabel) được chọn theo F1 trên dev. Lần chạy thứ hai cho cùng hồ sơ: EM câu có
-đáp án \PhobertRunBAnsEM, EM câu không có đáp án \PhobertRunBImpEM{} (Bảng~\ref{tab:runs}) --- hồ sơ
-``đọc giỏi, hiếm khi từ chối'' không phải do may rủi của một lần chạy.
+\textbf{Kết luận chính của đồ án.} So ở ngưỡng mặc định, hai mô hình ``bằng nhau với hai hồ sơ ngược
+nhau''; so ở ngưỡng chọn trên dev --- cách so sánh đúng cho SQuAD~2.0 --- PhoBERT-base tốt hơn XLM-R-base
+\PairTDiff{} điểm EM, trên cả câu có và không có đáp án. Với một seed mỗi mô hình, kết luận này cần đọc cùng
+độ dao động theo seed ở Mục~\ref{sec:seeds}.
 \end{keybox}
 
 \begin{table}[htbp]
 \centering
-\caption{Hai lần chạy PhoBERT trên validation. $\star$: lần chạy chính (F1 dev cao nhất)}
+\caption{Các lần chạy PhoBERT, validation ở $\tau = 0$. F1 dev: toàn bộ dev (\NDevFull{} câu). $\star$: lần chạy chính}
 \label{tab:runs}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
@@ -156,8 +227,9 @@ ngược lại PhoBERT có \PhobertErrFalseAns{} lỗi trả lời câu không c
 lỗi) so với \XlmrErrFalseAns{} của XLM-R.
 
 \begin{keybox}
-\textbf{Trả lời RQ1: Không --- ở dạng tổng quát.} Mô hình word-level không kém hơn ở ranh giới từ;
-nó tốt hơn \PairAnsDiff{} điểm EM trên câu có đáp án. Cơ chế ``không trả lời được nửa từ'' có thật và
+\textbf{Trả lời RQ1: Không --- ở dạng tổng quát.} Mô hình word-level không kém hơn ở ranh giới từ: trên
+những câu có đáp án mà cả hai cùng trả lời, nó tốt hơn \BothGap{} điểm EM (con số \PairAnsDiff{} ở
+Bảng~\ref{tab:paired} còn chứa khác biệt về từ chối). Cơ chế ``không trả lời được nửa từ'' có thật và
 quan sát được, nhưng bị chặn trên ở \SegCeilingLoss{} điểm EM và chỉ tác động lên \SegMis{} câu. Ở
 UIT-ViQuAD~2.0, lỗi tách từ \emph{không} phải yếu tố quyết định khi chọn giữa hai họ mô hình; hành vi
 từ chối mới là yếu tố quyết định (RQ3).
@@ -291,8 +363,9 @@ tỉ lệ thật \PctValImp\% --- nhưng precision chỉ \XlmrAbsPrec\%: gần m
 sai, phần lớn là những câu XLM-R từ chối --- ví dụ ``Ký túc xá cho sinh viên lớn nhất Paris gọi là gì?'',
 vàng ``Cité internationale universitaire'', PhoBERT trả lời đúng còn XLM-R trả về rỗng.
 
-\paragraph{PhoBERT gần như không bao giờ từ chối.} PhoBERT từ chối \PhobertAbsRate\% số câu với
-precision \PhobertAbsPrec\%: khi đã từ chối thì gần như luôn đúng, nhưng recall chỉ \PhobertAbsRec\%.
+\paragraph{PhoBERT ở $\tau = 0$ gần như không bao giờ từ chối.} PhoBERT từ chối \PhobertAbsRate\% số câu
+với precision \PhobertAbsPrec\%: khi đã từ chối thì gần như luôn đúng, nhưng recall chỉ \PhobertAbsRec\%.
+Như Mục~\ref{sec:threshold} cho thấy, đây là vấn đề của \emph{ngưỡng}, không phải của khả năng phân biệt.
 
 \paragraph{Cả hai rơi vào bẫy của người gán nhãn.} SQuAD~2.0 và UIT-ViQuAD~2.0 tạo câu không có đáp án
 bằng cách sửa câu hỏi sao cho vẫn có một cụm ``nghe hợp lý'' trong đoạn văn (trường
@@ -301,16 +374,49 @@ bằng cách sửa câu hỏi sao cho vẫn có một cụm ``nghe hợp lý'' t
 (\XlmrTrapHit/\XlmrTrapN). Hai mô hình tìm đúng thực thể khớp với câu hỏi, nhưng không nhận ra chi tiết
 đã bị sửa làm câu hỏi mất đáp án --- tức là \emph{không} thật sự ``hiểu'' rằng câu không trả lời được.
 
-\paragraph{Vì sao PhoBERT mất khả năng từ chối?} Loss huấn luyện toàn phần của PhoBERT \emph{tăng} từ
-epoch 2 ở cả hai lần chạy (Bảng~\ref{tab:curves}). Để biết phần tăng nằm ở đâu, loss của từng checkpoint
-được tính lại trên cùng 3.000 câu hỏi của tập fit, tách theo loại nhãn (Bảng~\ref{tab:probe}). Kết quả rõ
-ràng: \textbf{loss trên nhãn ``không có đáp án'' của PhoBERT tăng khoảng 7 lần} sau epoch 1
-(\ProbePhobertRunAClsOne{} $\to$ \ProbePhobertRunAClsTwo{} $\to$ \ProbePhobertRunAClsThree), \emph{trong khi}
-loss trên nhãn vị trí đáp án \emph{giảm đều} (\ProbePhobertRunASpanOne{} $\to$ \ProbePhobertRunASpanThree{})
-và kết thúc thấp hơn của XLM-R. Lần chạy lr $2\cdot10^{-5}$ lặp lại y hệt. Loss ``không có đáp án'' của
-XLM-R ổn định. Tỉ lệ feature mang nhãn ``không có đáp án'' của hai tokenizer tương đương
-(\ProbePhobertRunAClsFrac\% so với \ProbeXlmrClsFrac\%), nên mất cân bằng lớp không giải thích được khác
-biệt.
+\paragraph{Vì sao PhoBERT từ chối ít ở $\tau = 0$?} Loss trên nhãn ``không có đáp án'' của PhoBERT tăng
+khoảng 7 lần sau epoch 1 (\ProbePhobertRunAClsOne{} $\to$ \ProbePhobertRunAClsTwo{} $\to$
+\ProbePhobertRunAClsThree), trong khi loss trên vị trí đáp án \emph{giảm đều}
+(\ProbePhobertRunASpanOne{} $\to$ \ProbePhobertRunASpanThree; Bảng~\ref{tab:probe}). Loss ``không có đáp án''
+của XLM-R ổn định. Đó là \emph{triệu chứng}; nhóm kiểm tra ba giả thuyết về nguyên nhân, mỗi lần thay đổi đúng
+một biến:
+
+\begin{enumerate}
+  \item \textbf{Dữ liệu đầu vào hỏng --- bị loại.} Quét toàn bộ \ScanPhobertFeatures{} feature huấn luyện của
+        PhoBERT (\code{scripts/scan\_features.py}): \ScanPhobertViolations{} vi phạm về id ngoài từ vựng, vị trí
+        vượt bảng position embedding, nhãn ``không có đáp án'' không trỏ về \code{<s>}, hay span nằm ngoài ngữ
+        cảnh. Tỉ lệ feature mang nhãn ``không có đáp án'' tương đương giữa hai tokenizer
+        (\ScanPhobertClsFrac\% và \ScanXlmrClsFrac\%), nên mất cân bằng lớp cũng không giải thích được.
+  \item \textbf{Đây là sự kiện trong huấn luyện, không phải tính chất của PhoBERT.} Checkpoint epoch 1 --- trước
+        khi sụp đổ --- từ chối \DevEpochOneAbsRate\% số câu trên dev, sát tỉ lệ thật; checkpoint epoch 3 chỉ
+        còn \DevRunAAbsRate\%.
+  \item \textbf{Bất ổn tối ưu hoá --- được ủng hộ.} Huấn luyện tiếp từ checkpoint epoch 1 trong 1.000 bước,
+        \emph{cùng} dữ liệu, cùng thứ tự batch, chỉ khác tốc độ học, có ghi loss và chuẩn gradient \emph{trước
+        khi cắt} ở từng bước (Bảng~\ref{tab:probe-resume}). Ở lr $2{,}2\cdot10^{-5}$ --- đúng tốc độ học mà lần
+        chạy gốc có khi vào epoch 2 --- sụp đổ lặp lại: loss ``không có đáp án'' bắt đầu trôi lên quanh bước
+        500, rồi chuẩn gradient vọt tới \ResumeHighMaxSpike{} (bước \ResumeHighMaxSpikeStep; bình thường
+        $\approx$ 13), và loss ``không có đáp án'' dừng ở \ResumeHighClsEnd{} trong khi loss vị trí đáp án không
+        đổi. Ở lr $10^{-5}$ trên đúng các batch đó: không bước nào có chuẩn gradient trên 100, loss ``không có
+        đáp án'' giữ ở \ResumeLowClsEnd. Giả thuyết bất ổn số học của MPS chưa được kiểm tra riêng.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Huấn luyện tiếp PhoBERT từ epoch 1: loss ``không có đáp án'' trung bình và chuẩn gradient lớn nhất
+theo từng khối 100 bước (nguồn: \code{results/probe\_resume.json})}
+\label{tab:probe-resume}
+\renewcommand{\arraystretch}{1.12}
+\footnotesize
+\begin{tabular}{@{}l r r r r@{}}
+\toprule
+& \multicolumn{2}{c}{\textbf{lr $2{,}2\cdot10^{-5}$}} & \multicolumn{2}{c}{\textbf{lr $10^{-5}$}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+\textbf{Bước} & \textbf{Loss ``không đ.án''} & \textbf{Grad max} & \textbf{Loss ``không đ.án''} & \textbf{Grad max} \\
+\midrule
+\tabinput{generated/tab_probe_resume.tex}
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{table}[htbp]
 \centering
@@ -327,11 +433,33 @@ biệt.
 \end{tabular}
 \end{table}
 
-Tiêu chí chọn epoch cũng góp phần: chọn theo F1 dev thưởng cho chất lượng span, nên chọn epoch 3; chọn
-theo EM dev sẽ chọn epoch 1, khi PhoBERT còn giữ được khả năng từ chối. Nguyên nhân gốc vì sao PhoBERT
-``bỏ'' lớp ``không có đáp án'' khi fine-tune tiếp thì đồ án \emph{chưa xác định được}: giảm tốc độ học
-không khắc phục, và mất cân bằng lớp bị loại trừ; các giả thuyết còn lại (biểu diễn của token \code{<s>}
-trong PhoBERT, tương tác với cửa sổ 256 token, độ bất ổn số học) cần thêm thí nghiệm với nhiều seed.
+\paragraph{Lần chạy ổn định, và vì sao nó không thay lần chạy chính.} Huấn luyện lại PhoBERT từ đầu với lr
+$10^{-5}$ cho một lần chạy ổn định: loss ``không có đáp án'' giảm suốt ba epoch, và dev từ chối
+\DevRunCAbsRate\% số câu. Theo quy tắc nhóm định trước --- lần chạy mới chỉ thay lần chạy chính nếu vừa ổn
+định \emph{vừa} có F1 trên toàn bộ dev cao hơn --- nó \emph{không} thay: F1 dev \DevRunCFone{} so với
+\DevRunAFone{} (Bảng~\ref{tab:dev-runs}). Hiệu chỉnh ngưỡng giải thích vì sao: lần chạy lr $3\cdot10^{-5}$ ``sụp
+đổ'' nhưng thứ tự điểm của nó vẫn phân biệt tốt câu không có đáp án --- chỉ có điểm \code{[CLS]} bị dịch xuống
+khoảng \ThrPhobertTau{} đơn vị logit --- và tốc độ học cao hơn giúp nó học vị trí đáp án tốt hơn: ở ngưỡng
+chọn trên dev, F1 dev của nó là \ThrPhobertRunADevFone, so với \ThrPhobertRunCDevFone{} của lần chạy ổn định.
+Lần chạy lr $10^{-5}$ còn đang cải thiện ở epoch 3, nên với nhiều epoch hơn nó có thể bắt kịp.
+
+\begin{table}[htbp]
+\centering
+\caption{Mọi lần chạy trên toàn bộ dev (\NDevFull{} câu tách từ train): ở $\tau = 0$ và ở $\tau$ chọn trên chính dev}
+\label{tab:dev-runs}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l l r r r r r@{}}
+\toprule
+& & \multicolumn{2}{c}{\textbf{$\tau = 0$}} & \multicolumn{3}{c}{\textbf{$\tau$ chọn trên dev}} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+\textbf{Lần chạy} & \textbf{Huấn luyện} & \textbf{F1} & \textbf{Từ chối \%} & $\tau$ & \textbf{F1} & \textbf{Từ chối \%} \\
+\midrule
+\tabinput{generated/tab_dev_runs.tex}
+\bottomrule
+\end{tabular}
+\end{table}
 
 \paragraph{Bộ stress-test không phân biệt được gì.} Bảng~\ref{tab:stress} xác nhận kết luận kiểm định: ở
 E1, E3, E4, điểm của mọi mô hình \emph{bằng đúng} điểm của hệ thống luôn từ chối; ở E5, hệ thống luôn từ
@@ -340,10 +468,12 @@ chối \emph{thắng} cả hai mô hình. Trên toàn bộ 250 câu, luôn từ 
 làm gì'' là hệ thống tốt nhất.
 
 \begin{keybox}
-\textbf{Trả lời RQ3: chưa --- không mô hình nào thật sự nhận ra câu không có đáp án.} XLM-R từ chối đúng
-tần suất nhưng sai đối tượng; PhoBERT gần như không từ chối vì loss trên lớp ``không có đáp án'' của nó
-tăng vọt sau epoch 1. Cả hai trả về đúng cụm ``nghe hợp lý'' mà người gán nhãn đặt làm bẫy trong khoảng
-một nửa số lần trả lời sai.
+\textbf{Trả lời RQ3: một phần.} Ở $\tau = 0$, XLM-R từ chối đúng tần suất nhưng sai đối tượng, còn PhoBERT
+gần như không từ chối. Nguyên nhân phía PhoBERT là một sự kiện bất ổn khi huấn luyện ở tốc độ học cao, làm
+điểm \code{[CLS]} dịch xuống; khả năng phân biệt vẫn còn, và ngưỡng chọn trên dev khôi phục nó
+(EM câu không có đáp án \ThrPhobertImpEM{} so với \ThrXlmrImpEM{} của XLM-R). Dù vậy, cả hai mô hình trả về
+đúng cụm ``nghe hợp lý'' mà người gán nhãn đặt làm bẫy trong khoảng một nửa số lần trả lời sai: không mô
+hình nào thật sự ``hiểu'' vì sao một câu không trả lời được.
 \end{keybox}
 
 
@@ -362,6 +492,33 @@ truy hồi đứng trước một mô hình đọc hiểu, không phải bộ đ
 thước đo thứ hai (luôn từ chối) mới thấy rằng TF-IDF thậm chí không vượt được việc không làm gì.
 \end{keybox}
 
+
+\subsection{Độ dao động theo seed và theo cấu hình cửa sổ}
+\label{sec:seeds}
+
+Mọi kiểm định ở trên đo độ bất định do \emph{chọn câu hỏi}, không đo độ bất định do \emph{huấn luyện}. Mỗi
+mô hình được huấn luyện thêm một lần với seed 13 --- cùng cấu hình, cùng tập dev (seed tách dev cố định bằng
+42 để điểm dev so sánh được). XLM-R còn được huấn luyện lại ở đúng 256 token / chồng lấp 96 như PhoBERT, để
+tách biến ``cấu hình cửa sổ'' khỏi biến ``mô hình'' (Mục~\ref{sec:finetune}).
+
+\begin{table}[htbp]
+\centering
+\caption{Validation theo seed và cấu hình cửa sổ: EM / F1 ở $\tau = 0$ và ở $\tau$ chọn trên dev}
+\label{tab:seeds}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabular}{@{}l r l r r@{}}
+\toprule
+\textbf{Mô hình} & \textbf{Seed} & \textbf{Cửa sổ} & \textbf{$\tau = 0$} & \textbf{$\tau$ dev} \\
+\midrule
+\tabinput{generated/tab_seeds.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Với XLM-R, hai seed cho F1 ở ngưỡng hiệu chỉnh \SeedXlmrSTunedFone{} và \SeedXlmrSThirteenTunedFone; ở cửa sổ
+256/96, \SeedXlmrTwoFiftySixTunedFone. Với PhoBERT, hai seed cho \SeedPhobertSTunedFone{} và
+\SeedPhobertSThirteenTunedFone. Chênh lệch giữa hai họ mô hình cần được đọc so với độ dao động này.
 
 \subsection{Phân tích định tính}
 \label{sec:qualitative}
@@ -421,8 +578,10 @@ biên của PhoBERT phần lớn là thừa chữ ở đầu span, và một ph�
 \end{figure}
 
 XLM-R hội tụ đều: loss giảm và F1 dev tăng qua cả ba epoch; bộ chẩn đoán đường cong đánh dấu ``vẫn đang
-cải thiện'', nên thêm epoch có thể còn tăng điểm. PhoBERT học nhanh hơn ở epoch 1 (F1 dev cao hơn XLM-R ở cùng epoch, Bảng~\ref{tab:curves}), rồi loss toàn phần tăng từ epoch 2 do nguyên nhân đã phân tích ở
-Mục~\ref{sec:res-rq3}. Một epoch PhoBERT mất khoảng 22 phút, một epoch XLM-R khoảng 35 phút trên Apple M5 Pro
+cải thiện'', nên thêm epoch có thể còn tăng điểm. PhoBERT học nhanh hơn ở epoch 1 (F1 dev cao hơn XLM-R ở
+cùng epoch, Bảng~\ref{tab:curves}). Sau đó, ở lr $3\cdot10^{-5}$ loss toàn phần tăng trong epoch 2; ở lr
+$2\cdot10^{-5}$ nó giảm ở epoch 2 rồi tăng ở epoch 3 --- cả hai là sự kiện sụp đổ ở lớp ``không có đáp án''
+phân tích ở Mục~\ref{sec:res-rq3}. Ở lr $10^{-5}$, loss giảm đều cả ba epoch. Một epoch PhoBERT mất khoảng 22 phút, một epoch XLM-R khoảng 35 phút trên Apple M5 Pro
 --- PhoBERT nhanh hơn vì chuỗi ngắn hơn, dù có nhiều cửa sổ hơn. Tổng thời gian huấn luyện: XLM-R
 \XlmrTrainMin{} phút, mỗi lần chạy PhoBERT khoảng \PhobertRunATrainMin{} phút.
 

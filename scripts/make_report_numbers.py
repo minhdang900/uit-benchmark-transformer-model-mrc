@@ -338,6 +338,9 @@ def main() -> None:
         t = get(thr, "systems", key)
         z, v = get(t, "validation_at_tau0") or {}, get(t, "validation_at_tau") or {}
         m(f"Thr{P}Tau", get(t, "tau"))
+        m(f"Thr{P}DevFone", get(t, "dev_at_tau", "F1"))
+        m(f"Thr{P}DevFoneZero", get(t, "dev_at_tau0", "F1"))
+        m(f"Thr{P}DevAbsRate", get(t, "dev_at_tau", "abstain_rate"))
         for k, w in (("EM", "EM"), ("F1", "Fone"), ("EM_answerable", "AnsEM"),
                      ("EM_impossible", "ImpEM"), ("abstain_rate", "AbsRate")):
             m(f"Thr{P}{w}Zero", z.get(k))
@@ -348,6 +351,17 @@ def main() -> None:
                             f"{vi(v['EM'])} / {vi(v['F1'])} & {vi(v['EM_answerable'])} & "
                             f"{vi(v['EM_impossible'])} & {vi(v['abstain_rate'])} \\\\")
     table("tab_threshold.tex", "\n".join(thr_rows) + "\n")
+    dev_rows = []
+    for key, label in [("xlmr", "XLM-R-base, seed 42"), ("xlmr_seed13", "XLM-R-base, seed 13")] + [
+            (r, RUN_LABEL[r]) for r in ALL_PHOBERT_RUNS] + [("phobert_seed13", "PhoBERT, lr $3\\cdot10^{-5}$, seed 13")]:
+        t = get(thr, "systems", key)
+        if t:
+            c = load(f"training_curve_{key}.json") or {}
+            st = get(c, "stability", "stable")
+            flag = "ổn định" if st else ("sụp đổ" if key.startswith("phobert") else "---")
+            dev_rows.append(f"{label} & {flag} & {vi(t['dev_at_tau0']['F1'])} & {vi(t['dev_at_tau0']['abstain_rate'])} & "
+                            f"{vi(t['tau'])} & {vi(t['dev_at_tau']['F1'])} & {vi(t['dev_at_tau']['abstain_rate'])} \\\\")
+    table("tab_dev_runs.tex", "\n".join(dev_rows) + "\n")
     # Tên gọn cho hệ thống chính: \ThrPhobert... trỏ về lần chạy PhoBERT chính.
     tp = get(thr, "systems", PHOBERT) or {}
     for k, w in (("EM", "EM"), ("F1", "Fone"), ("EM_answerable", "AnsEM"),

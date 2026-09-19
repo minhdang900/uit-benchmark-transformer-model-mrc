@@ -12,25 +12,29 @@ như sau.
 
 \begin{enumerate}
   \item \textbf{RQ1 --- ranh giới từ.} Giả thuyết ghi trước (PhoBERT yếu hơn vì lỗi tách từ) \emph{sai}
-        ở dạng tổng quát: PhoBERT hơn XLM-R \PairAnsDiff{} điểm EM trên câu có đáp án, và tỉ lệ lỗi biên
+        ở dạng tổng quát: trên những câu có đáp án mà cả hai cùng trả lời, PhoBERT hơn XLM-R \BothGap{} điểm EM,
+        và tỉ lệ lỗi biên
         khi đã trả lời của hai mô hình như nhau (\PhobertBoundaryRate\% và \XlmrBoundaryRate\%). Cơ chế
         ``không trả lời được nửa từ'' có thật, nhìn thấy được qua dấu hiệu F1 cao/EM thấp, nhưng chỉ tác
         động lên \SegMisPct\% câu hỏi và bị chặn trên ở \SegCeilingLoss{} điểm EM; phần lớn các câu đó là lỗi
         của bộ tách từ \code{pyvi}, không phải ranh giới từ ghép thật.
   \item \textbf{RQ2 --- độ dài.} Không có suy giảm theo độ dài ngữ cảnh ở cả hai họ mô hình; độ dài đáp án
         làm giảm EM (không giảm F1) như nhau ở cả hai.
-  \item \textbf{RQ3 --- câu không có đáp án.} Không mô hình nào thật sự nhận ra câu không có đáp án. XLM-R từ
-        chối đúng tần suất nhưng sai đối tượng (precision \XlmrAbsPrec\%); PhoBERT gần như không từ chối
-        (\PhobertAbsRate\%), vì loss trên lớp ``không có đáp án'' của nó tăng khoảng 7 lần sau epoch 1 trong
-        khi loss trên vị trí đáp án vẫn giảm --- lặp lại ở hai tốc độ học. Cả hai thường trả về đúng cụm
-        gây nhiễu mà người gán nhãn đặt vào câu hỏi.
+  \item \textbf{RQ3 --- câu không có đáp án.} Ở $\tau = 0$, XLM-R từ chối đúng tần suất nhưng sai đối tượng
+        (precision \XlmrAbsPrec\%), còn PhoBERT gần như không từ chối (\PhobertAbsRate\%). Phía PhoBERT, nguyên
+        nhân là một sự kiện bất ổn khi fine-tune ở tốc độ học cao --- tái hiện được từ checkpoint epoch 1, đi
+        kèm chuẩn gradient vọt lên, và không xảy ra ở tốc độ học $10^{-5}$ --- làm điểm ``không có đáp án'' dịch
+        xuống chứ không xoá khả năng phân biệt: ngưỡng chọn trên dev khôi phục nó. Dù vậy, cả hai mô hình
+        thường trả về đúng cụm gây nhiễu mà người gán nhãn đặt vào câu hỏi.
   \item \textbf{RQ4 --- baseline.} Transformer vượt TF-IDF ở mọi nhóm; TF-IDF thậm chí không vượt được hệ
         thống luôn từ chối về EM tổng.
 \end{enumerate}
 
-\paragraph{Điều rút ra.} Điểm tổng của PhoBERT và XLM-R không khác nhau có ý nghĩa thống kê, nhưng hai mô
-hình có hai hồ sơ kỹ năng ngược nhau: một mô hình đọc giỏi mà không biết từ chối, một mô hình biết từ chối
-nhưng từ chối nhầm chỗ. Chọn mô hình dựa trên điểm tổng sẽ bỏ qua điều quan trọng nhất cho triển khai. Với
+\paragraph{Điều rút ra.} Ở ngưỡng mặc định, PhoBERT và XLM-R trông như ``bằng nhau với hai hồ sơ kỹ năng
+ngược nhau''. Kết luận đó sai: nó là hệ quả của việc so hai mô hình ở hai điểm làm việc khác nhau. Khi mỗi
+mô hình dùng ngưỡng chọn trên dev, PhoBERT tốt hơn \PairTDiff{} điểm EM trên cả hai loại câu; trên những câu
+cả hai cùng trả lời, khoảng cách ``đọc'' thuần chỉ khoảng \BothGap{} điểm. Bài học phương pháp: với bài toán
+có câu không có đáp án, so sánh ở $\tau$ cố định là so sánh hiệu chỉnh, không phải năng lực. Với
 câu hỏi ban đầu của môn học --- \emph{đặc điểm dữ liệu quyết định phương pháp} --- câu trả lời của đồ án là:
 trên UIT-ViQuAD~2.0, đặc điểm quyết định không phải là tách từ mà là \emph{một phần ba câu hỏi không có đáp
 án}; và việc một mô hình xử lý phần đó ra sao phải được đo riêng.
@@ -46,23 +50,27 @@ không kiểm định, bảng kết quả trên bộ đó sẽ xếp ``không l�
 Các giới hạn dưới đây quyết định phạm vi mà mọi kết luận ở trên có giá trị.
 
 \begin{enumerate}
-  \item \textbf{Một seed huấn luyện cho mỗi mô hình.} Kiểm định McNemar và bootstrap đo độ bất định do
-        \emph{chọn câu hỏi}, không đo độ bất định do \emph{seed}. Với mô hình cỡ base trên SQuAD, chênh
-        lệch giữa các seed có thể lên tới một vài điểm EM; một chênh lệch nhỏ hơn cỡ đó không nên được
-        hiểu là khác biệt giữa hai \emph{kiến trúc}.
-  \item \textbf{Không tìm kiếm siêu tham số.} Cả hai mô hình dùng cùng một cấu hình phổ biến; mỗi mô
-        hình có thể đạt điểm cao hơn ở cấu hình riêng của nó. So sánh ở đây là ``cùng điều kiện'', không
-        phải ``mỗi bên ở trạng thái tốt nhất''.
+  \item \textbf{Chỉ hai seed cho mỗi mô hình.} Kiểm định McNemar và bootstrap đo độ bất định do \emph{chọn
+        câu hỏi}; hai seed (Mục~\ref{sec:seeds}) chỉ cho một ước lượng thô về độ bất định do \emph{huấn
+        luyện}. MPS không cho kết quả tái lập từng bit, nên chạy lại cùng seed cũng có thể lệch nhẹ.
+  \item \textbf{Không tìm kiếm siêu tham số.} Ngoài ba tốc độ học của PhoBERT (chạy để chẩn đoán, chọn
+        trên dev), cả hai mô hình dùng một cấu hình phổ biến và chỉ 3 epoch; cả XLM-R lẫn PhoBERT
+        lr $10^{-5}$ còn đang cải thiện ở epoch cuối. So sánh ở đây là ``cùng điều kiện'', không phải ``mỗi
+        bên ở trạng thái tốt nhất''. Epoch và lần chạy được chọn trên dev; dev 500 câu dùng khi huấn luyện
+        không phân biệt được chênh lệch dưới khoảng 2 điểm F1.
   \item \textbf{Bộ tách từ khác với lúc tiền huấn luyện.} PhoBERT được tiền huấn luyện trên văn bản tách
         bởi RDRSegmenter; đồ án dùng \code{pyvi} để không phụ thuộc Java. Lệch phân phối này có thể làm
         PhoBERT kém hơn khả năng thật của nó, và Mục~\ref{sec:alignment-res} cho thấy \code{pyvi} có những
         lỗi hệ thống (dính dấu chấm, nối nhầm âm tiết).
-  \item \textbf{Validation đóng vai tập test.} Test chính thức ẩn nhãn nên không chấm được. Validation
-        không được dùng cho bất kỳ quyết định nào trước khi chấm (Mục~\ref{sec:protocol}), nhưng kết quả
-        không so sánh trực tiếp được với các con số công bố trên test của cuộc thi VLSP.
-  \item \textbf{Giới hạn vị trí khác nhau là một phần của so sánh.} PhoBERT dùng 256 token, XLM-R 384
-        token. Đây là ràng buộc kiến trúc chứ không phải lựa chọn, nhưng nó có nghĩa là ``PhoBERT vs XLM-R''
-        không cô lập riêng biến tokenization.
+  \item \textbf{Validation đóng vai tập test.} Private test của VLSP~2021 ẩn nhãn nên không chấm được.
+        Validation chính là public test của cuộc thi và không được dùng cho bất kỳ quyết định nào --- kể cả
+        chọn $\tau$ --- trước khi chấm (Mục~\ref{sec:protocol}). Nó so sánh được với các con số public test đã
+        công bố, với lưu ý rằng các đội thi được nộp nhiều lần lên chính tập này.
+  \item \textbf{Cấu hình cửa sổ khác nhau.} 256 token là ràng buộc của PhoBERT; 384 token cho XLM-R là lựa
+        chọn. Lần chạy XLM-R ở 256/96 (Mục~\ref{sec:seeds}) đo ảnh hưởng của lựa chọn này.
+  \item \textbf{Nguyên nhân sụp đổ chỉ được xác định đến mức ``đủ để khắc phục''.} Bằng chứng ủng hộ bất ổn
+        tối ưu hoá, nhưng vì sao nó chỉ xảy ra với PhoBERT, và liệu có xảy ra trên GPU CUDA hay không, chưa
+        được kiểm tra.
   \item \textbf{Bộ stress-test không dùng được làm thước đo} (Mục~\ref{sec:audit}). Các nhóm hiện tượng
         E2--E5 vì vậy không có bằng chứng định lượng đáng tin cậy trong đồ án này; phân tích theo độ dài và
         theo loại lỗi trên validation chỉ thay thế được một phần.
@@ -77,18 +85,14 @@ Các giới hạn dưới đây quyết định phạm vi mà mọi kết luận
 \label{sec:future}
 
 \begin{enumerate}
-  \item \textbf{Hiệu chỉnh ngưỡng từ chối trên dev.} Ngưỡng $\tau$ trong công thức~(\ref{eq:null}) được cố định
-        bằng 0. Chọn $\tau$ riêng cho từng mô hình trên tập dev (không phải validation) là cách rẻ nhất để
-        thử khôi phục khả năng từ chối của PhoBERT; kết quả cần được chấm lại trên validation.
-  \item \textbf{Tìm nguyên nhân gốc của việc PhoBERT bỏ lớp ``không có đáp án''}: nhiều seed, ghi lại chuẩn
-        gradient theo loại nhãn, thử trọng số lớp, thử độ dài 256 cho XLM-R để tách biến ``độ dài cửa sổ''
-        khỏi biến ``mô hình''.
+  \item \textbf{Tìm nguyên nhân gốc của sự kiện sụp đổ}: vì sao chỉ PhoBERT, và liệu có lặp lại trên CUDA;
+        thử warmup dài hơn hoặc cắt gradient chặt hơn thay vì hạ tốc độ học; huấn luyện lr $10^{-5}$ thêm epoch.
   \item \textbf{Bộ tách từ.} Chạy lại PhoBERT với RDRSegmenter (VnCoreNLP) --- bộ tách từ dùng lúc tiền
         huấn luyện --- để đo phần hiệu năng bị mất do lệch bộ tách từ; và sửa luật dính dấu chấm của
         \code{pyvi}, nguyên nhân của \MisPeriod{} trong \SegMis{} câu lệch biên.
   \item \textbf{Xây lại bộ stress-test} theo quy trình có kiểm định tự động từ đầu: đáp án phải nằm trong
         ngữ cảnh (báo lỗi thay vì trả về 0), mỗi nhóm có đủ câu có đáp án làm đối chứng, và câu hỏi do người
         viết thay vì sinh từ khuôn mẫu; đo độ đồng thuận giữa người gán.
-  \item \textbf{Nhiều seed} cho mọi mô hình để tách độ bất định do huấn luyện khỏi độ bất định do chọn câu
-        hỏi.
+  \item \textbf{Thêm seed} (từ 3 trở lên) cho mọi mô hình, để ước lượng độ bất định do huấn luyện đáng tin
+        cậy hơn hai seed hiện có.
 \end{enumerate}
