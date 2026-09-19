@@ -44,6 +44,8 @@ def main() -> None:
     examples = load_squad_file("data/raw/viquad2_validation.json")
     refs = {e.qid: list(e.answers) for e in examples}
     by_qid = {e.qid: e for e in examples}
+    # Bài viết của mỗi câu — cho bootstrap theo BÀI (câu cùng bài không độc lập).
+    article = {e.qid: e.title for e in examples}
     seg = json.loads(Path("results/segmentation_validation.json").read_text())["items"]
 
     preds = {}
@@ -97,11 +99,13 @@ def main() -> None:
     print("PhoBERT chính (theo F1 dev):", P)
     if {"xlmr", P} <= set(preds):
         report["paired_phobert_vs_xlmr"] = {
-            "all": paired_comparison(em[P], em["xlmr"]),
+            "all": paired_comparison(em[P], em["xlmr"], groups=article),
             "answerable": paired_comparison({q: em[P][q] for q in answerable},
-                                            {q: em["xlmr"][q] for q in answerable}),
+                                            {q: em["xlmr"][q] for q in answerable},
+                                            groups=article),
             "impossible": paired_comparison({q: em[P][q] for q in refs if not refs[q]},
-                                            {q: em["xlmr"][q] for q in refs if not refs[q]}),
+                                            {q: em["xlmr"][q] for q in refs if not refs[q]},
+                                            groups=article),
             "misaligned": paired_comparison({q: em[P][q] for q in misaligned},
                                             {q: em["xlmr"][q] for q in misaligned}),
         }

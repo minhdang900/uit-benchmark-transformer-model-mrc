@@ -145,10 +145,15 @@ def mcnemar_exact(b: int, c: int) -> float:
 
 
 def paired_comparison(em_a: Mapping[str, float], em_b: Mapping[str, float],
-                      n_boot: int = 2000, seed: int = 42) -> dict:
+                      n_boot: int = 2000, seed: int = 42,
+                      groups: Mapping[str, str] | None = None) -> dict:
     """So sánh cặp hai model trên cùng tập câu: bảng 2×2, McNemar, bootstrap CI.
 
     ``em_a[qid]`` là EM (0/1) của model A trên câu ``qid``.
+
+    ``groups[qid]`` (tuỳ chọn) là bài viết chứa câu hỏi. Câu trong cùng một bài
+    không độc lập — cùng chủ đề, cùng văn phong — nên bootstrap theo câu cho CI hẹp
+    quá mức. Khi có ``groups``, trả thêm ``ci95_article``: lấy lại mẫu cả BÀI.
     """
     qids = sorted(set(em_a) & set(em_b))
     both = only_a = only_b = neither = 0
@@ -166,10 +171,26 @@ def paired_comparison(em_a: Mapping[str, float], em_b: Mapping[str, float],
     boots = sorted(sum(diffs[rng.randrange(n)] for _ in range(n)) / n for _ in range(n_boot)) if n else []
     lo = boots[int(0.025 * n_boot)] if boots else 0.0
     hi = boots[int(0.975 * n_boot) - 1] if boots else 0.0
-    return {
+    out = {
         "n": n,
         "both_correct": both, "only_a": only_a, "only_b": only_b, "neither": neither,
         "em_diff": round(100 * sum(diffs) / n, 2) if n else 0.0,
         "ci95": [round(100 * lo, 2), round(100 * hi, 2)],
         "mcnemar_p": mcnemar_exact(only_a, only_b),
     }
+    if groups is not None and n:
+        by_group: dict[str, list[float]] = {}
+        for q, d in zip(qids, diffs):
+            by_group.setdefault(groups[q], []).append(d)
+        cells = [(sum(v), len(v)) for v in by_group.values()]
+        k = len(cells)
+        rng = random.Random(seed)
+        gboots = []
+        for _ in range(n_boot):
+            pick = [cells[rng.randrange(k)] for _ in range(k)]
+            gboots.append(sum(s for s, _ in pick) / sum(c for _, c in pick))
+        gboots.sort()
+        out["ci95_article"] = [round(100 * gboots[int(0.025 * n_boot)], 2),
+                               round(100 * gboots[int(0.975 * n_boot) - 1], 2)]
+        out["n_articles"] = k
+    return out

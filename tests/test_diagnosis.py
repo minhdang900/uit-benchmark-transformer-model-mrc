@@ -96,3 +96,21 @@ def test_load_stress_test_skips_flat_records(tmp_path):
     ex, meta, stats = load_stress_test(tmp_path)
     assert len(ex) == 5 and ex[0].answer_start == 5  # offset sai được sửa bằng find
     assert stats["E1"]["flat_records"] == 1
+
+
+def test_article_bootstrap_is_wider_when_gains_cluster_in_few_articles():
+    # 20 bài × 10 câu; A hơn B ở MỌI câu của 4 bài, hoà ở phần còn lại.
+    # Theo câu thì trông chắc chắn; theo bài thì chỉ 4/20 bài đóng góp.
+    a = {f"{g}-{i}": 1.0 for g in range(20) for i in range(10)}
+    b = {f"{g}-{i}": float(g >= 4) for g in range(20) for i in range(10)}
+    groups = {q: q.split("-")[0] for q in a}
+    r = paired_comparison(a, b, groups=groups)
+    w_q = r["ci95"][1] - r["ci95"][0]
+    w_g = r["ci95_article"][1] - r["ci95_article"][0]
+    assert w_g > 1.5 * w_q
+    assert r["n_articles"] == 20
+
+
+def test_article_bootstrap_absent_without_groups():
+    r = paired_comparison({"1": 1.0}, {"1": 0.0})
+    assert "ci95_article" not in r
