@@ -1,0 +1,17 @@
+{
+  "source": "Nguyen et al. (2022), VLSP 2021 - ViMRC Challenge: Vietnamese Machine Reading Comprehension, arXiv:2203.11400v3 (Tables 4, 6, 7, 8; Sections 5.3-5.4)",
+  "note": "Our 'validation' split is the VLSP 2021 public test (557 passages, 19 articles). Public-test leaderboard allowed up to 10 submissions/day, so top public scores are optimistic. Private-test labels are not released.",
+  "public_test": {
+    "mbert_baseline": {"F1": 63.03, "EM": 53.55, "setup": "mBERT single, lr 3e-5, batch 32, 2 epochs, 384/128"},
+    "best_f1": {"team": "NLP_HUST", "F1": 84.24},
+    "best_em": {"team": "NTQ", "EM": 77.99},
+    "mean_of_entries": {"F1": 70.70, "EM": 61.13, "n_entries": 551},
+    "human": {"F1": 87.34, "EM": 82.85, "n_samples": 100}
+  },
+  "private_test": {
+    "mbert_baseline": {"F1": 60.34, "EM": 49.35},
+    "winner": {"team": "vc-tus", "model": "Retrospective Reader + XLM-R (ensemble)", "F1": 77.24, "EM": 66.14},
+    "phobert_large_single": {"team": "HN-BERT", "model": "PhoBERT_Large+R3F+CS (single)", "F1": 70.10, "EM": 56.47},
+    "human": {"F1": 81.82, "EM": 75.50}
+  }
+}

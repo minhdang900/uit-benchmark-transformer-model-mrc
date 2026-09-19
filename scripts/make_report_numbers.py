@@ -424,6 +424,16 @@ def main() -> None:
             for w in ("High", "Low")) + " \\\\")
     table("tab_probe_resume.tex", "\n".join(lr_rows) + "\n")
 
+    # ── kết quả đã công bố trên cùng tập (VLSP 2021 public test = validation) ──
+    pub = load("published_viquad2.json") or {}
+    pt_ = get(pub, "public_test") or {}
+    m("PubBaseFone", get(pt_, "mbert_baseline", "F1")); m("PubBaseEM", get(pt_, "mbert_baseline", "EM"))
+    m("PubBestFone", get(pt_, "best_f1", "F1")); m("PubBestEM", get(pt_, "best_em", "EM"))
+    m("PubMeanFone", get(pt_, "mean_of_entries", "F1")); m("PubMeanEM", get(pt_, "mean_of_entries", "EM"))
+    m("PubHumanFone", get(pt_, "human", "F1")); m("PubHumanEM", get(pt_, "human", "EM"))
+    m("PubPrivPhobertLargeFone", get(pub, "private_test", "phobert_large_single", "F1"))
+    m("PubPrivWinnerFone", get(pub, "private_test", "winner", "F1"))
+
     # ── seed thứ hai và cấu hình cửa sổ khớp ─────────────────────────────────
     seed_rows = []
     for key, label, seed, win in (("xlmr", "XLM-R-base", 42, "384/128"), ("xlmr_seed13", "XLM-R-base", 13, "384/128"),
