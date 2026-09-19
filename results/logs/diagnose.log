@@ -1,0 +1,90 @@
+models: ['abstain', 'baseline', 'xlmr', 'phobert', 'phobert_lr2e5', 'phobert_stable', 'xlmr_seed13', 'phobert_seed13', 'xlmr_256']
+PhoBERT chính (theo F1 dev): phobert
+abstain abstain 100.0 taxonomy {'false_abstain': 2653, 'false_answer': 0, 'boundary_superset': 0, 'boundary_subset': 0, 'boundary_overlap': 0, 'wrong_span': 0}
+   aligned {'EM': 0.0, 'F1': 0.0, 'count': 2620} misaligned {'EM': 0.0, 'F1': 0.0, 'count': 33}
+baseline abstain 0.0 taxonomy {'false_abstain': 0, 'false_answer': 1161, 'boundary_superset': 1938, 'boundary_subset': 2, 'boundary_overlap': 457, 'wrong_span': 216}
+   aligned {'EM': 1.53, 'F1': 31.86, 'count': 2620} misaligned {'EM': 0.0, 'F1': 25.91, 'count': 33}
+xlmr abstain 32.96 taxonomy {'false_abstain': 635, 'false_answer': 539, 'boundary_superset': 258, 'boundary_subset': 181, 'boundary_overlap': 103, 'wrong_span': 96}
+   aligned {'EM': 52.1, 'F1': 64.82, 'count': 2620} misaligned {'EM': 45.45, 'F1': 56.12, 'count': 33}
+phobert abstain 5.66 taxonomy {'false_abstain': 32, 'false_answer': 977, 'boundary_superset': 354, 'boundary_subset': 223, 'boundary_overlap': 147, 'wrong_span': 122}
+   aligned {'EM': 67.37, 'F1': 83.93, 'count': 2620} misaligned {'EM': 30.3, 'F1': 70.96, 'count': 33}
+phobert_lr2e5 abstain 5.43 taxonomy {'false_abstain': 47, 'false_answer': 1001, 'boundary_superset': 386, 'boundary_subset': 215, 'boundary_overlap': 143, 'wrong_span': 132}
+   aligned {'EM': 65.65, 'F1': 82.0, 'count': 2620} misaligned {'EM': 30.3, 'F1': 70.03, 'count': 33}
+phobert_stable abstain 23.75 taxonomy {'false_abstain': 378, 'false_answer': 633, 'boundary_superset': 331, 'boundary_subset': 209, 'boundary_overlap': 108, 'wrong_span': 92}
+   aligned {'EM': 58.24, 'F1': 72.85, 'count': 2620} misaligned {'EM': 27.27, 'F1': 56.03, 'count': 33}
+xlmr_seed13 abstain 30.81 taxonomy {'false_abstain': 590, 'false_answer': 576, 'boundary_superset': 244, 'boundary_subset': 175, 'boundary_overlap': 102, 'wrong_span': 81}
+   aligned {'EM': 55.11, 'F1': 67.4, 'count': 2620} misaligned {'EM': 51.52, 'F1': 63.17, 'count': 33}
+phobert_seed13 abstain 26.38 taxonomy {'false_abstain': 365, 'false_answer': 520, 'boundary_superset': 309, 'boundary_subset': 187, 'boundary_overlap': 106, 'wrong_span': 79}
+   aligned {'EM': 60.99, 'F1': 75.11, 'count': 2620} misaligned {'EM': 27.27, 'F1': 58.98, 'count': 33}
+xlmr_256 abstain 33.51 taxonomy {'false_abstain': 618, 'false_answer': 501, 'boundary_superset': 257, 'boundary_subset': 170, 'boundary_overlap': 93, 'wrong_span': 98}
+   aligned {'EM': 53.51, 'F1': 65.84, 'count': 2620} misaligned {'EM': 45.45, 'F1': 57.58, 'count': 33}
+{
+ "all": {
+  "n": 3814,
+  "both_correct": 1386,
+  "only_a": 573,
+  "only_b": 616,
+  "neither": 1239,
+  "em_diff": -1.13,
+  "ci95": [
+   -2.88,
+   0.6
+  ],
+  "mcnemar_p": 0.22319650917417208,
+  "ci95_article": [
+   -3.53,
+   0.91
+  ],
+  "n_articles": 19
+ },
+ "answerable": {
+  "n": 2653,
+  "both_correct": 1231,
+  "only_a": 544,
+  "only_b": 149,
+  "neither": 729,
+  "em_diff": 14.89,
+  "ci95": [
+   13.08,
+   16.77
+  ],
+  "mcnemar_p": 1.1210589076876446e-53,
+  "ci95_article": [
+   11.82,
+   17.6
+  ],
+  "n_articles": 19
+ },
+ "impossible": {
+  "n": 1161,
+  "both_correct": 155,
+  "only_a": 29,
+  "only_b": 467,
+  "neither": 510,
+  "em_diff": -37.73,
+  "ci95": [
+   -40.83,
+   -34.63
+  ],
+  "mcnemar_p": 7.547306548493351e-103,
+  "ci95_article": [
+   -43.81,
+   -32.28
+  ],
+  "n_articles": 18
+ },
+ "misaligned": {
+  "n": 33,
+  "both_correct": 8,
+  "only_a": 2,
+  "only_b": 7,
+  "neither": 16,
+  "em_diff": -15.15,
+  "ci95": [
+   -33.33,
+   3.03
+  ],
+  "mcnemar_p": 0.1796875
+ }
+}
+-> results/diagnosis_validation.json

@@ -1,0 +1,49 @@
+xlmr tau -0.47253 val@0 {'EM': 52.4908, 'F1': 61.3225, 'EM_answerable': 52.0166, 'EM_impossible': 53.5745, 'abstain_rate': 32.9575, 'n': 3814} val@tau {'EM': 52.4908, 'F1': 61.9899, 'EM_answerable': 54.6174, 'EM_impossible': 47.6314, 'abstain_rate': 27.7661, 'n': 3814}
+xlmr_seed13 tau -0.618898 val@0 {'EM': 53.6445, 'F1': 62.1844, 'EM_answerable': 55.0697, 'EM_impossible': 50.3876, 'abstain_rate': 30.8076, 'n': 3814} val@tau {'EM': 53.2512, 'F1': 62.6776, 'EM_answerable': 57.859, 'EM_impossible': 42.7218, 'abstain_rate': 24.279, 'n': 3814}
+xlmr_256 tau -1.29837 val@0 {'EM': 54.4573, 'F1': 63.0289, 'EM_answerable': 53.4112, 'EM_impossible': 56.8475, 'abstain_rate': 33.5081, 'n': 3814} val@tau {'EM': 53.4085, 'F1': 63.3608, 'EM_answerable': 57.7836, 'EM_impossible': 43.4109, 'abstain_rate': 22.9156, 'n': 3814}
+phobert tau 7.864129 val@0 {'EM': 51.3634, 'F1': 63.0967, 'EM_answerable': 66.9054, 'EM_impossible': 15.8484, 'abstain_rate': 5.6633, 'n': 3814} val@tau {'EM': 58.3115, 'F1': 68.5352, 'EM_answerable': 60.5729, 'EM_impossible': 53.1438, 'abstain_rate': 24.9607, 'n': 3814}
+phobert_seed13 tau 1.029035 val@0 {'EM': 58.9407, 'F1': 68.9117, 'EM_answerable': 60.5729, 'EM_impossible': 55.211, 'abstain_rate': 26.3765, 'n': 3814} val@tau {'EM': 59.2554, 'F1': 68.4871, 'EM_answerable': 57.7083, 'EM_impossible': 62.7907, 'abstain_rate': 32.1447, 'n': 3814}
+phobert_lr2e5 tau 8.027758 val@0 {'EM': 49.5543, 'F1': 61.1286, 'EM_answerable': 65.2092, 'EM_impossible': 13.7812, 'abstain_rate': 5.4274, 'n': 3814} val@tau {'EM': 56.2664, 'F1': 65.3661, 'EM_answerable': 57.2182, 'EM_impossible': 54.0913, 'abstain_rate': 29.0509, 'n': 3814}
+phobert_stable tau -0.385784 val@0 {'EM': 54.0902, 'F1': 64.3752, 'EM_answerable': 57.859, 'EM_impossible': 45.478, 'abstain_rate': 23.7546, 'n': 3814} val@tau {'EM': 53.8542, 'F1': 64.6853, 'EM_answerable': 59.2537, 'EM_impossible': 41.5159, 'abstain_rate': 20.3723, 'n': 3814}
+xlmr xlmr_seed13 tau0 {'n_both_answered': 1893, 'xlmr': 70.3645, 'xlmr_seed13': 71.8965}
+xlmr xlmr_seed13 tuned {'n_both_answered': 2050, 'xlmr': 68.9756, 'xlmr_seed13': 70.439}
+xlmr xlmr_256 tau0 {'n_both_answered': 1854, 'xlmr': 69.795, 'xlmr_256': 70.9817}
+xlmr xlmr_256 tuned {'n_both_answered': 2068, 'xlmr': 68.0851, 'xlmr_256': 69.1973}
+xlmr phobert tau0 {'n_both_answered': 2011, 'xlmr': 68.4237, 'phobert': 72.551}
+xlmr phobert tuned {'n_both_answered': 1971, 'xlmr': 68.0873, 'phobert': 72.1461}
+xlmr phobert_seed13 tau0 {'n_both_answered': 1894, 'xlmr': 69.6938, 'phobert_seed13': 73.0201}
+xlmr phobert_seed13 tuned {'n_both_answered': 1916, 'xlmr': 69.2067, 'phobert_seed13': 72.9123}
+xlmr phobert_lr2e5 tau0 {'n_both_answered': 2005, 'xlmr': 68.3791, 'phobert_lr2e5': 70.5736}
+xlmr phobert_lr2e5 tuned {'n_both_answered': 1888, 'xlmr': 69.2267, 'phobert_lr2e5': 71.7161}
+xlmr phobert_stable tau0 {'n_both_answered': 1878, 'xlmr': 70.0213, 'phobert_stable': 69.9148}
+xlmr phobert_stable tuned {'n_both_answered': 2030, 'xlmr': 68.8177, 'phobert_stable': 68.7192}
+xlmr_seed13 xlmr_256 tau0 {'n_both_answered': 1875, 'xlmr_seed13': 72.32, 'xlmr_256': 71.84}
+xlmr_seed13 xlmr_256 tuned {'n_both_answered': 2123, 'xlmr_seed13': 69.6656, 'xlmr_256': 69.4772}
+xlmr_seed13 phobert tau0 {'n_both_answered': 2056, 'xlmr_seed13': 70.8171, 'phobert': 73.0545}
+xlmr_seed13 phobert tuned {'n_both_answered': 2038, 'xlmr_seed13': 69.4308, 'phobert': 72.5221}
+xlmr_seed13 phobert_seed13 tau0 {'n_both_answered': 1930, 'xlmr_seed13': 71.5544, 'phobert_seed13': 73.6269}
+xlmr_seed13 phobert_seed13 tuned {'n_both_answered': 1960, 'xlmr_seed13': 70.5612, 'phobert_seed13': 73.3673}
+xlmr_seed13 phobert_lr2e5 tau0 {'n_both_answered': 2045, 'xlmr_seed13': 70.8068, 'phobert_lr2e5': 71.5403}
+xlmr_seed13 phobert_lr2e5 tuned {'n_both_answered': 1940, 'xlmr_seed13': 70.8247, 'phobert_lr2e5': 72.5258}
+xlmr_seed13 phobert_stable tau0 {'n_both_answered': 1914, 'xlmr_seed13': 72.466, 'phobert_stable': 70.6374}
+xlmr_seed13 phobert_stable tuned {'n_both_answered': 2085, 'xlmr_seed13': 70.5036, 'phobert_stable': 69.4484}
+xlmr_256 phobert tau0 {'n_both_answered': 2027, 'xlmr_256': 69.6596, 'phobert': 72.521}
+xlmr_256 phobert tuned {'n_both_answered': 2093, 'xlmr_256': 68.0363, 'phobert': 71.2852}
+xlmr_256 phobert_seed13 tau0 {'n_both_answered': 1914, 'xlmr_256': 70.5329, 'phobert_seed13': 72.7795}
+xlmr_256 phobert_seed13 tuned {'n_both_answered': 2004, 'xlmr_256': 69.511, 'phobert_seed13': 72.1058}
+xlmr_256 phobert_lr2e5 tau0 {'n_both_answered': 2018, 'xlmr_256': 69.6729, 'phobert_lr2e5': 71.0605}
+xlmr_256 phobert_lr2e5 tuned {'n_both_answered': 1990, 'xlmr_256': 69.3467, 'phobert_lr2e5': 71.3568}
+xlmr_256 phobert_stable tau0 {'n_both_answered': 1892, 'xlmr_256': 71.5645, 'phobert_stable': 70.4017}
+xlmr_256 phobert_stable tuned {'n_both_answered': 2145, 'xlmr_256': 68.9044, 'phobert_stable': 68.0653}
+phobert phobert_seed13 tau0 {'n_both_answered': 2284, 'phobert': 70.9282, 'phobert_seed13': 70.2715}
+phobert phobert_seed13 tuned {'n_both_answered': 2063, 'phobert': 71.6917, 'phobert_seed13': 71.3524}
+phobert phobert_lr2e5 tau0 {'n_both_answered': 2599, 'phobert': 67.8338, 'phobert_lr2e5': 66.4871}
+phobert phobert_lr2e5 tuned {'n_both_answered': 2132, 'phobert': 71.4353, 'phobert_lr2e5': 69.8874}
+phobert phobert_stable tau0 {'n_both_answered': 2270, 'phobert': 71.7181, 'phobert_stable': 67.489}
+phobert phobert_stable tuned {'n_both_answered': 2198, 'phobert': 71.2466, 'phobert_stable': 66.97}
+phobert_seed13 phobert_lr2e5 tau0 {'n_both_answered': 2283, 'phobert_seed13': 70.2146, 'phobert_lr2e5': 69.3824}
+phobert_seed13 phobert_lr2e5 tuned {'n_both_answered': 1977, 'phobert_seed13': 72.5341, 'phobert_lr2e5': 71.1684}
+phobert_seed13 phobert_stable tau0 {'n_both_answered': 2153, 'phobert_seed13': 71.8997, 'phobert_stable': 68.3233}
+phobert_seed13 phobert_stable tuned {'n_both_answered': 2105, 'phobert_seed13': 71.734, 'phobert_stable': 67.981}
+phobert_lr2e5 phobert_stable tau0 {'n_both_answered': 2271, 'phobert_lr2e5': 70.2774, 'phobert_stable': 67.4593}
+phobert_lr2e5 phobert_stable tuned {'n_both_answered': 2118, 'phobert_lr2e5': 70.6799, 'phobert_stable': 67.7526}

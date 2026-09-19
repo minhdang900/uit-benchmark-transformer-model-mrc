@@ -7,13 +7,13 @@
 
 Đồ án khảo sát hai mô hình Transformer tiền huấn luyện cho đọc hiểu trích xuất tiếng Việt --- PhoBERT
 (đơn ngữ, word-level) và XLM-R (đa ngữ, subword) --- được fine-tune trong cùng điều kiện trên
-UIT-ViQuAD~2.0 và chấm một lần trên toàn bộ \NVal{} câu validation. Bốn câu hỏi nghiên cứu được trả lời
-như sau.
+UIT-ViQuAD~2.0, mỗi mô hình hai seed, và chấm một lần trên toàn bộ \NVal{} câu validation. Bốn câu hỏi
+nghiên cứu được trả lời như sau.
 
 \begin{enumerate}
   \item \textbf{RQ1 --- ranh giới từ.} Giả thuyết ghi trước (PhoBERT yếu hơn vì lỗi tách từ) \emph{sai}
-        ở dạng tổng quát: trên những câu có đáp án mà cả hai cùng trả lời, PhoBERT hơn XLM-R \BothGap{} điểm EM,
-        và tỉ lệ lỗi biên
+        ở dạng tổng quát: trên những câu có đáp án mà cả hai cùng trả lời, PhoBERT hơn XLM-R \BothSGap--\BothGap{}
+        điểm EM ở hai seed, và tỉ lệ lỗi biên
         khi đã trả lời của hai mô hình như nhau (\PhobertBoundaryRate\% và \XlmrBoundaryRate\%). Cơ chế
         ``không trả lời được nửa từ'' có thật, nhìn thấy được qua dấu hiệu F1 cao/EM thấp, nhưng chỉ tác
         động lên \SegMisPct\% câu hỏi và bị chặn trên ở \SegCeilingLoss{} điểm EM; phần lớn các câu đó là lỗi
@@ -21,20 +21,20 @@ như sau.
   \item \textbf{RQ2 --- độ dài.} Không có suy giảm theo độ dài ngữ cảnh ở cả hai họ mô hình; độ dài đáp án
         làm giảm EM (không giảm F1) như nhau ở cả hai.
   \item \textbf{RQ3 --- câu không có đáp án.} Ở $\tau = 0$, XLM-R từ chối đúng tần suất nhưng sai đối tượng
-        (precision \XlmrAbsPrec\%), còn PhoBERT gần như không từ chối (\PhobertAbsRate\%). Phía PhoBERT, nguyên
-        nhân là một sự kiện bất ổn khi fine-tune ở tốc độ học cao --- tái hiện được từ checkpoint epoch 1, đi
-        kèm chuẩn gradient vọt lên, và không xảy ra ở tốc độ học $10^{-5}$ --- làm điểm ``không có đáp án'' dịch
-        xuống chứ không xoá khả năng phân biệt: ngưỡng chọn trên dev khôi phục nó. Dù vậy, cả hai mô hình
-        thường trả về đúng cụm gây nhiễu mà người gán nhãn đặt vào câu hỏi.
+        (precision \XlmrAbsPrec\%). PhoBERT seed 42 gần như không từ chối (\PhobertAbsRate\%) vì một sự kiện bất
+        ổn khi fine-tune --- tái hiện được từ checkpoint epoch 1, đi kèm chuẩn gradient vọt lên --- làm điểm
+        ``không có đáp án'' dịch xuống chứ không xoá khả năng phân biệt; ngưỡng chọn trên dev khôi phục nó.
+        PhoBERT seed 13 cùng cấu hình không gặp sự kiện này. Dù vậy, cả hai mô hình thường trả về đúng cụm gây
+        nhiễu mà người gán nhãn đặt vào câu hỏi.
   \item \textbf{RQ4 --- baseline.} Transformer vượt TF-IDF ở mọi nhóm; TF-IDF thậm chí không vượt được hệ
         thống luôn từ chối về EM tổng.
 \end{enumerate}
 
-\paragraph{Điều rút ra.} Ở ngưỡng mặc định, PhoBERT và XLM-R trông như ``bằng nhau với hai hồ sơ kỹ năng
-ngược nhau''. Kết luận đó sai: nó là hệ quả của việc so hai mô hình ở hai điểm làm việc khác nhau. Khi mỗi
-mô hình dùng ngưỡng chọn trên dev, PhoBERT tốt hơn \PairTDiff{} điểm EM trên cả hai loại câu; trên những câu
-cả hai cùng trả lời, khoảng cách ``đọc'' thuần chỉ khoảng \BothGap{} điểm. Bài học phương pháp: với bài toán
-có câu không có đáp án, so sánh ở $\tau$ cố định là so sánh hiệu chỉnh, không phải năng lực. Với
+\paragraph{Điều rút ra.} Với một seed và ngưỡng mặc định, PhoBERT và XLM-R trông như ``bằng nhau với hai hồ
+sơ kỹ năng ngược nhau''. Kết luận đó sai: nó là hệ quả của một lần chạy bị lệch hiệu chỉnh. Seed thứ hai và
+ngưỡng chọn trên dev cho cùng một câu trả lời: PhoBERT tốt hơn \PairTDiff{} và \PairSTDiff{} điểm EM, và khoảng
+cách ``đọc'' thuần là \BothSGap--\BothGap{} điểm. Hai bài học phương pháp: với bài toán có câu không có đáp án,
+so ở $\tau$ cố định là so hiệu chỉnh chứ không phải năng lực; và một seed là không đủ để kết luận về kiến trúc. Với
 câu hỏi ban đầu của môn học --- \emph{đặc điểm dữ liệu quyết định phương pháp} --- câu trả lời của đồ án là:
 trên UIT-ViQuAD~2.0, đặc điểm quyết định không phải là tách từ mà là \emph{một phần ba câu hỏi không có đáp
 án}; và việc một mô hình xử lý phần đó ra sao phải được đo riêng.
@@ -67,10 +67,11 @@ Các giới hạn dưới đây quyết định phạm vi mà mọi kết luận
         chọn $\tau$ --- trước khi chấm (Mục~\ref{sec:protocol}). Nó so sánh được với các con số public test đã
         công bố, với lưu ý rằng các đội thi được nộp nhiều lần lên chính tập này.
   \item \textbf{Cấu hình cửa sổ khác nhau.} 256 token là ràng buộc của PhoBERT; 384 token cho XLM-R là lựa
-        chọn. Lần chạy XLM-R ở 256/96 (Mục~\ref{sec:seeds}) đo ảnh hưởng của lựa chọn này.
+        chọn. Lần chạy XLM-R ở 256/96 cho điểm ngang hoặc nhỉnh hơn (Mục~\ref{sec:seeds}), nên lựa chọn này
+        không thiên vị PhoBERT; nhưng đó cũng chỉ là một lần chạy.
   \item \textbf{Nguyên nhân sụp đổ chỉ được xác định đến mức ``đủ để khắc phục''.} Bằng chứng ủng hộ bất ổn
-        tối ưu hoá, nhưng vì sao nó chỉ xảy ra với PhoBERT, và liệu có xảy ra trên GPU CUDA hay không, chưa
-        được kiểm tra.
+        tối ưu hoá phụ thuộc lần chạy; vì sao nó xảy ra ở seed 42 mà không ở seed 13, vì sao chỉ với PhoBERT,
+        và liệu có xảy ra trên GPU CUDA hay không, chưa được kiểm tra.
   \item \textbf{Bộ stress-test không dùng được làm thước đo} (Mục~\ref{sec:audit}). Các nhóm hiện tượng
         E2--E5 vì vậy không có bằng chứng định lượng đáng tin cậy trong đồ án này; phân tích theo độ dài và
         theo loại lỗi trên validation chỉ thay thế được một phần.

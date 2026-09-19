@@ -12,17 +12,17 @@ trích xuất, nhóm cài một lớp tokenizer dựng offset từ bước tách
 EM do biên từ (không cần mô hình), phân loại lỗi tự động, precision/recall của hành vi từ chối, và kiểm định
 cặp McNemar/bootstrap.
 
-\textbf{Kết quả.} Ở ngưỡng từ chối mặc định ($\tau = 0$), điểm tổng của hai mô hình không khác nhau có ý
-nghĩa (EM \PhobertEM{} so với \XlmrEM) và che hai hồ sơ ngược nhau: PhoBERT hơn \PairAnsDiff{} điểm EM trên
-câu có đáp án, XLM-R hơn \,$-$\PairImpDiff{}\, điểm trên câu không có đáp án. Chẩn đoán cho thấy đó chủ yếu
-là vấn đề \emph{hiệu chỉnh}: khi fine-tune ở tốc độ học $3\cdot10^{-5}$, PhoBERT gặp một sự kiện bất ổn tối ưu
-hoá --- tái hiện được, kèm chuẩn gradient vọt tới \ResumeHighMaxSpike{} --- làm điểm ``không có đáp án'' dịch
-xuống, nên nó gần như không từ chối; ở tốc độ học $10^{-5}$ hiện tượng không xảy ra. Khả năng phân biệt vẫn
-còn: khi mỗi mô hình dùng ngưỡng chọn trên dev, PhoBERT tốt hơn XLM-R \PairTDiff{} điểm EM (CI 95\% theo bài
-viết [\PairTArtLo; \PairTArtHi]), trên cả câu có và không có đáp án. Giả thuyết ban đầu (PhoBERT yếu vì lỗi
-tách từ) \emph{sai} ở dạng tổng quát: chỉ \SegMisPct\% đáp án cắt ngang một từ, nên hiệu ứng này bị chặn ở
-\SegCeilingLoss{} điểm EM. Cuối cùng, kiểm định bộ stress-test 250 câu của nhóm cho thấy chỉ
-\AuditAnsInCtx/\AuditAns{} câu có đáp án chứa đáp án trong ngữ cảnh; bộ được giữ làm đối tượng phân tích,
+\textbf{Kết quả.} Mỗi mô hình được huấn luyện với hai seed, báo cáo ngang nhau. Ở seed 42 và ngưỡng từ chối
+mặc định ($\tau = 0$), điểm tổng của hai mô hình không khác nhau (EM \PhobertEM{} so với \XlmrEM) và che hai hồ
+sơ ngược nhau: PhoBERT hơn \PairAnsDiff{} điểm EM trên câu có đáp án, XLM-R hơn \,$-$\PairImpDiff{}\, điểm trên câu
+không có đáp án. Chẩn đoán cho thấy đó là đặc điểm của \emph{một lần chạy}: PhoBERT seed 42 gặp một sự kiện bất
+ổn khi fine-tune --- tái hiện được, kèm chuẩn gradient vọt tới \ResumeHighMaxSpike{} --- làm điểm ``không có đáp án''
+dịch xuống, nên nó gần như không từ chối; PhoBERT seed 13 cùng cấu hình không gặp sự kiện này. Khi mỗi mô hình
+dùng ngưỡng chọn trên dev, PhoBERT tốt hơn XLM-R \PairTDiff{} và \PairSTDiff{} điểm EM ở hai seed (CI 95\% theo
+bài viết không chứa 0), và đọc tốt hơn \BothSGap--\BothGap{} điểm trên những câu cả hai cùng trả lời. Giả thuyết
+ban đầu (PhoBERT yếu vì lỗi tách từ) \emph{sai} ở dạng tổng quát: chỉ \SegMisPct\% đáp án cắt ngang một từ, nên
+hiệu ứng này bị chặn ở \SegCeilingLoss{} điểm EM. Cuối cùng, kiểm định bộ stress-test 250 câu của nhóm cho thấy
+chỉ \AuditAnsInCtx/\AuditAns{} câu có đáp án chứa đáp án trong ngữ cảnh; bộ được giữ làm đối tượng phân tích,
 không dùng để xếp hạng.
 
 Mọi con số trong báo cáo được sinh tự động từ tệp \code{results/*.json} kèm commit.

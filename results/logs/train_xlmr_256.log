@@ -1,0 +1,73 @@
+device=mps  model=FacebookAI/xlm-roberta-base
+assert_no_leakage OK — train 3896 ctx / dev 205 ctx / validation(test) 557 ctx, giao nhau = 0
+27049 câu hỏi -> 37285 feature (11s)
+lịch học: 1554 bước/epoch, 4662 tổng, 466 warmup
+[transformers] [1mXLMRobertaForQuestionAnswering LOAD REPORT[0m from: FacebookAI/xlm-roberta-base
+Key                         | Status     | 
+----------------------------+------------+-
+lm_head.bias                | UNEXPECTED | 
+lm_head.layer_norm.weight   | UNEXPECTED | 
+lm_head.dense.weight        | UNEXPECTED | 
+lm_head.dense.bias          | UNEXPECTED | 
+roberta.pooler.dense.bias   | UNEXPECTED | 
+lm_head.layer_norm.bias     | UNEXPECTED | 
+roberta.pooler.dense.weight | UNEXPECTED | 
+qa_outputs.weight           | MISSING    | 
+qa_outputs.bias             | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  epoch 1 step 200/3108 loss 5.1782 (115s)
+  epoch 1 step 400/3108 loss 4.4636 (235s)
+  epoch 1 step 600/3108 loss 3.9164 (354s)
+  epoch 1 step 800/3108 loss 3.4668 (477s)
+  epoch 1 step 1000/3108 loss 3.1431 (598s)
+  epoch 1 step 1200/3108 loss 2.8982 (720s)
+  epoch 1 step 1400/3108 loss 2.7101 (843s)
+  epoch 1 step 1600/3108 loss 2.5650 (967s)
+  epoch 1 step 1800/3108 loss 2.4499 (1089s)
+  epoch 1 step 2000/3108 loss 2.3463 (1211s)
+  epoch 1 step 2200/3108 loss 2.2609 (1334s)
+  epoch 1 step 2400/3108 loss 2.1860 (1458s)
+  epoch 1 step 2600/3108 loss 2.1226 (1584s)
+  epoch 1 step 2800/3108 loss 2.0686 (1709s)
+  epoch 1 step 3000/3108 loss 2.0168 (1833s)
+epoch 1: loss 1.9918  val_EM 38.20  val_F1 52.94  (n=500, 1912s)
+  epoch 2 step 200/3108 loss 1.1386 (123s)
+  epoch 2 step 400/3108 loss 1.1484 (246s)
+  epoch 2 step 600/3108 loss 1.1456 (370s)
+  epoch 2 step 800/3108 loss 1.1475 (494s)
+  epoch 2 step 1000/3108 loss 1.1509 (618s)
+  epoch 2 step 1200/3108 loss 1.1453 (743s)
+  epoch 2 step 1400/3108 loss 1.1424 (866s)
+  epoch 2 step 1600/3108 loss 1.1386 (988s)
+  epoch 2 step 1800/3108 loss 1.1341 (1109s)
+  epoch 2 step 2000/3108 loss 1.1300 (1232s)
+  epoch 2 step 2200/3108 loss 1.1271 (1355s)
+  epoch 2 step 2400/3108 loss 1.1214 (1477s)
+  epoch 2 step 2600/3108 loss 1.1186 (1600s)
+  epoch 2 step 2800/3108 loss 1.1125 (1723s)
+  epoch 2 step 3000/3108 loss 1.1083 (1845s)
+epoch 2: loss 1.1082  val_EM 45.20  val_F1 58.58  (n=500, 1921s)
+  epoch 3 step 200/3108 loss 0.9136 (122s)
+  epoch 3 step 400/3108 loss 0.8814 (244s)
+  epoch 3 step 600/3108 loss 0.8797 (365s)
+  epoch 3 step 800/3108 loss 0.8704 (487s)
+  epoch 3 step 1000/3108 loss 0.8709 (610s)
+  epoch 3 step 1200/3108 loss 0.8695 (731s)
+  epoch 3 step 1400/3108 loss 0.8663 (853s)
+  epoch 3 step 1600/3108 loss 0.8695 (975s)
+  epoch 3 step 1800/3108 loss 0.8646 (1091s)
+  epoch 3 step 2000/3108 loss 0.8645 (1203s)
+  epoch 3 step 2200/3108 loss 0.8630 (1317s)
+  epoch 3 step 2400/3108 loss 0.8601 (1431s)
+  epoch 3 step 2600/3108 loss 0.8554 (1547s)
+  epoch 3 step 2800/3108 loss 0.8543 (1660s)
+  epoch 3 step 3000/3108 loss 0.8538 (1772s)
+epoch 3: loss 0.8533  val_EM 47.60  val_F1 60.68  (n=500, 1843s)
+ổn định: {'stable': True, 'max_rise': 0.047931, 'first_violation_step': None, 'window': 200, 'tolerance': 0.2}
+
+epoch tốt nhất = 3 -> sao chép vào models/xlmr_256
+chẩn đoán: val_f1 vẫn tăng tới epoch cuối (60.68) — model còn THIẾU epoch, chưa overfit. Cân nhắc huấn luyện thêm.
+curve -> results/training_curve_xlmr_256.json

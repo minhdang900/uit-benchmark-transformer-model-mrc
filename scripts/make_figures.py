@@ -17,8 +17,12 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 RES, OUT = ROOT / "results", ROOT / "report" / "figures"
 PREFIX = ""  # "slide_" khi vẽ bản cho slide (chữ lớn hơn)
-COLOR = {"xlmr": "#2a78d6", "phobert": "#eb6834", "baseline": "#1baf7a"}
-LABEL = {"xlmr": "XLM-R-base", "phobert": "PhoBERT-base-v2", "baseline": "TF-IDF", "abstain": "Luôn từ chối"}
+COLOR = {"xlmr": "#2a78d6", "phobert": "#eb6834", "baseline": "#1baf7a",
+         "xlmr_seed13": "#8fb8e8", "phobert_seed13": "#f3a57e"}
+LABEL = {"xlmr": "XLM-R (seed 42)", "phobert": "PhoBERT (seed 42)", "baseline": "TF-IDF", "abstain": "Luôn từ chối",
+         "xlmr_seed13": "XLM-R (seed 13)", "phobert_seed13": "PhoBERT (seed 13)"}
+# Hai seed được báo cáo ngang nhau.
+BOTH_SEEDS = ["baseline", "xlmr", "xlmr_seed13", "phobert", "phobert_seed13"]
 ERR_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]
 INK, MUTED, GRID = "#1f1f1e", "#6b6a64", "#e4e3dd"
 
@@ -41,7 +45,7 @@ def models(keys):
 
 
 def fig_main():
-    ms = models(["baseline", "xlmr", "phobert"])
+    ms = models(BOTH_SEEDS)
     groups = [("EM\ntoàn bộ", "overall", "EM"), ("F1\ntoàn bộ", "overall", "F1"),
               ("EM\ncâu có đáp án", "answerable_only", "EM"), ("F1\ncâu có đáp án", "answerable_only", "F1"),
               ("EM\ncâu không đáp án", "impossible_only", "EM")]
@@ -53,7 +57,7 @@ def fig_main():
         xs = [j + (i - (len(ms) - 1) / 2) * w for j in range(len(groups))]
         bars = ax.bar(xs, vals, w - 0.03, color=COLOR[m], label=LABEL[m])
         for x, v in zip(xs, vals):
-            ax.text(x, v + 1.2, f"{v:.1f}".replace(".", ","), ha="center", fontsize=7.5, color=INK)
+            ax.text(x, v + 1.2, f"{v:.0f}", ha="center", fontsize=6.5, color=INK)
     ab = load("eval_abstain_validation.json")
     if ab:
         ax.axhline(ab["overall"]["EM"], color=MUTED, lw=1.2, ls="--")
@@ -61,7 +65,7 @@ def fig_main():
                 ha="left", fontsize=8, color=MUTED, zorder=5, bbox=dict(boxstyle="round,pad=0.2", fc="white", ec=GRID))
     ax.set_xticks(range(len(groups)), [g for g, _, _ in groups])
     ax.set_ylim(0, 105); ax.set_ylabel("Điểm (%)")
-    ax.legend(ncol=len(ms), loc="upper left", bbox_to_anchor=(0, 1.13))
+    ax.legend(ncol=len(ms), loc="upper left", bbox_to_anchor=(0, 1.13), fontsize=7.5)
     fig.savefig(OUT / (PREFIX + "main_results.png")); plt.close(fig)
 
 
@@ -69,7 +73,7 @@ def fig_taxonomy():
     d = load("diagnosis_validation.json")
     if not d:
         return
-    ms = [m for m in ["baseline", "xlmr", "phobert"] if m in d["models"]]
+    ms = [m for m in BOTH_SEEDS if m in d["models"]]
     types = ["false_abstain", "false_answer", "boundary_superset", "boundary_subset", "boundary_overlap", "wrong_span"]
     names = ["Từ chối sai", "Trả lời sai", "Biên thừa", "Biên thiếu", "Biên lệch", "Sai vị trí"]
     fig, ax = plt.subplots(figsize=(9, 0.75 + 0.62 * len(ms)))
@@ -113,9 +117,12 @@ def fig_lines(key, order, xlabel, fname, source):
 
 def fig_curves():
     fig, axes = plt.subplots(1, 2, figsize=(9, 3.2))
-    runs = [("xlmr", "-", "o", LABEL["xlmr"]),
-            ("phobert", "-", "o", "PhoBERT (lr 3e-5)"),
-            ("phobert_lr2e5", ":", "^", "PhoBERT (lr 2e-5)")]
+    runs = [("xlmr", "-", "o", "XLM-R, seed 42"),
+            ("xlmr_seed13", "--", "s", "XLM-R, seed 13"),
+            ("phobert", "-", "o", "PhoBERT 3e-5, seed 42"),
+            ("phobert_seed13", "--", "s", "PhoBERT 3e-5, seed 13"),
+            ("phobert_lr2e5", ":", "^", "PhoBERT 2e-5, seed 42"),
+            ("phobert_stable", "-.", "D", "PhoBERT 1e-5, seed 42")]
     for m, ls, mk, lab in runs:
         c = load(f"training_curve_{m}.json")
         if not c:
@@ -128,7 +135,7 @@ def fig_curves():
     axes[1].set_title("F1 trên dev (tiêu chí chọn epoch)", color=INK)
     for a in axes:
         a.set_xticks([1, 2, 3]); a.set_xlabel("Epoch")
-    axes[0].legend()
+    axes[0].legend(fontsize=7)
     fig.savefig(OUT / (PREFIX + "training_curves.png")); plt.close(fig)
 
 

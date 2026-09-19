@@ -12,3 +12,10 @@ phobert_stable dev: {'tau': 0.0, 'EM': 44.1993, 'F1': 60.5615, 'abstain_rate': 2
 [transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (859 > 512). Running this sequence through the model will result in indexing errors
 xlmr_seed13 dev: {'tau': 0.0, 'EM': 46.0498, 'F1': 59.6651, 'abstain_rate': 29.6085, 'n': 1405}  (22.0s) -> results/windows_xlmr_seed13_dev.json
 NIGHT1_DONE
+phobert_stable validation: {'tau': 0.0, 'EM': 54.0902, 'F1': 64.3752, 'abstain_rate': 23.7546, 'n': 3814}  (48.7s) -> results/windows_phobert_stable_validation.json
+xlmr_seed13 validation: {'tau': 0.0, 'EM': 53.6445, 'F1': 62.1844, 'abstain_rate': 30.8076, 'n': 3814}  (55.0s) -> results/windows_xlmr_seed13_validation.json
+phobert_seed13 dev: {'tau': 0.0, 'EM': 52.8114, 'F1': 68.2763, 'abstain_rate': 25.0534, 'n': 1405}  (19.5s) -> results/windows_phobert_seed13_dev.json
+xlmr_256 dev: {'tau': 0.0, 'EM': 48.968, 'F1': 61.9919, 'abstain_rate': 32.5267, 'n': 1405}  (23.5s) -> results/windows_xlmr_256_dev.json
+phobert_seed13 validation: {'tau': 0.0, 'EM': 58.9407, 'F1': 68.9117, 'abstain_rate': 26.3765, 'n': 3814}  (49.2s) -> results/windows_phobert_seed13_validation.json
+xlmr_256 validation: {'tau': 0.0, 'EM': 54.4573, 'F1': 63.0289, 'abstain_rate': 33.5081, 'n': 3814}  (63.2s) -> results/windows_xlmr_256_validation.json
+NIGHT2_DONE
