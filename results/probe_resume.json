@@ -1,0 +1,234 @@
+{
+  "question": "Does resuming PhoBERT from its epoch-1 checkpoint reproduce the no-answer collapse, and does a lower lr avoid it?",
+  "design": "resume from models/phobert/epoch1; fresh AdamW; 1000 optimizer steps; warmup 2%; same seed (42), same batch order; only lr differs",
+  "probes": {
+    "probe_phobert_lr2.2e-5": {
+      "lr": 2.2e-05,
+      "stability": {
+        "stable": false,
+        "max_rise": 1.500694,
+        "first_violation_step": 549,
+        "window": 200,
+        "tolerance": 0.2
+      },
+      "grad_spikes_over_100": [
+        [
+          522,
+          1532.2
+        ],
+        [
+          538,
+          135.2
+        ],
+        [
+          562,
+          160.2
+        ],
+        [
+          570,
+          12880.4
+        ],
+        [
+          599,
+          220.5
+        ],
+        [
+          680,
+          343.2
+        ],
+        [
+          732,
+          187.7
+        ],
+        [
+          844,
+          601.2
+        ],
+        [
+          951,
+          294.1
+        ]
+      ],
+      "blocks": [
+        {
+          "steps": "1-100",
+          "loss": 1.1419,
+          "cls_loss": 0.7128,
+          "span_loss": 1.3988,
+          "grad_norm_mean": 12.3143,
+          "grad_norm_max": 24.9
+        },
+        {
+          "steps": "101-200",
+          "loss": 1.1211,
+          "cls_loss": 0.7202,
+          "span_loss": 1.3904,
+          "grad_norm_mean": 12.7357,
+          "grad_norm_max": 30.9
+        },
+        {
+          "steps": "201-300",
+          "loss": 1.0912,
+          "cls_loss": 0.7056,
+          "span_loss": 1.3395,
+          "grad_norm_mean": 12.6597,
+          "grad_norm_max": 21.3
+        },
+        {
+          "steps": "301-400",
+          "loss": 1.0907,
+          "cls_loss": 0.6774,
+          "span_loss": 1.3493,
+          "grad_norm_mean": 12.9784,
+          "grad_norm_max": 24.2
+        },
+        {
+          "steps": "401-500",
+          "loss": 1.1579,
+          "cls_loss": 0.7703,
+          "span_loss": 1.3983,
+          "grad_norm_mean": 13.9716,
+          "grad_norm_max": 30.2
+        },
+        {
+          "steps": "501-600",
+          "loss": 1.8007,
+          "cls_loss": 2.38,
+          "span_loss": 1.4067,
+          "grad_norm_mean": 167.8083,
+          "grad_norm_max": 12880.4
+        },
+        {
+          "steps": "601-700",
+          "loss": 2.475,
+          "cls_loss": 4.2278,
+          "span_loss": 1.3963,
+          "grad_norm_mean": 20.9254,
+          "grad_norm_max": 343.2
+        },
+        {
+          "steps": "701-800",
+          "loss": 2.5723,
+          "cls_loss": 4.4061,
+          "span_loss": 1.3201,
+          "grad_norm_mean": 18.3965,
+          "grad_norm_max": 187.7
+        },
+        {
+          "steps": "801-900",
+          "loss": 2.5394,
+          "cls_loss": 4.3602,
+          "span_loss": 1.3285,
+          "grad_norm_mean": 22.0558,
+          "grad_norm_max": 601.2
+        },
+        {
+          "steps": "901-1000",
+          "loss": 2.5194,
+          "cls_loss": 4.3549,
+          "span_loss": 1.3392,
+          "grad_norm_mean": 19.9117,
+          "grad_norm_max": 294.1
+        }
+      ]
+    },
+    "probe_phobert_lr1e-5": {
+      "lr": 1e-05,
+      "stability": {
+        "stable": true,
+        "max_rise": 0.03632,
+        "first_violation_step": null,
+        "window": 200,
+        "tolerance": 0.2
+      },
+      "grad_spikes_over_100": [],
+      "blocks": [
+        {
+          "steps": "1-100",
+          "loss": 1.1256,
+          "cls_loss": 0.6899,
+          "span_loss": 1.389,
+          "grad_norm_mean": 11.9313,
+          "grad_norm_max": 26.0
+        },
+        {
+          "steps": "101-200",
+          "loss": 1.0945,
+          "cls_loss": 0.702,
+          "span_loss": 1.3589,
+          "grad_norm_mean": 12.3909,
+          "grad_norm_max": 29.1
+        },
+        {
+          "steps": "201-300",
+          "loss": 1.0682,
+          "cls_loss": 0.6978,
+          "span_loss": 1.3095,
+          "grad_norm_mean": 12.1528,
+          "grad_norm_max": 21.8
+        },
+        {
+          "steps": "301-400",
+          "loss": 1.06,
+          "cls_loss": 0.6768,
+          "span_loss": 1.302,
+          "grad_norm_mean": 12.4851,
+          "grad_norm_max": 21.7
+        },
+        {
+          "steps": "401-500",
+          "loss": 1.103,
+          "cls_loss": 0.6817,
+          "span_loss": 1.3666,
+          "grad_norm_mean": 13.3449,
+          "grad_norm_max": 23.3
+        },
+        {
+          "steps": "501-600",
+          "loss": 1.0384,
+          "cls_loss": 0.6779,
+          "span_loss": 1.2748,
+          "grad_norm_mean": 13.4895,
+          "grad_norm_max": 23.0
+        },
+        {
+          "steps": "601-700",
+          "loss": 1.0637,
+          "cls_loss": 0.6717,
+          "span_loss": 1.3032,
+          "grad_norm_mean": 13.7497,
+          "grad_norm_max": 57.9
+        },
+        {
+          "steps": "701-800",
+          "loss": 1.0165,
+          "cls_loss": 0.6849,
+          "span_loss": 1.254,
+          "grad_norm_mean": 13.4665,
+          "grad_norm_max": 21.8
+        },
+        {
+          "steps": "801-900",
+          "loss": 1.0441,
+          "cls_loss": 0.6457,
+          "span_loss": 1.3105,
+          "grad_norm_mean": 13.3025,
+          "grad_norm_max": 25.1
+        },
+        {
+          "steps": "901-1000",
+          "loss": 1.072,
+          "cls_loss": 0.7059,
+          "span_loss": 1.3069,
+          "grad_norm_mean": 13.5967,
+          "grad_norm_max": 24.9
+        }
+      ]
+    }
+  },
+  "finding": "lr 2.2e-5 (the lr the original run had entering epoch 2) reproduces the collapse: no-answer loss drifts up from step ~505, gradient-norm spikes follow (1532 at step 522, 12880 at step 570), and no-answer loss settles at ~4.36 while span loss is unchanged. lr 1e-5 on the identical batches shows no spike >100 and flat no-answer loss. Supports H1 (optimisation instability); H2 rejected by feature scan; H3 (MPS) not tested.",
+  "chosen_stable_config": {
+    "lr": 1e-05,
+    "other": "unchanged (256/96, warmup 10%, clip 1.0, bs 12x2, 3 epochs)"
+  }
+}

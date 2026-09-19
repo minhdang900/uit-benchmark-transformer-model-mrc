@@ -1,0 +1,32 @@
+{
+  "config": {
+    "model": "vinai/phobert-base-v2",
+    "out": "models/probe_phobert_lr2.2e-5",
+    "data_dir": "data/raw",
+    "train_size": null,
+    "epochs": 1,
+    "batch_size": 12,
+    "grad_accum": 2,
+    "lr": 2.2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.02,
+    "max_length": 256,
+    "doc_stride": 96,
+    "max_answer_len": 64,
+    "eval_limit": 500,
+    "dev_frac": 0.05,
+    "word_segmented": true,
+    "seed": 42,
+    "split_seed": 42,
+    "resume_from": "models/phobert/epoch1",
+    "max_steps": 1000
+  },
+  "steps": 1000,
+  "stability": {
+    "stable": false,
+    "max_rise": 1.500694,
+    "first_violation_step": 549,
+    "window": 200,
+    "tolerance": 0.2
+  }
+}

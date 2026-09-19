@@ -1,0 +1,15 @@
+device=mps  model=vinai/phobert-base-v2
+assert_no_leakage OK — train 3896 ctx / dev 205 ctx / validation(test) 557 ctx, giao nhau = 0
+27049 câu hỏi -> 31039 feature (12s)
+lịch học: 1293 bước/epoch, 1293 tổng, 25 warmup
+  epoch 1 step 200/2587 loss 1.1419 (98s)
+  epoch 1 step 400/2587 loss 1.1315 (196s)
+  epoch 1 step 600/2587 loss 1.1181 (301s)
+  epoch 1 step 800/2587 loss 1.1112 (403s)
+  epoch 1 step 1000/2587 loss 1.1205 (503s)
+  epoch 1 step 1200/2587 loss 1.2339 (602s)
+  epoch 1 step 1400/2587 loss 1.4112 (702s)
+  epoch 1 step 1600/2587 loss 1.5563 (810s)
+  epoch 1 step 1800/2587 loss 1.6656 (910s)
+  epoch 1 step 2000/2587 loss 1.7509 (1009s)
+ổn định: {'stable': False, 'max_rise': 1.500694, 'first_violation_step': 549, 'window': 200, 'tolerance': 0.2}
