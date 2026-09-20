@@ -259,16 +259,35 @@ trên các câu mà hai mô hình bất đồng, kèm khoảng tin cậy bootstr
 Kết luận ``A khác B'' chỉ được đưa ra khi khoảng tin cậy không chứa 0; ngược lại báo cáo ghi
 ``chưa đủ bằng chứng''.
 
-\subsection{Kiểm định bộ stress-test}
+\subsection{Dựng và kiểm định bộ stress-test v2}
 \label{sec:audit-method}
 
-Trước khi dùng bộ stress-test 250 câu (5 nhóm E1--E5 $\times$ 50) để chấm mô hình, mỗi câu được
-kiểm tra tự động: (1) với câu có đáp án, đáp án vàng có nằm trong đoạn văn không; (2)
-\code{answer\_start} có trỏ đúng vào đáp án không; (3) đáp án có xuất hiện nguyên văn trong câu
-hỏi không (rò rỉ đáp án); (4) số câu hỏi khác nhau và số khung câu hỏi (câu hỏi sau khi thay
-cụm trong nháy đơn bằng \code{X}). Một câu \textbf{hợp lệ} nếu nó không có đáp án, hoặc đáp án của
-nó nằm trong đoạn văn --- điều kiện tối thiểu để một mô hình trích xuất \emph{có thể} trả lời
-đúng. Kết quả ở Mục~\ref{sec:audit}.
+Bộ stress-test dùng trong báo cáo này (\emph{v2}) được dựng lại từ \textbf{UIT-ViQuAD 2.0
+validation} theo một nguyên tắc: \emph{không tự viết câu hỏi và không tự gán nhãn}. Mọi câu hỏi
+và đáp án vàng đều do người gán trong bộ gốc. Mỗi mục thuộc một trong hai loại:
+
+\begin{itemize}
+  \item \textbf{slice} --- câu gốc giữ nguyên, được \emph{chọn} vì mang một hiện tượng đo được
+        (ví dụ biên đáp án cắt ngang một từ của bộ tách từ; đáp án nằm ngoài cửa sổ token đầu);
+  \item \textbf{perturbation} --- câu gốc bị biến đổi bằng một luật mà nhãn mới \emph{suy ra
+        được} từ nhãn cũ: xoá câu chứa đáp án $\Rightarrow$ không trả lời được; chèn một câu
+        nhiễu không nói về chủ thể của câu hỏi $\Rightarrow$ đáp án không đổi; bỏ dấu tiếng Việt
+        trong câu hỏi $\Rightarrow$ đáp án không đổi. Mỗi perturbation đi kèm chính câu gốc của
+        nó (vai trò \code{original}) để đo \textbf{độ nhất quán theo cặp}, không chỉ điểm trung bình.
+\end{itemize}
+
+Trước khi bộ này được dùng để chấm bất kỳ mô hình nào, hàm \code{mrc.stress\_v2.audit} kiểm các
+bất biến sau trên từng mục: (1) với câu có đáp án, đáp án vàng nằm đúng tại \code{answer\_start}
+đã ghi trong ngữ cảnh; (2) với câu bị xoá câu chứa đáp án, không đáp án gốc nào --- kể cả sau
+chuẩn hoá --- còn sót trong ngữ cảnh; (3) câu hỏi nhóm E5 không còn dấu tiếng Việt; (4) câu nhiễu
+chèn thêm không chứa đáp án vàng; (5) mỗi perturbation có câu gốc đi kèm; (6) không ngữ cảnh nào
+trùng với tập train. Bộ dữ liệu \textbf{hợp lệ} khi số vi phạm bằng 0 --- nghĩa là \emph{mọi} mục
+đều chấm được, khác với việc lọc bớt câu hỏng sau khi đã chấm.
+
+Để bộ trải rộng thay vì dồn vào vài đoạn văn, mỗi tập con lấy tối đa hai mục từ cùng một ngữ
+cảnh. Bộ v2 chỉ dùng để \emph{chẩn đoán sau khi mô hình đã chốt}: không epoch, seed hay ngưỡng
+$\tau$ nào được chọn trên nó. Kết quả kiểm định ở Mục~\ref{sec:audit}; điểm của các hệ thống ở
+Mục~\ref{sec:res-rq3}.
 
 \subsection{Truy vết số liệu và kiểm thử}
 \label{sec:traceability}
@@ -277,6 +296,6 @@ Mọi hệ thống ghi \code{results/eval\_<hệ~thống>\_<tập>.json} (số t
 điểm, thiết bị) và \code{results/predictions\_<hệ~thống>\_<tập>.json} (dự đoán từng câu). Mọi
 phép đo chẩn đoán đọc các tệp này. Báo cáo \emph{không gõ tay con số kết quả nào}: script
 \code{make\_report\_numbers.py} sinh các macro \LaTeX{} và các bảng từ \code{results/}; giá trị
-nào chưa có sẽ hiện chữ đỏ ``??'' trong PDF thay vì một con số đoán. Mã nguồn có 244 kiểm thử
+nào chưa có sẽ hiện chữ đỏ ``??'' trong PDF thay vì một con số đoán. Mã nguồn có 348 kiểm thử
 tự động chạy không cần GPU, gồm các bất biến của lớp tokenizer PhoBERT, phép đo biên từ, phân
 loại lỗi và kiểm định McNemar.

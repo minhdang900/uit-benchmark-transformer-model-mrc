@@ -23,9 +23,10 @@ bài viết không chứa 0). Phần hơn đó \emph{không} phải khả năng 
 của lần chạy, chênh lệch trên câu có đáp án là \PairMAnsDiff{} điểm (CI [\PairMAnsArtLo; \PairMAnsArtHi],
 $p$ = \PairMAnsP) và toàn bộ phần hơn nằm ở câu không có đáp án (\PairMImpDiff{} điểm). Giả thuyết ban đầu
 (PhoBERT yếu vì lỗi tách từ) \emph{sai} ở dạng tổng quát: chỉ \SegMisPct\% đáp án cắt ngang một từ, nên hiệu ứng
-này bị chặn ở \SegCeilingLoss{} điểm EM. Cuối cùng, kiểm định bộ stress-test 250 câu của nhóm cho thấy
-chỉ \AuditAnsInCtx/\AuditAns{} câu có đáp án chứa đáp án trong ngữ cảnh; bộ được giữ làm đối tượng phân tích,
-không dùng để xếp hạng.
+này bị chặn ở \SegCeilingLoss{} điểm EM. Cuối cùng, chúng tôi dựng một bộ stress-test (\StressN{} mục,
+\StressCtx{} ngữ cảnh) từ validation bằng các luật mà nhãn suy ra được, kiểm định tự động đạt \StressViol{}
+vi phạm; trên bộ này hệ thống ``luôn từ chối'' chỉ đạt \AbstainStressEM{} EM, và nhóm lệch từ vựng cùng
+nhóm câu hỏi không dấu là hai nơi mô hình sụt rõ nhất.
 
 Mọi con số trong báo cáo được sinh tự động từ tệp \code{results/*.json} kèm commit.
 

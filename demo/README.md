@@ -24,9 +24,9 @@ Mở <http://localhost:8501>.
 | Trang | Đọc từ | Nội dung |
 |---|---|---|
 | **Hỏi đáp** | `models/<run>/` + `data/raw/` | chạy checkpoint thật; đối chiếu đáp án với nhãn vàng, tô vị trí đáp án trong ngữ cảnh, so các nhánh mô hình trên cùng đầu vào |
-| **Ma trận chẩn đoán** | `eval_*_validation.json`, `eval_*_stress.json`, `diagnosis_validation.json` | bảng kết quả chính, ma trận E1–E5, phân loại lỗi |
+| **Ma trận chẩn đoán** | `eval_*_validation.json`, `eval_*_stress2.json`, `diagnosis_validation.json` | bảng kết quả chính, ma trận E1–E5, phân loại lỗi |
 | **Khám phá lỗi** | `disagreements_phobert_xlmr.json` | các câu PhoBERT và XLM-R trả lời khác nhau, lọc theo cơ chế lỗi |
-| **Bộ stress-test** | `stress_test_audit.json`, `data/stress_test/` | kiểm định từng nhóm, cảnh báo sinh từ chính số kiểm định, mẫu câu |
+| **Bộ stress-test v2** | `stress_v2_audit.json`, `data/stress_test_v2/` | thiết kế từng nhóm, ghi chú cách đọc sinh từ chính số kiểm định, mẫu câu |
 | **Huấn luyện & ngưỡng** | `training_curve_*.json`, `thresholds.json` | đường cong dev, các lần chạy, τ chọn trên dev |
 
 ## Quy ước

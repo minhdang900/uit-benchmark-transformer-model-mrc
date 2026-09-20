@@ -48,7 +48,9 @@ nhau**. Nguồn: `results/eval_*_validation.json`, `results/thresholds.json`, `r
 5. **Cửa sổ không phải lợi thế của XLM-R**: ở 256/96 như PhoBERT, XLM-R đạt F1 63,03 ở τ = 0 — ngang hoặc
    nhỉnh hơn hai lần chạy 384/128.
 6. **Tách từ không phải yếu tố quyết định** — chỉ 1,24% đáp án cắt ngang một từ của `pyvi` (trần 0,75 EM).
-7. **Bộ stress-test 250 câu của nhóm không dùng được làm thước đo** — chỉ 15/120 câu có đáp án chứa đáp án.
+7. **Bộ stress-test v2** (1.139 mục, 572 ngữ cảnh, dựng từ ViQuAD 2.0 validation bằng các luật mà nhãn suy ra được,
+   kiểm định tự động 0 vi phạm): `data/stress_test_v2/README.md`. Bộ v1 250 câu đã được gỡ bỏ — nó chỉ có 15/120
+   câu có đáp án thật sự chứa đáp án trong ngữ cảnh, nên không đo được thứ nó tuyên bố đo.
 
 Mốc tham chiếu (VLSP 2021 public test, Nguyen et al. 2022): baseline mBERT F1 63,03; đội cao nhất 84,24;
 người 87,34.
@@ -58,10 +60,10 @@ người 87,34.
 ```bash
 uv venv .venv --python 3.12 && uv pip install --python .venv/bin/python -r requirements.txt
 python scripts/fetch_data.py                      # UIT-ViQuAD 2.0 -> data/raw/
-python -m pytest -m "not slow"                    # 244 kiểm thử, không cần GPU
+python -m pytest -m "not slow"                    # 297 kiểm thử, không cần GPU
 
 python scripts/analyze_segmentation.py            # biên từ + trần EM (không cần mô hình)
-python scripts/audit_stress_test.py               # kiểm định stress-test
+python scripts/build_stress_v2.py                 # dựng + kiểm định stress-test v2
 
 python scripts/finetune.py --model FacebookAI/xlm-roberta-base --out models/xlmr \
     --epochs 3 --max-length 384 --doc-stride 128 --max-answer-len 64
@@ -69,7 +71,7 @@ python scripts/finetune.py --model vinai/phobert-base-v2 --out models/phobert --
     --epochs 3 --max-length 256 --doc-stride 96 --max-answer-len 64
 
 python scripts/run_eval.py --models abstain baseline xlmr phobert
-python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress
+python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress2
 python scripts/scan_features.py --model vinai/phobert-base-v2 --word-segmented \
     --max-length 256 --doc-stride 96 --name phobert          # quét feature
 bash scripts/queue_score_windows.sh                         # điểm từng cửa sổ (dev + validation)
@@ -86,7 +88,7 @@ Thiết bị đã dùng: Apple M5 Pro (MPS). Một epoch XLM-R ≈ 35 phút, Pho
 src/mrc/        pipeline có kiểm thử (kế thừa đồ án CS116 của cùng nhóm) + phần CS221:
                 segmented_tokenizer.py  PhoBERT: tách từ pyvi + BPE + offset về văn bản gốc
                 segmentation.py         tương thích biên từ, trần EM
-                stress_test.py          nạp + kiểm định stress-test
+                stress_v2.py            dựng + kiểm định + chấm stress-test v2
                 diagnosis.py            phân loại lỗi, từ chối, McNemar, bootstrap
 scripts/        fine-tune, chấm, chẩn đoán, sinh số liệu và hình cho báo cáo
 results/        mọi con số: eval_*, predictions_*, training_curve_*, diagnosis_*, logs/

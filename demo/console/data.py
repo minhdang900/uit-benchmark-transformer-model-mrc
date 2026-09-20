@@ -37,15 +37,20 @@ RUNS = [
 
 CATEGORIES = [
     ("E1", "Ranh giới từ ghép", "ranh giới",
-     "Đáp án nằm trong từ ghép đa âm tiết; dò xem lỗi tách từ có lan truyền vào mô hình không."),
-    ("E2", "Ngữ cảnh gây nhiễu", "nhiễu",
-     "Ngữ cảnh dài thêm và chèn thực thể nhiễu cùng loại; dò giới hạn độ dài và khả năng định vị."),
-    ("E3", "Câu hỏi phủ định", "phủ định",
-     "Câu hỏi chứa phủ định hoặc tiền giả định sai; dò xem mô hình hiểu phủ định hay chỉ học thiên lệch từ chối."),
-    ("E4", "Suy luận nhiều bước", "suy luận",
-     "Đáp án đòi hỏi nối hai mệnh đề cách xa nhau trong ngữ cảnh."),
-    ("E5", "Nhãn mập mờ", "mập mờ",
-     "Đáp án vàng có nhiều biến thể chấp nhận được; dò xem EM phạt oan tới mức nào."),
+     "Biên đáp án vàng cắt ngang một từ của bộ tách từ, hoặc đáp án mở đầu/kết thúc bằng "
+     "từ ghép riêng nhiều âm tiết."),
+    ("E2", "Nhiễu / ngữ cảnh dài", "nhiễu",
+     "Đáp án nằm ngoài cửa sổ token đầu tiên, context có nhiều số làm ứng viên nhiễu, "
+     "hoặc được chèn thêm một câu nhiễu nói về chủ thể khác."),
+    ("E3", "Không trả lời được", "không trả lời",
+     "Câu impossible do người viết, và câu bị xoá đúng câu chứa đáp án — chỉ số chính là "
+     "độ nhất quán theo cặp, không phải EM trung bình."),
+    ("E4", "Lệch từ vựng / nhiều câu", "lệch từ vựng",
+     "Câu chứa đáp án KHÔNG phải câu trùng từ nhiều nhất với câu hỏi, nên truy hồi theo "
+     "chồng lấn từ vựng sẽ chọn sai câu."),
+    ("E5", "Câu hỏi không dấu", "không dấu",
+     "Bỏ toàn bộ dấu tiếng Việt trong câu hỏi; đáp án vàng không đổi, nên mọi sụt giảm "
+     "là do mô hình lệ thuộc vào dấu."),
 ]
 
 TAX_TYPES = [
@@ -129,44 +134,57 @@ def tiles(system_key: str, baseline_key: str = "xlmr") -> list[dict]:
     return out
 
 
-# ── ma trận stress-test E1–E5 ────────────────────────────────────────────────
-def stress_matrix(scope: str = "all") -> tuple[list[dict], list[dict]]:
-    """(cột, dòng). ``scope`` = ``all`` (250 câu) hoặc ``valid`` (145 câu hợp lệ)."""
-    cols = [{"code": c, "name": n} for c, _, n, _ in CATEGORIES]
-    rows = []
-    total_valid = 0
-    for s in SYSTEMS:
-        ev = load(f"eval_{s['key']}_stress.json")
+# ── ma trận stress-test v2 E1–E5 ─────────────────────────────────────────────
+def _v2_audit() -> dict:
+    return load("stress_v2_audit.json") or {}
+
+
+def stress_matrix(scope: str = "category") -> tuple[list[dict], list[dict]]:
+    """(cột, dòng) EM trên bộ stress-test v2.
+
+    ``scope`` = ``category`` (5 nhóm E1–E5) hoặc ``subset`` (9 tập con E1a…E5).
+    Bộ v2 không có khái niệm "câu hợp lệ": mọi mục đều chấm được, đó là bất biến
+    mà ``mrc.stress_v2.audit`` kiểm (results/stress_v2_audit.json, 0 vi phạm).
+    """
+    key = "by_subset" if scope == "subset" else "by_category"
+    audit = _v2_audit()
+    if scope == "subset":
+        codes = list((audit.get("by_subset") or {}).keys())
+        cols = [{"code": c, "name": ""} for c in codes]
+    else:
+        codes = [c for c, _, _, _ in CATEGORIES]
+        cols = [{"code": c, "name": n} for c, n, _, _ in CATEGORIES]
+
+    rows, total_n = [], 0
+    for sy in SYSTEMS:
+        ev = load(f"eval_{sy['key']}_stress2.json")
         if not ev:
             continue
-        cells, num, den = [], 0.0, 0
-        for code, _, _, _ in CATEGORIES:
-            c = dig(ev, "by_category", code, scope) or {}
+        cells, den = [], 0
+        for code in codes:
+            c = dig(ev, key, code) or {}
             cells.append(c.get("EM"))
-            if c.get("EM") is not None and c.get("count"):
-                num += c["EM"] * c["count"]
-                den += c["count"]
-        total_valid = den
-        # Tổng của "toàn bộ" lấy từ overall đã chấm; của "hợp lệ" tính lại theo số câu.
-        total = dig(ev, "overall", "EM") if scope == "all" else (num / den if den else None)
-        rows.append({**s, "cells": cells + [total]})
-    cols.append({"code": "Tổng", "name": f"{vi(250 if scope == 'all' else total_valid, 0)} câu"})
+            den += c.get("n") or 0
+        total_n = den
+        rows.append({**sy, "cells": cells + [dig(ev, "overall", "EM")]})
+    cols.append({"code": "Tổng", "name": f"{vi(total_n, 0)} câu"})
     return cols, rows
 
 
-def stress_note(scope: str) -> str:
-    audit = load("stress_test_audit.json") or {}
-    n = dig(audit, "totals", "n")
-    valid = dig(audit, "totals", "valid")
-    ans = dig(audit, "totals", "answerable")
-    abstain = dig(load("eval_abstain_stress.json") or {}, "overall", "EM")
-    if scope == "all":
-        return (f"Hệ thống “luôn từ chối” đạt {vi(abstain, 1)} EM trên toàn bộ {vi(n, 0)} câu — "
-                f"cao hơn phần lớn mô hình thật. Đó là kết quả chẩn đoán, không phải xếp hạng: "
-                f"bộ stress-test hiện tại thưởng cho việc từ chối, vì chỉ {vi(ans, 0)} câu có đáp án.")
-    return (f"Lọc còn {vi(valid, 0)} câu qua kiểm định thì mọi hệ thống đều nhảy vọt và khoảng cách "
-            f"giữa chúng thu hẹp lại — phần lớn chênh lệch ở bảng đầy đủ đến từ các câu hỏng, "
-            f"không từ năng lực mô hình.")
+def stress_note(scope: str = "category") -> str:
+    audit = _v2_audit()
+    n = audit.get("n_items")
+    ctx = audit.get("distinct_contexts")
+    imp = audit.get("n_impossible")
+    abstain = dig(load("eval_abstain_stress2.json") or {}, "overall", "EM")
+    base = (f"Bộ v2 có {vi(n, 0)} mục trải trên {vi(ctx, 0)} ngữ cảnh, mọi câu hỏi và đáp án "
+            f"vàng đều do người gán trong ViQuAD 2.0 validation. Hệ thống “luôn từ chối” chỉ đạt "
+            f"{vi(abstain, 1)} EM ({vi(imp, 0)} câu không có đáp án), nên bảng này xếp hạng được "
+            f"chứ không thưởng cho việc từ chối.")
+    if scope == "subset":
+        return base + (" Cột theo tập con tách riêng từng cơ chế: E1a biên cắt ngang từ, "
+                       "E2a đáp án ngoài cửa sổ đầu, E3b xoá câu chứa đáp án, E5 câu hỏi bỏ dấu.")
+    return base
 
 
 # ── phân loại lỗi ────────────────────────────────────────────────────────────
@@ -226,85 +244,74 @@ def paired_summary() -> str:
             f"ở ngưỡng chọn trên dev là {vi(t.get('em_diff'))} điểm ({vi(tci[0])} … {vi(tci[1])}).")
 
 
-# ── trang bộ stress-test ─────────────────────────────────────────────────────
+# ── trang bộ stress-test v2 ──────────────────────────────────────────────────
 def audit_tiles() -> list[dict]:
-    a = load("stress_test_audit.json")
+    a = _v2_audit()
     if not a:
         return []
-    t = a["totals"]
-    pct = 100 * t["valid"] / t["n"] if t["n"] else 0
+    n, imp = a.get("n_items"), a.get("n_impossible")
+    pct = 100 * imp / n if n else 0
     return [
-        {"k": "Cặp Q–A", "v": vi(t["n"], 0), "note": f"{len(CATEGORIES)} nhóm × 50"},
-        {"k": "Qua kiểm định", "v": vi(t["valid"], 0),
-         "note": f"{vi(pct, 0)}% — phần còn lại tính là không có đáp án"},
-        {"k": "Có đáp án trong ngữ cảnh",
-         "v": f"{vi(t['answerable_with_answer_in_context'], 0)}/{vi(t['answerable'], 0)}",
-         "note": "lý do bộ này không dùng để xếp hạng"},
-        {"k": "Trùng với train", "v": vi(dig(a, "overlap_with_viquad", "contexts_in_train"), 0),
-         "note": "không rò rỉ dữ liệu"},
+        {"k": "Mục", "v": vi(n, 0), "note": f"{len(CATEGORIES)} nhóm · 9 tập con"},
+        {"k": "Vi phạm kiểm định", "v": vi(a.get("n_violations"), 0),
+         "note": "mọi mục phải chấm được — bất biến của bộ v2"},
+        {"k": "Ngữ cảnh khác nhau", "v": vi(a.get("distinct_contexts"), 0),
+         "note": "trải rộng, tối đa 2 mục/ngữ cảnh mỗi tập con"},
+        {"k": "Không có đáp án", "v": f"{vi(imp, 0)} ({vi(pct, 0)}%)",
+         "note": "nhãn suy ra được, không tự gán"},
     ]
 
 
 def group_cards() -> list[dict]:
-    a = load("stress_test_audit.json") or {}
+    a = _v2_audit()
     out = []
     for code, name, _, mech in CATEGORIES:
         c = dig(a, "by_category", code) or {}
-        out.append({"code": code, "name": name, "mech": mech, "n": c.get("n"),
-                    "valid": c.get("valid"), "ans": c.get("answerable"),
-                    "ans_in_ctx": c.get("answer_in_context"),
-                    "distinct": c.get("distinct_questions"),
-                    "top_template": (c.get("top_template") or [None, 0])})
+        out.append({"code": code, "name": name, "mech": mech,
+                    "n": c.get("n_items"), "ans": c.get("n_answerable"),
+                    "imp": c.get("n_impossible"), "twins": c.get("n_original_twins"),
+                    "abstain_em": c.get("always_abstain_em")})
     return out
 
 
 def group_warning(code: str) -> str | None:
-    """Cảnh báo dựng từ chính số kiểm định, không viết tay."""
-    a = load("stress_test_audit.json") or {}
+    """Ghi chú dựng từ chính số kiểm định — cách ĐỌC nhóm, không phải lỗi dữ liệu."""
+    a = _v2_audit()
     c = dig(a, "by_category", code)
     if not c:
         return None
-    bits = []
-    if c["valid"] < c["n"]:
-        bits.append(f"chỉ {c['valid']}/{c['n']} câu qua được kiểm định")
-    if c["answerable"] and c["answer_in_context"] < c["answerable"]:
-        bits.append(f"{c['answer_in_context']}/{c['answerable']} câu có đáp án thật sự "
-                    f"chứa đáp án trong ngữ cảnh")
-    if c["answerable"] == 0:
-        bits.append("100% câu không có đáp án — hệ thống luôn từ chối đạt 100 EM "
-                    "mà không chứng minh năng lực nào")
-    if c["distinct_questions"] < c["n"]:
-        bits.append(f"{c['distinct_questions']} câu hỏi khác nhau trên {c['n']} mục")
-    tmpl = c.get("top_template") or [None, 0]
-    if tmpl[0] and tmpl[1] >= 5:
-        bits.append(f"khuôn mẫu lặp nhiều nhất xuất hiện {tmpl[1]} lần: “{tmpl[0]}”")
-    if not bits:
-        return None
-    return "Nhóm này cần dựng lại trước khi rút kết luận: " + "; ".join(bits) + "."
+    if (c.get("always_abstain_em") or 0) >= 100:
+        return ("Mọi mục nhóm này đều không có đáp án, nên hệ thống “luôn từ chối” đạt 100 EM "
+                "theo định nghĩa. Đọc nhóm này bằng độ nhất quán theo cặp (mỗi câu đi kèm câu "
+                "gốc có đáp án), không bằng EM trung bình.")
+    if c.get("n_original_twins"):
+        return (f"{c['n_original_twins']} mục gốc đi kèm để so theo cặp: điểm chỉ có nghĩa khi "
+                f"đặt cạnh chính câu đó trước khi biến đổi.")
+    return None
 
 
 def group_samples(code: str, limit: int = 6) -> list[dict]:
-    """Mẫu thật từ bộ stress-test, kèm cờ hợp lệ theo kiểm định."""
+    """Mẫu thật từ bộ v2, kèm tập con và vai trò (slice / perturbed / original)."""
     import sys
 
     if str(ROOT / "src") not in sys.path:
         sys.path.insert(0, str(ROOT / "src"))
     try:
-        from mrc.stress_test import load_stress_test
+        from mrc.stress_v2 import load_stress_v2
     except Exception:
         return []
     try:
-        examples, meta, _ = load_stress_test(str(ROOT / "data/stress_test"))
+        examples, meta = load_stress_v2(ROOT / "data/stress_test_v2/stress_v2.json")
     except Exception:
         return []
     out = []
     for ex in examples:
         m = meta.get(ex.qid, {})
-        if m.get("category") != code:
+        if not m.get("category", "").startswith(code) or m.get("role") == "original":
             continue
         out.append({"qid": ex.qid, "question": ex.question,
                     "gold": ex.answers[0] if ex.answers else "⌀ không có đáp án",
-                    "valid": bool(m.get("valid"))})
+                    "subset": m.get("subset", ""), "role": m.get("role", "")})
         if len(out) >= limit:
             break
     return out

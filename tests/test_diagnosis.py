@@ -1,7 +1,5 @@
-"""Bất biến của phân tích chẩn đoán, stress-test loader và baseline từ chối."""
+"""Bất biến của phân tích chẩn đoán và baseline từ chối."""
 from __future__ import annotations
-
-import json
 
 import pytest
 
@@ -10,7 +8,6 @@ from mrc.diagnosis import (
     abstention_stats, classify_error, error_taxonomy, mcnemar_exact,
     paired_comparison, slice_scores,
 )
-from mrc.stress_test import audit_item, load_stress_test
 
 
 @pytest.mark.parametrize("pred,golds,expected", [
@@ -69,33 +66,6 @@ def test_paired_comparison_table_and_ci():
 
 def test_always_abstain_returns_empty():
     assert AlwaysAbstain().predict("ctx", "q") == ""
-
-
-def test_audit_flags_answer_missing_from_context():
-    qa = {"question": "Ai?", "answers": {"text": ["Bác Hồ"], "answer_start": [0]}}
-    a = audit_item("Hà Nội là thủ đô.", qa)
-    assert a["answerable"] and not a["answer_in_context"] and not a["valid"]
-
-
-def test_audit_accepts_unanswerable_and_bad_offset():
-    ctx = "Hà Nội là thủ đô."
-    assert audit_item(ctx, {"question": "?", "answers": {"text": [], "answer_start": []},
-                            "is_impossible": True})["valid"]
-    a = audit_item(ctx, {"question": "?", "answers": {"text": ["thủ đô"], "answer_start": [0]}})
-    assert a["valid"] and not a["offset_correct"]
-
-
-def test_load_stress_test_skips_flat_records(tmp_path):
-    squad = {"title": "t", "paragraphs": [{"context": "A là B.", "qas": [
-        {"id": "q1", "question": "A là gì?", "is_impossible": False,
-         "answers": {"text": ["B"], "answer_start": [99]}}]}]}
-    flat = {"id": "f1", "context": "c", "question": "q", "expected_answer": "z"}
-    from mrc.stress_test import CATEGORIES
-    for name in CATEGORIES.values():
-        (tmp_path / f"{name}.json").write_text(json.dumps({"data": [squad, flat]}))
-    ex, meta, stats = load_stress_test(tmp_path)
-    assert len(ex) == 5 and ex[0].answer_start == 5  # offset sai được sửa bằng find
-    assert stats["E1"]["flat_records"] == 1
 
 
 def test_article_bootstrap_is_wider_when_gains_cluster_in_few_articles():

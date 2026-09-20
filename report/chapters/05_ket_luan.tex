@@ -44,8 +44,9 @@ trên UIT-ViQuAD~2.0, đặc điểm quyết định không phải là tách t�
 
 \paragraph{Về phương pháp.} Hai trong ba công cụ chẩn đoán có giá trị nhất của đồ án không cần chạy mô hình
 nào: phép đo biên từ cho biết trước giới hạn trên của hiệu ứng mà giả thuyết RQ1 dự đoán, và phép kiểm định
-bộ stress-test cho thấy bộ dữ liệu chẩn đoán do chính nhóm xây \emph{không đo được thứ nó tuyên bố đo}. Nếu
-không kiểm định, bảng kết quả trên bộ đó sẽ xếp ``không làm gì'' đứng đầu mà không ai nhận ra vì sao.
+bộ stress-test cho thấy một bộ dữ liệu chẩn đoán có thể \emph{không đo được thứ nó tuyên bố đo}. Bài học đó
+được mã hoá thành công cụ: bộ v2 chỉ được coi là dựng xong khi hàm kiểm định báo \StressViol{} vi phạm, nên
+điều kiện ``mọi mục đều chấm được'' là bất biến của chương trình chứ không phải lời hứa trong tài liệu.
 
 \subsection{Giới hạn}
 \label{sec:limitations}
@@ -75,9 +76,11 @@ Các giới hạn dưới đây quyết định phạm vi mà mọi kết luận
   \item \textbf{Nguyên nhân sụp đổ chỉ được xác định đến mức ``đủ để khắc phục''.} Bằng chứng ủng hộ bất ổn
         tối ưu hoá phụ thuộc lần chạy; vì sao nó xảy ra ở seed 42 mà không ở seed 13, vì sao chỉ với PhoBERT,
         và liệu có xảy ra trên GPU CUDA hay không, chưa được kiểm tra.
-  \item \textbf{Bộ stress-test không dùng được làm thước đo} (Mục~\ref{sec:audit}). Các nhóm hiện tượng
-        E2--E5 vì vậy không có bằng chứng định lượng đáng tin cậy trong đồ án này; phân tích theo độ dài và
-        theo loại lỗi trên validation chỉ thay thế được một phần.
+  \item \textbf{Bộ stress-test v2 dựa trên biến đổi tự động, không phải văn bản tự nhiên} (Mục~\ref{sec:audit}).
+        Các nhóm perturbation (E2c, E3b, E5) đúng nhãn theo luật, nhưng câu sinh ra có thể khác phân phối văn
+        bản thật: xoá một câu có thể làm đoạn văn mất mạch, và câu hỏi bỏ dấu không phải lúc nào cũng giống
+        cách người dùng thật gõ thiếu dấu. Kết luận từ các nhóm này nói về \emph{độ bền dưới phép biến đổi},
+        không trực tiếp về hiệu năng trên dữ liệu tự nhiên tương ứng.
   \item \textbf{Phân loại thủ công 33 câu lệch biên} do một người thực hiện, chưa đo độ đồng thuận giữa
         các người gán. Phân loại lỗi tự động (Mục~\ref{sec:taxonomy}) dựa trên quan hệ tập hợp token nên
         tái lập được, nhưng không phân biệt được lỗi ``hiểu sai câu hỏi'' với ``chọn nhầm thực thể cùng loại''.
@@ -94,9 +97,9 @@ Các giới hạn dưới đây quyết định phạm vi mà mọi kết luận
   \item \textbf{Bộ tách từ.} Chạy lại PhoBERT với RDRSegmenter (VnCoreNLP) --- bộ tách từ dùng lúc tiền
         huấn luyện --- để đo phần hiệu năng bị mất do lệch bộ tách từ; và sửa luật dính dấu chấm của
         \code{pyvi}, nguyên nhân của \MisPeriod{} trong \SegMis{} câu lệch biên.
-  \item \textbf{Xây lại bộ stress-test} theo quy trình có kiểm định tự động từ đầu: đáp án phải nằm trong
-        ngữ cảnh (báo lỗi thay vì trả về 0), mỗi nhóm có đủ câu có đáp án làm đối chứng, và câu hỏi do người
-        viết thay vì sinh từ khuôn mẫu; đo độ đồng thuận giữa người gán.
+  \item \textbf{Thẩm định bộ stress-test v2 bằng người.} Bộ v2 bảo đảm nhãn đúng \emph{theo luật}; bước
+        tiếp theo là để người đọc chấm một mẫu ngẫu nhiên mỗi nhóm, đo độ đồng thuận, và kiểm xem các câu
+        sau biến đổi có còn tự nhiên không --- đặc biệt với E3b (xoá câu) và E2c (chèn câu nhiễu).
   \item \textbf{Thêm seed} (từ 3 trở lên) cho mọi mô hình, để ước lượng độ bất định do huấn luyện đáng tin
         cậy hơn hai seed hiện có.
 \end{enumerate}

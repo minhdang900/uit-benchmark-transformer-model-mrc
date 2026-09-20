@@ -1,0 +1,167 @@
+{
+  "n_items": 1139,
+  "n_answerable": 839,
+  "n_impossible": 300,
+  "distinct_contexts": 572,
+  "distinct_source_questions": 758,
+  "by_category": {
+    "E1": {
+      "name": "Ranh giới từ ghép",
+      "n_items": 133,
+      "n_original_twins": 0,
+      "n_answerable": 133,
+      "n_impossible": 0,
+      "always_abstain_em": 0.0
+    },
+    "E2": {
+      "name": "Nhiễu / ngữ cảnh dài",
+      "n_items": 223,
+      "n_original_twins": 63,
+      "n_answerable": 223,
+      "n_impossible": 0,
+      "always_abstain_em": 0.0
+    },
+    "E3": {
+      "name": "Không trả lời được",
+      "n_items": 200,
+      "n_original_twins": 100,
+      "n_answerable": 0,
+      "n_impossible": 200,
+      "always_abstain_em": 100.0
+    },
+    "E4": {
+      "name": "Lệch từ vựng / nhiều câu",
+      "n_items": 120,
+      "n_original_twins": 0,
+      "n_answerable": 120,
+      "n_impossible": 0,
+      "always_abstain_em": 0.0
+    },
+    "E5": {
+      "name": "Câu hỏi không dấu",
+      "n_items": 150,
+      "n_original_twins": 150,
+      "n_answerable": 100,
+      "n_impossible": 50,
+      "always_abstain_em": 33.33
+    }
+  },
+  "by_subset": {
+    "E1a": {
+      "description": "slice — biên đáp án vàng cắt ngang một từ của pyvi",
+      "n_items": 33,
+      "n_original_twins": 0,
+      "n_answerable": 33,
+      "n_impossible": 0,
+      "distinct_contexts": 32,
+      "distinct_source_articles": 16,
+      "distinct_questions": 33,
+      "max_items_per_context": 2
+    },
+    "E1b": {
+      "description": "slice — đáp án mở đầu/kết thúc bằng từ ghép riêng (viết hoa) ≥2 âm tiết",
+      "n_items": 100,
+      "n_original_twins": 0,
+      "n_answerable": 100,
+      "n_impossible": 0,
+      "distinct_contexts": 87,
+      "distinct_source_articles": 17,
+      "distinct_questions": 100,
+      "max_items_per_context": 2
+    },
+    "E2a": {
+      "description": "slice — đáp án nằm sau âm tiết thứ 180 của context (ngoài cửa sổ đầu)",
+      "n_items": 80,
+      "n_original_twins": 0,
+      "n_answerable": 80,
+      "n_impossible": 0,
+      "distinct_contexts": 66,
+      "distinct_source_articles": 12,
+      "distinct_questions": 80,
+      "max_items_per_context": 2
+    },
+    "E2b": {
+      "description": "slice — đáp án chứa số, context có ≥3 con số khác làm ứng viên nhiễu",
+      "n_items": 80,
+      "n_original_twins": 0,
+      "n_answerable": 80,
+      "n_impossible": 0,
+      "distinct_contexts": 70,
+      "distinct_source_articles": 17,
+      "distinct_questions": 80,
+      "max_items_per_context": 2
+    },
+    "E2c": {
+      "description": "perturbation — chèn một câu nhiễu nói về chủ thể khác, số khác",
+      "n_items": 63,
+      "n_original_twins": 63,
+      "n_answerable": 63,
+      "n_impossible": 0,
+      "distinct_contexts": 63,
+      "distinct_source_articles": 8,
+      "distinct_questions": 63,
+      "max_items_per_context": 1
+    },
+    "E3a": {
+      "description": "slice — câu không trả lời được do người viết (ViQuAD 2.0)",
+      "n_items": 100,
+      "n_original_twins": 0,
+      "n_answerable": 0,
+      "n_impossible": 100,
+      "distinct_contexts": 93,
+      "distinct_source_articles": 17,
+      "distinct_questions": 100,
+      "max_items_per_context": 2
+    },
+    "E3b": {
+      "description": "perturbation — xoá câu chứa đáp án khỏi context",
+      "n_items": 100,
+      "n_original_twins": 100,
+      "n_answerable": 0,
+      "n_impossible": 100,
+      "distinct_contexts": 99,
+      "distinct_source_articles": 19,
+      "distinct_questions": 100,
+      "max_items_per_context": 2
+    },
+    "E4": {
+      "description": "slice — câu chứa đáp án không phải câu trùng từ nhiều nhất với câu hỏi",
+      "n_items": 120,
+      "n_original_twins": 0,
+      "n_answerable": 120,
+      "n_impossible": 0,
+      "distinct_contexts": 105,
+      "distinct_source_articles": 18,
+      "distinct_questions": 120,
+      "max_items_per_context": 2
+    },
+    "E5": {
+      "description": "perturbation — bỏ toàn bộ dấu tiếng Việt trong câu hỏi",
+      "n_items": 150,
+      "n_original_twins": 150,
+      "n_answerable": 100,
+      "n_impossible": 50,
+      "distinct_contexts": 133,
+      "distinct_source_articles": 18,
+      "distinct_questions": 150,
+      "max_items_per_context": 2
+    }
+  },
+  "n_violations": 0,
+  "violations": [],
+  "manual_review": {
+    "subsets": [
+      "E2c",
+      "E3b"
+    ],
+    "n_to_review": 163,
+    "n_reviewed_by_both": 0,
+    "n_rejected": 0,
+    "agreement_pct": null,
+    "cohen_kappa": null,
+    "status": "chưa kiểm tra tay"
+  },
+  "commit": "f6f0b48",
+  "seed": 42,
+  "source": "UIT-ViQuAD 2.0 validation"
+}

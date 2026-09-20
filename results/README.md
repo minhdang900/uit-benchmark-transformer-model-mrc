@@ -9,7 +9,9 @@ Mọi con số trong README, báo cáo (`report/`) và slide (`slides/`) đến 
 | `training_curve_<run>.json` | `scripts/finetune.py` | cấu hình, loss và EM/F1 dev theo epoch, epoch được chọn |
 | `segmentation_validation.json` | `scripts/analyze_segmentation.py` | tương thích biên từ và trần EM từng câu |
 | `misaligned_labels.json` | phân loại thủ công | nguyên nhân của 33 câu lệch biên (cần nhóm rà lại) |
-| `stress_test_audit.json` | `scripts/audit_stress_test.py` | kiểm định bộ stress-test |
+| `stress_v2_audit.json` | `scripts/build_stress_v2.py` | thiết kế + kiểm định bộ stress-test v2 (0 vi phạm) |
+| `stress_v2_slice_scores.json` | `scripts/stress_v2_slice_scores.py` | điểm của các *slice* v2 chiếu lên dự đoán validation (không gồm perturbation) |
+| `dataset_analysis.json` | `scripts/analyze_dataset.py` | thống kê mô tả UIT-ViQuAD 2.0 (độ dài, loại câu hỏi, phân bố nhãn) |
 | `diagnosis_validation.json` | `scripts/diagnose.py` | phân loại lỗi, từ chối, so sánh cặp, bẫy plausible |
 | `disagreements_phobert_xlmr.json`, `error_sample_*.json` | `scripts/diagnose.py` | nguyên liệu phân tích định tính |
 | `loss_probe.json` | `scripts/probe_loss.py` | loss theo loại nhãn cho từng checkpoint |

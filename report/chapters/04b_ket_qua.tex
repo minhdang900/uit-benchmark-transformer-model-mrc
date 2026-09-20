@@ -407,7 +407,7 @@ PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec & & \TunedP
 
 \begin{table}[htbp]
 \centering
-\caption{EM trên bộ stress-test theo nhóm: \emph{toàn bộ} / \emph{chỉ câu hợp lệ}. Chỉ để minh hoạ --- xem Mục~\ref{sec:audit}}
+\caption{EM / F1 trên bộ stress-test v2 theo nhóm (\StressN{} mục, \StressViol{} vi phạm kiểm định --- xem Mục~\ref{sec:audit})}
 \label{tab:stress}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
@@ -419,7 +419,7 @@ PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec & & \TunedP
 \tabinput{generated/tab_stress.tex}
 \bottomrule
 \end{tabular}
-\par\vspace{2pt}{\footnotesize Số câu hợp lệ mỗi nhóm: E1 \AuditEOneValid, E2 \AuditETwoValid, E3 \AuditEThreeValid, E4 \AuditEFourValid, E5 \AuditEFiveValid.}
+\par\vspace{2pt}{\footnotesize Số mục mỗi nhóm: E1 \StressEOneN, E2 \StressETwoN, E3 \StressEThreeN, E4 \StressEFourN, E5 \StressEFiveN. Mỗi ô là EM / F1.}
 \end{table}
 
 \paragraph{Mức sàn.} Hệ thống không làm gì đạt EM \AbstainEM{} trên validation. Mọi điểm trên câu không
@@ -543,11 +543,37 @@ thay vì chọn một lần chạy ``chính''.
 \end{tabular}
 \end{table}
 
-\paragraph{Bộ stress-test không phân biệt được gì.} Bảng~\ref{tab:stress} xác nhận kết luận kiểm định: ở
-E1, E3, E4, điểm của mọi mô hình \emph{bằng đúng} điểm của hệ thống luôn từ chối; ở E5, hệ thống luôn từ
-chối \emph{thắng} cả hai mô hình. Trên toàn bộ 250 câu, luôn từ chối (\AbstainStressEM) đứng trên XLM-R
-(\XlmrStressEM) và PhoBERT (\PhobertStressEM). Một bảng xếp hạng dựa trên bộ này sẽ kết luận rằng ``không
-làm gì'' là hệ thống tốt nhất.
+\paragraph{Bộ stress-test v2 phân biệt được các hệ thống.} Trên \StressN{} mục, hệ thống ``luôn từ
+chối'' đạt \AbstainStressEM{} EM --- đúng bằng tỉ lệ câu không có đáp án --- trong khi XLM-R đạt
+\XlmrStressEM{} và PhoBERT \PhobertStressEM{} (seed 13: \XlmrThirteenStressEM{} và
+\PhobertThirteenStressEM{}). Khác với một bộ chẩn đoán mà mọi mô hình đều bằng mức sàn, bảng này
+xếp hạng được, nên các chênh lệch theo nhóm ở Bảng~\ref{tab:stress} và Hình~\ref{fig:stress} mới
+đọc được như tín hiệu về cơ chế thất bại.
+
+Bốn quan sát theo nhóm:
+
+\begin{enumerate}
+  \item \textbf{E4 (lệch từ vựng) tách hai mô hình mạnh nhất.} Đây là nhóm mà câu chứa đáp án
+        \emph{không} phải câu trùng từ nhiều nhất với câu hỏi. XLM-R rơi xuống mức thấp nhất trong
+        năm nhóm, còn PhoBERT giữ được khoảng cách rõ rệt --- dấu hiệu XLM-R dựa nhiều hơn vào
+        chồng lấn từ vựng giữa câu hỏi và câu chứa đáp án.
+  \item \textbf{E5 (câu hỏi không dấu) làm cả hai mô hình sụt.} Ngữ cảnh và đáp án vàng không đổi;
+        chỉ dấu tiếng Việt trong câu hỏi bị bỏ. Mọi hệ thống đều tụt mạnh, cho thấy biểu diễn câu
+        hỏi lệ thuộc vào dấu chứ không chỉ vào nội dung.
+  \item \textbf{E3 phải đọc theo cặp.} Mọi mục E3 đều không có đáp án nên ``luôn từ chối'' đạt 100
+        EM trên nhóm này \emph{theo định nghĩa}; điểm thấp của PhoBERT seed 42 ở đây phản ánh đúng
+        việc nó gần như không từ chối ở $\tau = 0$ (Mục~\ref{sec:res-rq3}), chứ không phải nó hiểu
+        sai câu hỏi. Chỉ số có nghĩa là độ nhất quán theo cặp với câu gốc đi kèm.
+  \item \textbf{TF-IDF gần như bằng 0 trên mọi nhóm.} Baseline truy hồi câu đạt \TfidfStressEM{} EM
+        toàn bộ: bộ v2 không thể giải bằng cách chọn câu trùng từ nhiều nhất, đúng như thiết kế.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/stress_v2.png}
+\caption{EM theo nhóm E1--E5 trên bộ stress-test v2. Đường đứt là mốc của hệ thống ``luôn từ chối''}
+\label{fig:stress}
+\end{figure}
 
 \begin{keybox}
 \textbf{Trả lời RQ3: một phần.} Ở $\tau = 0$, XLM-R từ chối đúng tần suất nhưng sai đối tượng. PhoBERT seed 42

@@ -42,8 +42,8 @@ SYSTEMS = [  # (khoá tệp, tiền tố macro, tên hiển thị)
     ("phobert_seed13", "PhobertThirteen", "PhoBERT-base-v2, seed 13"),
 ]
 CAT_WORDS = {"E1": "EOne", "E2": "ETwo", "E3": "EThree", "E4": "EFour", "E5": "EFive"}
-CAT_NAMES = {"E1": "Ranh giới từ ghép", "E2": "Ngữ cảnh gây nhiễu", "E3": "Câu hỏi phủ định",
-             "E4": "Suy luận nhiều bước", "E5": "Nhãn mập mờ"}
+CAT_NAMES = {"E1": "Ranh giới từ ghép", "E2": "Nhiễu / ngữ cảnh dài", "E3": "Không trả lời được",
+             "E4": "Lệch từ vựng / nhiều câu", "E5": "Câu hỏi không dấu"}
 
 
 def load(name: str):
@@ -138,28 +138,30 @@ def main() -> None:
                     ("compound_boundary", "MisCompound"), ("annotation_truncated", "MisAnnot")):
         m(name, mis_labels.get(k), 0)
 
-    # ── kiểm định stress-test ────────────────────────────────────────────────
-    audit = load("stress_test_audit.json") or {}
-    tot = audit.get("totals", {})
-    for k, name in (("n", "AuditN"), ("answerable", "AuditAns"),
-                    ("answerable_with_answer_in_context", "AuditAnsInCtx"),
-                    ("answerable_with_correct_offset", "AuditOffsetOK"), ("valid", "AuditValid"),
-                    ("distinct_contexts", "AuditCtx"), ("flat_records_outside_squad_schema", "AuditFlat")):
-        m(name, tot.get(k), 0)
-    m("AuditCombined", get(audit, "combined_file", "top_level_records"), 0)
-    m("AuditTrainOverlap", get(audit, "overlap_with_viquad", "contexts_in_train"), 0)
-    cats = audit.get("by_category", {})
-    rows = []
-    for code, c in cats.items():
+    # ── kiểm định bộ stress-test v2 ──────────────────────────────────────────
+    # Bộ v2 dựng lại từ ViQuAD 2.0 validation; bất biến là MỌI mục chấm được,
+    # nên \StressViol phải bằng 0 — nếu khác 0 thì bộ dữ liệu hỏng, không phải mô hình.
+    audit = load("stress_v2_audit.json") or {}
+    m("StressN", audit.get("n_items"), 0)
+    m("StressAns", audit.get("n_answerable"), 0)
+    m("StressImp", audit.get("n_impossible"), 0)
+    m("StressCtx", audit.get("distinct_contexts"), 0)
+    m("StressViol", audit.get("n_violations"), 0)
+    m("StressSrcQ", audit.get("distinct_source_questions"), 0)
+    m("StressImpPct", 100 * audit["n_impossible"] / audit["n_items"] if audit.get("n_items") else None)
+    audit_rows = []
+    for code, c in (audit.get("by_category") or {}).items():
         w = CAT_WORDS[code]
-        m(f"Audit{w}Valid", c["valid"], 0)
-        m(f"Audit{w}Ans", c["answerable"], 0)
-        m(f"Audit{w}AnsInCtx", c["answer_in_context"], 0)
-        m(f"Audit{w}DistinctQ", c["distinct_questions"], 0)
-        rows.append(f"{code} & {CAT_NAMES[code]} & {c['n']} & {c['answerable']} & "
-                    f"{c['answer_in_context']} & {c['offset_correct']} & {c['answer_in_question']} & "
-                    f"{c['distinct_questions']} & \\textbf{{{c['valid']}}} \\\\")
-    table("tab_audit.tex", "\n".join(rows) + "\n")
+        m(f"Stress{w}N", c.get("n_items"), 0)
+        m(f"Stress{w}Ans", c.get("n_answerable"), 0)
+        m(f"Stress{w}Imp", c.get("n_impossible"), 0)
+        m(f"Stress{w}Twins", c.get("n_original_twins"), 0)
+        m(f"Stress{w}Abstain", c.get("always_abstain_em"))
+        audit_rows.append(
+            f"{code} & {CAT_NAMES[code]} & {c.get('n_items')} & {c.get('n_answerable')} & "
+            f"{c.get('n_impossible')} & {c.get('n_original_twins')} & "
+            f"{vi(c.get('always_abstain_em'), 1)} \\\\")
+    table("tab_stress_design.tex", "\n".join(audit_rows) + "\n")
 
     # ── từng hệ thống ─────────────────────────────────────────────────────────
     diag = load("diagnosis_validation.json") or {}
@@ -170,7 +172,7 @@ def main() -> None:
     tax_rows_tuned = []
     for key, P, label in SYSTEMS:
         ev = load(f"eval_{key}_validation.json")
-        st = load(f"eval_{key}_stress.json")
+        st = load(f"eval_{key}_stress2.json")
         dg = get(diag, "models", key)
         m(f"{P}EM", get(ev, "overall", "EM"))
         m(f"{P}Fone", get(ev, "overall", "F1"))
@@ -237,8 +239,7 @@ def main() -> None:
             cells = []
             for code in CAT_WORDS:
                 c = get(st, "by_category", code) or {}
-                allc, valc = c.get("all", {}), c.get("valid", {})
-                cells.append(f"{vi(allc.get('EM'), 1)} / {vi(valc.get('EM'), 1)}")
+                cells.append(f"{vi(c.get('EM'), 1)} / {vi(c.get('F1'), 1)}")
             stress_rows.append(f"{label} & " + " & ".join(cells) + f" & {vi(st['overall']['EM'], 1)} \\\\")
         if counts:
             tax_rows.append(f"{label} & {vi(nerr)} & " + " & ".join(
