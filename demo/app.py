@@ -39,8 +39,8 @@ PAGES = {
                "title": "Khám phá lỗi",
                "lede": "Những câu mà PhoBERT và XLM-R trả lời khác nhau — nơi điểm tổng che mất "
                        "cơ chế thất bại."},
-    "stress": {"label": "Bộ stress-test", "note": "250 cặp · 5 nhóm",
-               "title": "Bộ stress-test",
+    "stress": {"label": "Bộ stress-test v2", "note": "1139 mục · 5 nhóm",
+               "title": "Bộ stress-test v2",
                "lede": "Mỗi nhóm cô lập một cơ chế thất bại. Kiểm định hiện lên cùng dữ liệu, "
                        "không giấu ở phụ lục."},
     "runs": {"label": "Huấn luyện & ngưỡng", "note": "các lần chạy · τ hiệu chỉnh",

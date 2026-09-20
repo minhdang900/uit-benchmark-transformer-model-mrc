@@ -128,28 +128,29 @@ Một đáp án \emph{đúng} bị chấm sai --- khung mã cũ mắc lỗi này
 % ─────────────────────────────────────────────────────────────── 3 CÔNG CỤ ĐO
 \section{Kiểm định công cụ đo}
 
-\begin{frame}{Bộ stress-test 250 câu của nhóm: kiểm định \emph{trước} khi dùng}
+\begin{frame}{Bộ stress-test v2: kiểm định \emph{trước} khi dùng}
 \begin{columns}[T]
 \begin{column}{0.56\textwidth}
-\includegraphics[width=\textwidth]{slide_stress_audit.png}
+\includegraphics[width=\textwidth]{slide_stress_v2.png}
 \end{column}
 \begin{column}{0.42\textwidth}
 \small
-\bignum{\AuditAnsInCtx/\AuditAns}{phobert}\\
-câu có đáp án chứa đáp án \emph{trong} ngữ cảnh
+\bignum{\StressViol}{phobert}\\
+vi phạm trên \StressN{} mục --- \emph{mọi} mục đều chấm được
 
 \vspace{0.4em}
 \footnotesize
-$\bullet$ 250 câu dùng chung \AuditCtx{} đoạn văn\\
-$\bullet$ E5: 50 câu, \AuditEFiveDistinctQ{} câu hỏi khác nhau\\
-$\bullet$ ``Luôn từ chối'' đạt \textbf{\AbstainStressEM} điểm\\[4pt]
-\textbf{Nguyên nhân:} \code{\_find\_answer\_start} trả về 0 khi không tìm thấy; ngữ cảnh gán lại theo vòng.
+$\bullet$ \StressN{} mục trên \StressCtx{} ngữ cảnh\\
+$\bullet$ Câu hỏi + đáp án vàng đều do \emph{người} gán (ViQuAD 2.0)\\
+$\bullet$ Biến đổi chỉ dùng luật mà nhãn mới suy ra được\\
+$\bullet$ ``Luôn từ chối'' chỉ đạt \textbf{\AbstainStressEM} điểm\\[4pt]
+\textbf{Kiểm bằng máy:} offset đúng, đáp án đã mất thật sự, câu hỏi E5 hết dấu, không trùng train.
 
 \vspace{0.3em}
-\alert{$\Rightarrow$ Không dùng để xếp hạng mô hình.}
+\alert{$\Rightarrow$ Xếp hạng được, dùng để chẩn đoán.}
 \end{column}
 \end{columns}
-\src{results/stress\_test\_audit.json}
+\src{results/stress\_v2\_audit.json}
 \end{frame}
 
 \begin{frame}{Trần EM do biên từ --- đo được mà không cần mô hình}
@@ -422,7 +423,7 @@ $\bullet$ \textbf{Phụ thuộc lần chạy}: seed 13, cùng lr $3\cdot10^{-5}$
 \textbf{RQ4:} Transformer vượt TF-IDF ở mọi nhóm; TF-IDF (EM \TfidfEM) còn thua ``luôn từ chối''.
 \end{column}
 \begin{column}{0.46\textwidth}
-\small \textbf{EM trên stress-test 250 câu}\\[3pt]
+\small \textbf{EM trên stress-test v2 (\StressN{} mục)}\\[3pt]
 \begin{tabular}{@{}l r@{}}
 \toprule
 \textbf{Luôn từ chối} & \textbf{\AbstainStressEM} \\
@@ -433,7 +434,7 @@ TF-IDF & \TfidfStressEM \\
 \end{tabular}
 
 \vspace{0.5em}
-\alert{``Không làm gì'' đứng đầu} --- đúng như kiểm định dự báo. Bộ này không dùng để xếp hạng.
+\alert{Mô hình vượt xa mức sàn} --- ``luôn từ chối'' \AbstainStressEM{} điểm. Nhóm lệch từ vựng (E4) và câu hỏi không dấu (E5) là hai chỗ sụt rõ nhất.
 \end{column}
 \end{columns}
 \end{frame}

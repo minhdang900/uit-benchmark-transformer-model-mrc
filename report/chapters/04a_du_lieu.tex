@@ -74,73 +74,58 @@ tiết. Tuy vậy PhoBERT chỉ có 256 vị trí, nên 14\% đoạn văn cần 
 XLM-R ở độ dài 384. Lợi thế ``chuỗi ngắn hơn'' của mô hình word-level bị giới hạn vị trí triệt
 tiêu một phần.
 
-\subsection{Kiểm định bộ stress-test}
+\subsection{Bộ stress-test v2: thiết kế và kiểm định}
 \label{sec:audit}
 
-Bộ stress-test 250 câu được xây trong giai đoạn đầu của đồ án để cô lập năm cơ chế thất bại
-(E1 ranh giới từ ghép, E2 ngữ cảnh gây nhiễu, E3 câu hỏi phủ định, E4 suy luận nhiều bước, E5
-nhãn mập mờ). Theo giao thức ở Mục~\ref{sec:audit-method}, nó được kiểm định \emph{trước} khi
-chấm mô hình. Kết quả (Bảng~\ref{tab:audit}, Hình~\ref{fig:audit}) cho thấy bộ này \textbf{không
-dùng được để so sánh mô hình}.
+Bộ stress-test dùng để chẩn đoán trong báo cáo này được dựng lại từ UIT-ViQuAD 2.0 validation
+theo giao thức ở Mục~\ref{sec:audit-method}. Kết quả: \textbf{\StressN{} mục} trải trên
+\StressCtx{} ngữ cảnh khác nhau, sinh từ \StressSrcQ{} câu hỏi gốc do người gán, trong đó
+\StressAns{} câu có đáp án và \StressImp{} câu không có đáp án (\StressImpPct{}\%).
+
+Kiểm định tự động chạy \emph{trước} khi chấm bất kỳ mô hình nào báo cáo
+\textbf{\StressViol{} vi phạm} trên toàn bộ \StressN{} mục: mọi câu có đáp án đều có đáp án vàng
+nằm đúng tại offset đã ghi, mọi câu ``không trả lời được'' do xoá câu đều thật sự không còn đáp
+án trong ngữ cảnh, mọi câu hỏi E5 đều đã bỏ hết dấu, và không ngữ cảnh nào trùng với tập train.
+Nói cách khác, \emph{mọi mục đều chấm được}: không có câu nào mà điểm EM tối đa của một mô hình
+trích xuất bị chặn ở 0 vì lỗi dữ liệu.
 
 \begin{table}[htbp]
 \centering
-\caption{Kiểm định tự động bộ stress-test (nguồn: \code{results/stress\_test\_audit.json})}
+\caption{Thiết kế bộ stress-test v2 (nguồn: \code{results/stress\_v2\_audit.json})}
 \label{tab:audit}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
-\setlength{\tabcolsep}{3pt}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{2.9cm} r r r r r r r@{}}
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{4.6cm} r r r r r@{}}
 \toprule
-& & & \textbf{Có} & \multicolumn{3}{c}{\textbf{Trong số câu có đáp án}} & \textbf{Câu hỏi} & \\
-\cmidrule(lr){5-7}
-& \textbf{Nhóm} & \textbf{Câu} & \textbf{đáp án} & \textbf{đ.án $\in$ ngữ cảnh} & \textbf{offset đúng} & \textbf{đ.án $\in$ câu hỏi} & \textbf{khác nhau} & \textbf{Hợp lệ} \\
+& \textbf{Nhóm} & \textbf{Mục} & \textbf{Có đáp án} & \textbf{Không đáp án} & \textbf{Câu gốc đi kèm} & \textbf{Luôn từ chối (EM)} \\
 \midrule
-\tabinput{generated/tab_audit.tex}
+\tabinput{generated/tab_stress_design.tex}
 \bottomrule
-\end{tabular}}
+\end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.88\textwidth]{figures/stress_audit.png}
-\caption{Thành phần từng nhóm stress-test. Phần cam là câu có đáp án mà đáp án không nằm trong ngữ cảnh --- không mô hình trích xuất nào trả lời đúng được}
-\label{fig:audit}
-\end{figure}
-
-Bốn phát hiện:
+Ba điểm đáng chú ý về thiết kế:
 
 \begin{enumerate}
-  \item \textbf{Đáp án không nằm trong ngữ cảnh.} Chỉ \AuditAnsInCtx{} trên \AuditAns{} câu có đáp
-        án chứa đáp án vàng trong đoạn văn; chỉ \AuditOffsetOK{} câu có \code{answer\_start} đúng.
-        Với các câu còn lại, điểm EM tối đa của \emph{mọi} mô hình trích xuất là 0.
-  \item \textbf{Độ đa dạng rất thấp.} Cả 250 câu dùng chung \AuditCtx{} đoạn văn. Nhóm E5 có 50 câu
-        nhưng chỉ \AuditEFiveDistinctQ{} câu hỏi khác nhau; nhóm E1 có \AuditEOneDistinctQ{}. Câu hỏi
-        của E1 phần lớn là câu ``siêu ngôn ngữ'' dạng \emph{``Tại sao từ ghép `X' khó được tách từ
-        chính xác trong ngữ cảnh này?''} với đáp án là chính X, nên 19 câu có đáp án nằm nguyên văn
-        trong câu hỏi. Chúng đo khả năng chép lại cụm trong nháy đơn, không đo ranh giới từ ghép.
-  \item \textbf{Mất cân bằng nhãn tạo điểm thoái hoá.} E3 có 100\% câu không có đáp án, E5 có 86\%.
-        Hệ thống luôn từ chối đạt 100 điểm trên E3 và \AbstainStressEM{} điểm trên toàn bộ 250 câu.
-  \item \textbf{Tệp gộp chứa bản ghi ngoài lược đồ.} Tệp \code{stress\_test\_combined.json} có
-        \AuditCombined{} bản ghi: 250 câu SQuAD cộng \AuditFlat{} bản ghi ``phẳng'' không theo lược đồ
-        SQuAD (24 mỗi nhóm) mà tài liệu dự án không nhắc tới. Đây là lời giải cho sự chênh lệch
-        ``370 so với 250'' từng ghi nhận.
+  \item \textbf{Nhãn suy ra được, không tự gán.} Cả \StressImp{} câu không có đáp án đều hoặc là
+        câu \emph{impossible} do người viết trong ViQuAD 2.0 (nhóm E3a), hoặc là câu mà câu chứa
+        đáp án đã bị xoá khỏi ngữ cảnh theo luật và được kiểm lại là không còn đáp án (E3b). Không
+        câu nào được nhóm tự tuyên bố là ``không trả lời được''.
+  \item \textbf{Câu gốc đi kèm để so theo cặp.} Các nhóm perturbation mang theo chính câu trước
+        khi biến đổi (cột cuối Bảng~\ref{tab:audit}). Điều này quan trọng với E3: vì mọi mục E3
+        đều không có đáp án, hệ thống ``luôn từ chối'' đạt 100 EM trên nhóm đó \emph{theo định
+        nghĩa}. Chỉ số có nghĩa của E3 vì thế là độ nhất quán theo cặp --- trả lời đúng câu gốc
+        \emph{và} từ chối đúng câu đã xoá --- nơi ``luôn từ chối'' được 0.
+  \item \textbf{Trải rộng trên nhiều đoạn văn.} \StressN{} mục nằm trên \StressCtx{} ngữ cảnh, mỗi
+        tập con lấy tối đa hai mục từ cùng một ngữ cảnh, nên điểm số không bị chi phối bởi đặc
+        điểm của vài đoạn văn riêng lẻ.
 \end{enumerate}
 
-\paragraph{Nguyên nhân gốc.} Truy ngược mã sinh dữ liệu (\code{legacy/stress\_test\_generator.py})
-cho thấy hai lỗi ``sai âm thầm'' cụ thể: hàm \code{\_find\_answer\_start} trả về \textbf{0} khi không
-tìm thấy đáp án trong ngữ cảnh thay vì báo lỗi; và hàm \code{\_wrap\_into\_squad} gán ngữ cảnh
-\emph{theo vòng} cho các mẫu chưa có ngữ cảnh --- sau khi câu hỏi và đáp án đã được viết cho một
-ngữ cảnh khác. Hai lỗi cộng lại tạo ra dữ liệu đúng định dạng, qua được mọi kiểm tra rò rỉ (báo cáo
-rò rỉ đi kèm ghi \code{is\_clean: true}), nhưng sai về nội dung.
-
-\paragraph{Hệ quả cho thiết kế.} Bộ stress-test được giữ lại \emph{như một đối tượng nghiên cứu},
-không như một thước đo: các mô hình vẫn được chấm trên nó (Mục~\ref{sec:res-rq3}) để cho thấy điểm
-số trên một bộ chẩn đoán lỗi trông như thế nào, nhưng không kết luận nào về mô hình dựa trên nó.
-Vai trò chẩn đoán được chuyển sang các phép đo trên \emph{validation} --- \NValAns{} câu có đáp án do
-người gán --- bắt đầu từ phép đo biên từ dưới đây. Đây đúng là điều kiện mà Bowman và Dahl
-\cite{bowman2021fix} nêu: một bộ chẩn đoán chỉ có giá trị khi nhãn của nó đúng.
+\paragraph{Vai trò trong báo cáo.} Bộ v2 là công cụ \emph{chẩn đoán}, không phải tập test thứ hai:
+nó không tham gia chọn epoch, seed hay ngưỡng $\tau$. Kết luận chính của báo cáo vẫn đo trên
+validation (Mục~\ref{sec:res-rq1}); bộ v2 dùng để trả lời câu hỏi ``mô hình hỏng ở đâu''
+(Mục~\ref{sec:res-rq3}). Điều kiện mà Bowman và Dahl \cite{bowman2021fix} nêu --- một bộ chẩn
+đoán chỉ có giá trị khi nhãn của nó đúng --- ở đây được kiểm bằng máy chứ không bằng niềm tin.
 
 \subsection{Trần EM do biên từ}
 \label{sec:alignment-res}

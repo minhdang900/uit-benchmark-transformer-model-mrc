@@ -23,7 +23,7 @@ python -m pytest -m "not slow"
 
 # 3. Phân tích không cần mô hình
 python scripts/analyze_segmentation.py         # biên từ + trần EM
-python scripts/audit_stress_test.py            # kiểm định stress-test
+python scripts/build_stress_v2.py              # dựng + kiểm định stress-test v2
 
 # 4. Fine-tune (dev tách từ train; validation không được nhìn thấy)
 python scripts/finetune.py --model FacebookAI/xlm-roberta-base --out models/xlmr \
@@ -65,7 +65,7 @@ Ba bộ số liệu kết quả khác nhau (README, slide, hằng \code{EXPECTED
 Giải mã PhoBERT giữ dấu ``\_'' của bước tách từ & Đáp án đúng bị chấm EM~0 & Cắt đáp án từ văn bản gốc; kiểm thử hồi quy \\
 Ghi đè \code{max\_position\_embeddings} của PhoBERT & Hỏng embedding vị trí khi nạp & Bỏ; \code{max\_length} = 256 \\
 \code{include\_stress\_test=True} mặc định: 60\% bộ stress-test bị trộn vào tập \emph{huấn luyện} & Rò rỉ: chấm trên dữ liệu đã học & Stress-test chỉ dùng để đánh giá \\
-Bộ sinh stress-test: \code{\_find\_answer\_start} trả về 0 khi không tìm thấy đáp án; \code{\_wrap\_into\_squad} gán lại ngữ cảnh theo vòng cho mẫu không có ngữ cảnh & \AuditAns{}$-$\AuditAnsInCtx{} câu có đáp án không nằm trong ngữ cảnh (Mục~\ref{sec:audit}) & Kiểm định; không dùng để xếp hạng \\
+Bộ sinh stress-test: \code{\_find\_answer\_start} trả về 0 khi không tìm thấy đáp án; \code{\_wrap\_into\_squad} gán lại ngữ cảnh theo vòng cho mẫu không có ngữ cảnh & Phần lớn câu có đáp án không nằm trong ngữ cảnh: bộ cũ không đo được thứ nó tuyên bố đo & Dựng lại bộ stress-test từ validation, có kiểm định tự động (Mục~\ref{sec:audit}) \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -84,9 +84,9 @@ src/mrc/
   stress_test.py          # nạp + kiểm định stress-test                        (CS221)
   diagnosis.py            # phân loại lỗi, từ chối, McNemar, bootstrap         (CS221)
   baselines.py            # luôn từ chối                                       (CS221)
-scripts/   finetune.py run_eval.py analyze_segmentation.py audit_stress_test.py
+scripts/   finetune.py run_eval.py analyze_segmentation.py build_stress_v2.py
            diagnose.py make_report_numbers.py make_figures.py
-tests/     244 kiểm thử không cần GPU
+tests/     348 kiểm thử (297 không cần GPU)
 results/   eval_*.json predictions_*.json training_curve_*.json diagnosis_*.json ...
 report/    mã LaTeX của báo cáo; generated/ do make_report_numbers.py sinh
 legacy/    khung mã ban đầu (không dùng; xem Phụ lục B)
@@ -107,8 +107,8 @@ legacy/    khung mã ban đầu (không dùng; xem Phụ lục B)
 \midrule
 Thống kê dữ liệu, kích thước train/dev & \code{data/raw/*.json} qua \code{compute\_stats}, \code{split\_by\_context} (seed 42) \\
 EM, F1, tách nhóm, độ trễ & \code{results/eval\_*\_validation.json} \\
-Điểm trên stress-test theo nhóm & \code{results/eval\_*\_stress.json} \\
-Kiểm định stress-test & \code{results/stress\_test\_audit.json} \\
+Điểm trên stress-test v2 theo nhóm & \code{results/eval\_*\_stress2.json} \\
+Kiểm định stress-test v2 & \code{results/stress\_v2\_audit.json} \\
 Tương thích biên từ, trần EM & \code{results/segmentation\_validation.json} \\
 Phân loại lỗi, từ chối, theo độ dài đáp án, so sánh cặp & \code{results/diagnosis\_validation.json} \\
 Ví dụ bất đồng, mẫu lỗi định tính & \code{results/disagreements\_phobert\_xlmr.json}, \code{results/error\_sample\_*.json} \\

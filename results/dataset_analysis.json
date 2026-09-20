@@ -1,0 +1,2685 @@
+{
+ "commit": "f6f0b48",
+ "splits": {
+  "train": {
+   "articles": 138,
+   "paragraphs": 4101,
+   "questions": 28454,
+   "questions_per_paragraph": 6.94,
+   "context_words": {
+    "mean": 178.98,
+    "median": 160,
+    "p05": 112,
+    "p95": 311,
+    "max": 1537,
+    "n": 4101
+   },
+   "question_words": {
+    "mean": 14.65,
+    "median": 14.0,
+    "p05": 8,
+    "p95": 24,
+    "max": 53,
+    "n": 28454
+   },
+   "context_hist": [
+    {
+     "bin": "0-99",
+     "count": 11
+    },
+    {
+     "bin": "100-149",
+     "count": 1707
+    },
+    {
+     "bin": "150-199",
+     "count": 1243
+    },
+    {
+     "bin": "200-249",
+     "count": 624
+    },
+    {
+     "bin": "250-299",
+     "count": 271
+    },
+    {
+     "bin": "300-399",
+     "count": 199
+    },
+    {
+     "bin": "400+",
+     "count": 46
+    }
+   ],
+   "question_type": {
+    "Lựa chọn (…nào)": 7004,
+    "Định nghĩa/Sự vật": 6827,
+    "Người": 3450,
+    "Số lượng": 2806,
+    "Cách thức": 2315,
+    "Thời gian": 1947,
+    "Lý do": 1792,
+    "Địa điểm": 1595,
+    "Khác": 718
+   },
+   "per_article": [
+    {
+     "title": "Phạm Văn Đồng",
+     "questions": 41,
+     "impossible_pct": 34.1
+    },
+    {
+     "title": "Thực vật có hoa",
+     "questions": 138,
+     "impossible_pct": 37.7
+    },
+    {
+     "title": "Phần mềm giáo dục",
+     "questions": 63,
+     "impossible_pct": 36.5
+    },
+    {
+     "title": "Ngôn ngữ máy",
+     "questions": 42,
+     "impossible_pct": 28.6
+    },
+    {
+     "title": "Edward I của Anh",
+     "questions": 415,
+     "impossible_pct": 36.4
+    },
+    {
+     "title": "Nhật Bản",
+     "questions": 290,
+     "impossible_pct": 24.1
+    },
+    {
+     "title": "Đồng hồ cát",
+     "questions": 43,
+     "impossible_pct": 39.5
+    },
+    {
+     "title": "Albert Einstein",
+     "questions": 366,
+     "impossible_pct": 33.6
+    },
+    {
+     "title": "Voyager 1",
+     "questions": 49,
+     "impossible_pct": 24.5
+    },
+    {
+     "title": "Cộng hòa Dân chủ Đức",
+     "questions": 196,
+     "impossible_pct": 34.2
+    },
+    {
+     "title": "Karl Marx",
+     "questions": 374,
+     "impossible_pct": 37.4
+    },
+    {
+     "title": "Lưu vực",
+     "questions": 46,
+     "impossible_pct": 30.4
+    },
+    {
+     "title": "Đế quốc Ottoman",
+     "questions": 186,
+     "impossible_pct": 35.5
+    },
+    {
+     "title": "Thư viện Quốc gia Pháp",
+     "questions": 164,
+     "impossible_pct": 32.9
+    },
+    {
+     "title": "Nhôm",
+     "questions": 51,
+     "impossible_pct": 25.5
+    },
+    {
+     "title": "Dương cầm",
+     "questions": 47,
+     "impossible_pct": 23.4
+    },
+    {
+     "title": "Người Ê Đê",
+     "questions": 109,
+     "impossible_pct": 25.7
+    },
+    {
+     "title": "Thổ Nhĩ Kỳ",
+     "questions": 311,
+     "impossible_pct": 34.1
+    },
+    {
+     "title": "Động vật lưỡng cư",
+     "questions": 111,
+     "impossible_pct": 33.3
+    },
+    {
+     "title": "Dòng Tên",
+     "questions": 43,
+     "impossible_pct": 18.6
+    },
+    {
+     "title": "Lịch sử thế giới",
+     "questions": 393,
+     "impossible_pct": 28.8
+    },
+    {
+     "title": "Roma",
+     "questions": 522,
+     "impossible_pct": 32.8
+    },
+    {
+     "title": "Pyrit",
+     "questions": 60,
+     "impossible_pct": 35.0
+    },
+    {
+     "title": "Quảng Châu",
+     "questions": 162,
+     "impossible_pct": 34.0
+    },
+    {
+     "title": "Dân chủ trực tiếp",
+     "questions": 53,
+     "impossible_pct": 30.2
+    },
+    {
+     "title": "Ngành (sinh học)",
+     "questions": 41,
+     "impossible_pct": 31.7
+    },
+    {
+     "title": "Thành phố Hồ Chí Minh",
+     "questions": 334,
+     "impossible_pct": 25.7
+    },
+    {
+     "title": "Thực vật",
+     "questions": 83,
+     "impossible_pct": 28.9
+    },
+    {
+     "title": "Terbi",
+     "questions": 60,
+     "impossible_pct": 33.3
+    },
+    {
+     "title": "Giấy phép Tài liệu Tự do GNU",
+     "questions": 47,
+     "impossible_pct": 29.8
+    },
+    {
+     "title": "Công nghệ thông tin và truyền thông",
+     "questions": 32,
+     "impossible_pct": 34.4
+    },
+    {
+     "title": "Hà Nam (Trung Quốc)",
+     "questions": 335,
+     "impossible_pct": 36.4
+    },
+    {
+     "title": "Nhà Hán",
+     "questions": 309,
+     "impossible_pct": 20.7
+    },
+    {
+     "title": "Alexandros Đại đế",
+     "questions": 388,
+     "impossible_pct": 36.1
+    },
+    {
+     "title": "Đại học Chicago",
+     "questions": 49,
+     "impossible_pct": 28.6
+    },
+    {
+     "title": "Hồng y",
+     "questions": 59,
+     "impossible_pct": 32.2
+    },
+    {
+     "title": "Châu Mỹ",
+     "questions": 61,
+     "impossible_pct": 31.1
+    },
+    {
+     "title": "Antimon",
+     "questions": 51,
+     "impossible_pct": 27.5
+    },
+    {
+     "title": "Louis XVI của Pháp",
+     "questions": 155,
+     "impossible_pct": 23.2
+    },
+    {
+     "title": "Cholesterol",
+     "questions": 56,
+     "impossible_pct": 32.1
+    },
+    {
+     "title": "Enrico Fermi",
+     "questions": 56,
+     "impossible_pct": 32.1
+    },
+    {
+     "title": "Giáo hoàng Gioan Phaolô II",
+     "questions": 427,
+     "impossible_pct": 35.6
+    },
+    {
+     "title": "Comoros",
+     "questions": 45,
+     "impossible_pct": 17.8
+    },
+    {
+     "title": "Thiên văn học",
+     "questions": 148,
+     "impossible_pct": 35.1
+    },
+    {
+     "title": "Ả Rập Xê Út",
+     "questions": 422,
+     "impossible_pct": 26.5
+    },
+    {
+     "title": "Tiếng Anh",
+     "questions": 106,
+     "impossible_pct": 33.0
+    },
+    {
+     "title": "Tính từ",
+     "questions": 73,
+     "impossible_pct": 41.1
+    },
+    {
+     "title": "Hệ thống nhúng",
+     "questions": 59,
+     "impossible_pct": 30.5
+    },
+    {
+     "title": "Bắc Kinh",
+     "questions": 245,
+     "impossible_pct": 36.7
+    },
+    {
+     "title": "Khánh Hòa",
+     "questions": 259,
+     "impossible_pct": 36.3
+    },
+    {
+     "title": "Malaysia",
+     "questions": 352,
+     "impossible_pct": 33.5
+    },
+    {
+     "title": "Thiên Chúa",
+     "questions": 38,
+     "impossible_pct": 18.4
+    },
+    {
+     "title": "Michael Jackson",
+     "questions": 324,
+     "impossible_pct": 21.3
+    },
+    {
+     "title": "Người Do Thái",
+     "questions": 379,
+     "impossible_pct": 34.6
+    },
+    {
+     "title": "Louis XV của Pháp",
+     "questions": 539,
+     "impossible_pct": 24.7
+    },
+    {
+     "title": "Ukraina",
+     "questions": 440,
+     "impossible_pct": 35.2
+    },
+    {
+     "title": "Bồ Đào Nha",
+     "questions": 640,
+     "impossible_pct": 36.7
+    },
+    {
+     "title": "Ẩm thực Việt Nam",
+     "questions": 198,
+     "impossible_pct": 29.8
+    },
+    {
+     "title": "Cách mạng Tháng Mười",
+     "questions": 179,
+     "impossible_pct": 35.8
+    },
+    {
+     "title": "Crom",
+     "questions": 38,
+     "impossible_pct": 28.9
+    },
+    {
+     "title": "Châu Nam Cực",
+     "questions": 76,
+     "impossible_pct": 23.7
+    },
+    {
+     "title": "Hồ Quý Ly",
+     "questions": 232,
+     "impossible_pct": 31.0
+    },
+    {
+     "title": "George Washington",
+     "questions": 399,
+     "impossible_pct": 30.6
+    },
+    {
+     "title": "Vườn quốc gia Phong Nha - Kẻ Bàng",
+     "questions": 327,
+     "impossible_pct": 41.9
+    },
+    {
+     "title": "Nhà Trần",
+     "questions": 188,
+     "impossible_pct": 30.9
+    },
+    {
+     "title": "Quá trình làm phim",
+     "questions": 34,
+     "impossible_pct": 17.6
+    },
+    {
+     "title": "Điện Biên",
+     "questions": 39,
+     "impossible_pct": 23.1
+    },
+    {
+     "title": "Nhu cầu",
+     "questions": 40,
+     "impossible_pct": 25.0
+    },
+    {
+     "title": "Nam Bộ (Việt Nam)",
+     "questions": 56,
+     "impossible_pct": 25.0
+    },
+    {
+     "title": "Birmingham",
+     "questions": 271,
+     "impossible_pct": 37.3
+    },
+    {
+     "title": "Sao Kim",
+     "questions": 343,
+     "impossible_pct": 36.7
+    },
+    {
+     "title": "Amur (tỉnh)",
+     "questions": 42,
+     "impossible_pct": 21.4
+    },
+    {
+     "title": "Bảo tồn sinh học",
+     "questions": 96,
+     "impossible_pct": 33.3
+    },
+    {
+     "title": "Mặt trận Dân tộc Giải phóng miền Nam Việt Nam",
+     "questions": 393,
+     "impossible_pct": 35.9
+    },
+    {
+     "title": "Đế quốc Parthia",
+     "questions": 327,
+     "impossible_pct": 27.2
+    },
+    {
+     "title": "Chủ nghĩa thực dân",
+     "questions": 198,
+     "impossible_pct": 40.4
+    },
+    {
+     "title": "Lý thuyết tập hợp",
+     "questions": 50,
+     "impossible_pct": 32.0
+    },
+    {
+     "title": "Viện nguyên lão La Mã",
+     "questions": 55,
+     "impossible_pct": 23.6
+    },
+    {
+     "title": "Cộng hòa Síp",
+     "questions": 276,
+     "impossible_pct": 36.6
+    },
+    {
+     "title": "Mali",
+     "questions": 205,
+     "impossible_pct": 34.1
+    },
+    {
+     "title": "Isaac Newton",
+     "questions": 128,
+     "impossible_pct": 29.7
+    },
+    {
+     "title": "Đạn",
+     "questions": 50,
+     "impossible_pct": 22.0
+    },
+    {
+     "title": "Bạc Liêu",
+     "questions": 150,
+     "impossible_pct": 23.3
+    },
+    {
+     "title": "Luxembourg",
+     "questions": 50,
+     "impossible_pct": 14.0
+    },
+    {
+     "title": "Tôm tít",
+     "questions": 77,
+     "impossible_pct": 26.0
+    },
+    {
+     "title": "Biển Đông",
+     "questions": 43,
+     "impossible_pct": 14.0
+    },
+    {
+     "title": "Donald Trump",
+     "questions": 398,
+     "impossible_pct": 32.2
+    },
+    {
+     "title": "Đại học Harvard",
+     "questions": 161,
+     "impossible_pct": 37.3
+    },
+    {
+     "title": "Zirconi",
+     "questions": 55,
+     "impossible_pct": 27.3
+    },
+    {
+     "title": "Tầng đối lưu",
+     "questions": 66,
+     "impossible_pct": 39.4
+    },
+    {
+     "title": "Đại học New York",
+     "questions": 135,
+     "impossible_pct": 37.0
+    },
+    {
+     "title": "Chiến tranh Triều Tiên",
+     "questions": 633,
+     "impossible_pct": 36.2
+    },
+    {
+     "title": "Cục Điều tra Liên bang",
+     "questions": 169,
+     "impossible_pct": 29.0
+    },
+    {
+     "title": "Bình Định",
+     "questions": 50,
+     "impossible_pct": 36.0
+    },
+    {
+     "title": "Trung Quốc Quốc dân Đảng",
+     "questions": 298,
+     "impossible_pct": 34.6
+    },
+    {
+     "title": "Tổ chức xã hội",
+     "questions": 49,
+     "impossible_pct": 34.7
+    },
+    {
+     "title": "Erwin Schrödinger",
+     "questions": 45,
+     "impossible_pct": 20.0
+    },
+    {
+     "title": "Họ Đậu",
+     "questions": 63,
+     "impossible_pct": 41.3
+    },
+    {
+     "title": "Lệch lạc (xã hội học)",
+     "questions": 54,
+     "impossible_pct": 35.2
+    },
+    {
+     "title": "Lịch sử Hoa Kỳ",
+     "questions": 742,
+     "impossible_pct": 34.5
+    },
+    {
+     "title": "Nhà Minh",
+     "questions": 471,
+     "impossible_pct": 28.7
+    },
+    {
+     "title": "Sao Hải Vương",
+     "questions": 240,
+     "impossible_pct": 29.6
+    },
+    {
+     "title": "Qur’an",
+     "questions": 54,
+     "impossible_pct": 27.8
+    },
+    {
+     "title": "Trung Hoa Dân Quốc (1912-1949)",
+     "questions": 403,
+     "impossible_pct": 33.3
+    },
+    {
+     "title": "Hà Nam",
+     "questions": 59,
+     "impossible_pct": 27.1
+    },
+    {
+     "title": "Đảo Ireland",
+     "questions": 525,
+     "impossible_pct": 41.0
+    },
+    {
+     "title": "Đế quốc La Mã",
+     "questions": 432,
+     "impossible_pct": 29.4
+    },
+    {
+     "title": "Thế vận hội Mùa hè 2012",
+     "questions": 61,
+     "impossible_pct": 34.4
+    },
+    {
+     "title": "Việt Nam",
+     "questions": 396,
+     "impossible_pct": 36.4
+    },
+    {
+     "title": "Quốc hội Hoa Kỳ",
+     "questions": 179,
+     "impossible_pct": 31.3
+    },
+    {
+     "title": "Dãy núi Rocky",
+     "questions": 47,
+     "impossible_pct": 21.3
+    },
+    {
+     "title": "Trường đại học",
+     "questions": 58,
+     "impossible_pct": 24.1
+    },
+    {
+     "title": "Đảo Wake",
+     "questions": 63,
+     "impossible_pct": 34.9
+    },
+    {
+     "title": "Richard I của Anh",
+     "questions": 319,
+     "impossible_pct": 27.6
+    },
+    {
+     "title": "Hải ly",
+     "questions": 59,
+     "impossible_pct": 33.9
+    },
+    {
+     "title": "Bức tường Berlin",
+     "questions": 175,
+     "impossible_pct": 25.7
+    },
+    {
+     "title": "Kinh tế Hoa Kỳ",
+     "questions": 527,
+     "impossible_pct": 36.4
+    },
+    {
+     "title": "Iran",
+     "questions": 148,
+     "impossible_pct": 25.7
+    },
+    {
+     "title": "Cuba",
+     "questions": 509,
+     "impossible_pct": 37.1
+    },
+    {
+     "title": "John von Neumann",
+     "questions": 179,
+     "impossible_pct": 29.6
+    },
+    {
+     "title": "HIV/AIDS",
+     "questions": 188,
+     "impossible_pct": 30.3
+    },
+    {
+     "title": "Vị",
+     "questions": 53,
+     "impossible_pct": 18.9
+    },
+    {
+     "title": "Hà Nội",
+     "questions": 561,
+     "impossible_pct": 26.9
+    },
+    {
+     "title": "Đồng Tháp",
+     "questions": 203,
+     "impossible_pct": 36.0
+    },
+    {
+     "title": "Bắc Phi",
+     "questions": 58,
+     "impossible_pct": 27.6
+    },
+    {
+     "title": "Pháp",
+     "questions": 746,
+     "impossible_pct": 35.8
+    },
+    {
+     "title": "Trung Quốc",
+     "questions": 549,
+     "impossible_pct": 33.9
+    },
+    {
+     "title": "Kinh tế Hàn Quốc",
+     "questions": 62,
+     "impossible_pct": 35.5
+    },
+    {
+     "title": "Samsung Electronics",
+     "questions": 57,
+     "impossible_pct": 29.8
+    },
+    {
+     "title": "Nam Đại Dương",
+     "questions": 220,
+     "impossible_pct": 36.4
+    },
+    {
+     "title": "Johannes Kepler",
+     "questions": 285,
+     "impossible_pct": 27.7
+    },
+    {
+     "title": "Den Haag",
+     "questions": 50,
+     "impossible_pct": 28.0
+    },
+    {
+     "title": "Xeri",
+     "questions": 43,
+     "impossible_pct": 20.9
+    },
+    {
+     "title": "Elizabeth I của Anh",
+     "questions": 249,
+     "impossible_pct": 28.1
+    },
+    {
+     "title": "Niue",
+     "questions": 34,
+     "impossible_pct": 20.6
+    },
+    {
+     "title": "Người",
+     "questions": 169,
+     "impossible_pct": 29.6
+    },
+    {
+     "title": "Vladimir Vladimirovich Putin",
+     "questions": 246,
+     "impossible_pct": 24.8
+    },
+    {
+     "title": "Chiến tranh Đông Dương",
+     "questions": 1412,
+     "impossible_pct": 35.2
+    }
+   ],
+   "impossible": 9216,
+   "impossible_pct": 32.39,
+   "question_type_impossible_pct": {
+    "Lựa chọn (…nào)": 32.6,
+    "Định nghĩa/Sự vật": 32.0,
+    "Người": 33.3,
+    "Khác": 29.4,
+    "Cách thức": 30.1,
+    "Địa điểm": 33.4,
+    "Lý do": 33.1,
+    "Thời gian": 32.8,
+    "Số lượng": 33.1
+   },
+   "answer_words": {
+    "mean": 9.95,
+    "median": 6.0,
+    "p05": 1,
+    "p95": 31,
+    "max": 150,
+    "n": 19238
+   },
+   "answer_hist": [
+    {
+     "bin": "1-1",
+     "count": 1505
+    },
+    {
+     "bin": "2-2",
+     "count": 2871
+    },
+    {
+     "bin": "3-5",
+     "count": 4672
+    },
+    {
+     "bin": "6-10",
+     "count": 3850
+    },
+    {
+     "bin": "11-20",
+     "count": 3773
+    },
+    {
+     "bin": "21+",
+     "count": 2567
+    }
+   ],
+   "answer_rel_position": {
+    "q1": 0.17,
+    "median": 0.42,
+    "q3": 0.7,
+    "deciles": [
+     3021,
+     2355,
+     2008,
+     1896,
+     1852,
+     1712,
+     1672,
+     1605,
+     1684,
+     1433
+    ]
+   },
+   "answer_type": {
+    "Cụm vừa (5–12 từ)": 5165,
+    "Mệnh đề dài (>12 từ)": 4524,
+    "Số / ngày tháng": 4099,
+    "Cụm ngắn (≤4 từ)": 3292,
+    "Tên riêng": 2158
+   },
+   "gold_variants": {
+    "1": 19238
+   },
+   "question_context_overlap": {
+    "answerable": 70.6,
+    "impossible": 71.3
+   },
+   "answer_mostly_in_question_pct": 11.22,
+   "answer_sentence_is_top_overlap_pct": 80.9,
+   "answer_sentence_index": {
+    "0": 4945,
+    "1": 4095,
+    "2": 3488,
+    "3": 2658,
+    "4": 1704,
+    "5": 1004,
+    "6": 1193
+   },
+   "label_noise": {
+    "cut_start": 60,
+    "cut_end": 30,
+    "offset_mismatch": 154,
+    "cut_any_pct": 0.47
+   },
+   "impossible_construction": {
+    "max_jaccard_to_sibling": {
+     "mean": 0.78,
+     "median": 0.778,
+     "p05": 0.545,
+     "p95": 1.0,
+     "max": 1.0,
+     "n": 9216
+    },
+    "sibling_jaccard_ge_0.5_pct": 97.5,
+    "sibling_jaccard_ge_0.7_pct": 74.8,
+    "sim_hist": [
+     {
+      "bin": "0-29",
+      "count": 14
+     },
+     {
+      "bin": "30-49",
+      "count": 212
+     },
+     {
+      "bin": "50-69",
+      "count": 2094
+     },
+     {
+      "bin": "70-89",
+      "count": 5107
+     },
+     {
+      "bin": "90-100",
+      "count": 1789
+     }
+    ],
+    "plausible_equals_sibling_answer_pct": 100.0,
+    "plausible_offset_ok_pct": 99.2,
+    "edit_type": {
+     "Thay từ/cụm thường": 4169,
+     "Thay thực thể (tên riêng)": 3281,
+     "Đảo vị trí thực thể": 1225,
+     "Đổi số / thời gian": 329,
+     "Thêm/bớt phủ định": 118,
+     "Đổi sang từ trái nghĩa": 92,
+     "Giống hệt": 2
+    },
+    "edit_examples": {
+     "Thay từ/cụm thường": [
+      {
+       "answerable": "Tên gọi nào được Phạm Văn Đồng sử dụng khi làm Phó chủ nhiệm cơ quan Biện sự xứ tại Quế Lâm?",
+       "impossible": "Tên gọi nào được Phạm Văn Đồng sử dụng trước khi làm Phó chủ nhiệm cơ quan Biện sự xứ tại Quế Lâm?",
+       "plausible": "Lâm Bá Kiệt"
+      },
+      {
+       "answerable": "Quan điểm của Trung Quốc là gì đối với công hàm của Thủ tướng nước Việt Nam Dân Chủ Cộng Hoà Phạm Văn Đồng?",
+       "impossible": "Quan điểm của Trung Quốc là gì đối với thư ký của Thủ tướng nước Việt Nam Dân Chủ Cộng Hoà Phạm Văn Đồng?",
+       "plausible": "đương nhiên \"công nhận\" chủ quyền của Trung Quốc đối với các quần đảo trên biển Đông"
+      },
+      {
+       "answerable": "Tại sao lòng tin của nhân dân vào Đảng lại giảm sút?",
+       "impossible": "Tại sao nhân dân lại mất hoàn toàn lòng tin vào Đảng?",
+       "plausible": "nhiều người có chức, có quyền trong hệ thống tổ chức của Đảng, Nhà nước, các đoàn thể quần chúng hư hỏng quá, thoái hóa biến chất, chạy theo chức quyền, tiền và danh lợi"
+      }
+     ],
+     "Thay thực thể (tên riêng)": [
+      {
+       "answerable": "Phạm Văn Đồng giữ chức vụ gì trong bộ máy Nhà nước Cộng hòa Xã hội chủ nghĩa Việt Nam?",
+       "impossible": "Hồ Học Lãm giữ chức vụ gì trong bộ máy Nhà nước Cộng hòa Xã hội chủ nghĩa Việt Nam?",
+       "plausible": "Thủ tướng"
+      },
+      {
+       "answerable": "Sai lầm mà cố thủ tướng Phạm Văn Đồng mắc phải khi đàm phán hiệp định Geneva là gì?",
+       "impossible": "Sai lầm mà cố thủ tướng Phạm Văn Đồng mắc phải khi đàm phán hiệp định với Trung Quốc là gì?",
+       "plausible": "nhờ Trung Quốc chuyển các bức điện về nước"
+      },
+      {
+       "answerable": "Nguyên nhân nào dẫn đến các sai lầm mà Phạm Văn Đồng mắc phải?",
+       "impossible": "Nguyên nhân nào dẫn đến các sai lầm mà Việt Phương mắc phải?",
+       "plausible": "đoàn Việt Nam khi đó quá tin đoàn Trung Quốc"
+      }
+     ],
+     "Đổi số / thời gian": [
+      {
+       "answerable": "Giai đoạn năm 1955-1976, Phạm Văn Đồng nắm giữ chức vụ gì?",
+       "impossible": "Giai đoạn năm 1987-2000, Phạm Văn Đồng nắm giữ chức vụ gì?",
+       "plausible": "Thủ tướng Chính phủ Việt Nam Dân chủ Cộng hòa"
+      },
+      {
+       "answerable": "Lời diễn giải về bản công hàm ngày 14 tháng 9 năm 1958 được Bộ Ngoại giao nước CHXHCN Việt Nam nhìn nhận như thế nào?",
+       "impossible": "Lời diễn giải về bản công hàm ngày 7 tháng 8 năm 1979 được Bộ Ngoại giao nước CHXHCN Việt Nam nhìn nhận như thế nào?",
+       "plausible": "một sự xuyên tạc trắng trợn"
+      },
+      {
+       "answerable": "Đầu những năm 1940, các nhà nghiên cứ Mỹ đã có những bước đột phá gì?",
+       "impossible": "Đầu những năm 1943, các nhà nghiên cứu Mỹ đã có những bước đột phá gì?",
+       "plausible": "phát triển các mô hình tập bay sử dụng máy tính analog để tạo ra các mô phỏng cài đặt trong thiết bị dữ liệu"
+      }
+     ],
+     "Đảo vị trí thực thể": [
+      {
+       "answerable": "Hội nghị Genève về Đông Dương có tính chất như thế nào?",
+       "impossible": "Hội nghị Đông Dương về Genève có tính chất như thế nào?",
+       "plausible": "rất căng thẳng và phức tạp"
+      },
+      {
+       "answerable": "Phạm Văn Đồng từng cố gắng đưa bà Cúc đến nơi nào để chữa bệnh?",
+       "impossible": "Bà Cúc từng cố gắng đưa Phạm Văn Đồng đến nơi nào để chữa bệnh?",
+       "plausible": "Trung Quốc, Liên Xô"
+      },
+      {
+       "answerable": "Lập trường của Việt Nam trong việc giải quyết các vấn đề tranh chấp quần đảo Hoàng Sa và Trường Sa là gì?",
+       "impossible": "Lập trường của Hoàng Sa trong việc giải quyết các vấn đề tranh chấp quần đảo Việt Nam và Trường Sa là gì?",
+       "plausible": "thương lượng hoà bình"
+      }
+     ],
+     "Thêm/bớt phủ định": [
+      {
+       "answerable": "Cây hoa nào có thân chính không sinh cành và kết thúc của nó là hoa?",
+       "impossible": "Cây hoa nào có thân chính ít lá và kết thúc của nó là hoa?",
+       "plausible": "tulip"
+      },
+      {
+       "answerable": "Tên gọi nào gắn liền với hạt có phôi nhũ hay ngoại nhũ hoặc cả phôi nhũ và ngoại nhũ cùng tồn tại?",
+       "impossible": "Tên gọi nào gắn liền với hạt chỉ có nội nhũ hoặc ngoại nhũ hoặc cả nội nhũ và ngoại nhũ không cùng tồn tại?",
+       "plausible": "có phôi nhũ hay có nội nhũ"
+      },
+      {
+       "answerable": "Các phần mềm giáo dục mang tính giải trí không bao gồm những gì?",
+       "impossible": "Các phần mềm giáo dục không mang tính giải trí không bao gồm những gì?",
+       "plausible": "các chỉ dẫn học tập"
+      }
+     ],
+     "Đổi sang từ trái nghĩa": [
+      {
+       "answerable": "Thành tựu lớn nhất của Nhật Bản trong công nghiệp chế tạo là gì?",
+       "impossible": "Thành tựu nhỏ nhất của Nhật Bản trong công nghiệp chế tạo là gì?",
+       "plausible": "robot"
+      },
+      {
+       "answerable": "Tác phẩm văn học nào có tuổi đời dài nhất trong thể loại ký sự?",
+       "impossible": "Tác phẩm văn học nào có tuổi đời ngắn nhất trong thể loại ký sự?",
+       "plausible": "tiểu thuyết The Tale of the Bamboo Cutter"
+      },
+      {
+       "answerable": "Máy nhiệt điện RTG sau mỗi khoảng thời gian nhất định phát ra lượng giảm dần số điện năng vì lí do gì?",
+       "impossible": "Máy nhiệt điện RTG sau mỗi khoảng thời gian nhất định phát ra lượng phóng xa tăng dần vì lí do gì?",
+       "plausible": "do chu kì bán rã 87.7 năm của plutoni-238 và sự suy giảm hiệu suất của các cặp nhiệt điện"
+      }
+     ],
+     "Giống hệt": [
+      {
+       "answerable": "Mòn bản Kinh Qur'an đã được lưu giữ như thế nào?",
+       "impossible": "Mòn bản Kinh Quran đã được lưu giữ như thế nào?",
+       "plausible": "được bọc trong vải và lưu giữ vô thời hạn ở một nơi an toàn, hoặc bị chôn vùi trong một nhà thờ Hồi giáo hay một nghĩa trang Hồi giáo, hoặc bị đốt cháy và tro được chôn hoặc rải trên nước"
+      },
+      {
+       "answerable": "Xét về GDP danh nghĩa và GDP PPP, kinh tế nước Pháp đứng thứ mấy?",
+       "impossible": "Xét về GDP danh nghĩa và GDP PPP kinh tế, nước Pháp đứng thứ mấy?",
+       "plausible": "nền kinh tế lớn thứ sáu thế giới theo GDP danh nghĩa và lớn thứ chín theo GDP PPP"
+      }
+     ]
+    },
+    "top_added_tokens": [
+     [
+      "quốc",
+      159
+     ],
+     [
+      "chính",
+      121
+     ],
+     [
+      "dân",
+      120
+     ],
+     [
+      "nam",
+      116
+     ],
+     [
+      "châu",
+      105
+     ],
+     [
+      "trung",
+      99
+     ],
+     [
+      "công",
+      98
+     ],
+     [
+      "người",
+      94
+     ],
+     [
+      "thế",
+      94
+     ],
+     [
+      "của",
+      88
+     ],
+     [
+      "giới",
+      88
+     ],
+     [
+      "mỹ",
+      82
+     ],
+     [
+      "liên",
+      81
+     ],
+     [
+      "hoa",
+      80
+     ],
+     [
+      "kỳ",
+      80
+     ],
+     [
+      "tây",
+      79
+     ],
+     [
+      "anh",
+      77
+     ],
+     [
+      "quân",
+      76
+     ],
+     [
+      "việt",
+      74
+     ],
+     [
+      "nước",
+      74
+     ],
+     [
+      "minh",
+      73
+     ],
+     [
+      "thành",
+      72
+     ],
+     [
+      "phát",
+      71
+     ],
+     [
+      "âu",
+      71
+     ],
+     [
+      "không",
+      70
+     ]
+    ],
+    "top_removed_tokens": [
+     [
+      "quốc",
+      160
+     ],
+     [
+      "nam",
+      140
+     ],
+     [
+      "thành",
+      110
+     ],
+     [
+      "trung",
+      103
+     ],
+     [
+      "dân",
+      97
+     ],
+     [
+      "pháp",
+      87
+     ],
+     [
+      "công",
+      85
+     ],
+     [
+      "chính",
+      83
+     ],
+     [
+      "đầu",
+      80
+     ],
+     [
+      "nha",
+      78
+     ],
+     [
+      "đào",
+      77
+     ],
+     [
+      "việt",
+      72
+     ],
+     [
+      "kinh",
+      71
+     ],
+     [
+      "giáo",
+      69
+     ],
+     [
+      "bồ",
+      69
+     ],
+     [
+      "đại",
+      68
+     ],
+     [
+      "người",
+      64
+     ],
+     [
+      "minh",
+      64
+     ],
+     [
+      "kỳ",
+      62
+     ],
+     [
+      "bắc",
+      61
+     ],
+     [
+      "lập",
+      60
+     ],
+     [
+      "chiến",
+      60
+     ],
+     [
+      "gia",
+      60
+     ],
+     [
+      "của",
+      59
+     ],
+     [
+      "học",
+      58
+     ]
+    ]
+   }
+  },
+  "validation": {
+   "articles": 19,
+   "paragraphs": 557,
+   "questions": 3814,
+   "questions_per_paragraph": 6.85,
+   "context_words": {
+    "mean": 167.6,
+    "median": 152,
+    "p05": 109,
+    "p95": 281,
+    "max": 618,
+    "n": 557
+   },
+   "question_words": {
+    "mean": 14.24,
+    "median": 14.0,
+    "p05": 8,
+    "p95": 23,
+    "max": 45,
+    "n": 3814
+   },
+   "context_hist": [
+    {
+     "bin": "0-99",
+     "count": 2
+    },
+    {
+     "bin": "100-149",
+     "count": 261
+    },
+    {
+     "bin": "150-199",
+     "count": 183
+    },
+    {
+     "bin": "200-249",
+     "count": 63
+    },
+    {
+     "bin": "250-299",
+     "count": 29
+    },
+    {
+     "bin": "300-399",
+     "count": 16
+    },
+    {
+     "bin": "400+",
+     "count": 3
+    }
+   ],
+   "question_type": {
+    "Định nghĩa/Sự vật": 1058,
+    "Lựa chọn (…nào)": 812,
+    "Người": 459,
+    "Số lượng": 332,
+    "Cách thức": 330,
+    "Thời gian": 277,
+    "Lý do": 263,
+    "Địa điểm": 223,
+    "Khác": 60
+   },
+   "per_article": [
+    {
+     "title": "Paris",
+     "questions": 462,
+     "impossible_pct": 33.8
+    },
+    {
+     "title": "Nouvelle-Calédonie",
+     "questions": 163,
+     "impossible_pct": 24.5
+    },
+    {
+     "title": "Canada",
+     "questions": 356,
+     "impossible_pct": 32.6
+    },
+    {
+     "title": "Chiến tranh Vùng Vịnh",
+     "questions": 379,
+     "impossible_pct": 32.7
+    },
+    {
+     "title": "Nước biển",
+     "questions": 53,
+     "impossible_pct": 20.8
+    },
+    {
+     "title": "Puerto Rico",
+     "questions": 180,
+     "impossible_pct": 33.3
+    },
+    {
+     "title": "Nam Ossetia",
+     "questions": 128,
+     "impossible_pct": 33.6
+    },
+    {
+     "title": "Kiến",
+     "questions": 57,
+     "impossible_pct": 33.3
+    },
+    {
+     "title": "François Mitterrand",
+     "questions": 298,
+     "impossible_pct": 31.2
+    },
+    {
+     "title": "Gia cầm",
+     "questions": 59,
+     "impossible_pct": 32.2
+    },
+    {
+     "title": "Thần học",
+     "questions": 61,
+     "impossible_pct": 26.2
+    },
+    {
+     "title": "Mahatma Gandhi",
+     "questions": 324,
+     "impossible_pct": 37.0
+    },
+    {
+     "title": "Nội chiến Anh",
+     "questions": 53,
+     "impossible_pct": 24.5
+    },
+    {
+     "title": "Đế quốc La Mã Thần thánh",
+     "questions": 138,
+     "impossible_pct": 31.2
+    },
+    {
+     "title": "Mông Cổ",
+     "questions": 293,
+     "impossible_pct": 30.4
+    },
+    {
+     "title": "Montréal",
+     "questions": 42,
+     "impossible_pct": 31.0
+    },
+    {
+     "title": "Franklin D. Roosevelt",
+     "questions": 503,
+     "impossible_pct": 33.0
+    },
+    {
+     "title": "Uganda",
+     "questions": 59,
+     "impossible_pct": 33.9
+    },
+    {
+     "title": "Texas",
+     "questions": 206,
+     "impossible_pct": 0.0
+    }
+   ],
+   "impossible": 1161,
+   "impossible_pct": 30.44,
+   "question_type_impossible_pct": {
+    "Định nghĩa/Sự vật": 32.7,
+    "Địa điểm": 30.9,
+    "Thời gian": 29.6,
+    "Cách thức": 30.6,
+    "Lựa chọn (…nào)": 29.3,
+    "Khác": 26.7,
+    "Người": 30.1,
+    "Lý do": 28.1,
+    "Số lượng": 29.2
+   },
+   "answer_words": {
+    "mean": 9.81,
+    "median": 6,
+    "p05": 1,
+    "p95": 30,
+    "max": 89,
+    "n": 2653
+   },
+   "answer_hist": [
+    {
+     "bin": "1-1",
+     "count": 268
+    },
+    {
+     "bin": "2-2",
+     "count": 389
+    },
+    {
+     "bin": "3-5",
+     "count": 597
+    },
+    {
+     "bin": "6-10",
+     "count": 540
+    },
+    {
+     "bin": "11-20",
+     "count": 508
+    },
+    {
+     "bin": "21+",
+     "count": 351
+    }
+   ],
+   "answer_rel_position": {
+    "q1": 0.18,
+    "median": 0.41,
+    "q3": 0.68,
+    "deciles": [
+     406,
+     322,
+     291,
+     279,
+     260,
+     244,
+     224,
+     244,
+     217,
+     166
+    ]
+   },
+   "answer_type": {
+    "Cụm vừa (5–12 từ)": 720,
+    "Mệnh đề dài (>12 từ)": 590,
+    "Số / ngày tháng": 580,
+    "Cụm ngắn (≤4 từ)": 423,
+    "Tên riêng": 340
+   },
+   "gold_variants": {
+    "1": 1435,
+    "2": 1041,
+    "3": 177
+   },
+   "question_context_overlap": {
+    "answerable": 68.1,
+    "impossible": 67.2
+   },
+   "answer_mostly_in_question_pct": 9.5,
+   "answer_sentence_is_top_overlap_pct": 76.3,
+   "answer_sentence_index": {
+    "0": 647,
+    "1": 543,
+    "2": 512,
+    "3": 387,
+    "4": 246,
+    "5": 169,
+    "6": 146
+   },
+   "label_noise": {
+    "offset_mismatch": 13,
+    "cut_start": 10,
+    "cut_end": 5,
+    "cut_any_pct": 0.57
+   },
+   "impossible_construction": {
+    "max_jaccard_to_sibling": {
+     "mean": 0.8,
+     "median": 0.81,
+     "p05": 0.562,
+     "p95": 1.0,
+     "max": 1.0,
+     "n": 1161
+    },
+    "sibling_jaccard_ge_0.5_pct": 98.1,
+    "sibling_jaccard_ge_0.7_pct": 77.7,
+    "sim_hist": [
+     {
+      "bin": "0-29",
+      "count": 2
+     },
+     {
+      "bin": "30-49",
+      "count": 20
+     },
+     {
+      "bin": "50-69",
+      "count": 237
+     },
+     {
+      "bin": "70-89",
+      "count": 618
+     },
+     {
+      "bin": "90-100",
+      "count": 284
+     }
+    ],
+    "plausible_equals_sibling_answer_pct": 99.9,
+    "plausible_offset_ok_pct": 98.8,
+    "edit_type": {
+     "Thay thực thể (tên riêng)": 436,
+     "Thay từ/cụm thường": 436,
+     "Đảo vị trí thực thể": 213,
+     "Đổi số / thời gian": 44,
+     "Thêm/bớt phủ định": 22,
+     "Đổi sang từ trái nghĩa": 10
+    },
+    "edit_examples": {
+     "Thay thực thể (tên riêng)": [
+      {
+       "answerable": "Vị trí địa lý của Paris có gì đặc biệt?",
+       "impossible": "Vị trí địa lý của Pháp có gì đặc biệt?",
+       "plausible": "nằm ở điểm gặp nhau của các hành trình thương mại đường bộ và đường sông"
+      },
+      {
+       "answerable": "Điều gì đã nói lên Paris là thành phố lý tưởng để khách du lịch?",
+       "impossible": "Điều gì đã nói lên New York là thành phố lý tưởng để khách du lịch?",
+       "plausible": "mỗi năm có đến 30 triệu khách nước ngoài"
+      },
+      {
+       "answerable": "Tên gọi The City of Lights bắt nguồn từ sự việc gì?",
+       "impossible": "Tên gọi Pháp bắt nguồn từ sự việc gì?",
+       "plausible": "cuối thế kỷ 17, trung tướng cảnh sát đầu tiên của Paris Gabriel Nicolas de La Reynie ra lệnh thắp sáng những khu vực công cộng nhiều tệ nạn của thành phố"
+      }
+     ],
+     "Đảo vị trí thực thể": [
+      {
+       "answerable": "Điều gì đã khiến Paris trở thành nơi trung chuyển trên toàn cầu?",
+       "impossible": "Điều gì đã khiến toàn cầu trở thành nơi trung chuyển trên Paris?",
+       "plausible": "Là nơi đặt trụ sở chính của các tổ chức quốc tế như OECD, UNESCO... cộng với những hoạt động đa dạng về tài chính, kinh doanh, chính trị và du lịch"
+      },
+      {
+       "answerable": "Hai thành phố nào được gọi là thành phố của tình yêu?",
+       "impossible": "Thành phố nào được gọi là thành phố của Hai tình yêu?",
+       "plausible": "Venezia, Paris"
+      },
+      {
+       "answerable": "Rừng Vincennes nằm ở đâu của Paris?",
+       "impossible": "Rừng Paris nằm ở đâu của Vincennes?",
+       "plausible": "Quận 12 ở phía Đông"
+      }
+     ],
+     "Thay từ/cụm thường": [
+      {
+       "answerable": "Công trình nào nằm trên đỉnh Montmartre?",
+       "impossible": "Công trình nào nằm dưới đỉnh Montmartre?",
+       "plausible": "nhà thờ Saint-Pierre"
+      },
+      {
+       "answerable": "Năm 1844, ngoại ô và nội ô Paris được ngăn cách bằng gì?",
+       "impossible": "Năm 1844, ngoại ô và nội ô Paris được sát nhập bằng gì?",
+       "plausible": "bức tường thành Thiers"
+      },
+      {
+       "answerable": "Vì sao các cửa bồn Paris bị khóa lại?",
+       "impossible": "Vì sao các cửa bồn Paris mở khóa lại?",
+       "plausible": "sự tạo thành của dãy Alps"
+      }
+     ],
+     "Đổi số / thời gian": [
+      {
+       "answerable": "Dựa vào đâu cho thấy con người đã sống ở Sông Sen 40000 năm trước?",
+       "impossible": "Dựa vào đâu cho thấy con người đã sống ở Sông Sen 4000 năm trước?",
+       "plausible": "những công cụ đá được tìm thấy ở bờ sông Seine"
+      },
+      {
+       "answerable": "Từ 1562 tới 1598 có mấy cuộc xung đột tôn giáo lớn xảy ra ở Paris?",
+       "impossible": "Từ 1572 tới 1598 có mấy cuộc xung đột tôn giáo lớn xảy ra ở Paris?",
+       "plausible": "8 cuộc"
+      },
+      {
+       "answerable": "Công trình nổi tiếng nào được xây dựng để đánh dấu 100 năm cách mạng Pháp?",
+       "impossible": "Công trình nổi tiếng nào được xây dựng để đánh dấu 175 năm cách mạng Pháp?",
+       "plausible": "Tháp Eiffel"
+      }
+     ],
+     "Thêm/bớt phủ định": [
+      {
+       "answerable": "Pháp chính thức không theo chế độ quân chủ vào lúc nào?",
+       "impossible": "Pháp chính thức theo chế độ quân chủ vào lúc nào?",
+       "plausible": "Ngày 21 tháng 9 năm 1792"
+      },
+      {
+       "answerable": "Nguồn dân lao động sống ở đâu nhiều nhất tại Paris?",
+       "impossible": "Nguồn dân không lao động sống ở đâu nhiều nhất tại Paris?",
+       "plausible": "Nội ô Paris"
+      },
+      {
+       "answerable": "Tình trạng nào cho thấy thành phần không kết hôn hoặc không sinh con ở Paris cao?",
+       "impossible": "Tình trạng nào cho thấy thành phần kết hôn hoặc không sinh con ở Paris cao?",
+       "plausible": "Hơn một nửa - 58,1% vào năm 1999 - số căn hộ của Paris chỉ gồm một hoặc hai phòng"
+      }
+     ],
+     "Đổi sang từ trái nghĩa": [
+      {
+       "answerable": "Dẫn chứng nào cho thấy sự tan vỡ của các cặp hôn nhân ở Paris cao?",
+       "impossible": "Dẫn chứng nào cho thấy sự tan vỡ của các cặp hôn nhân ở Paris thấp?",
+       "plausible": "Tỷ lệ số gia đình chỉ có bố hoặc mẹ của Paris cũng cao hơn trung bình nước Pháp"
+      },
+      {
+       "answerable": "Vì sao có nhiều khách sạn xuất hiện ở Paris vào đầu thế kỷ 20?",
+       "impossible": "Vì sao có nhiều khách sạn xuất hiện ở Paris vào cuối thế kỷ 20?",
+       "plausible": "những cuộc Triển lãm thế giới được tổ chức ở đây đã kéo theo một số lượng lớn du khách từ khắp nơi tới thành phố"
+      },
+      {
+       "answerable": "Mitterrand nhận được nhiều sự ủng hộ ở vòng mấy của cuộc bầu cử?",
+       "impossible": "Mitterrand nhận được ít sự ủng hộ ở vòng mấy của cuộc bầu cử?",
+       "plausible": "vòng hai"
+      }
+     ]
+    },
+    "top_added_tokens": [
+     [
+      "hoa",
+      24
+     ],
+     [
+      "quốc",
+      23
+     ],
+     [
+      "kỳ",
+      22
+     ],
+     [
+      "anh",
+      20
+     ],
+     [
+      "mỹ",
+      19
+     ],
+     [
+      "của",
+      17
+     ],
+     [
+      "liên",
+      17
+     ],
+     [
+      "nam",
+      16
+     ],
+     [
+      "châu",
+      16
+     ],
+     [
+      "dân",
+      16
+     ],
+     [
+      "pháp",
+      15
+     ],
+     [
+      "trung",
+      14
+     ],
+     [
+      "kinh",
+      13
+     ],
+     [
+      "tế",
+      13
+     ],
+     [
+      "cư",
+      12
+     ],
+     [
+      "tây",
+      11
+     ],
+     [
+      "nhập",
+      10
+     ],
+     [
+      "âu",
+      10
+     ],
+     [
+      "đại",
+      9
+     ],
+     [
+      "không",
+      9
+     ],
+     [
+      "giới",
+      9
+     ],
+     [
+      "sự",
+      9
+     ],
+     [
+      "các",
+      9
+     ],
+     [
+      "bị",
+      9
+     ],
+     [
+      "iraq",
+      9
+     ]
+    ],
+    "top_removed_tokens": [
+     [
+      "dân",
+      28
+     ],
+     [
+      "rico",
+      28
+     ],
+     [
+      "puerto",
+      27
+     ],
+     [
+      "paris",
+      23
+     ],
+     [
+      "cổ",
+      21
+     ],
+     [
+      "mông",
+      21
+     ],
+     [
+      "ossetia",
+      16
+     ],
+     [
+      "gandhi",
+      15
+     ],
+     [
+      "pháp",
+      13
+     ],
+     [
+      "quốc",
+      13
+     ],
+     [
+      "iraq",
+      13
+     ],
+     [
+      "ra",
+      12
+     ],
+     [
+      "canada",
+      12
+     ],
+     [
+      "hoa",
+      12
+     ],
+     [
+      "đế",
+      12
+     ],
+     [
+      "roosevelt",
+      12
+     ],
+     [
+      "kỳ",
+      11
+     ],
+     [
+      "lập",
+      10
+     ],
+     [
+      "chính",
+      10
+     ],
+     [
+      "chủ",
+      10
+     ],
+     [
+      "mỹ",
+      10
+     ],
+     [
+      "mitterrand",
+      10
+     ],
+     [
+      "người",
+      9
+     ],
+     [
+      "hóa",
+      9
+     ],
+     [
+      "chiến",
+      9
+     ]
+    ]
+   }
+  },
+  "test": {
+   "articles": 48,
+   "paragraphs": 1241,
+   "questions": 7301,
+   "questions_per_paragraph": 5.88,
+   "context_words": {
+    "mean": 175.77,
+    "median": 159,
+    "p05": 110,
+    "p95": 297,
+    "max": 823,
+    "n": 1241
+   },
+   "question_words": {
+    "mean": 14.43,
+    "median": 14,
+    "p05": 8,
+    "p95": 23,
+    "max": 35,
+    "n": 7301
+   },
+   "context_hist": [
+    {
+     "bin": "0-99",
+     "count": 3
+    },
+    {
+     "bin": "100-149",
+     "count": 529
+    },
+    {
+     "bin": "150-199",
+     "count": 384
+    },
+    {
+     "bin": "200-249",
+     "count": 186
+    },
+    {
+     "bin": "250-299",
+     "count": 78
+    },
+    {
+     "bin": "300-399",
+     "count": 51
+    },
+    {
+     "bin": "400+",
+     "count": 10
+    }
+   ],
+   "question_type": {
+    "Lựa chọn (…nào)": 2043,
+    "Định nghĩa/Sự vật": 1609,
+    "Người": 757,
+    "Số lượng": 706,
+    "Cách thức": 663,
+    "Thời gian": 526,
+    "Địa điểm": 423,
+    "Lý do": 381,
+    "Khác": 193
+   },
+   "per_article": [
+    {
+     "title": "California",
+     "questions": 151,
+     "impossible_pct": null
+    },
+    {
+     "title": "Lịch sử Trái Đất",
+     "questions": 136,
+     "impossible_pct": null
+    },
+    {
+     "title": "Lào",
+     "questions": 110,
+     "impossible_pct": null
+    },
+    {
+     "title": "Brunei",
+     "questions": 115,
+     "impossible_pct": null
+    },
+    {
+     "title": "Stephen Hawking",
+     "questions": 292,
+     "impossible_pct": null
+    },
+    {
+     "title": "Bangladesh",
+     "questions": 115,
+     "impossible_pct": null
+    },
+    {
+     "title": "Tầng đối lưu",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Chiến tranh Vùng Vịnh",
+     "questions": 254,
+     "impossible_pct": null
+    },
+    {
+     "title": "Đế quốc Đức",
+     "questions": 129,
+     "impossible_pct": null
+    },
+    {
+     "title": "Công an nhân dân Việt Nam",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Thế vận hội Mùa hè 2012",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Vladimir Vladimirovich Putin",
+     "questions": 222,
+     "impossible_pct": null
+    },
+    {
+     "title": "Zirconi",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Sao đôi",
+     "questions": 50,
+     "impossible_pct": null
+    },
+    {
+     "title": "Puerto Rico",
+     "questions": 220,
+     "impossible_pct": null
+    },
+    {
+     "title": "Hồng y",
+     "questions": 33,
+     "impossible_pct": null
+    },
+    {
+     "title": "Biến đổi khí hậu",
+     "questions": 98,
+     "impossible_pct": null
+    },
+    {
+     "title": "Edward II của Anh",
+     "questions": 612,
+     "impossible_pct": null
+    },
+    {
+     "title": "Na Uy",
+     "questions": 135,
+     "impossible_pct": null
+    },
+    {
+     "title": "Karl Marx",
+     "questions": 212,
+     "impossible_pct": null
+    },
+    {
+     "title": "Thiên hà Tiên Nữ",
+     "questions": 57,
+     "impossible_pct": null
+    },
+    {
+     "title": "Thiểm Tây",
+     "questions": 395,
+     "impossible_pct": null
+    },
+    {
+     "title": "Kinh tế Hàn Quốc",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Thừa Thiên - Huế",
+     "questions": 69,
+     "impossible_pct": null
+    },
+    {
+     "title": "Richard I của Anh",
+     "questions": 62,
+     "impossible_pct": null
+    },
+    {
+     "title": "Edward I của Anh",
+     "questions": 262,
+     "impossible_pct": null
+    },
+    {
+     "title": "Chuột nhắt nhà",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Kinh tế Đài Loan",
+     "questions": 200,
+     "impossible_pct": null
+    },
+    {
+     "title": "Đức",
+     "questions": 586,
+     "impossible_pct": null
+    },
+    {
+     "title": "Đảo Ireland",
+     "questions": 275,
+     "impossible_pct": null
+    },
+    {
+     "title": "Iran",
+     "questions": 105,
+     "impossible_pct": null
+    },
+    {
+     "title": "Nam Đại Dương",
+     "questions": 135,
+     "impossible_pct": null
+    },
+    {
+     "title": "Trái Đất rỗng",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Sao Kim",
+     "questions": 187,
+     "impossible_pct": null
+    },
+    {
+     "title": "Canada",
+     "questions": 270,
+     "impossible_pct": null
+    },
+    {
+     "title": "Trái Đất",
+     "questions": 257,
+     "impossible_pct": null
+    },
+    {
+     "title": "Vườn thực vật hoàng gia Kew",
+     "questions": 51,
+     "impossible_pct": null
+    },
+    {
+     "title": "Sinh học",
+     "questions": 135,
+     "impossible_pct": null
+    },
+    {
+     "title": "Wikipedia",
+     "questions": 125,
+     "impossible_pct": null
+    },
+    {
+     "title": "Nội chiến Anh",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Đế quốc Nga",
+     "questions": 72,
+     "impossible_pct": null
+    },
+    {
+     "title": "Mali",
+     "questions": 130,
+     "impossible_pct": null
+    },
+    {
+     "title": "Kuala Lumpur",
+     "questions": 206,
+     "impossible_pct": null
+    },
+    {
+     "title": "Athens",
+     "questions": 120,
+     "impossible_pct": null
+    },
+    {
+     "title": "Terbi",
+     "questions": 35,
+     "impossible_pct": null
+    },
+    {
+     "title": "Apple Inc.",
+     "questions": 53,
+     "impossible_pct": null
+    },
+    {
+     "title": "Cách mạng Tháng Mười",
+     "questions": 110,
+     "impossible_pct": null
+    },
+    {
+     "title": "Alexandros Đại đế",
+     "questions": 240,
+     "impossible_pct": null
+    }
+   ],
+   "note": "private test VLSP 2021 — không có nhãn (mọi is_impossible=false, answers rỗng)"
+  }
+ },
+ "windows": {
+  "phobert_seed13": {
+   "windows_per_question": {
+    "1": 3497,
+    "2": 280,
+    "3": 25,
+    "4+": 12
+   },
+   "mean": 1.096
+  },
+  "xlmr_seed13": {
+   "windows_per_question": {
+    "1": 3705,
+    "2": 95,
+    "3": 14
+   },
+   "mean": 1.032
+  }
+ },
+ "model_slices": {
+  "phobert_seed13": {
+   "question_type": {
+    "Định nghĩa/Sự vật": {
+     "n": 1058,
+     "EM": 59.36,
+     "F1": 69.72
+    },
+    "Địa điểm": {
+     "n": 223,
+     "EM": 57.85,
+     "F1": 65.74
+    },
+    "Thời gian": {
+     "n": 277,
+     "EM": 68.23,
+     "F1": 72.88
+    },
+    "Cách thức": {
+     "n": 330,
+     "EM": 52.42,
+     "F1": 66.56
+    },
+    "Lựa chọn (…nào)": {
+     "n": 812,
+     "EM": 59.48,
+     "F1": 68.13
+    },
+    "Khác": {
+     "n": 60,
+     "EM": 58.33,
+     "F1": 69.46
+    },
+    "Người": {
+     "n": 459,
+     "EM": 61.0,
+     "F1": 66.78
+    },
+    "Lý do": {
+     "n": 263,
+     "EM": 46.39,
+     "F1": 62.16
+    },
+    "Số lượng": {
+     "n": 332,
+     "EM": 66.57,
+     "F1": 72.72
+    }
+   },
+   "article": {
+    "Paris": {
+     "n": 462,
+     "EM": 49.78,
+     "F1": 58.63
+    },
+    "Nouvelle-Calédonie": {
+     "n": 163,
+     "EM": 70.55,
+     "F1": 79.42
+    },
+    "Canada": {
+     "n": 356,
+     "EM": 59.83,
+     "F1": 68.59
+    },
+    "Chiến tranh Vùng Vịnh": {
+     "n": 379,
+     "EM": 57.52,
+     "F1": 66.21
+    },
+    "Nước biển": {
+     "n": 53,
+     "EM": 52.83,
+     "F1": 56.9
+    },
+    "Puerto Rico": {
+     "n": 180,
+     "EM": 52.78,
+     "F1": 62.81
+    },
+    "Nam Ossetia": {
+     "n": 128,
+     "EM": 53.91,
+     "F1": 68.38
+    },
+    "Kiến": {
+     "n": 57,
+     "EM": 56.14,
+     "F1": 65.25
+    },
+    "François Mitterrand": {
+     "n": 298,
+     "EM": 65.1,
+     "F1": 72.14
+    },
+    "Gia cầm": {
+     "n": 59,
+     "EM": 52.54,
+     "F1": 62.42
+    },
+    "Thần học": {
+     "n": 61,
+     "EM": 63.93,
+     "F1": 70.29
+    },
+    "Mahatma Gandhi": {
+     "n": 324,
+     "EM": 63.89,
+     "F1": 74.06
+    },
+    "Nội chiến Anh": {
+     "n": 53,
+     "EM": 54.72,
+     "F1": 67.83
+    },
+    "Đế quốc La Mã Thần thánh": {
+     "n": 138,
+     "EM": 48.55,
+     "F1": 61.7
+    },
+    "Mông Cổ": {
+     "n": 293,
+     "EM": 67.92,
+     "F1": 75.97
+    },
+    "Montréal": {
+     "n": 42,
+     "EM": 64.29,
+     "F1": 71.36
+    },
+    "Franklin D. Roosevelt": {
+     "n": 503,
+     "EM": 58.05,
+     "F1": 66.44
+    },
+    "Uganda": {
+     "n": 59,
+     "EM": 61.02,
+     "F1": 68.93
+    },
+    "Texas": {
+     "n": 206,
+     "EM": 67.48,
+     "F1": 80.38
+    }
+   },
+   "answer_type": {
+    "Mệnh đề dài (>12 từ)": {
+     "n": 590,
+     "EM": 55.93,
+     "F1": 75.39
+    },
+    "Cụm vừa (5–12 từ)": {
+     "n": 720,
+     "EM": 59.44,
+     "F1": 73.23
+    },
+    "Tên riêng": {
+     "n": 340,
+     "EM": 58.24,
+     "F1": 64.59
+    },
+    "Số / ngày tháng": {
+     "n": 580,
+     "EM": 58.1,
+     "F1": 70.8
+    },
+    "Cụm ngắn (≤4 từ)": {
+     "n": 423,
+     "EM": 56.26,
+     "F1": 66.38
+    }
+   },
+   "gold_variants": {
+    "1": {
+     "n": 1435,
+     "EM": 58.68,
+     "F1": 69.95
+    },
+    "2": {
+     "n": 1041,
+     "EM": 55.62,
+     "F1": 71.36
+    },
+    "3": {
+     "n": 177,
+     "EM": 62.15,
+     "F1": 77.16
+    }
+   },
+   "lexical": {
+    "không phải câu trùng nhiều nhất": {
+     "n": 628,
+     "EM": 37.74,
+     "F1": 52.99
+    },
+    "câu đáp án trùng từ nhiều nhất": {
+     "n": 2022,
+     "EM": 63.9,
+     "F1": 76.57
+    },
+    "?": {
+     "n": 3,
+     "EM": 66.67,
+     "F1": 66.67
+    }
+   },
+   "all": {
+    "all": {
+     "n": 3814,
+     "EM": 59.26,
+     "F1": 68.49
+    }
+   },
+   "impossible_similarity": {
+    ">=0.7": {
+     "n": 902,
+     "EM": 59.42,
+     "F1": 59.42
+    },
+    "0.5-0.7": {
+     "n": 237,
+     "EM": 76.37,
+     "F1": 76.37
+    },
+    "<0.5": {
+     "n": 22,
+     "EM": 54.55,
+     "F1": 54.55
+    }
+   },
+   "impossible_edit": {
+    "Thay thực thể (tên riêng)": {
+     "n": 436,
+     "EM": 75.0,
+     "F1": 75.0
+    },
+    "Đảo vị trí thực thể": {
+     "n": 213,
+     "EM": 40.38,
+     "F1": 40.38
+    },
+    "Thay từ/cụm thường": {
+     "n": 436,
+     "EM": 63.53,
+     "F1": 63.53
+    },
+    "Đổi số / thời gian": {
+     "n": 44,
+     "EM": 56.82,
+     "F1": 56.82
+    },
+    "Thêm/bớt phủ định": {
+     "n": 22,
+     "EM": 54.55,
+     "F1": 54.55
+    },
+    "Đổi sang từ trái nghĩa": {
+     "n": 10,
+     "EM": 20.0,
+     "F1": 20.0
+    }
+   },
+   "label": "PhoBERT s13"
+  },
+  "xlmr_seed13": {
+   "question_type": {
+    "Định nghĩa/Sự vật": {
+     "n": 1058,
+     "EM": 51.98,
+     "F1": 63.83
+    },
+    "Địa điểm": {
+     "n": 223,
+     "EM": 54.71,
+     "F1": 61.72
+    },
+    "Thời gian": {
+     "n": 277,
+     "EM": 66.06,
+     "F1": 69.95
+    },
+    "Cách thức": {
+     "n": 330,
+     "EM": 41.82,
+     "F1": 58.81
+    },
+    "Lựa chọn (…nào)": {
+     "n": 812,
+     "EM": 54.19,
+     "F1": 62.35
+    },
+    "Khác": {
+     "n": 60,
+     "EM": 53.33,
+     "F1": 64.59
+    },
+    "Người": {
+     "n": 459,
+     "EM": 55.77,
+     "F1": 61.92
+    },
+    "Lý do": {
+     "n": 263,
+     "EM": 43.73,
+     "F1": 55.76
+    },
+    "Số lượng": {
+     "n": 332,
+     "EM": 58.73,
+     "F1": 64.43
+    }
+   },
+   "article": {
+    "Paris": {
+     "n": 462,
+     "EM": 47.19,
+     "F1": 56.33
+    },
+    "Nouvelle-Calédonie": {
+     "n": 163,
+     "EM": 61.35,
+     "F1": 68.67
+    },
+    "Canada": {
+     "n": 356,
+     "EM": 52.25,
+     "F1": 61.59
+    },
+    "Chiến tranh Vùng Vịnh": {
+     "n": 379,
+     "EM": 51.45,
+     "F1": 60.03
+    },
+    "Nước biển": {
+     "n": 53,
+     "EM": 56.6,
+     "F1": 66.48
+    },
+    "Puerto Rico": {
+     "n": 180,
+     "EM": 48.33,
+     "F1": 55.62
+    },
+    "Nam Ossetia": {
+     "n": 128,
+     "EM": 62.5,
+     "F1": 71.01
+    },
+    "Kiến": {
+     "n": 57,
+     "EM": 45.61,
+     "F1": 54.81
+    },
+    "François Mitterrand": {
+     "n": 298,
+     "EM": 58.39,
+     "F1": 65.92
+    },
+    "Gia cầm": {
+     "n": 59,
+     "EM": 38.98,
+     "F1": 50.87
+    },
+    "Thần học": {
+     "n": 61,
+     "EM": 57.38,
+     "F1": 69.85
+    },
+    "Mahatma Gandhi": {
+     "n": 324,
+     "EM": 50.0,
+     "F1": 62.0
+    },
+    "Nội chiến Anh": {
+     "n": 53,
+     "EM": 47.17,
+     "F1": 55.22
+    },
+    "Đế quốc La Mã Thần thánh": {
+     "n": 138,
+     "EM": 50.72,
+     "F1": 60.18
+    },
+    "Mông Cổ": {
+     "n": 293,
+     "EM": 59.39,
+     "F1": 68.6
+    },
+    "Montréal": {
+     "n": 42,
+     "EM": 52.38,
+     "F1": 64.39
+    },
+    "Franklin D. Roosevelt": {
+     "n": 503,
+     "EM": 49.11,
+     "F1": 59.14
+    },
+    "Uganda": {
+     "n": 59,
+     "EM": 55.93,
+     "F1": 60.55
+    },
+    "Texas": {
+     "n": 206,
+     "EM": 69.9,
+     "F1": 82.82
+    }
+   },
+   "answer_type": {
+    "Mệnh đề dài (>12 từ)": {
+     "n": 590,
+     "EM": 51.69,
+     "F1": 72.84
+    },
+    "Cụm vừa (5–12 từ)": {
+     "n": 720,
+     "EM": 59.17,
+     "F1": 74.78
+    },
+    "Tên riêng": {
+     "n": 340,
+     "EM": 63.82,
+     "F1": 69.03
+    },
+    "Số / ngày tháng": {
+     "n": 580,
+     "EM": 60.86,
+     "F1": 72.14
+    },
+    "Cụm ngắn (≤4 từ)": {
+     "n": 423,
+     "EM": 55.32,
+     "F1": 64.59
+    }
+   },
+   "gold_variants": {
+    "1": {
+     "n": 1435,
+     "EM": 58.75,
+     "F1": 69.75
+    },
+    "2": {
+     "n": 1041,
+     "EM": 57.54,
+     "F1": 73.41
+    },
+    "3": {
+     "n": 177,
+     "EM": 52.54,
+     "F1": 73.09
+    }
+   },
+   "lexical": {
+    "không phải câu trùng nhiều nhất": {
+     "n": 628,
+     "EM": 36.62,
+     "F1": 50.06
+    },
+    "câu đáp án trùng từ nhiều nhất": {
+     "n": 2022,
+     "EM": 64.49,
+     "F1": 78.1
+    },
+    "?": {
+     "n": 3,
+     "EM": 33.33,
+     "F1": 33.33
+    }
+   },
+   "all": {
+    "all": {
+     "n": 3814,
+     "EM": 53.25,
+     "F1": 62.68
+    }
+   },
+   "impossible_similarity": {
+    ">=0.7": {
+     "n": 902,
+     "EM": 39.02,
+     "F1": 39.02
+    },
+    "0.5-0.7": {
+     "n": 237,
+     "EM": 56.96,
+     "F1": 56.96
+    },
+    "<0.5": {
+     "n": 22,
+     "EM": 40.91,
+     "F1": 40.91
+    }
+   },
+   "impossible_edit": {
+    "Thay thực thể (tên riêng)": {
+     "n": 436,
+     "EM": 56.65,
+     "F1": 56.65
+    },
+    "Đảo vị trí thực thể": {
+     "n": 213,
+     "EM": 18.78,
+     "F1": 18.78
+    },
+    "Thay từ/cụm thường": {
+     "n": 436,
+     "EM": 42.66,
+     "F1": 42.66
+    },
+    "Đổi số / thời gian": {
+     "n": 44,
+     "EM": 40.91,
+     "F1": 40.91
+    },
+    "Thêm/bớt phủ định": {
+     "n": 22,
+     "EM": 18.18,
+     "F1": 18.18
+    },
+    "Đổi sang từ trái nghĩa": {
+     "n": 10,
+     "EM": 10.0,
+     "F1": 10.0
+    }
+   },
+   "label": "XLM-R s13"
+  }
+ },
+ "title_overlap_train_validation": []
+}

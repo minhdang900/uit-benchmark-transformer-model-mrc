@@ -1,6 +1,6 @@
 # Evaluation & Audit — PhoBERT vs XLM-R on UIT-ViQuAD 2.0
 
-**State audited:** `main` @ `c4c2698`
+**State audited:** `main` @ `f6f0b48`
 **Deliverable set:** tested pipeline (`src/mrc/`, `scripts/`) · evidence store (`results/`) ·
 report (`report/`) · deck (`slides/`) · ViMRC Console (`demo/`)
 
@@ -78,7 +78,7 @@ Reporting your own dataset as unusable is the most creditable act in this reposi
 | 4 | PhoBERT seed 42's non-abstention is a reproducible training event | `probe_resume.json`: gradient-norm spike 12,880 at lr 2.2e-5, absent at 1e-5 on identical batches | **Yes** as a symptom→trigger link. Root cause explicitly left open. |
 | 5 | Window size is not XLM-R's handicap | `xlmr_256` run at 256/96 | **Yes** — the strongest control in the study, and the basis of claim 2. |
 | 6 | Word segmentation is not decisive: 1.24% of answers, ceiling 0.75 EM | `segmentation_validation.json`, model-free | **Yes.** The ceiling bounds the effect a priori. |
-| 7 | The 250-question stress-test is not a usable instrument | `stress_test_audit.json`: 15/120 answerable items gradeable | **Yes**, and acted upon rather than published. |
+| 7 | The 250-question stress-test is not a usable instrument | 15/120 answerable items gradeable (audit artifact since removed with the v1 set; see git history) | **Yes**, and acted upon rather than published. |
 
 ---
 
@@ -112,7 +112,7 @@ The matched comparison that carries claim 2 was re-derived end to end:
 Resampling **articles rather than questions** is the correct unit — questions within an article share
 a passage and an annotator — and the project uses it and reports the wider interval.
 
-**Test suite:** 244 tests, all passing, no GPU required.
+**Test suite:** 280 tests, all passing, no GPU required.
 
 ---
 
@@ -206,7 +206,7 @@ Vietnam Pro with Source Code Pro for code; the palette is the Organic token set 
 console. Figures render on the deck's own canvas colour, so charts sit flush in the page.
 
 **ViMRC Console.** A Streamlit application over the same evidence store, with five pages: extractive
-QA, diagnostic matrix, error explorer, stress-test, and training/threshold views. Two design decisions
+QA, diagnostic matrix, error explorer, stress-test, and training/threshold views. Four properties
 deserve credit:
 
 - **The traceability invariant extends to the interface.** `data.py` reads `results/*.json` directly
@@ -214,6 +214,16 @@ deserve credit:
 - **It refuses to fabricate.** `infer.py` uses the report's own inference class and the dev-selected
   τ, so an answer shown in the interface is the answer the results table scored. With no checkpoint
   present it raises an explicit error instead of displaying an invented answer.
+- **The markup carries semantics, and they are tested.** `markup.py` is a Streamlit-free module, so
+  the generated HTML is asserted without a browser: section titles are real `<h2>` elements (heading
+  outline `H1 → H2 → H2 → H2`), and every `.vm-bar` chart declares `role="img"` with an `aria-label`
+  naming the row, each segment and the total. Verified in Chrome across all five pages: 6/6 charts
+  named, 0 exceptions.
+- **The logo is resolution- and font-independent.** Streamlit embeds a logo as `<img src="data:…">`,
+  where the page's imported fonts do not apply, so the "ViMRC" wordmark ships as outlines converted
+  from Be Vietnam Pro ExtraBold rather than SVG `<text>` — 1.3 KB, no runtime font dependency. Since
+  Streamlit fixes `alt="Logo"` on that image, a visually hidden `ViMRC` carries the app name into the
+  accessibility tree.
 
 ### Accessibility audit — WCAG 2.1 AA
 
@@ -242,13 +252,13 @@ weakest pairs in the system.
 
 | Criterion | Finding |
 |---|---|
-| 1.1.1 Non-text content | No raster images in the console, so no missing alt text. The taxonomy bars are `<div>` segments carrying no accessible name or value — see A2. |
-| 1.3.1 Info and relationships | The diagnostic matrix is a real `<table>` with `<thead>` and `<th>`. Nine section headings are `<div class='vm-h2'>` rather than `<h2>` — see A1. |
+| 1.1.1 Non-text content | Charts built from `<div>` declare `role="img"` with a descriptive `aria-label`. The logo image is named through a visually hidden text node, since Streamlit fixes its `alt` to "Logo". |
+| 1.3.1 Info and relationships | The diagnostic matrix is a real `<table>` with `<thead>` and `<th>`; section titles are real `<h2>` elements, so the heading outline is navigable. |
 | 1.4.3 / 1.4.11 Contrast | Pass, as above. |
 | 2.1.1 Keyboard | Navigation, system selection, example chips and threshold selection are Streamlit buttons and text inputs — natively focusable and operable. |
 | 2.4.7 Focus visible | Explicit `:focus-visible` outlines for buttons and inputs, with `outline-offset`. |
 | 3.3.2 Labels | Inputs carry visible widget labels styled through `[data-testid="stWidgetLabel"]`. |
-| 4.1.2 Name, role, value | Buttons and inputs are native controls. The div-built bar charts expose no name or value — see A2. |
+| 4.1.2 Name, role, value | Buttons and inputs are native controls; div-built charts expose name and role. The sidebar collapse control is the exception — see A1. |
 | Reduced motion | `prefers-reduced-motion` is honoured. |
 
 ---
@@ -282,16 +292,23 @@ padded with manufactured objections.
 
 ### MAJOR
 
-**A1 — Section headings are not headings (WCAG 1.3.1).** Nine `<div class='vm-h2'>` elements in
-`demo/console/pages.py` carry heading styling without heading semantics, so screen-reader users get no
-heading outline and cannot navigate the console by section. **Fix:** render them as `<h2>` and keep
-the class.
+**A1 — The sidebar collapse control has no usable accessible name (WCAG 4.1.2), and the defect is
+upstream.** Streamlit renders that button with `aria-label=""` and the Material ligature
+`keyboard_double_arrow_left` as its only text content, so assistive technology announces that string.
+Nothing in this repository sets either value.
 
-**A2 — Bar charts expose no accessible name or value (WCAG 1.1.1, 4.1.2).** The taxonomy bars and
-segment stacks are `<div>` elements; their quantities are conveyed only visually, and
-`demo/console/pages.py` contains no `aria-*` or `role` attributes. **Fix:** add `role="img"` with an
-`aria-label` summarising the distribution, or pair each chart with a visually hidden table of the same
-numbers.
+The standard CSS remedy — hide the ligature, redraw the icon, name the button through clipped
+`::after` content, which does count toward the accessible name — **cannot be used here.** Streamlit
+binds the click handler to the icon element rather than the button, so suppressing that element
+disables the control. Measured directly: with the icon hidden the sidebar stays at 292px on click;
+with it rendered the same click collapses it to 1px. `visibility: hidden` fails the same way (not
+hit-testable) and `opacity: 0` leaves the text in the accessibility tree. No CSS both removes the
+string from the accessibility tree and preserves a hit target.
+
+**Fix:** report upstream — Streamlit should give the control a non-empty `aria-label`. A custom
+component injecting JavaScript into the parent DOM would work but adds an iframe and a dependency on
+Streamlit internals; that is poor value for a coursework artifact. Recorded here as a known
+limitation rather than worked around.
 
 ### MINOR
 
@@ -313,7 +330,13 @@ window configurations and is currently unquantified. No GPU required.
 **M5 — The oracle-threshold robustness check is absent from the report.** The data to run it already
 ships in `results/windows_*.json`; the result strengthens claim 1 at the cost of one paragraph.
 
-**A3 — The deck's PhoBERT and XLM-R emphasis colours pass the large-text threshold by 0.03 and 0.14.**
+**M6 — The console's styling depends on Streamlit-internal selectors.** `theme.py` targets
+`data-testid` attributes and emotion-generated structure. These are not a public API and do rot: the
+main content area is matched by two names because the element's identifier changed between versions,
+and until both were targeted the design's own container padding and max-width did not apply at all.
+Worth a scan whenever Streamlit is upgraded.
+
+**A2 — The deck's PhoBERT and XLM-R emphasis colours pass the large-text threshold by 0.03 and 0.14.**
 Adequate for projection, but with no headroom; darker variants of the same hues would clear the
 normal-text threshold.
 
@@ -351,8 +374,8 @@ normal-text threshold.
 2. Sweep XLM-R's learning rate over the same three values PhoBERT receives.
 3. Three or more seeds per family at 256/96, reporting answerable-only EM with a seed-level interval.
 4. Compute the per-model window-coverage ceiling — no GPU required, closes M3.
-5. Promote the nine styled section headings to real `<h2>` elements and give the bar charts an
-   accessible name — closes A1 and A2, both small markup changes.
+5. File the sidebar-collapse naming defect upstream with Streamlit — closes A1, which cannot be
+   fixed from application code.
 
 ---
 
@@ -360,7 +383,13 @@ normal-text threshold.
 
 **Accept with minor revision.** The evidence base is sound and unusually auditable, and the claims are
 stated at the strength the evidence carries — including the negative result that the advantage is not
-reading ability, which is the harder and more valuable finding. The open items are two accessibility
-defects in the console (A1, A2), both small markup changes, and a short list of documentation gaps
-(M1–M5). The remaining limits on what the study can conclude are compute-bound and are already
-declared in the text as scope boundaries rather than left for a reader to discover.
+reading ability, which is the harder and more valuable finding.
+
+One MAJOR item remains (A1), and it is not the project's to fix: the sidebar collapse control is named
+by Streamlit, and the CSS workaround disables the control, as measured. It belongs upstream and is
+recorded as a known limitation. The rest are documentation and packaging gaps (M1–M6) plus one slide
+colour pair with no contrast headroom (A2).
+
+The remaining limits on what the study can conclude — tuning budget, epoch budget, two seeds — are
+compute-bound and are already declared in the text as scope boundaries rather than left for a reader
+to discover.

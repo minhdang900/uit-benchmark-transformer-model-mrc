@@ -279,9 +279,9 @@ def matrix_page(system_key: str) -> None:
             không-đáp-án rất thấp; seed 13 đảo lại cân bằng đó. Cột “tỉ lệ từ chối” là chìa khoá
             để đọc bảng này.</p></div>""")
 
-    _md(M.heading("Ma trận chẩn đoán E1–E5 (EM, bộ stress-test)",
+    _md(M.heading("Ma trận chẩn đoán E1–E5 (EM, bộ stress-test v2)",
                   style="margin:22px 0 10px"))
-    scope = _chips([("all", "Toàn bộ 250 câu"), ("valid", "Chỉ câu hợp lệ")],
+    scope = _chips([("category", "Theo nhóm E1–E5"), ("subset", "Theo tập con")],
                    "matrix-scope", ncols=4)
     cols, srows = D.stress_matrix(scope)
     if srows:
@@ -381,10 +381,10 @@ def stress_page() -> None:
         f"<span class='vm-tile-v' style='font-size:26px'>{esc(v)}</span>"
         f"<span class='vm-tile-d vm-muted'>{esc(note)}</span></div>"
         for k, v, note in (
-            ("Hợp lệ", f"{g['valid']}/{g['n']}", "qua kiểm định tự động"),
+            ("Mục", f"{g['n']}", "đều chấm được — 0 vi phạm kiểm định"),
             ("Có đáp án", f"{g['ans']}/{g['n']}",
-             f"{g['ans_in_ctx']} câu chứa đáp án trong ngữ cảnh"),
-            ("Câu hỏi khác nhau", f"{g['distinct']}/{g['n']}", "độ đa dạng của nhóm"),
+             f"{g['imp']} câu không có đáp án"),
+            ("Câu gốc đi kèm", f"{g['twins']}", "để so theo cặp trước/sau biến đổi"),
         )) + "</div>")
 
     warn = D.group_warning(code)
@@ -397,8 +397,8 @@ def stress_page() -> None:
         f"<span class='vm-mono vm-muted' style='font-size:12px'>{esc(s['qid'])}</span>"
         f"<span style='font-size:13.5px'>{esc(s['question'])}</span>"
         f"<span style='font-size:13px;color:var(--color-accent-2-800)'>{esc(s['gold'])}</span>"
-        f"<span class='vm-tag {'vm-tag-ok' if s['valid'] else 'vm-tag-err'}'>"
-        f"{'hợp lệ' if s['valid'] else 'không hợp lệ'}</span></div>"
+        f"<span class='vm-tag vm-tag-ok'>"
+        f"{esc(s['subset'])}{' · ' + esc(s['role']) if s['role'] else ''}</span></div>"
         for s in D.group_samples(code))
     _md(f"<div class='vm-card' style='margin-top:14px'>"
         f"{M.heading(g['code'] + ' — ' + g['name'])}"

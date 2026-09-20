@@ -1,7 +1,7 @@
 """Chấm một hoặc nhiều hệ thống, ghi kết quả có provenance + dự đoán từng câu.
 
     python scripts/run_eval.py --models abstain baseline xlmr phobert            # ViQuAD validation (toàn bộ)
-    python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress
+    python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress2   # bộ stress-test v2
 
 Validation chính thức đóng vai tập TEST của đồ án: không model nào nhìn thấy nó
 khi huấn luyện hay chọn epoch (xem scripts/finetune.py). Mỗi hệ thống được chấm
@@ -25,7 +25,6 @@ for _p in (_ROOT, _ROOT / "src"):
 
 from mrc.data import assert_gradeable, compute_stats, load_squad_file  # noqa: E402
 from mrc.evaluate import breakdown, run_evaluation  # noqa: E402
-from mrc.metrics import evaluate as evaluate_metrics  # noqa: E402
 
 NAMES = {
     "abstain": "Always-abstain",
@@ -40,6 +39,9 @@ NAMES = {
     "xlmr_seed13": "XLM-R-base (fine-tuned, seed 13)",
     "xlmr_256": "XLM-R-base (fine-tuned, 256/96)",
 }
+
+
+STRESS_V2_PATH = Path("data/stress_test_v2/stress_v2.json")
 
 
 def build_predictor(kind: str):
@@ -62,37 +64,17 @@ def build_predictor(kind: str):
 
 
 def load(dataset: str, data_dir: str):
-    if dataset == "stress":
-        from mrc.stress_test import load_stress_test
+    if dataset == "stress2":
+        from mrc.stress_v2 import load_stress_v2
 
-        examples, meta, _ = load_stress_test("data/stress_test")
-        return examples, meta
+        return load_stress_v2(STRESS_V2_PATH)
     return load_squad_file(Path(data_dir) / f"viquad2_{dataset}.json"), None
-
-
-def stress_breakdown(predictions: dict, examples, meta: dict) -> dict:
-    """Điểm theo nhóm E1–E5, trên TẤT CẢ câu và trên tập con HỢP LỆ."""
-    out: dict = {}
-    for code in sorted({m["category"] for m in meta.values()}):
-        for label, keep in (("all", lambda m: True), ("valid", lambda m: m["valid"])):
-            subset = [e for e in examples if meta[e.qid]["category"] == code and keep(meta[e.qid])]
-            if not subset:
-                continue
-            s = evaluate_metrics({e.qid: predictions[e.qid] for e in subset},
-                                 {e.qid: list(e.answers) for e in subset})
-            out.setdefault(code, {})[label] = {
-                "EM": round(s["EM"], 4), "F1": round(s["F1"], 4), "count": s["count"],
-                "n_answerable": s["n_answerable"],
-                "EM_answerable": round(s["EM_answerable"], 4) if s["n_answerable"] else None,
-                "EM_impossible": round(s["EM_impossible"], 4) if s["n_impossible"] else None,
-            }
-    return out
 
 
 def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--models", nargs="+", required=True, choices=sorted(NAMES))
-    ap.add_argument("--dataset", default="validation", help="validation | stress")
+    ap.add_argument("--dataset", default="validation", help="validation | stress2")
     ap.add_argument("--data-dir", default="data/raw")
     ap.add_argument("--out-dir", default="results")
     args = ap.parse_args(argv)
@@ -109,7 +91,8 @@ def main(argv=None) -> None:
         print(f"\n=== {kind} ===", flush=True)
         predictor = build_predictor(kind)
         result = run_evaluation(predictor, examples, split=args.dataset,
-                                dataset="stress-test" if args.dataset == "stress" else "UIT-ViQuAD 2.0")
+                                dataset="stress-test v2" if args.dataset == "stress2"
+                                else "UIT-ViQuAD 2.0")
         predictions = result.pop("_predictions")
         result["config"] = {k: getattr(predictor, k) for k in
                             ("max_length", "doc_stride", "max_answer_len", "word_segmented")
@@ -127,8 +110,10 @@ def main(argv=None) -> None:
 
         result["library_versions"] = {"torch": torch.__version__,
                                       "transformers": transformers.__version__}
-        if meta is not None:
-            result["by_category"] = stress_breakdown(predictions, examples, meta)
+        if args.dataset == "stress2":
+            from mrc.stress_v2 import score_report
+
+            result.update(score_report(predictions, examples, meta))
 
         o, a, i = result["overall"], result["answerable_only"], result["impossible_only"]
         print(f"  overall    EM {o['EM']:6.2f}  F1 {o['F1']:6.2f}  (n={o['count']})")

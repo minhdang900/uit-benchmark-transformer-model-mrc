@@ -26,7 +26,6 @@ BOTH_SEEDS = ["baseline", "xlmr", "xlmr_seed13", "phobert", "phobert_seed13"]
 ERR_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]
 INK, MUTED, GRID = "#1f1f1e", "#6b6a64", "#e4e3dd"
 PANEL = "white"  # nền hình + đường tách giữa các đoạn cột
-AUDIT = ("#2a78d6", "#eb6834", "#b9b8b0")  # trong ngữ cảnh / ngoài ngữ cảnh / không đáp án
 
 # Hệ màu "Organic" của web demo (demo/console/theme.py) — chỉ dùng cho bản slide,
 # để slide và demo trông như một sản phẩm. Báo cáo giữ nguyên bảng màu xanh/cam.
@@ -36,7 +35,6 @@ ORGANIC = {
     "ERR_COLORS": ["#c67139", "#728157", "#8c491a", "#56633f", "#82796a", "#402310"],
     "INK": "#201e1d", "MUTED": "#645c50", "GRID": "#dcd3c4",
     "PANEL": "#f5ead8",
-    "AUDIT": ("#728157", "#c67139", "#c0b6a5"),
 }
 ORGANIC_RC = {
     "figure.facecolor": ORGANIC["PANEL"], "axes.facecolor": ORGANIC["PANEL"],
@@ -52,11 +50,11 @@ ORGANIC_RC = {
 
 def use_organic():
     """Chuyển bảng màu sang hệ Organic (gọi trước lượt vẽ cho slide)."""
-    global COLOR, ERR_COLORS, INK, MUTED, GRID, PANEL, AUDIT
+    global COLOR, ERR_COLORS, INK, MUTED, GRID, PANEL
     COLOR = ORGANIC["COLOR"]
     ERR_COLORS = ORGANIC["ERR_COLORS"]
     INK, MUTED, GRID = ORGANIC["INK"], ORGANIC["MUTED"], ORGANIC["GRID"]
-    PANEL, AUDIT = ORGANIC["PANEL"], ORGANIC["AUDIT"]
+    PANEL = ORGANIC["PANEL"]
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans", "font.size": 10, "axes.edgecolor": MUTED,
@@ -171,33 +169,41 @@ def fig_curves():
     fig.savefig(OUT / (PREFIX + "training_curves.png")); plt.close(fig)
 
 
-def fig_audit():
-    a = load("stress_test_audit.json")
+def fig_stress_v2():
+    """EM theo nhóm E1–E5 trên bộ stress-test v2, kèm mốc "luôn từ chối"."""
+    a = load("stress_v2_audit.json")
     if not a:
         return
     cats = list(a["by_category"])
-    parts = [("Có đáp án, đáp án NẰM trong ngữ cảnh", AUDIT[0], lambda c: c["answer_in_context"]),
-             ("Có đáp án, đáp án KHÔNG có trong ngữ cảnh", AUDIT[1], lambda c: c["answerable"] - c["answer_in_context"]),
-             ("Không có đáp án", AUDIT[2], lambda c: c["unanswerable"])]
-    fig, ax = plt.subplots(figsize=(7.5, 3.0))
-    for j, cat in enumerate(cats):
-        c, bottom = a["by_category"][cat], 0
-        for name, col, f in parts:
-            v = f(c)
-            ax.bar(j, v, bottom=bottom, color=col, edgecolor=PANEL, linewidth=1.5, width=0.6)
-            if v >= 2:
-                ax.text(j, bottom + v / 2, str(v), ha="center", va="center", fontsize=8,
-                        color="white" if col != AUDIT[2] else INK)
-            bottom += v
-    ax.set_xticks(range(len(cats)), cats); ax.set_ylabel("Số câu (mỗi nhóm 50)")
-    ax.legend([plt.Rectangle((0, 0), 1, 1, color=c) for _, c, _ in parts], [n for n, _, _ in parts],
-              loc="upper left", bbox_to_anchor=(1.0, 1.0))
-    ax.grid(axis="x", visible=False)
-    fig.savefig(OUT / (PREFIX + "stress_audit.png")); plt.close(fig)
+    ms = [k for k in BOTH_SEEDS if load(f"eval_{k}_stress2.json")]
+    if not ms:
+        return
+    fig, ax = plt.subplots(figsize=(8.5, 3.2))
+    w = 0.8 / max(1, len(ms))
+    for i, m in enumerate(ms):
+        ev = load(f"eval_{m}_stress2.json")
+        vals = [(ev.get("by_category", {}).get(c) or {}).get("EM", 0) for c in cats]
+        xs = [j + (i - (len(ms) - 1) / 2) * w for j in range(len(cats))]
+        ax.bar(xs, vals, w - 0.03, color=COLOR.get(m, MUTED), label=LABEL.get(m, m))
+        for x, v in zip(xs, vals):
+            ax.text(x, v + 1.2, f"{v:.0f}", ha="center", fontsize=6.5, color=INK)
+    ab = load("eval_abstain_stress2.json")
+    if ab:
+        ax.axhline(ab["overall"]["EM"], color=MUTED, lw=1.2, ls="--")
+        ax.text(-0.45, ab["overall"]["EM"] + 2.5,
+                f"luôn từ chối: EM toàn bộ = {ab['overall']['EM']:.2f}".replace(".", ","),
+                ha="left", fontsize=8, color=MUTED, zorder=5,
+                bbox=dict(boxstyle="round,pad=0.2", fc=PANEL, ec=GRID))
+    names = {c: (a["by_category"][c].get("name") or c) for c in cats}
+    ax.set_xticks(range(len(cats)),
+                  [f"{c}\n{names[c]}" for c in cats], fontsize=7.5)
+    ax.set_ylim(0, 105); ax.set_ylabel("EM (%)")
+    ax.legend(ncol=len(ms), loc="upper left", bbox_to_anchor=(0, 1.15), fontsize=7.5)
+    fig.savefig(OUT / (PREFIX + "stress_v2.png")); plt.close(fig)
 
 
 def render():
-    fig_main(); fig_taxonomy(); fig_curves(); fig_audit()
+    fig_main(); fig_taxonomy(); fig_curves(); fig_stress_v2()
     fig_lines("by_answer_length", ["1-2", "3-5", "6-10", "11+"], "Độ dài đáp án vàng (âm tiết)", "by_answer_length.png", "diag")
     fig_lines("by_context_length", ["<100", "100-200", "200-300", "300+"], "Độ dài đoạn văn (âm tiết)", "by_context_length.png", "eval")
 

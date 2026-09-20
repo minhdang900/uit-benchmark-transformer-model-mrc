@@ -1,0 +1,344 @@
+{
+  "model": "Always-abstain",
+  "dataset": "stress-test v2",
+  "split": "stress2",
+  "n": 1139,
+  "timestamp": "2026-09-20T16:02:18+00:00",
+  "commit": "f6f0b48",
+  "device": "mps",
+  "env": {
+    "device": "mps",
+    "torch": "2.14.0",
+    "mps_available": true,
+    "platform": "macOS-26.4.1-arm64-arm-64bit",
+    "machine": "arm64"
+  },
+  "overall": {
+    "EM": 26.3389,
+    "F1": 26.3389,
+    "count": 1139
+  },
+  "answerable_only": {
+    "EM": 0.0,
+    "F1": 0.0,
+    "count": 839
+  },
+  "impossible_only": {
+    "EM": 100.0,
+    "count": 300
+  },
+  "avg_latency_ms": 0.0,
+  "by_context_length": {
+    "100-200": {
+      "EM": 26.087,
+      "F1": 26.087,
+      "count": 805,
+      "unreliable": false
+    },
+    "200-300": {
+      "EM": 20.8,
+      "F1": 20.8,
+      "count": 250,
+      "unreliable": false
+    },
+    "300+": {
+      "EM": 15.6863,
+      "F1": 15.6863,
+      "count": 51,
+      "unreliable": false
+    },
+    "<100": {
+      "EM": 90.9091,
+      "F1": 90.9091,
+      "count": 33,
+      "unreliable": false
+    }
+  },
+  "by_question_type": {
+    "multi-sentence": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "count": 572,
+      "unreliable": false
+    },
+    "single-sentence": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "count": 267,
+      "unreliable": false
+    },
+    "_note": "Tổng của bảng này là 839 chứ không phải n=1139, vì 300 câu impossible không được gán question_type (chúng không có phạm vi suy luận để phân loại). question_type là HEURISTIC tự gán, không phải nhãn có sẵn của ViQuAD."
+  },
+  "sample_predictions": [
+    {
+      "qid": "s2-E1a-0000",
+      "question": "Lý do mà Liên minh Hồi giáo muốn phân chia Ấn Độ là gì?",
+      "gold": [
+        "thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống",
+        "thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống bởi phần lớn môn đồ Ấn Độ giáo trong một quốc gia Ấn Độ thống nhất"
+      ],
+      "prediction": "",
+      "context": "Gandhi có ảnh hưởng lớn trong các cộng đồng Ấn Độ giáo và Hồi giáo tại Ấn Độ. Tương truyền chỉ sự hiện diện của ông thôi cũng đủ chấm dứt các cuộc bạo động. Ông phản đối kịch liệt tất cả những kế hoạch phân chia Ấn Độ thành hai quốc gia độc lập. Liên minh Hồi giáo luận cứ rằng thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống bởi phần lớn môn đồ Ấn Độ giáo trong một quốc gia Ấn Độ thống nhất, và một quốc gia riêng cho người theo Hồi giáo là một giải pháp hợp lý. Tuy nhiên, nhiều người Hồi giáo ở trung tâm Ấn Độ - vốn chung sống với người Ấn giáo, đạo Sikhs, Phật giáo, Kì-na giáo, đạo Parsi, Kitô giáo và đạo Do Thái - lại muốn một quốc gia Ấn Độ thống nhất. Nhưng Jinnah ra lệnh hỗ trợ rộng rãi các vùng Tây Punjab, Sindh, NWFP và Đông Bengal, tất cả những vùng đã hợp thành dạng Pakistan và Bangladesh ngày nay. Xứ sở mới của người theo Hồi giáo được kiến lập từ các vùng Đông và Tây Ấn Độ. Ban đầu nó được gọi là Tây và Đông Pakistan, và giờ đây tương ưng với Pakistan và Bangladesh. Ngày trao quyền chính trị, Gandhi không ăn mừng độc lập cùng với công chúng Ấn Độ mà chỉ đơn độc tại Kolkata, đau buồn về sự phân chia và tiếp tục công việc nhằm chấm dứt bạo lực.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "s2-E1b-0040",
+      "question": "Xứ sở mới của người Hồi giáo đặt ở đâu?",
+      "gold": [
+        "các vùng Đông và Tây Ấn Độ",
+        "vùng Đông và Tây Ấn Độ",
+        "vùng Đông và Tây Ấn Độ"
+      ],
+      "prediction": "",
+      "context": "Gandhi có ảnh hưởng lớn trong các cộng đồng Ấn Độ giáo và Hồi giáo tại Ấn Độ. Tương truyền chỉ sự hiện diện của ông thôi cũng đủ chấm dứt các cuộc bạo động. Ông phản đối kịch liệt tất cả những kế hoạch phân chia Ấn Độ thành hai quốc gia độc lập. Liên minh Hồi giáo luận cứ rằng thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống bởi phần lớn môn đồ Ấn Độ giáo trong một quốc gia Ấn Độ thống nhất, và một quốc gia riêng cho người theo Hồi giáo là một giải pháp hợp lý. Tuy nhiên, nhiều người Hồi giáo ở trung tâm Ấn Độ - vốn chung sống với người Ấn giáo, đạo Sikhs, Phật giáo, Kì-na giáo, đạo Parsi, Kitô giáo và đạo Do Thái - lại muốn một quốc gia Ấn Độ thống nhất. Nhưng Jinnah ra lệnh hỗ trợ rộng rãi các vùng Tây Punjab, Sindh, NWFP và Đông Bengal, tất cả những vùng đã hợp thành dạng Pakistan và Bangladesh ngày nay. Xứ sở mới của người theo Hồi giáo được kiến lập từ các vùng Đông và Tây Ấn Độ. Ban đầu nó được gọi là Tây và Đông Pakistan, và giờ đây tương ưng với Pakistan và Bangladesh. Ngày trao quyền chính trị, Gandhi không ăn mừng độc lập cùng với công chúng Ấn Độ mà chỉ đơn độc tại Kolkata, đau buồn về sự phân chia và tiếp tục công việc nhằm chấm dứt bạo lực.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "s2-E1b-0061",
+      "question": "Người hồi giáo ở trung tâm Ấn độ chung sống với những người theo tôn giáo nào?",
+      "gold": [
+        "người Ấn giáo, đạo Sikhs, Phật giáo, Kì-na giáo, đạo Parsi, Kitô giáo và đạo Do Thái"
+      ],
+      "prediction": "",
+      "context": "Gandhi có ảnh hưởng lớn trong các cộng đồng Ấn Độ giáo và Hồi giáo tại Ấn Độ. Tương truyền chỉ sự hiện diện của ông thôi cũng đủ chấm dứt các cuộc bạo động. Ông phản đối kịch liệt tất cả những kế hoạch phân chia Ấn Độ thành hai quốc gia độc lập. Liên minh Hồi giáo luận cứ rằng thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống bởi phần lớn môn đồ Ấn Độ giáo trong một quốc gia Ấn Độ thống nhất, và một quốc gia riêng cho người theo Hồi giáo là một giải pháp hợp lý. Tuy nhiên, nhiều người Hồi giáo ở trung tâm Ấn Độ - vốn chung sống với người Ấn giáo, đạo Sikhs, Phật giáo, Kì-na giáo, đạo Parsi, Kitô giáo và đạo Do Thái - lại muốn một quốc gia Ấn Độ thống nhất. Nhưng Jinnah ra lệnh hỗ trợ rộng rãi các vùng Tây Punjab, Sindh, NWFP và Đông Bengal, tất cả những vùng đã hợp thành dạng Pakistan và Bangladesh ngày nay. Xứ sở mới của người theo Hồi giáo được kiến lập từ các vùng Đông và Tây Ấn Độ. Ban đầu nó được gọi là Tây và Đông Pakistan, và giờ đây tương ưng với Pakistan và Bangladesh. Ngày trao quyền chính trị, Gandhi không ăn mừng độc lập cùng với công chúng Ấn Độ mà chỉ đơn độc tại Kolkata, đau buồn về sự phân chia và tiếp tục công việc nhằm chấm dứt bạo lực.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "s2-E2a-0065",
+      "question": "Xứ sở mới của người Hồi giáo đặt ở đâu?",
+      "gold": [
+        "các vùng Đông và Tây Ấn Độ",
+        "vùng Đông và Tây Ấn Độ",
+        "vùng Đông và Tây Ấn Độ"
+      ],
+      "prediction": "",
+      "context": "Gandhi có ảnh hưởng lớn trong các cộng đồng Ấn Độ giáo và Hồi giáo tại Ấn Độ. Tương truyền chỉ sự hiện diện của ông thôi cũng đủ chấm dứt các cuộc bạo động. Ông phản đối kịch liệt tất cả những kế hoạch phân chia Ấn Độ thành hai quốc gia độc lập. Liên minh Hồi giáo luận cứ rằng thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống bởi phần lớn môn đồ Ấn Độ giáo trong một quốc gia Ấn Độ thống nhất, và một quốc gia riêng cho người theo Hồi giáo là một giải pháp hợp lý. Tuy nhiên, nhiều người Hồi giáo ở trung tâm Ấn Độ - vốn chung sống với người Ấn giáo, đạo Sikhs, Phật giáo, Kì-na giáo, đạo Parsi, Kitô giáo và đạo Do Thái - lại muốn một quốc gia Ấn Độ thống nhất. Nhưng Jinnah ra lệnh hỗ trợ rộng rãi các vùng Tây Punjab, Sindh, NWFP và Đông Bengal, tất cả những vùng đã hợp thành dạng Pakistan và Bangladesh ngày nay. Xứ sở mới của người theo Hồi giáo được kiến lập từ các vùng Đông và Tây Ấn Độ. Ban đầu nó được gọi là Tây và Đông Pakistan, và giờ đây tương ưng với Pakistan và Bangladesh. Ngày trao quyền chính trị, Gandhi không ăn mừng độc lập cùng với công chúng Ấn Độ mà chỉ đơn độc tại Kolkata, đau buồn về sự phân chia và tiếp tục công việc nhằm chấm dứt bạo lực.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "s2-E3a-0022",
+      "question": "Lý do mà Ấn Độ muốn phân chia Liên minh Hồi giáo là gì?",
+      "gold": [],
+      "prediction": "",
+      "context": "Gandhi có ảnh hưởng lớn trong các cộng đồng Ấn Độ giáo và Hồi giáo tại Ấn Độ. Tương truyền chỉ sự hiện diện của ông thôi cũng đủ chấm dứt các cuộc bạo động. Ông phản đối kịch liệt tất cả những kế hoạch phân chia Ấn Độ thành hai quốc gia độc lập. Liên minh Hồi giáo luận cứ rằng thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống bởi phần lớn môn đồ Ấn Độ giáo trong một quốc gia Ấn Độ thống nhất, và một quốc gia riêng cho người theo Hồi giáo là một giải pháp hợp lý. Tuy nhiên, nhiều người Hồi giáo ở trung tâm Ấn Độ - vốn chung sống với người Ấn giáo, đạo Sikhs, Phật giáo, Kì-na giáo, đạo Parsi, Kitô giáo và đạo Do Thái - lại muốn một quốc gia Ấn Độ thống nhất. Nhưng Jinnah ra lệnh hỗ trợ rộng rãi các vùng Tây Punjab, Sindh, NWFP và Đông Bengal, tất cả những vùng đã hợp thành dạng Pakistan và Bangladesh ngày nay. Xứ sở mới của người theo Hồi giáo được kiến lập từ các vùng Đông và Tây Ấn Độ. Ban đầu nó được gọi là Tây và Đông Pakistan, và giờ đây tương ưng với Pakistan và Bangladesh. Ngày trao quyền chính trị, Gandhi không ăn mừng độc lập cùng với công chúng Ấn Độ mà chỉ đơn độc tại Kolkata, đau buồn về sự phân chia và tiếp tục công việc nhằm chấm dứt bạo lực.",
+      "em": 1.0,
+      "f1": 1.0,
+      "is_impossible": true
+    },
+    {
+      "qid": "s2-E3a-0074",
+      "question": "Cộng đồng nào có ảnh hưởng đối với Gandhi?",
+      "gold": [],
+      "prediction": "",
+      "context": "Gandhi có ảnh hưởng lớn trong các cộng đồng Ấn Độ giáo và Hồi giáo tại Ấn Độ. Tương truyền chỉ sự hiện diện của ông thôi cũng đủ chấm dứt các cuộc bạo động. Ông phản đối kịch liệt tất cả những kế hoạch phân chia Ấn Độ thành hai quốc gia độc lập. Liên minh Hồi giáo luận cứ rằng thiểu số người Hồi giáo sẽ bị bức áp một cách có hệ thống bởi phần lớn môn đồ Ấn Độ giáo trong một quốc gia Ấn Độ thống nhất, và một quốc gia riêng cho người theo Hồi giáo là một giải pháp hợp lý. Tuy nhiên, nhiều người Hồi giáo ở trung tâm Ấn Độ - vốn chung sống với người Ấn giáo, đạo Sikhs, Phật giáo, Kì-na giáo, đạo Parsi, Kitô giáo và đạo Do Thái - lại muốn một quốc gia Ấn Độ thống nhất. Nhưng Jinnah ra lệnh hỗ trợ rộng rãi các vùng Tây Punjab, Sindh, NWFP và Đông Bengal, tất cả những vùng đã hợp thành dạng Pakistan và Bangladesh ngày nay. Xứ sở mới của người theo Hồi giáo được kiến lập từ các vùng Đông và Tây Ấn Độ. Ban đầu nó được gọi là Tây và Đông Pakistan, và giờ đây tương ưng với Pakistan và Bangladesh. Ngày trao quyền chính trị, Gandhi không ăn mừng độc lập cùng với công chúng Ấn Độ mà chỉ đơn độc tại Kolkata, đau buồn về sự phân chia và tiếp tục công việc nhằm chấm dứt bạo lực.",
+      "em": 1.0,
+      "f1": 1.0,
+      "is_impossible": true
+    },
+    {
+      "qid": "s2-E1a-0028",
+      "question": "Những khái niệm và kỹ thuật của phương pháp bất hợp tác được phát triển trong thời gian nào?",
+      "gold": [
+        "Những năm lưu trú tại Nam Phi"
+      ],
+      "prediction": "",
+      "context": "Trong những năm sống tại Nam Phi, Gandhi đã lấy cảm hứng từ quyển Chí Tôn ca cũng như những tác phẩm của Lev Nikolayevich Tolstoy (đặc biệt là quyển \"Thiên đường nằm trong Bạn\"), người đã trải qua một sự chuyển biến tôn giáo sâu sắc với niềm tin vào một dạng \"chủ nghĩa vô chính phủ\" của Kitô giáo. Gandhi dịch bài \"Thư gửi đến một môn đồ Ấn Độ giáo\" (A Letter to a Hindu) của Tolstoi, được viết vào năm 1908 để phản ứng những đồng hương Ấn Độ theo chủ nghĩa dân tộc một cách hung bạo. Hai người viết thư cho nhau cho đến khi Tolstoi mất vào năm 1910. Bức thư của Tolstoi dùng triết học Ấn Độ có nguồn từ các Phệ-đà và những lời khuyên của Hắc thiên để hướng đến phong trào chủ nghĩa dân tộc Ấn Độ đang tiến triển. Gandhi cũng bị ảnh hưởng lớn qua tiểu luận nổi danh của Henry David Thoreau là \"Sự không phục tòng của công chúng\". Những năm lưu trú tại Nam Phi với tư cách một người chủ trương hành động chuyên về xã hội chính trị chính là thời kì những khái niệm và kĩ thuật của phương pháp bất hợp tác và phản đối bất bạo lực được phát triển. Khi Chiến tranh thế giới thứ nhất bắt đầu, ông quyết định trở về Ấn Độ, mang theo tất cả những gì ông đã học được từ những kinh nghiệm tại Nam Phi.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "s2-E3a-0033",
+      "question": "Một môn đồ Ấn Độ giáo dịch bài Thư gửi đến Gandhi để làm gì?",
+      "gold": [],
+      "prediction": "",
+      "context": "Trong những năm sống tại Nam Phi, Gandhi đã lấy cảm hứng từ quyển Chí Tôn ca cũng như những tác phẩm của Lev Nikolayevich Tolstoy (đặc biệt là quyển \"Thiên đường nằm trong Bạn\"), người đã trải qua một sự chuyển biến tôn giáo sâu sắc với niềm tin vào một dạng \"chủ nghĩa vô chính phủ\" của Kitô giáo. Gandhi dịch bài \"Thư gửi đến một môn đồ Ấn Độ giáo\" (A Letter to a Hindu) của Tolstoi, được viết vào năm 1908 để phản ứng những đồng hương Ấn Độ theo chủ nghĩa dân tộc một cách hung bạo. Hai người viết thư cho nhau cho đến khi Tolstoi mất vào năm 1910. Bức thư của Tolstoi dùng triết học Ấn Độ có nguồn từ các Phệ-đà và những lời khuyên của Hắc thiên để hướng đến phong trào chủ nghĩa dân tộc Ấn Độ đang tiến triển. Gandhi cũng bị ảnh hưởng lớn qua tiểu luận nổi danh của Henry David Thoreau là \"Sự không phục tòng của công chúng\". Những năm lưu trú tại Nam Phi với tư cách một người chủ trương hành động chuyên về xã hội chính trị chính là thời kì những khái niệm và kĩ thuật của phương pháp bất hợp tác và phản đối bất bạo lực được phát triển. Khi Chiến tranh thế giới thứ nhất bắt đầu, ông quyết định trở về Ấn Độ, mang theo tất cả những gì ông đã học được từ những kinh nghiệm tại Nam Phi.",
+      "em": 1.0,
+      "f1": 1.0,
+      "is_impossible": true
+    },
+    {
+      "qid": "s2-E1b-0001",
+      "question": "Ông đã thuyết trình cho những ai?",
+      "gold": [
+        "Quốc dân Đại hội Ấn Độ"
+      ],
+      "prediction": "",
+      "context": "Như đã thực hiện trong cuộc chiến Nam Phi, Gandhi khuyến khích việc ủng hộ người Anh trong cuộc chiến (Chiến tranh thế giới thứ nhất) và chủ động khích lệ người Ấn tham gia quân đội. Khác với quan niệm của nhiều người khác, cách biện luận duy lý của ông cho trường hợp này là quyền công dân đầy đủ, tự do và quyền lợi trong Đế quốc Anh, và như vậy thì việc giúp nó phòng vệ không có gì sai. Ông thuyết trình trước Quốc dân Đại hội Ấn Độ, nhưng phần lớn là chính ông được hướng dẫn vào những chủ đề Ấn Độ, chính trị và công chúng Ấn qua Gopal Krishna Gokhale, nhà lãnh đạo được tôn trọng nhất của đảng Quốc dân Đại hội bấy giờ.",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    },
+    {
+      "qid": "s2-E1b-0002",
+      "question": "Gandhi đã làm những gì cho Ấn Độ?",
+      "gold": [
+        "chỉ đạo cuộc kháng chiến chống chế độ thực dân của Đế quốc Anh và giành độc lập cho Ấn Độ",
+        "chỉ đạo cuộc kháng chiến chống chế độ thực dân của Đế quốc Anh và giành độc lập cho Ấn Độ với sự ủng hộ của hàng triệu người dân",
+        "đã chỉ đạo cuộc kháng chiến chống chế độ thực dân của Đế quốc Anh và giành độc lập cho Ấn Độ"
+      ],
+      "prediction": "",
+      "context": "Mahātmā Gāndhī (2 tháng 10 năm 1869 – 30 tháng 1 năm 1948), nguyên tên đầy đủ là Mohandas Karamchand Gandhi (Devanagari: मोहनदास करमचन्द गांधी; Gujarati: મોહનદાસ કરમચંદ ગાંધી), là anh hùng dân tộc Ấn Độ, đã chỉ đạo cuộc kháng chiến chống chế độ thực dân của Đế quốc Anh và giành độc lập cho Ấn Độ với sự ủng hộ của hàng triệu người dân. Trong suốt cuộc đời, ông phản đối tất cả các hình thức khủng bố bạo lực và thay vào đó, chỉ áp dụng những tiêu chuẩn đạo đức tối cao. Nguyên lý bất bạo lực (còn gọi là bất hại) được ông đề xướng với tên Chấp trì chân lý (sa. satyāgraha) đã ảnh hưởng đến các phong trào đấu tranh bất bạo động trong và ngoài nước cho đến ngày nay, bao gồm phong trào Vận động Quyền công dân tại Hoa Kỳ (American Civil Rights Movement) được dẫn đầu bởi Martin Luther King, Jr..",
+      "em": 0.0,
+      "f1": 0.0,
+      "is_impossible": false
+    }
+  ],
+  "config": {},
+  "library_versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0"
+  },
+  "by_category": {
+    "E1": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 133,
+      "n_answerable": 133,
+      "n_impossible": 0
+    },
+    "E2": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 223,
+      "n_answerable": 223,
+      "n_impossible": 0
+    },
+    "E3": {
+      "EM": 100.0,
+      "F1": 100.0,
+      "n": 200,
+      "n_answerable": 0,
+      "n_impossible": 200
+    },
+    "E4": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 120,
+      "n_answerable": 120,
+      "n_impossible": 0
+    },
+    "E5": {
+      "EM": 33.33,
+      "F1": 33.33,
+      "n": 150,
+      "n_answerable": 100,
+      "n_impossible": 50
+    }
+  },
+  "by_subset": {
+    "E1a": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 33,
+      "n_answerable": 33,
+      "n_impossible": 0
+    },
+    "E1b": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 100,
+      "n_answerable": 100,
+      "n_impossible": 0
+    },
+    "E2a": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 80,
+      "n_answerable": 80,
+      "n_impossible": 0
+    },
+    "E2b": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 80,
+      "n_answerable": 80,
+      "n_impossible": 0
+    },
+    "E2c": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 63,
+      "n_answerable": 63,
+      "n_impossible": 0,
+      "original": {
+        "EM": 0.0,
+        "F1": 0.0,
+        "n": 63,
+        "n_answerable": 63,
+        "n_impossible": 0
+      },
+      "pairs": {
+        "n": 63,
+        "both_correct": 0,
+        "broken": 0,
+        "fixed": 0,
+        "broken_pct_of_original_correct": null
+      }
+    },
+    "E3a": {
+      "EM": 100.0,
+      "F1": 100.0,
+      "n": 100,
+      "n_answerable": 0,
+      "n_impossible": 100
+    },
+    "E3b": {
+      "EM": 100.0,
+      "F1": 100.0,
+      "n": 100,
+      "n_answerable": 0,
+      "n_impossible": 100,
+      "original": {
+        "EM": 0.0,
+        "F1": 0.0,
+        "n": 100,
+        "n_answerable": 100,
+        "n_impossible": 0
+      },
+      "pairs": {
+        "n": 100,
+        "both_correct": 0,
+        "broken": 0,
+        "fixed": 100,
+        "broken_pct_of_original_correct": null
+      }
+    },
+    "E4": {
+      "EM": 0.0,
+      "F1": 0.0,
+      "n": 120,
+      "n_answerable": 120,
+      "n_impossible": 0
+    },
+    "E5": {
+      "EM": 33.33,
+      "F1": 33.33,
+      "n": 150,
+      "n_answerable": 100,
+      "n_impossible": 50,
+      "original": {
+        "EM": 33.33,
+        "F1": 33.33,
+        "n": 150,
+        "n_answerable": 100,
+        "n_impossible": 50
+      },
+      "pairs": {
+        "n": 150,
+        "both_correct": 50,
+        "broken": 0,
+        "fixed": 0,
+        "broken_pct_of_original_correct": 0.0
+      }
+    }
+  }
+}

@@ -143,10 +143,11 @@ với một seed huấn luyện và cấu hình được mô tả.
   \item \textbf{So sánh có kiểm soát} PhoBERT và XLM-R trên cùng dữ liệu, cùng lịch học, cùng
         quy trình chọn epoch; chênh lệch được kiểm định bằng McNemar và bootstrap trên từng
         câu thay vì so hai con số tổng (Mục~\ref{sec:paired}).
-  \item \textbf{Kiểm định bộ stress-test của chính nhóm} trước khi dùng nó. Kết quả là một
-        phát hiện âm tính quan trọng: chỉ \AuditAnsInCtx{}/\AuditAns{} câu có đáp án chứa đáp
-        án trong ngữ cảnh; nguyên nhân được truy tới hai hàm cụ thể trong mã sinh dữ liệu. Bộ
-        này vì vậy \emph{không} được dùng để xếp hạng mô hình (Mục~\ref{sec:audit}).
+  \item \textbf{Một bộ stress-test kiểm định được}, dựng từ validation thay vì tự viết câu
+        hỏi: mỗi mục hoặc là câu gốc do người gán, hoặc là câu bị biến đổi bằng luật mà nhãn
+        mới suy ra được từ nhãn cũ, kèm chính câu gốc để so theo cặp. Bất biến ``mọi mục đều
+        chấm được'' được kiểm bằng máy trước khi chấm mô hình (\StressN{} mục, \StressViol{}
+        vi phạm; Mục~\ref{sec:audit}).
   \item \textbf{Tái lập được}: mọi con số trong báo cáo được sinh từ tệp
         \code{results/*.json} kèm commit; chính các bảng và con số trong văn bản của báo cáo
         này được sinh tự động từ các tệp đó (Phụ lục~\ref{app:trace}).
