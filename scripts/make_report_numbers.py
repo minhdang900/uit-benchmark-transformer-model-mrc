@@ -89,8 +89,14 @@ def get(d, *keys):
 
 
 def ci(r: dict) -> str:
-    """CI 95% theo BÀI nếu có (trung thực hơn), không thì theo câu."""
-    lo, hi = r.get("ci95_article") or r["ci95"]
+    """CI 95% theo BÀI nếu có (trung thực hơn), không thì theo câu.
+
+    Thiếu cả hai thì báo thiếu, không làm dừng cả lần sinh số liệu.
+    """
+    pair = r.get("ci95_article") or r.get("ci95")
+    if not pair:
+        return r"\missing{}"
+    lo, hi = pair
     return f"[{vi(lo)}; {vi(hi)}]"
 
 
