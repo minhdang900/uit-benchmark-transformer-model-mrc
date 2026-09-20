@@ -1,0 +1,4 @@
+# Phụ thuộc RIÊNG của ViMRC Console. Cố ý không nằm trong requirements.txt gốc:
+# pipeline huấn luyện/chấm điểm của báo cáo không cần streamlit.
+# Phần còn lại (torch, transformers, pyvi…) dùng chung với requirements.txt.
+streamlit==1.64.0

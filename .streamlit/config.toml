@@ -1,0 +1,19 @@
+# Khung Streamlit dùng đúng token của hệ thiết kế (xem demo/console/theme.py).
+# Phần còn lại do CSS trong theme.py đảm nhiệm; ở đây chỉ là những gì Streamlit
+# phải biết TRƯỚC khi trang được dựng, để không loé lên bảng màu mặc định.
+[theme]
+base = "light"
+primaryColor = "#c67139"
+backgroundColor = "#f5ead8"
+secondaryBackgroundColor = "#ebddc5"
+textColor = "#201e1d"
+font = "sans serif"
+
+[server]
+# Bộ theo dõi tệp của Streamlit đi qua mọi module đã import để tìm đường dẫn; với
+# transformers, việc đó kích hoạt chuỗi import lười và đụng phụ thuộc tuỳ chọn
+# (torchvision) mà đồ án không cài. Tắt theo dõi: sửa mã thì tự bấm tải lại trang.
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false

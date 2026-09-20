@@ -89,6 +89,8 @@ results/        mọi con số: eval_*, predictions_*, training_curve_*, diagnos
 report/         mã LaTeX báo cáo (generated/ do script sinh)
 slides/         mã Beamer, dùng chung số liệu với báo cáo
 legacy/         khung mã ban đầu — chưa từng chạy, không dùng (xem legacy/README.md)
+demo/           ViMRC Console (Streamlit): chạy mô hình thật + đọc lại results/
+                — phần thêm để trình bày, không thuộc sản phẩm nộp (demo/README.md)
 ```
 
 ## Nhóm thực hiện
