@@ -1,9 +1,17 @@
-"""Gộp dự đoán từng câu của mọi hệ thống -> ``results/diagnosis_validation.json``.
+"""Gộp dự đoán từng câu của mọi hệ thống -> ``results/diagnosis_validation*.json``.
 
 Cần có trước: ``results/predictions_<model>_validation.json`` (scripts/run_eval.py)
 và ``results/segmentation_validation.json`` (scripts/analyze_segmentation.py).
 
-    python scripts/diagnose.py
+    python scripts/diagnose.py              # ở ngưỡng mặc định τ = 0
+    python scripts/diagnose.py --tuned      # ở τ chọn trên dev
+
+Hai chế độ cùng tồn tại một cách CÓ CHỦ Ý. Câu chuyện của đồ án là chênh lệch giữa
+hai điểm làm việc, nên phần τ = 0 vẫn cần; nhưng mọi kết luận chính đo ở τ hiệu chỉnh,
+vậy bảng phân loại lỗi và bảng hành vi từ chối cũng phải có bản ở τ đó — nếu không,
+phần phân tích định tính đang mô tả những hệ thống không có trong bảng kết quả.
+Bản τ hiệu chỉnh cần ``predictions_<model>_tuned_validation.json``
+(scripts/calibrate_thresholds.py); hệ thống nào không có thì bị bỏ qua.
 """
 from __future__ import annotations
 
@@ -41,7 +49,15 @@ def answer_length_bucket(n_syllables: int) -> str:
     return "11+"
 
 
-def main() -> None:
+def main(argv=None) -> None:
+    import argparse
+
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--tuned", action="store_true",
+                    help="đọc dự đoán ở τ chọn trên dev thay vì τ = 0")
+    args = ap.parse_args(argv)
+    suffix = "_tuned" if args.tuned else ""
+
     examples = load_squad_file("data/raw/viquad2_validation.json")
     refs = {e.qid: list(e.answers) for e in examples}
     by_qid = {e.qid: e for e in examples}
@@ -51,10 +67,14 @@ def main() -> None:
 
     preds = {}
     for m in MODELS:
-        p = Path(f"results/predictions_{m}_validation.json")
+        p = Path(f"results/predictions_{m}{suffix}_validation.json")
+        if not p.exists() and args.tuned:
+            # abstain/baseline không có ngưỡng nên không có bản tuned; dùng bản gốc,
+            # chúng là như nhau ở mọi τ.
+            p = Path(f"results/predictions_{m}_validation.json")
         if p.exists():
             preds[m] = json.loads(p.read_text())
-    print("models:", list(preds))
+    print(f"τ{'  đã hiệu chỉnh' if args.tuned else ' = 0'} · models:", list(preds))
 
     answerable = [q for q, g in refs.items() if g]
     aligned = [q for q in answerable if seg.get(q, {}).get("aligned")]
@@ -174,7 +194,7 @@ def main() -> None:
                     "xlmr_error": classify_error(preds["xlmr"].get(q, ""), refs[q]),
                     "aligned": seg.get(q, {}).get("aligned"),
                 })
-        Path("results/disagreements_phobert_xlmr.json").write_text(
+        Path(f"results/disagreements_phobert_xlmr{suffix}.json").write_text(
             json.dumps(disagree, ensure_ascii=False, indent=1), encoding="utf-8")
 
     # Mẫu 100 lỗi ngẫu nhiên / model (seed 42) cho phần phân tích định tính.
@@ -183,13 +203,13 @@ def main() -> None:
             continue
         errs = [q for q in refs if em[m][q] < 1]
         sample = random.Random(42).sample(errs, min(100, len(errs)))
-        Path(f"results/error_sample_{m}.json").write_text(json.dumps([
+        Path(f"results/error_sample_{m}{suffix}.json").write_text(json.dumps([
             {"qid": q, "question": by_qid[q].question, "gold": refs[q],
              "prediction": preds[m].get(q, ""), "type": classify_error(preds[m].get(q, ""), refs[q]),
              "context": by_qid[q].context}
             for q in sample], ensure_ascii=False, indent=1), encoding="utf-8")
 
-    out = Path("results/diagnosis_validation.json")
+    out = Path(f"results/diagnosis_validation{suffix}.json")
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     for m, r in report["models"].items():
         print(m, "abstain", r["abstention"]["abstain_rate"], "taxonomy", r["taxonomy_all"]["counts"])

@@ -157,7 +157,11 @@ def main() -> None:
 
     # ── từng hệ thống ─────────────────────────────────────────────────────────
     diag = load("diagnosis_validation.json") or {}
+    # Bản chẩn đoán ở τ chọn trên dev: mọi kết luận chính đo ở đó, nên bảng phân loại
+    # lỗi và bảng từ chối phải có bản tương ứng (scripts/diagnose.py --tuned).
+    diagt = load("diagnosis_validation_tuned.json") or {}
     main_rows, stress_rows, tax_rows, len_rows, ctx_rows, qt_rows, align_rows = [], [], [], [], [], [], []
+    tax_rows_tuned = []
     for key, P, label in SYSTEMS:
         ev = load(f"eval_{key}_validation.json")
         st = load(f"eval_{key}_stress.json")
@@ -172,6 +176,21 @@ def main() -> None:
         m(f"{P}AbsRate", get(dg, "abstention", "abstain_rate"))
         m(f"{P}AbsPrec", get(dg, "abstention", "precision"))
         m(f"{P}AbsRec", get(dg, "abstention", "recall"))
+        # cùng các chỉ số ở τ hiệu chỉnh
+        dgt = get(diagt, "models", key)
+        m(f"Tuned{P}AbsRate", get(dgt, "abstention", "abstain_rate"))
+        m(f"Tuned{P}AbsPrec", get(dgt, "abstention", "precision"))
+        m(f"Tuned{P}AbsRec", get(dgt, "abstention", "recall"))
+        m(f"Tuned{P}NErr", get(dgt, "taxonomy_all", "n_errors"), 0)
+        countst = get(dgt, "taxonomy_all", "counts") or {}
+        for k, w in (("false_abstain", "FalseAbs"), ("false_answer", "FalseAns"),
+                     ("wrong_span", "Wrong"), ("boundary_superset", "Super"),
+                     ("boundary_subset", "Sub"), ("boundary_overlap", "Overlap")):
+            m(f"Tuned{P}Err{w}", countst.get(k) if countst else None, 0)
+        if countst:
+            tax_rows_tuned.append(f"{label} & {vi(get(dgt, 'taxonomy_all', 'n_errors'))} & " + " & ".join(
+                vi(countst[k]) for k in ("false_abstain", "false_answer", "boundary_superset",
+                                         "boundary_subset", "boundary_overlap", "wrong_span")) + " \\\\")
         trap = get(diag, "plausible_trap", key) or {}
         m(f"{P}TrapN", trap.get("answered_impossible"), 0)
         m(f"{P}TrapHit", trap.get("equals_plausible_answer"), 0)
@@ -229,6 +248,7 @@ def main() -> None:
     table("tab_main.tex", "\n".join(main_rows) + "\n")
     table("tab_stress.tex", "\n".join(stress_rows) + "\n")
     table("tab_taxonomy.tex", "\n".join(tax_rows) + "\n")
+    table("tab_taxonomy_tuned.tex", "\n".join(tax_rows_tuned) + "\n")
     table("tab_alignment.tex", "\n".join(align_rows) + "\n")
     table("tab_answer_length.tex", "\n".join(len_rows) + "\n")
     slices = get(diag, "slices") or {}

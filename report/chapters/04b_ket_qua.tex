@@ -217,10 +217,35 @@ là \emph{biết khi nào không nên trả lời}.
 \end{tabular}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\caption{Cùng bảng đó nhưng ở $\tau$ chọn trên dev --- điểm làm việc mà mọi kết luận chính được đo
+(nguồn: \code{results/diagnosis\_validation\_tuned.json})}
+\label{tab:taxonomy-tuned}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l r r r r r r r@{}}
+\toprule
+\textbf{Hệ thống} & \textbf{Tổng lỗi} & \textbf{Từ chối sai} & \textbf{Trả lời sai} & \textbf{Biên thừa} & \textbf{Biên thiếu} & \textbf{Biên lệch} & \textbf{Sai vị trí} \\
+\midrule
+\tabinput{generated/tab_taxonomy_tuned.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Hiệu chỉnh ngưỡng đổi hẳn hình dạng lỗi.} Hai bảng trên đo cùng một mô hình ở hai điểm làm
+việc. Ở $\tau = 0$, lỗi của PhoBERT seed 42 gần như chỉ có một loại: \PhobertErrFalseAns{} câu trả lời
+khi không có đáp án và chỉ \PhobertErrFalseAbs{} câu từ chối sai. Ở $\tau$ chọn trên dev, hai con số đó
+thành \TunedPhobertErrFalseAns{} và \TunedPhobertErrFalseAbs: mô hình chuyển một phần lỗi ``trả lời
+bừa'' thành lỗi ``từ chối quá tay'', và tổng số lỗi giảm từ \PhobertNErr{} xuống \TunedPhobertNErr.
+Các bảng theo tương thích biên từ và theo độ dài ở Mục~\ref{sec:res-rq1}--\ref{sec:res-rq2} đo ở
+$\tau = 0$; đọc chúng như mô tả hành vi \emph{chưa hiệu chỉnh}, không phải hệ thống ở bảng kết quả chính.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figures/error_taxonomy.png}
-\caption{Cơ cấu lỗi của từng hệ thống}
+\caption{Cơ cấu lỗi của từng hệ thống ở $\tau = 0$}
 \label{fig:taxonomy}
 \end{figure}
 
@@ -366,13 +391,15 @@ vào độ dài.
 \label{tab:abstention}
 \renewcommand{\arraystretch}{1.15}
 \small
-\begin{tabular}{@{}l r r r@{}}
+\begin{tabular}{@{}l r r r c r r r@{}}
 \toprule
-\textbf{Hệ thống} & \textbf{Tỉ lệ từ chối (\%)} & \textbf{Precision (\%)} & \textbf{Recall (\%)} \\
+& \multicolumn{3}{c}{\textbf{$\tau = 0$}} & & \multicolumn{3}{c}{\textbf{$\tau$ chọn trên dev}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){6-8}
+\textbf{Hệ thống} & \textbf{Từ chối} & \textbf{Prec.} & \textbf{Recall} & & \textbf{Từ chối} & \textbf{Prec.} & \textbf{Recall} \\
 \midrule
-Luôn từ chối & \AbstainAbsRate & \AbstainAbsPrec & \AbstainAbsRec \\
-XLM-R-base & \XlmrAbsRate & \XlmrAbsPrec & \XlmrAbsRec \\
-PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec \\
+Luôn từ chối & \AbstainAbsRate & \AbstainAbsPrec & \AbstainAbsRec & & --- & --- & --- \\
+XLM-R-base & \XlmrAbsRate & \XlmrAbsPrec & \XlmrAbsRec & & \TunedXlmrAbsRate & \TunedXlmrAbsPrec & \TunedXlmrAbsRec \\
+PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec & & \TunedPhobertAbsRate & \TunedPhobertAbsPrec & \TunedPhobertAbsRec \\
 \bottomrule
 \end{tabular}
 \par\vspace{2pt}{\footnotesize Tỉ lệ câu không có đáp án thật: \PctValImp\%.}
@@ -406,7 +433,11 @@ vàng ``Cité internationale universitaire'', PhoBERT trả lời đúng còn XL
 
 \paragraph{PhoBERT ở $\tau = 0$ gần như không bao giờ từ chối.} PhoBERT từ chối \PhobertAbsRate\% số câu
 với precision \PhobertAbsPrec\%: khi đã từ chối thì gần như luôn đúng, nhưng recall chỉ \PhobertAbsRec\%.
-Như Mục~\ref{sec:threshold} cho thấy, đây là vấn đề của \emph{ngưỡng}, không phải của khả năng phân biệt.
+Đây là vấn đề của \emph{ngưỡng}, không phải của khả năng phân biệt: ở $\tau$ chọn trên dev, cùng checkpoint
+đó từ chối \TunedPhobertAbsRate\% số câu, recall tăng từ \PhobertAbsRec{} lên \TunedPhobertAbsRec{} --- hơn
+ba lần --- và đổi lại precision giảm từ \PhobertAbsPrec{} xuống \TunedPhobertAbsPrec. Đó là đánh đổi mà ngưỡng
+điều khiển, không phải năng lực mới: cùng một thứ tự điểm, chỉ dịch điểm cắt. Ở mức đó PhoBERT vượt XLM-R về
+cả recall (\TunedXlmrAbsRec) lẫn precision (\TunedXlmrAbsPrec).
 
 \paragraph{Cả hai rơi vào bẫy của người gán nhãn.} SQuAD~2.0 và UIT-ViQuAD~2.0 tạo câu không có đáp án
 bằng cách sửa câu hỏi sao cho vẫn có một cụm ``nghe hợp lý'' trong đoạn văn (trường
