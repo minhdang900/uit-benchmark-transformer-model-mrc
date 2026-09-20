@@ -12,8 +12,9 @@ nghiên cứu được trả lời như sau.
 
 \begin{enumerate}
   \item \textbf{RQ1 --- ranh giới từ.} Giả thuyết ghi trước (PhoBERT yếu hơn vì lỗi tách từ) \emph{sai}
-        ở dạng tổng quát: trên những câu có đáp án mà cả hai cùng trả lời, PhoBERT hơn XLM-R \BothSGap--\BothGap{}
-        điểm EM ở hai seed, và tỉ lệ lỗi biên
+        ở dạng tổng quát: PhoBERT không kém hơn ở ranh giới từ. Nhưng nó cũng không đọc tốt hơn --- khớp cửa sổ và
+        loại lần chạy sụp đổ, chênh lệch trên câu có đáp án là \PairMAnsDiff{} điểm
+        ([\PairMAnsArtLo; \PairMAnsArtHi]) --- và tỉ lệ lỗi biên
         khi đã trả lời của hai mô hình như nhau (\PhobertBoundaryRate\% và \XlmrBoundaryRate\%). Cơ chế
         ``không trả lời được nửa từ'' có thật, nhìn thấy được qua dấu hiệu F1 cao/EM thấp, nhưng chỉ tác
         động lên \SegMisPct\% câu hỏi và bị chặn trên ở \SegCeilingLoss{} điểm EM; phần lớn các câu đó là lỗi
@@ -32,9 +33,11 @@ nghiên cứu được trả lời như sau.
 
 \paragraph{Điều rút ra.} Với một seed và ngưỡng mặc định, PhoBERT và XLM-R trông như ``bằng nhau với hai hồ
 sơ kỹ năng ngược nhau''. Kết luận đó sai: nó là hệ quả của một lần chạy bị lệch hiệu chỉnh. Seed thứ hai và
-ngưỡng chọn trên dev cho cùng một câu trả lời: PhoBERT tốt hơn \PairTDiff{} và \PairSTDiff{} điểm EM, và khoảng
-cách ``đọc'' thuần là \BothSGap--\BothGap{} điểm. Hai bài học phương pháp: với bài toán có câu không có đáp án,
-so ở $\tau$ cố định là so hiệu chỉnh chứ không phải năng lực; và một seed là không đủ để kết luận về kiến trúc. Với
+ngưỡng chọn trên dev cho cùng một câu trả lời: PhoBERT tốt hơn \PairTDiff{} và \PairSTDiff{} điểm EM. Nhưng khi
+khớp cửa sổ và loại lần chạy sụp đổ, chênh lệch trên câu có đáp án biến mất (\PairMAnsDiff{} điểm): thứ PhoBERT
+làm tốt hơn là \emph{quyết định khi nào không trả lời}, không phải đọc. Ba bài học phương pháp: so ở $\tau$ cố
+định là so hiệu chỉnh chứ không phải năng lực; một seed không đủ để kết luận về kiến trúc; và mọi phép so phải
+khớp những biến mà nó không định đo --- ở đây là cấu hình cửa sổ. Với
 câu hỏi ban đầu của môn học --- \emph{đặc điểm dữ liệu quyết định phương pháp} --- câu trả lời của đồ án là:
 trên UIT-ViQuAD~2.0, đặc điểm quyết định không phải là tách từ mà là \emph{một phần ba câu hỏi không có đáp
 án}; và việc một mô hình xử lý phần đó ra sao phải được đo riêng.

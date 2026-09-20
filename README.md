@@ -33,18 +33,22 @@ nhau**. Nguồn: `results/eval_*_validation.json`, `results/thresholds.json`, `r
 
 1. **Ở τ chọn trên dev, PhoBERT tốt hơn XLM-R ở cả hai seed**: +5,82 EM (seed 42, CI theo bài viết
    [3,60; 7,72]) và +6,00 EM (seed 13, [3,30; 8,29]). Sau hiệu chỉnh, dao động theo seed < 1 điểm F1.
-   Trên câu cả hai cùng trả lời, PhoBERT "đọc" tốt hơn +2,1 đến +4,1 EM.
-2. **Seed 42 ở τ = 0 cho một kết luận sai**: bằng nhau về tổng (−1,13, p = 0,22) với "hai hồ sơ ngược nhau"
+2. **Phần hơn đó là hiệu chỉnh, không phải khả năng đọc.** Khớp cả cấu hình cửa sổ lẫn tính ổn định của
+   lần chạy (PhoBERT s13 vs XLM-R ở 256/96): chênh lệch trên câu **có đáp án** là **−0,08 EM**
+   (CI theo bài viết [−2,24; 2,05], p = 0,97) — một kết quả "không khác biệt" đo chắc chắn, CI chỉ rộng
+   ±2 điểm. Toàn bộ +5,85 EM nằm ở câu **không có đáp án** (+19,38). Lát cắt "cả hai cùng trả lời" đổi
+   dấu theo lần chạy (+2,60 với seed 13; −0,84 với lr 1e-5), nên không dùng để kết luận.
+3. **Seed 42 ở τ = 0 cho một kết luận sai**: bằng nhau về tổng (−1,13, p = 0,22) với "hai hồ sơ ngược nhau"
    (PhoBERT +14,89 EM có đáp án, XLM-R +37,73 không đáp án) — vì PhoBERT seed 42 chỉ từ chối 5,7%.
    Seed 13 không có hiện tượng này (+5,30 EM cho PhoBERT ngay ở τ = 0).
-3. **PhoBERT seed 42 "không từ chối" là một sự kiện khi huấn luyện**, tái hiện được: huấn luyện tiếp từ epoch 1
+4. **PhoBERT seed 42 "không từ chối" là một sự kiện khi huấn luyện**, tái hiện được: huấn luyện tiếp từ epoch 1
    ở lr 2,2e-5 → chuẩn gradient vọt 12.880, loss "không có đáp án" 0,71 → 4,35; cùng batch ở lr 1e-5 thì không
    (`results/probe_resume.json`). Nhưng seed 13 ở cùng lr 3e-5 không sụp đổ → phụ thuộc lần chạy.
    Dữ liệu sạch: 0 vi phạm trên 31.039 feature.
-4. **Cửa sổ không phải lợi thế của XLM-R**: ở 256/96 như PhoBERT, XLM-R đạt F1 63,03 ở τ = 0 — ngang hoặc
+5. **Cửa sổ không phải lợi thế của XLM-R**: ở 256/96 như PhoBERT, XLM-R đạt F1 63,03 ở τ = 0 — ngang hoặc
    nhỉnh hơn hai lần chạy 384/128.
-5. **Tách từ không phải yếu tố quyết định** — chỉ 1,24% đáp án cắt ngang một từ của `pyvi` (trần 0,75 EM).
-6. **Bộ stress-test 250 câu của nhóm không dùng được làm thước đo** — chỉ 15/120 câu có đáp án chứa đáp án.
+6. **Tách từ không phải yếu tố quyết định** — chỉ 1,24% đáp án cắt ngang một từ của `pyvi` (trần 0,75 EM).
+7. **Bộ stress-test 250 câu của nhóm không dùng được làm thước đo** — chỉ 15/120 câu có đáp án chứa đáp án.
 
 Mốc tham chiếu (VLSP 2021 public test, Nguyen et al. 2022): baseline mBERT F1 63,03; đội cao nhất 84,24;
 người 87,34.

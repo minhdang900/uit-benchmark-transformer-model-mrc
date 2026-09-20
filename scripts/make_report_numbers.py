@@ -279,6 +279,11 @@ def main() -> None:
         return rows
 
     P3 = (("all", ""), ("answerable", "Ans"), ("impossible", "Imp"))
+    # Cặp khớp cửa sổ (PhoBERT s13 vs XLM-R 256/96, cả hai ổn định): phép so duy nhất
+    # loại được cả biến cửa sổ lẫn biến lần-chạy-sụp-đổ.
+    matched_rows = paired_block("paired_matched_windows_tuned", "PairM", P3, "13/42")
+    paired_block("paired_matched_windows", "PairMZero", P3, "13/42")
+    table("tab_paired_matched.tex", "\n".join(matched_rows) + "\n")
     rows42 = paired_block("paired_phobert_vs_xlmr", "Pair", P3 + (("misaligned", "Mis"),), "42")
     rows13 = paired_block("paired_seed13", "PairS", P3, "13")
     table("tab_paired.tex", "\n".join(rows42) + "\n\\midrule\n" + "\n".join(rows13) + "\n")
@@ -385,7 +390,8 @@ def main() -> None:
     m("ThrPhobertTau", tp.get("tau"))
 
     both = get(thr, "both_answered") or {}
-    for (ph, xl, sp) in ((PHOBERT, "xlmr", ""), ("phobert_seed13", "xlmr_seed13", "S")):
+    for (ph, xl, sp) in ((PHOBERT, "xlmr", ""), ("phobert_seed13", "xlmr_seed13", "S"),
+                         ("phobert_seed13", "xlmr_256", "M"), ("phobert_stable", "xlmr_256", "MS")):
         for label, w in (("tau0", ""), ("tuned", "Tuned")):
             r = both.get(f"{xl}__{ph}__{label}") or both.get(f"{ph}__{xl}__{label}")
             m(f"Both{sp}{w}N", get(r, "n_both_answered"), 0)

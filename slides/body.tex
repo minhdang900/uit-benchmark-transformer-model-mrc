@@ -237,9 +237,8 @@ TF-IDF & \TfidfEM & \TfidfFone \\
 
 \vspace{1.2em}
 \begin{block}{Nhưng PhoBERT từ chối \PhobertAbsRate\%, XLM-R từ chối \XlmrAbsRate\%}
-\small Hai chênh lệch phần lớn là \emph{một}: ai sẵn lòng trả lời hơn. Trên câu có đáp án mà \emph{cả hai} cùng
-trả lời, khoảng cách ``đọc'' chỉ \textbf{\BothGap} (seed 42) và \textbf{\BothSGap} (seed 13). Seed 13 \emph{không}
-có hai hồ sơ ngược nhau: PhoBERT từ chối \PhobertThirteenAbsRate\%.
+\small Hai chênh lệch phần lớn là \emph{một}: ai sẵn lòng trả lời hơn. Seed 13 \emph{không} có hai hồ sơ ngược
+nhau --- PhoBERT từ chối \PhobertThirteenAbsRate\% --- nên hình ảnh này là của \emph{một lần chạy}.
 \end{block}
 \src{results/diagnosis\_validation.json, results/thresholds.json}
 \end{frame}
@@ -273,9 +272,41 @@ Phần chia theo loại câu \emph{không} ổn định giữa hai seed
 
 \vspace{0.3em}
 \begin{block}{``Hai hồ sơ ngược nhau'' là do một lần chạy lệch hiệu chỉnh}
-\footnotesize Ở ngưỡng đúng, PhoBERT tốt hơn về tổng ở \emph{cả hai} seed; dao động theo seed $<$ 1 điểm F1.
+\footnotesize Ở ngưỡng đúng, PhoBERT tốt hơn về tổng ở \emph{cả hai} seed. Nhưng phần hơn đó là hiệu chỉnh:
+xem slide sau.
 \end{block}
 \src{results/thresholds.json, results/diagnosis\_validation.json}
+\end{frame}
+
+\begin{frame}{Vậy PhoBERT có \emph{đọc} tốt hơn? \alert{Không đo được khác biệt.}}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+\small Phải khớp \textbf{cả hai} biến gây nhiễu: cấu hình cửa sổ và lần chạy sụp đổ.\\[4pt]
+\footnotesize PhoBERT s13 vs XLM-R \textbf{256/96}, cả hai ổn định, mỗi bên ở $\tau$ của mình:
+\vspace{0.4em}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r l@{}}
+\toprule
+\textbf{Nhóm câu} & \textbf{Chênh EM} & \textbf{CI 95\%} \\
+\midrule
+Toàn bộ & \textbf{+\PairMDiff} & [\PairMArtLo; \PairMArtHi] \\
+Có đáp án & \textbf{\PairMAnsDiff} & [\PairMAnsArtLo; \PairMAnsArtHi] \\
+Không có đáp án & \textbf{+\PairMImpDiff} & [\PairMImpArtLo; \PairMImpArtHi] \\
+\bottomrule
+\end{tabular}
+\end{column}
+\begin{column}{0.44\textwidth}
+\small
+$\bullet$ CI chỉ rộng $\pm$2 điểm $\Rightarrow$ \textbf{không khác biệt}, chứ không phải thiếu dữ liệu\\[4pt]
+$\bullet$ Toàn bộ phần hơn nằm ở câu \textbf{không có đáp án}\\[4pt]
+$\bullet$ Lát cắt ``cả hai cùng trả lời'' \textbf{đổi dấu} theo lần chạy: \BothMGap{} với seed 13,
+\,$-$\BothMSGap{}\, với lr $10^{-5}$
+
+\vspace{0.5em}
+\alert{Điều PhoBERT làm tốt hơn là biết khi nào \emph{không} trả lời.}
+\end{column}
+\end{columns}
+\src{results/diagnosis\_validation.json (paired\_matched\_windows\_tuned)}
 \end{frame}
 
 \begin{frame}{RQ1 --- Word-level có yếu ở ranh giới từ? \alert{Không.}}
@@ -415,7 +446,7 @@ TF-IDF & \TfidfStressEM \\
 \begin{enumerate}
 \item \textbf{So ở $\tau$ cố định với một seed là so hiệu chỉnh, không phải năng lực.} Seed 42, $\tau = 0$: ``bằng nhau, hồ sơ ngược nhau''. Ở $\tau$ chọn trên dev: PhoBERT hơn \PairTDiff{} / \PairSTDiff{} điểm EM ở hai seed.
 \item \textbf{PhoBERT seed 42 ``không từ chối'' là một sự kiện khi huấn luyện}, tái hiện được, kèm gradient vọt; seed 13 không gặp.
-\item \textbf{Tách từ không phải yếu tố quyết định}: chỉ \SegMisPct\% đáp án cắt ngang từ; khoảng cách ``đọc'' thuần \BothSGap--\BothGap{} điểm.
+\item \textbf{Không đo được khác biệt về ``đọc''}: khớp cửa sổ thì chênh lệch trên câu có đáp án là \PairMAnsDiff{} điểm. Tách từ cũng không quyết định: chỉ \SegMisPct\% đáp án cắt ngang từ.
 \item \textbf{Kiểm định công cụ đo trước khi dùng}: bộ stress-test của chính nhóm xếp ``không làm gì'' đứng đầu.
 \end{enumerate}
 

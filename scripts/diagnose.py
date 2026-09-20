@@ -152,6 +152,16 @@ def main() -> None:
             ta, tb = (Path(f"results/predictions_{m}_tuned_validation.json") for m in (pa, pb))
             if ta.exists() and tb.exists():
                 report["paired_seed13_tuned"] = pairs(em_of(ta), em_of(tb))
+
+        # Cặp KHỚP CỬA SỔ: PhoBERT seed 13 vs XLM-R ở đúng 256/96, cả hai đều huấn luyện
+        # ổn định. Đây là phép so duy nhất mà biến "cấu hình cửa sổ" và biến "lần chạy
+        # sụp đổ" đều bị loại; nó quyết định câu hỏi mô hình nào ĐỌC tốt hơn.
+        ma, mb = "phobert_seed13", "xlmr_256"
+        if {ma, mb} <= set(preds):
+            report["paired_matched_windows"] = pairs(em[ma], em[mb])
+            ta, tb = (Path(f"results/predictions_{m}_tuned_validation.json") for m in (ma, mb))
+            if ta.exists() and tb.exists():
+                report["paired_matched_windows_tuned"] = pairs(em_of(ta), em_of(tb))
         # Câu PhoBERT sai mà XLM-R đúng, và ngược lại: nguyên liệu cho phân tích định tính.
         disagree = []
         for q in refs:

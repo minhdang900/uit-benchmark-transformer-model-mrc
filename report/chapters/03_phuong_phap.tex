@@ -174,10 +174,14 @@ Seed & 42 & 42 \\
 {\footnotesize Nguồn: trường \code{config} trong \code{results/training\_curve\_\{phobert,xlmr\}.json}.}
 \end{table}
 
-Không có tìm kiếm siêu tham số: tốc độ học $3\cdot10^{-5}$ và lịch học là giá trị phổ biến cho
-mô hình cỡ \emph{base} trên SQuAD. Đây là lựa chọn có chủ đích --- với một lần chạy mỗi mô hình,
-tìm kiếm siêu tham số trên dev rồi báo cáo trên cùng dev sẽ thổi phồng kết quả --- nhưng cũng có
-nghĩa là cả hai mô hình có thể chưa đạt điểm tốt nhất của chúng.
+Không có tìm kiếm siêu tham số theo nghĩa quét có hệ thống: tốc độ học $3\cdot10^{-5}$ và lịch học
+là giá trị phổ biến cho mô hình cỡ \emph{base} trên SQuAD, và cả hai mô hình đều bắt đầu từ đó.
+Ngân sách sau đó \emph{không} cân bằng, và điều này phải được nói rõ: PhoBERT được chạy thêm ở
+$2\cdot10^{-5}$ và $10^{-5}$ để \emph{chẩn đoán} sự kiện sụp đổ (Mục~\ref{sec:res-rq3}), còn XLM-R
+chỉ có một tốc độ học. Các lần chạy thêm đó được chọn trên dev, không phải trên validation, nhưng
+chúng vẫn là ba lần thử cho một họ mô hình và một lần cho họ kia --- nên phần hơn của PhoBERT về
+điểm tổng phải được đọc kèm điều kiện đó. Ngoài ra cả hai mô hình có thể chưa đạt điểm tốt nhất:
+mọi lần chạy đều còn đang cải thiện ở epoch cuối.
 
 \subsection{Phép đo tương thích biên từ}
 \label{sec:alignment}

@@ -19,9 +19,11 @@ không có đáp án. Chẩn đoán cho thấy đó là đặc điểm của \em
 ổn khi fine-tune --- tái hiện được, kèm chuẩn gradient vọt tới \ResumeHighMaxSpike{} --- làm điểm ``không có đáp án''
 dịch xuống, nên nó gần như không từ chối; PhoBERT seed 13 cùng cấu hình không gặp sự kiện này. Khi mỗi mô hình
 dùng ngưỡng chọn trên dev, PhoBERT tốt hơn XLM-R \PairTDiff{} và \PairSTDiff{} điểm EM ở hai seed (CI 95\% theo
-bài viết không chứa 0), và đọc tốt hơn \BothSGap--\BothGap{} điểm trên những câu cả hai cùng trả lời. Giả thuyết
-ban đầu (PhoBERT yếu vì lỗi tách từ) \emph{sai} ở dạng tổng quát: chỉ \SegMisPct\% đáp án cắt ngang một từ, nên
-hiệu ứng này bị chặn ở \SegCeilingLoss{} điểm EM. Cuối cùng, kiểm định bộ stress-test 250 câu của nhóm cho thấy
+bài viết không chứa 0). Phần hơn đó \emph{không} phải khả năng đọc: khi khớp cả cấu hình cửa sổ lẫn tính ổn định
+của lần chạy, chênh lệch trên câu có đáp án là \PairMAnsDiff{} điểm (CI [\PairMAnsArtLo; \PairMAnsArtHi],
+$p$ = \PairMAnsP) và toàn bộ phần hơn nằm ở câu không có đáp án (\PairMImpDiff{} điểm). Giả thuyết ban đầu
+(PhoBERT yếu vì lỗi tách từ) \emph{sai} ở dạng tổng quát: chỉ \SegMisPct\% đáp án cắt ngang một từ, nên hiệu ứng
+này bị chặn ở \SegCeilingLoss{} điểm EM. Cuối cùng, kiểm định bộ stress-test 250 câu của nhóm cho thấy
 chỉ \AuditAnsInCtx/\AuditAns{} câu có đáp án chứa đáp án trong ngữ cảnh; bộ được giữ làm đối tượng phân tích,
 không dùng để xếp hạng.
 

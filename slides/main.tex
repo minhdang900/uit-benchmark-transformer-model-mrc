@@ -2,38 +2,81 @@
 %  SLIDE THUYẾT TRÌNH — CS221 · Transformer cho đọc hiểu tiếng Việt
 %  Dùng CHUNG số liệu với báo cáo: ../report/generated/numbers.tex (sinh từ results/)
 %  Biên dịch:  cd slides && latexmk -xelatex main.tex
+%
+%  GIAO DIỆN: hệ thiết kế "Organic" của web demo (demo/console/theme.py) — cùng
+%  token màu, cùng kiểu chữ, để slide và demo trông như một sản phẩm. Báo cáo
+%  (report/) giữ nguyên bảng màu xanh/cam của nó.
+%
+%  CẦN CÀI PHÔNG (một lần, mỗi máy):
+%    Be Vietnam Pro  https://fonts.google.com/specimen/Be+Vietnam+Pro
+%    Source Code Pro https://fonts.google.com/specimen/Source+Code+Pro
+%  Hai phông này có đủ bộ ký tự tiếng Việt; đây cũng là phông của web demo.
 % ============================================================================
 \documentclass[aspectratio=169,11pt]{beamer}
 \usetheme[progressbar=frametitle,numbering=fraction,block=fill]{metropolis}
 \usepackage{fontspec}
-\setsansfont{Nunito}[BoldFont={Nunito Bold}]
-\newfontfamily\headfont{Baloo 2}[BoldFont={Baloo 2 ExtraBold}]
+\setsansfont{Be Vietnam Pro}
+\newfontfamily\headfont{Be Vietnam Pro ExtraBold}
+\setmonofont{Source Code Pro}[Scale=0.90]
 \usepackage{booktabs,tabularx,array,graphicx,xcolor,tikz,colortbl}
 \usetikzlibrary{arrows.meta,positioning,calc}
 
-\definecolor{ink}{HTML}{1F1F1E}
-\definecolor{muted}{HTML}{6B6A64}
-\definecolor{xlmr}{HTML}{2A78D6}
-\definecolor{phobert}{HTML}{EB6834}
-\definecolor{tfidf}{HTML}{1BAF7A}
-\definecolor{uitblue}{HTML}{2F5BB7}
-\definecolor{badred}{HTML}{B3261E}
-\definecolor{okgreen}{HTML}{2E7D32}
-\definecolor{warnorange}{HTML}{B85C00}
-\definecolor{soft}{HTML}{F1F4FA}
-\setbeamercolor{frametitle}{bg=uitblue,fg=white}
-\setbeamercolor{progress bar}{fg=phobert,bg=uitblue!30}
-\setbeamercolor{normal text}{fg=ink}
-\setbeamercolor{alerted text}{fg=phobert}
-\setbeamercolor{block title}{bg=uitblue!12,fg=uitblue}
-\setbeamercolor{block body}{bg=soft}
-\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+% ── token hệ thiết kế Organic (demo/console/theme.py) ───────────────────────
+\definecolor{orgbg}{HTML}{F5EAD8}        % --color-bg
+\definecolor{orgsurface}{HTML}{EBDDC5}   % --color-surface
+\definecolor{orgcard}{HTML}{F9F4ED}      % --color-neutral-100  (.vm-card)
+\definecolor{orgaccent}{HTML}{C67139}    % --color-accent
+\definecolor{orgaccent2}{HTML}{7A8A5E}   % --color-accent-2
+\definecolor{orgacc100}{HTML}{FFF2EB}    % --color-accent-100
+\definecolor{orgacc600}{HTML}{B2622D}
+\definecolor{orgacc700}{HTML}{8C491A}
+\definecolor{orgacc800}{HTML}{643312}
+\definecolor{orgacc2600}{HTML}{728157}
+\definecolor{orgacc2700}{HTML}{56633F}
+\definecolor{orgn200}{HTML}{EEE7DB}
+\definecolor{orgn300}{HTML}{DCD3C4}
+\definecolor{orgn500}{HTML}{A19786}
+\definecolor{orgn700}{HTML}{645C50}
+
+% ── tên ngữ nghĩa dùng trong body.tex (giữ nguyên, chỉ đổi giá trị) ─────────
+\definecolor{orgink}{HTML}{201E1D}       % --color-text
+\colorlet{ink}{orgink}
+\colorlet{muted}{orgn700}
+\colorlet{phobert}{orgaccent}            % PhoBERT  → terracotta (accent)
+\colorlet{xlmr}{orgaccent2}              % XLM-R    → ô liu (accent-2)
+\colorlet{tfidf}{orgn700}                % TF-IDF → trung tính đậm (5,53:1 trên nền kem)
+\colorlet{badred}{orgacc700}
+\colorlet{okgreen}{orgacc2700}
+\colorlet{warnorange}{orgacc600}
+\colorlet{uitblue}{orgaccent}
+\colorlet{soft}{orgcard}
+
+% ── ánh xạ token sang Beamer ────────────────────────────────────────────────
+\setbeamercolor{background canvas}{bg=orgbg}
+\setbeamercolor{normal text}{fg=orgink,bg=orgbg}
+\setbeamercolor{frametitle}{bg=orgsurface,fg=orgink}
+\setbeamercolor{progress bar}{fg=orgaccent,bg=orgn300}
+\setbeamercolor{progress bar in head/foot}{fg=orgaccent,bg=orgn300}
+\setbeamercolor{alerted text}{fg=orgacc600}
+\setbeamercolor{example text}{fg=orgacc2600}
+\setbeamercolor{block title}{bg=orgacc100,fg=orgacc800}   % .vm-card + .vm-tag-accent
+\setbeamercolor{block body}{bg=orgcard,fg=orgink}
+\setbeamercolor{title separator}{fg=orgaccent}
+\setbeamercolor{palette primary}{bg=orgsurface,fg=orgink}
+\setbeamercolor{section title}{fg=orgink}
+\setbeamercolor{footline}{fg=orgn700}
+\setbeamerfont{frametitle}{family=\headfont,size=\large}
+\setbeamerfont{title}{family=\headfont,size=\Large}
+\setbeamerfont{section title}{family=\headfont,size=\LARGE}
+\setbeamerfont{block title}{series=\bfseries}
+% .vm-card: bo góc lớn, không viền, nền sáng hơn nền trang
+\setbeamertemplate{blocks}[rounded][shadow=false]
 
 \newcommand{\code}[1]{\texttt{#1}}
 \input{../report/generated/numbers}
 \makeatletter\newcommand{\tabinput}[1]{\@@input #1 }\makeatother
 \graphicspath{{../report/figures/}}
-\newcommand{\bignum}[2]{{\headfont\bfseries\fontsize{30}{32}\selectfont\color{#2}#1}}
+\newcommand{\bignum}[2]{{\headfont\fontsize{30}{32}\selectfont\color{#2}#1}}
 \newcommand{\src}[1]{\vfill{\scriptsize\color{muted}Nguồn: \code{#1}}}
 
 \title{Khảo sát và đánh giá hiệu năng các mô hình Transformer tiền huấn luyện\\trong bài toán đọc hiểu văn bản tiếng Việt}

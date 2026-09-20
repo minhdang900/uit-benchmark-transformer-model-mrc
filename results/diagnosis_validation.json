@@ -1,5 +1,5 @@
 {
-  "commit": "ae55293",
+  "commit": "8335d26",
   "n": 3814,
   "slices": {
     "answerable": 2653,
@@ -907,6 +907,118 @@
       "ci95_article": [
         15.6,
         24.81
+      ],
+      "n_articles": 18
+    }
+  },
+  "paired_matched_windows": {
+    "all": {
+      "n": 3814,
+      "both_correct": 1667,
+      "only_a": 581,
+      "only_b": 410,
+      "neither": 1156,
+      "em_diff": 4.48,
+      "ci95": [
+        2.94,
+        6.06
+      ],
+      "mcnemar_p": 6.192395497718656e-08,
+      "ci95_article": [
+        2.7,
+        6.24
+      ],
+      "n_articles": 19
+    },
+    "answerable": {
+      "n": 2653,
+      "both_correct": 1181,
+      "only_a": 426,
+      "only_b": 236,
+      "neither": 810,
+      "em_diff": 7.16,
+      "ci95": [
+        5.2,
+        8.97
+      ],
+      "mcnemar_p": 1.401734239618132e-13,
+      "ci95_article": [
+        4.79,
+        9.38
+      ],
+      "n_articles": 19
+    },
+    "impossible": {
+      "n": 1161,
+      "both_correct": 486,
+      "only_a": 155,
+      "only_b": 174,
+      "neither": 346,
+      "em_diff": -1.64,
+      "ci95": [
+        -4.65,
+        1.29
+      ],
+      "mcnemar_p": 0.3210183830178668,
+      "ci95_article": [
+        -5.53,
+        2.68
+      ],
+      "n_articles": 18
+    }
+  },
+  "paired_matched_windows_tuned": {
+    "all": {
+      "n": 3814,
+      "both_correct": 1656,
+      "only_a": 604,
+      "only_b": 381,
+      "neither": 1173,
+      "em_diff": 5.85,
+      "ci95": [
+        4.25,
+        7.42
+      ],
+      "mcnemar_p": 1.2172117218028454e-12,
+      "ci95_article": [
+        3.74,
+        7.85
+      ],
+      "n_articles": 19
+    },
+    "answerable": {
+      "n": 2653,
+      "both_correct": 1221,
+      "only_a": 310,
+      "only_b": 312,
+      "neither": 810,
+      "em_diff": -0.08,
+      "ci95": [
+        -2.0,
+        1.7
+      ],
+      "mcnemar_p": 0.9680205998280534,
+      "ci95_article": [
+        -2.24,
+        2.05
+      ],
+      "n_articles": 19
+    },
+    "impossible": {
+      "n": 1161,
+      "both_correct": 435,
+      "only_a": 294,
+      "only_b": 69,
+      "neither": 363,
+      "em_diff": 19.38,
+      "ci95": [
+        16.37,
+        22.39
+      ],
+      "mcnemar_p": 3.4694877947515507e-34,
+      "ci95_article": [
+        16.71,
+        22.76
       ],
       "n_articles": 18
     }

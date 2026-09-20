@@ -25,6 +25,38 @@ LABEL = {"xlmr": "XLM-R (seed 42)", "phobert": "PhoBERT (seed 42)", "baseline": 
 BOTH_SEEDS = ["baseline", "xlmr", "xlmr_seed13", "phobert", "phobert_seed13"]
 ERR_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]
 INK, MUTED, GRID = "#1f1f1e", "#6b6a64", "#e4e3dd"
+PANEL = "white"  # nền hình + đường tách giữa các đoạn cột
+AUDIT = ("#2a78d6", "#eb6834", "#b9b8b0")  # trong ngữ cảnh / ngoài ngữ cảnh / không đáp án
+
+# Hệ màu "Organic" của web demo (demo/console/theme.py) — chỉ dùng cho bản slide,
+# để slide và demo trông như một sản phẩm. Báo cáo giữ nguyên bảng màu xanh/cam.
+ORGANIC = {
+    "COLOR": {"xlmr": "#7a8a5e", "phobert": "#c67139", "baseline": "#645c50",
+              "xlmr_seed13": "#aebf92", "phobert_seed13": "#f6a06b"},
+    "ERR_COLORS": ["#c67139", "#728157", "#8c491a", "#56633f", "#82796a", "#402310"],
+    "INK": "#201e1d", "MUTED": "#645c50", "GRID": "#dcd3c4",
+    "PANEL": "#f5ead8",
+    "AUDIT": ("#728157", "#c67139", "#c0b6a5"),
+}
+ORGANIC_RC = {
+    "figure.facecolor": ORGANIC["PANEL"], "axes.facecolor": ORGANIC["PANEL"],
+    "savefig.facecolor": ORGANIC["PANEL"], "savefig.edgecolor": ORGANIC["PANEL"],
+    "axes.edgecolor": ORGANIC["MUTED"], "axes.labelcolor": ORGANIC["INK"],
+    "xtick.color": ORGANIC["MUTED"], "ytick.color": ORGANIC["MUTED"],
+    "grid.color": ORGANIC["GRID"], "text.color": ORGANIC["INK"],
+    "font.family": "Be Vietnam Pro",
+    # Be Vietnam Pro rộng hơn DejaVu Sans; hạ cỡ nhãn trục để nhãn hai dòng không chồng nhau.
+    "xtick.labelsize": 10.5, "ytick.labelsize": 10.5, "legend.fontsize": 9.5,
+}
+
+
+def use_organic():
+    """Chuyển bảng màu sang hệ Organic (gọi trước lượt vẽ cho slide)."""
+    global COLOR, ERR_COLORS, INK, MUTED, GRID, PANEL, AUDIT
+    COLOR = ORGANIC["COLOR"]
+    ERR_COLORS = ORGANIC["ERR_COLORS"]
+    INK, MUTED, GRID = ORGANIC["INK"], ORGANIC["MUTED"], ORGANIC["GRID"]
+    PANEL, AUDIT = ORGANIC["PANEL"], ORGANIC["AUDIT"]
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans", "font.size": 10, "axes.edgecolor": MUTED,
@@ -62,7 +94,7 @@ def fig_main():
     if ab:
         ax.axhline(ab["overall"]["EM"], color=MUTED, lw=1.2, ls="--")
         ax.text(1.45, ab["overall"]["EM"] - 6.5, f"luôn từ chối: EM toàn bộ = {ab['overall']['EM']:.2f}".replace(".", ","),
-                ha="left", fontsize=8, color=MUTED, zorder=5, bbox=dict(boxstyle="round,pad=0.2", fc="white", ec=GRID))
+                ha="left", fontsize=8, color=MUTED, zorder=5, bbox=dict(boxstyle="round,pad=0.2", fc=PANEL, ec=GRID))
     ax.set_xticks(range(len(groups)), [g for g, _, _ in groups])
     ax.set_ylim(0, 105); ax.set_ylabel("Điểm (%)")
     ax.legend(ncol=len(ms), loc="upper left", bbox_to_anchor=(0, 1.13), fontsize=7.5)
@@ -81,7 +113,7 @@ def fig_taxonomy():
         c = d["models"][m]["taxonomy_all"]["counts"]
         left = 0
         for t, col in zip(types, ERR_COLORS):
-            ax.barh(y, c[t], left=left, color=col, edgecolor="white", linewidth=1.5, height=0.6)
+            ax.barh(y, c[t], left=left, color=col, edgecolor=PANEL, linewidth=1.5, height=0.6)
             if c[t] >= 140:
                 ax.text(left + c[t] / 2, y, str(c[t]), ha="center", va="center", fontsize=7.5, color="white")
             left += c[t]
@@ -144,18 +176,18 @@ def fig_audit():
     if not a:
         return
     cats = list(a["by_category"])
-    parts = [("Có đáp án, đáp án NẰM trong ngữ cảnh", "#2a78d6", lambda c: c["answer_in_context"]),
-             ("Có đáp án, đáp án KHÔNG có trong ngữ cảnh", "#eb6834", lambda c: c["answerable"] - c["answer_in_context"]),
-             ("Không có đáp án", "#b9b8b0", lambda c: c["unanswerable"])]
+    parts = [("Có đáp án, đáp án NẰM trong ngữ cảnh", AUDIT[0], lambda c: c["answer_in_context"]),
+             ("Có đáp án, đáp án KHÔNG có trong ngữ cảnh", AUDIT[1], lambda c: c["answerable"] - c["answer_in_context"]),
+             ("Không có đáp án", AUDIT[2], lambda c: c["unanswerable"])]
     fig, ax = plt.subplots(figsize=(7.5, 3.0))
     for j, cat in enumerate(cats):
         c, bottom = a["by_category"][cat], 0
         for name, col, f in parts:
             v = f(c)
-            ax.bar(j, v, bottom=bottom, color=col, edgecolor="white", linewidth=1.5, width=0.6)
+            ax.bar(j, v, bottom=bottom, color=col, edgecolor=PANEL, linewidth=1.5, width=0.6)
             if v >= 2:
                 ax.text(j, bottom + v / 2, str(v), ha="center", va="center", fontsize=8,
-                        color="white" if col != "#b9b8b0" else INK)
+                        color="white" if col != AUDIT[2] else INK)
             bottom += v
     ax.set_xticks(range(len(cats)), cats); ax.set_ylabel("Số câu (mỗi nhóm 50)")
     ax.legend([plt.Rectangle((0, 0), 1, 1, color=c) for _, c, _ in parts], [n for n, _, _ in parts],
@@ -176,7 +208,8 @@ def main():
     render()
     # Bản cho slide: cùng dữ liệu, chữ lớn hơn để đọc được trên màn chiếu.
     PREFIX = "slide_"
-    with plt.rc_context({"font.size": 13, "legend.fontsize": 11}):
+    use_organic()
+    with plt.rc_context({"font.size": 13, "legend.fontsize": 11, **ORGANIC_RC}):
         render()
     print(sorted(p.name for p in OUT.glob("*.png")))
 

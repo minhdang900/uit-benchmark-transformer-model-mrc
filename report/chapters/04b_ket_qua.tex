@@ -122,16 +122,46 @@ seed 13 hai mô hình ngang nhau trên câu có đáp án (\PairSTAnsDiff) và t
 PhoBERT seed 42 không mất khả năng phân biệt câu không có đáp án --- chỉ có điểm \code{[CLS]} của nó bị dịch
 xuống (Mục~\ref{sec:res-rq3}).
 
-\paragraph{Khả năng ``đọc'' thuần.} Trên các câu có đáp án mà \emph{cả hai} mô hình đều trả lời ở $\tau = 0$
---- tức loại bỏ hoàn toàn quyết định từ chối --- PhoBERT hơn XLM-R \BothGap{} điểm EM ở seed 42 (\BothPhobert{}
-so với \BothXlmr{} trên \BothN{} câu) và \BothSGap{} điểm ở seed 13 (\BothSPhobert{} so với \BothSXlmr{} trên
-\BothSN{} câu): một lợi thế nhỏ, nhất quán, nhỏ hơn nhiều so với \PairAnsDiff{} điểm ở Bảng~\ref{tab:paired}.
+\paragraph{Phần hơn đó là hiệu chỉnh, không phải khả năng đọc.} Muốn biết mô hình nào \emph{đọc} tốt hơn thì
+phải loại cả hai biến gây nhiễu cùng lúc: cấu hình cửa sổ và lần chạy bị sụp đổ. Chỉ một phép so làm được điều
+đó --- PhoBERT seed 13 với XLM-R huấn luyện ở đúng 256/96, cả hai đều ổn định --- và kết quả là
+\textbf{không có khác biệt} trên câu có đáp án: \PairMAnsDiff{} điểm EM, khoảng tin cậy theo bài viết
+[\PairMAnsArtLo; \PairMAnsArtHi], $p$ = \PairMAnsP{} (Bảng~\ref{tab:paired-matched}). Khoảng tin cậy rộng chỉ
+$\pm$2 điểm, nên đây là một kết quả \emph{không} có khác biệt được đo chắc chắn, không phải thiếu dữ liệu.
+Toàn bộ phần hơn \PairMDiff{} điểm của PhoBERT nằm ở câu không có đáp án (\PairMImpDiff{} điểm).
+
+\begin{table}[htbp]
+\centering
+\caption{So sánh cặp khi \emph{khớp cửa sổ}: PhoBERT seed 13 và XLM-R ở 256/96, cả hai lần chạy đều ổn định,
+mỗi mô hình ở $\tau$ chọn trên dev}
+\label{tab:paired-matched}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}c l r r r r r r l r@{}}
+\toprule
+& & & \textbf{Cả hai} & \textbf{Chỉ} & \textbf{Chỉ} & \textbf{Cả hai} & \textbf{Chênh} & & \\
+\textbf{Seed} & \textbf{Nhóm câu} & $n$ & \textbf{đúng} & \textbf{A} & \textbf{B} & \textbf{sai} & \textbf{lệch} & \textbf{CI 95\%} & \textbf{$p$} \\
+\midrule
+\tabinput{generated/tab_paired_matched.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Vì sao các con số khác trông như có khác biệt.} Trên những câu mà \emph{cả hai} mô hình đều trả lời
+ở $\tau = 0$, PhoBERT hơn \BothGap{} điểm (seed 42) và \BothSGap{} điểm (seed 13). Nhưng lát cắt đó
+\emph{đổi dấu} theo lần chạy được chọn: khớp cửa sổ thì seed 13 hơn \BothMGap{} điểm còn lần chạy lr $10^{-5}$
+\emph{kém} \,$-$\BothMSGap{}\, điểm. Và ở $\tau = 0$ với cửa sổ đã khớp, chênh lệch trên câu có đáp án là
+\PairMZeroAnsDiff{} điểm --- lớn, nhưng chỉ vì XLM-R ở $\tau = 0$ từ chối quá nhiều. Cả ba con số đo cùng một
+thứ: ai sẵn lòng trả lời hơn. Đồ án vì vậy không kết luận gì về ``đọc'' từ chúng.
 
 \begin{keybox}
 \textbf{Kết luận chính của đồ án.} Ở seed 42 và ngưỡng mặc định, hai mô hình trông như ``bằng nhau với hai
 hồ sơ ngược nhau''; đó là hệ quả của một lần chạy PhoBERT bị lệch hiệu chỉnh. Khi so đúng cách --- mỗi mô hình
-ở ngưỡng chọn trên dev --- PhoBERT-base tốt hơn XLM-R-base \PairTDiff{} và \PairSTDiff{} điểm EM ở hai seed,
-và đọc tốt hơn \BothSGap--\BothGap{} điểm trên những câu cả hai cùng trả lời.
+ở ngưỡng chọn trên dev --- PhoBERT-base tốt hơn XLM-R-base \PairTDiff{} và \PairSTDiff{} điểm EM ở hai seed.
+Phần hơn đó \emph{không} phải khả năng đọc: khớp cả cấu hình cửa sổ lẫn tính ổn định của lần chạy thì chênh
+lệch trên câu có đáp án bằng \PairMAnsDiff{} điểm ([\PairMAnsArtLo; \PairMAnsArtHi]). Điều PhoBERT làm tốt hơn
+là \emph{biết khi nào không nên trả lời}.
 \end{keybox}
 
 \begin{table}[htbp]
@@ -237,9 +267,10 @@ ngược lại PhoBERT có \PhobertErrFalseAns{} lỗi trả lời câu không c
 lỗi) so với \XlmrErrFalseAns{} của XLM-R.
 
 \begin{keybox}
-\textbf{Trả lời RQ1: Không --- ở dạng tổng quát.} Mô hình word-level không kém hơn ở ranh giới từ: trên
-những câu có đáp án mà cả hai cùng trả lời, nó tốt hơn \BothGap{} điểm EM (con số \PairAnsDiff{} ở
-Bảng~\ref{tab:paired} còn chứa khác biệt về từ chối). Cơ chế ``không trả lời được nửa từ'' có thật và
+\textbf{Trả lời RQ1: Không --- ở dạng tổng quát.} Mô hình word-level không kém hơn ở ranh giới từ; nhưng nó
+cũng không \emph{đọc} tốt hơn. Khớp cửa sổ và loại lần chạy sụp đổ, chênh lệch trên câu có đáp án là
+\PairMAnsDiff{} điểm, CI [\PairMAnsArtLo; \PairMAnsArtHi] (Bảng~\ref{tab:paired-matched}). Con số
+\PairAnsDiff{} ở Bảng~\ref{tab:paired} là khác biệt về hành vi từ chối, không phải về đọc. Cơ chế ``không trả lời được nửa từ'' có thật và
 quan sát được, nhưng bị chặn trên ở \SegCeilingLoss{} điểm EM và chỉ tác động lên \SegMis{} câu. Ở
 UIT-ViQuAD~2.0, lỗi tách từ \emph{không} phải yếu tố quyết định khi chọn giữa hai họ mô hình; hành vi
 từ chối mới là yếu tố quyết định (RQ3).
