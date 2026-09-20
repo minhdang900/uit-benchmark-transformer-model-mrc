@@ -83,14 +83,32 @@ html, body, [class*="st-"], .stMarkdown, button, input, textarea, select {
   font-family: var(--font-body) !important;
   color: var(--color-text);
 }
+/* Trừ chữ biểu tượng ra: Streamlit dùng ligature của Material Symbols, ép font chữ
+   thường lên đó thì nút hiện ra chữ "keyboard_double" thay vì mũi tên. */
+[data-testid="stIconMaterial"], .material-symbols-rounded, span[translate="no"] {
+  font-family: "Material Symbols Rounded", "Material Icons" !important;
+}
 body { font-size: 15px; line-height: 1.5; }
-#MainMenu, footer, [data-testid="stToolbar"] { visibility: hidden; }
+#MainMenu, footer, [data-testid="stToolbarActions"], [data-testid="stStatusWidget"],
+[data-testid="stAppDeployButton"] { display: none; }
+/* Nút thu/mở thanh bên PHẢI thấy được: điều hướng chỉ nằm trong thanh bên. */
+[data-testid="stExpandSidebarButton"], [data-testid="stSidebarCollapseButton"] {
+  visibility: visible !important;
+}
+[data-testid="stExpandSidebarButton"] button, [data-testid="stSidebarCollapseButton"] button {
+  color: var(--color-accent-800) !important;
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-divider) !important;
+  border-radius: 999px !important;
+}
 
 /* ── thanh bên ───────────────────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
   background: var(--color-surface);
   border-right: 1px solid var(--color-divider);
-  width: 292px !important;
+}
+@media (min-width: 901px) {
+  [data-testid="stSidebar"] { width: 292px !important; }
 }
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] { padding: var(--space-6) var(--space-4); }
 [data-testid="stSidebar"] .stButton > button { text-align: left; justify-content: flex-start; }
@@ -109,11 +127,13 @@ body { font-size: 15px; line-height: 1.5; }
 .stButton > button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .stButton > button[kind="primary"],
 .stButton > button[data-testid="stBaseButton-primary"] {
-  background: var(--color-accent); border-color: var(--color-accent); color: #fff;
+  /* accent-700 thay vì accent: chữ trắng 14px trên accent chỉ đạt 3,61:1, dưới ngưỡng
+     AA 4,5:1 cho chữ nhỏ. accent-700 đạt 6,81:1 và vẫn cùng họ màu. */
+  background: var(--color-accent-700); border-color: var(--color-accent-700); color: #fff;
 }
 .stButton > button[kind="primary"]:hover,
 .stButton > button[data-testid="stBaseButton-primary"]:hover {
-  background: var(--color-accent-600); border-color: var(--color-accent-600); color: #fff;
+  background: var(--color-accent-800); border-color: var(--color-accent-800); color: #fff;
 }
 .stButton > button:active { background: color-mix(in srgb, var(--color-text) 10%, transparent); }
 
@@ -130,6 +150,9 @@ body { font-size: 15px; line-height: 1.5; }
 .stTextInput input { border-radius: 999px !important; padding-inline: 14px !important; }
 .stTextInput input:focus, .stTextArea textarea:focus {
   border-color: var(--color-accent) !important; box-shadow: none !important;
+}
+.stTextInput input:focus-visible, .stTextArea textarea:focus-visible {
+  outline: 2px solid var(--color-accent-700) !important; outline-offset: 2px;
 }
 [data-testid="stWidgetLabel"] p {
   font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em;
@@ -158,7 +181,7 @@ body { font-size: 15px; line-height: 1.5; }
 .vm-tag { display: inline-flex; align-items: center; font-size: 11.5px; font-weight: 700;
   padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
 .vm-tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
-.vm-tag-ok { background: var(--color-accent-2-600); color: #fff; }
+.vm-tag-ok { background: var(--color-accent-2-700); color: #fff; }  /* 6,46:1 */
 .vm-tag-err { background: var(--color-accent-700); color: #fff; }
 .vm-tag-neutral { background: var(--color-neutral-200); color: var(--color-neutral-800); }
 .vm-num { font-variant-numeric: tabular-nums; }
@@ -169,9 +192,24 @@ body { font-size: 15px; line-height: 1.5; }
   display: flex; flex-direction: column; gap: 3px; }
 .vm-tile-k { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
   font-weight: 700; color: var(--color-neutral-700); }
-.vm-tile-v { font-weight: 800; letter-spacing: -0.015em; font-size: 32px; line-height: 1.05; white-space: nowrap; }
+.vm-tile-v { font-weight: 800; letter-spacing: -0.015em; line-height: 1.05;
+  font-size: clamp(22px, 2.4vw, 32px); white-space: nowrap; }
 .vm-tile-d { font-size: 12px; }
 
+/* Bảng rộng cuộn ngang được, và CHỈ hiện bóng mờ ở rìa khi thật sự còn cột bị cắt:
+   hai lớp "local" (màu nền thẻ) trượt theo nội dung và che hai lớp bóng "scroll" khi
+   đã cuộn hết — kỹ thuật scroll-shadow bằng CSS thuần, không cần JS. */
+.vm-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  background:
+    linear-gradient(to right, var(--color-neutral-100) 40%, transparent) left center / 28px 100% no-repeat local,
+    linear-gradient(to left, var(--color-neutral-100) 40%, transparent) right center / 28px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%,
+      color-mix(in srgb, var(--color-neutral-900) 18%, transparent), transparent) left center / 12px 100% no-repeat,
+    radial-gradient(farthest-side at 100% 50%,
+      color-mix(in srgb, var(--color-neutral-900) 18%, transparent), transparent) right center / 12px 100% no-repeat;
+}
 .vm-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
 .vm-table th { text-align: right; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--color-neutral-700); padding: 0 0 var(--space-2) var(--space-4);

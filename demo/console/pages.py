@@ -100,7 +100,8 @@ def qa_page() -> None:
 
     examples = st.cache_data(infer.examples)()
     if examples:
-        _md("<div class='vm-label' style='margin-bottom:6px'>Câu mẫu có sẵn kết quả thật</div>")
+        _md("<div class='vm-label' style='margin-bottom:6px'>Câu mẫu — chọn theo cơ chế lỗi"
+            "</div>")
         picked = _chips([(e["qid"], e["label"]) for e in examples], "qa-example")
         ex = next((e for e in examples if e["qid"] == picked), examples[0])
     else:
@@ -116,7 +117,8 @@ def qa_page() -> None:
         context = st.text_area("Ngữ cảnh", key="qa-context", height=240)
         question = st.text_input("Câu hỏi", key="qa-question")
         _md(f"<div class='vm-muted' style='font-size:11.5px;margin:-6px 0 10px'>"
-            f"{len(context.split())} âm tiết · cửa sổ 256 token, stride 96</div>")
+            f"<span class='vm-mono'>{esc(ex['qid'])}</span> · {len(context.split())} âm tiết · "
+            f"cửa sổ 256 token, stride 96</div>")
         run_key = _chips([(r["key"], r["label"]) for r in runs], "qa-run", per_row=2)
         tuned = _chips([("tuned", "τ chọn trên dev"), ("zero", "τ = 0")], "qa-tau")
         tau = infer.tau_for(run_key) if tuned == "tuned" else 0.0
@@ -131,6 +133,12 @@ def qa_page() -> None:
         return
     st.session_state["qa-has-run"] = True
 
+    if not context.strip() or not question.strip():
+        with right:
+            st.warning("Cần cả ngữ cảnh và câu hỏi. Chọn một câu mẫu ở trên hoặc dán "
+                       "đoạn văn của bạn rồi nhập câu hỏi.")
+        return
+
     # Nhãn vàng chỉ có nghĩa khi câu hỏi chưa bị sửa khỏi câu mẫu.
     gold = ex["gold"] if question.strip() == str(ex["question"]).strip() else []
     try:
@@ -139,7 +147,10 @@ def qa_page() -> None:
             out = infer.predict(predictor, context, question, tau)
     except Exception as exc:  # thiếu checkpoint, hết bộ nhớ, …
         with right:
-            st.error(f"Không chạy được mô hình: {exc}")
+            st.error("Không chạy được mô hình trên máy này. Kiểm tra checkpoint trong "
+                     "`models/` và bộ nhớ còn trống, rồi thử lại.")
+            with st.expander("Chi tiết kỹ thuật"):
+                st.code(f"{type(exc).__name__}: {exc}")
         return
 
     em, f1 = infer.score(out["answer"], gold)
@@ -260,8 +271,8 @@ def matrix_page(system_key: str) -> None:
         n = D.dig(D.load("eval_phobert_validation.json") or {}, "overall", "count")
         _md(f"""<div class='vm-card' style='margin-top:14px'>
           <div class='vm-h2'>Kết quả chính — UIT-ViQuAD 2.0 validation (n = {D.vi(n, 0)})</div>
-          <table class='vm-table'><thead><tr><th>Hệ thống</th>{head}</tr></thead>
-          <tbody>{body}</tbody></table>
+          <div class='vm-scroll'><table class='vm-table'><thead><tr><th>Hệ thống</th>{head}</tr></thead>
+          <tbody>{body}</tbody></table></div>
           <p class='vm-muted' style='margin:14px 0 0;font-size:12.5px;max-width:90ch'>
             Ở τ = 0, PhoBERT seed 42 đạt EM có-đáp-án cao nhất nhưng gần như không từ chối, nên EM
             không-đáp-án rất thấp; seed 13 đảo lại cân bằng đó. Cột “tỉ lệ từ chối” là chìa khoá
@@ -282,8 +293,8 @@ def matrix_page(system_key: str) -> None:
                 cells += f"<td style='background:{bg};color:{fg}'>{D.vi(v, 1)}</td>"
             body += f"<tr><td>{esc(r['short'])}</td>{cells}</tr>"
         _md(f"""<div class='vm-card'>
-          <table class='vm-matrix'><thead><tr><th>Hệ thống</th>{head}</tr></thead>
-          <tbody>{body}</tbody></table>
+          <div class='vm-scroll'><table class='vm-matrix'><thead><tr><th>Hệ thống</th>{head}</tr></thead>
+          <tbody>{body}</tbody></table></div>
           <p class='vm-muted' style='margin:14px 0 0;font-size:12.5px;max-width:90ch'>
             {esc(D.stress_note(scope))}</p></div>""")
 
@@ -420,8 +431,8 @@ def runs_page() -> None:
             body += f"<tr><td>{esc(r['name'])}</td>{cells}</tr>"
         _md(f"""<div class='vm-card' style='margin-top:14px'>
           <div class='vm-h2'>Các lần huấn luyện</div>
-          <table class='vm-table'><thead><tr><th>Lần chạy</th>{head}</tr></thead>
-          <tbody>{body}</tbody></table>
+          <div class='vm-scroll'><table class='vm-table'><thead><tr><th>Lần chạy</th>{head}</tr></thead>
+          <tbody>{body}</tbody></table></div>
           <p class='vm-muted' style='margin:14px 0 0;font-size:12px'>* Lần chạy trước khi có nhật ký
             từng bước: trạng thái nhánh CLS suy ra từ loss theo nhãn của từng checkpoint
             (<span class='vm-mono'>results/loss_probe.json</span>), không phải từ chuẩn gradient
@@ -445,8 +456,8 @@ def runs_page() -> None:
             <span class='vm-muted' style='font-size:12.5px'>τ dịch cân bằng có/không đáp án mà
               không huấn luyện lại</span>
           </div>
-          <table class='vm-table' style='margin-top:14px'>
-          <thead><tr><th>Lần chạy</th>{head}</tr></thead><tbody>{body}</tbody></table>
+          <div class='vm-scroll'><table class='vm-table' style='margin-top:14px'>
+          <thead><tr><th>Lần chạy</th>{head}</tr></thead><tbody>{body}</tbody></table></div>
           <p class='vm-muted' style='margin:14px 0 0;font-size:12.5px;max-width:90ch'>
             {esc(D.threshold_note())}</p></div>""")
 
@@ -490,6 +501,6 @@ def _curve_svg(rows: list[dict]) -> str:
             f"gap:20px;align-items:center'>"
             f"<svg viewBox='0 0 560 250' style='width:100%;height:auto;overflow:visible'>"
             f"<g stroke='var(--color-neutral-300)' stroke-width='1'>{grid}</g>"
-            f"<g text-anchor='end' font-size='11' fill='#82796a'>{labels}</g>"
-            f"<g text-anchor='middle' font-size='11' fill='#82796a'>{ticks}</g>{lines}</svg>"
+            f"<g text-anchor='end' font-size='11' fill='#645c50'>{labels}</g>"
+            f"<g text-anchor='middle' font-size='11' fill='#645c50'>{ticks}</g>{lines}</svg>"
             f"<div style='display:flex;flex-direction:column;gap:8px'>{legend}</div></div>")

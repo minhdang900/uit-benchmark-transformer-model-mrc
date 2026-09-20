@@ -100,7 +100,7 @@ def examples(limit_per_kind: int = 1) -> list[dict]:
             if e.get("phobert_error") == kind or e.get("xlmr_error") == kind:
                 seen[kind] = seen.get(kind, 0) + 1
                 out.append({
-                    "qid": ex.qid, "label": f"{ex.qid} · {label}",
+                    "qid": ex.qid, "label": label,
                     "context": ex.context, "question": ex.question,
                     "gold": list(ex.answers),
                 })
