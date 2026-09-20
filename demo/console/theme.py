@@ -75,6 +75,7 @@ __TOKENS__
 /* ── khung Streamlit ─────────────────────────────────────────────────────── */
 .stApp, [data-testid="stAppViewContainer"] { background: var(--color-bg); }
 [data-testid="stHeader"] { background: transparent; }
+.stMainBlockContainer, [data-testid="stMainBlockContainer"],
 [data-testid="stAppViewBlockContainer"] {
   padding: var(--space-8) var(--space-8) var(--space-8);
   max-width: 1360px;
@@ -111,6 +112,21 @@ body { font-size: 15px; line-height: 1.5; }
   [data-testid="stSidebar"] { width: 292px !important; }
 }
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] { padding: var(--space-6) var(--space-4); }
+
+/* Streamlit dành sẵn một ô trống ở đầu thanh bên cho st.logo(); đồ án không
+   dùng logo nên ô đó chỉ là khoảng trắng. Bỏ ô trống và cân lại khoảng đệm.
+   KHÔNG ẩn cả stSidebarHeader: nút thu gọn thanh bên nằm trong đó. */
+[data-testid="stLogoSpacer"] { display: none; }
+[data-testid="stSidebarLogo"], [data-testid="stHeaderLogo"],
+[data-testid="stAppLogo"] { height: 26px; width: auto; margin: 0; }
+/* Streamlit gán alt="Logo" cho ảnh logo và không cho đổi, nên tên ứng dụng
+   được đặt riêng dưới dạng chữ chỉ dành cho trình đọc màn hình. */
+.vm-sr-only { position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+[data-testid="stSidebarHeader"] { height: auto; min-height: 0;
+  padding-top: var(--space-1); padding-bottom: 0; }
+[data-testid="stSidebar"] [data-testid="stSidebarContent"] { padding-top: var(--space-3); }
+[data-testid="stSidebarUserContent"] { padding-bottom: var(--space-6); }
 [data-testid="stSidebar"] .stButton > button { text-align: left; justify-content: flex-start; }
 
 /* ── nút: pill; primary = đang chọn ─────────────────────────────────────── */
@@ -171,6 +187,15 @@ body { font-size: 15px; line-height: 1.5; }
 .vm-card + .vm-card { margin-top: var(--space-4); }
 .vm-h1 { font-weight: 800; letter-spacing: -0.015em; font-size: 38px; line-height: 1.12; margin: 0 0 6px; }
 .vm-h2 { font-weight: 800; letter-spacing: -0.015em; font-size: 22px; margin: 0 0 var(--space-3); }
+/* Streamlit tự đặt cỡ cho h1–h6 trong markdown với độ ưu tiên cao hơn một lớp
+   đơn; tiêu đề mục là <h2> thật (để đọc màn hình nhảy theo tiêu đề được) nên
+   phải giành lại cỡ chữ của bản thiết kế. */
+.stMarkdown h2.vm-h2, [data-testid="stMarkdownContainer"] h2.vm-h2, h2.vm-h2 {
+  font-weight: 800; letter-spacing: -0.015em; font-size: 22px;
+  margin: 0 0 var(--space-3); padding: 0; color: var(--color-text); }
+.stMarkdown h1.vm-h1, [data-testid="stMarkdownContainer"] h1.vm-h1, h1.vm-h1 {
+  font-weight: 800; letter-spacing: -0.015em; font-size: 38px;
+  line-height: 1.12; margin: 0 0 6px; padding: 0; color: var(--color-text); }
 .vm-lede { margin: 0; max-width: 62ch; color: var(--color-neutral-700); font-size: 14.5px; text-wrap: pretty; }
 .vm-kicker { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--color-neutral-700); font-weight: 700; }
@@ -277,7 +302,17 @@ body { font-size: 15px; line-height: 1.5; }
 .vm-foot { font-size: 11.5px; line-height: 1.7; color: var(--color-neutral-700);
   border-top: 1px solid var(--color-divider); padding-top: var(--space-3); margin-top: var(--space-4); }
 
+/* nhóm thực hiện ở chân thanh bên */
+.vm-team { border-top: 1px solid var(--color-divider);
+  padding-top: var(--space-3); margin-top: var(--space-4); }
+.vm-team .vm-kicker { display: block; margin-bottom: var(--space-2); }
+.vm-team-row { display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--space-2); font-size: 12px; line-height: 1.75; }
+.vm-team-row .vm-mono { font-size: 11px; }
+.vm-foot { border-top: 0; margin-top: var(--space-2); padding-top: 0; }
+
 @media (max-width: 900px) {
+  .stMainBlockContainer, [data-testid="stMainBlockContainer"],
   [data-testid="stAppViewBlockContainer"] { padding: var(--space-4); }
   .vm-h1 { font-size: 30px; }
   .vm-taxrow, .vm-samples, .vm-kv, .vm-side { grid-template-columns: 1fr; }

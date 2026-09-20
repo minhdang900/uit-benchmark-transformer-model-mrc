@@ -16,6 +16,7 @@ import streamlit as st
 
 from . import data as D
 from . import infer
+from . import markup as M
 from .theme import heat
 
 MISSING = "<span class='vm-muted'>chưa có dữ liệu trong results/</span>"
@@ -220,8 +221,8 @@ def qa_page() -> None:
         f"<span style='font-size:13.5px'>⌀ từ chối trả lời</span>"
         f"<span class='vm-tag {'vm-tag-ok' if ab_ok else 'vm-tag-err'}'>"
         f"{'đúng' if ab_ok else 'sai'}</span></div>")
-    _md(f"<div class='vm-card' style='margin-top:14px'><div class='vm-h2'>"
-        f"Các nhánh mô hình trả lời gì</div>{''.join(rows)}</div>")
+    _md(f"<div class='vm-card' style='margin-top:14px'>"
+        f"{M.heading('Các nhánh mô hình trả lời gì')}{''.join(rows)}</div>")
 
     seg, causes = D.seg_summary(), D.seg_causes()
     if seg and causes:
@@ -235,7 +236,7 @@ def qa_page() -> None:
             for c in causes)
         _md(f"""<div class='vm-card' style='margin-top:14px'>
           <div style='display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px'>
-            <div class='vm-h2' style='margin:0'>Ranh giới từ ghép trên tập validation</div>
+            {M.heading('Ranh giới từ ghép trên tập validation', style='margin:0')}
             <span class='vm-muted' style='font-size:13px'>{D.vi(seg['aligned'], 0)} /
               {D.vi(seg['answerable'], 0)} đáp án khớp ranh giới pyvi — {D.vi(seg['aligned_pct'])}%.
               Trần EM do tách từ: {D.vi(seg['oracle'])}%.</span>
@@ -270,7 +271,7 @@ def matrix_page(system_key: str) -> None:
                       for i, v in enumerate(r["cells"])) + "</tr>" for r in rows)
         n = D.dig(D.load("eval_phobert_validation.json") or {}, "overall", "count")
         _md(f"""<div class='vm-card' style='margin-top:14px'>
-          <div class='vm-h2'>Kết quả chính — UIT-ViQuAD 2.0 validation (n = {D.vi(n, 0)})</div>
+          {M.heading(f"Kết quả chính — UIT-ViQuAD 2.0 validation (n = {D.vi(n, 0)})")}
           <div class='vm-scroll'><table class='vm-table'><thead><tr><th>Hệ thống</th>{head}</tr></thead>
           <tbody>{body}</tbody></table></div>
           <p class='vm-muted' style='margin:14px 0 0;font-size:12.5px;max-width:90ch'>
@@ -278,8 +279,8 @@ def matrix_page(system_key: str) -> None:
             không-đáp-án rất thấp; seed 13 đảo lại cân bằng đó. Cột “tỉ lệ từ chối” là chìa khoá
             để đọc bảng này.</p></div>""")
 
-    _md("<div class='vm-h2' style='margin:22px 0 10px'>Ma trận chẩn đoán E1–E5 "
-        "(EM, bộ stress-test)</div>")
+    _md(M.heading("Ma trận chẩn đoán E1–E5 (EM, bộ stress-test)",
+                  style="margin:22px 0 10px"))
     scope = _chips([("all", "Toàn bộ 250 câu"), ("valid", "Chỉ câu hợp lệ")],
                    "matrix-scope", ncols=4)
     cols, srows = D.stress_matrix(scope)
@@ -302,18 +303,16 @@ def matrix_page(system_key: str) -> None:
     if tax:
         rows_html = ""
         for r in tax:
-            segs = "".join(
-                f"<div title='{esc(s['label'])}: {s['n']}' style='height:100%;"
-                f"width:{s['pct']:.2f}%;background:{s['bg']}'></div>" for s in r["segs"])
             rows_html += (f"<div class='vm-taxrow'><span style='font-size:13px;font-weight:700'>"
-                          f"{esc(r['short'])}</span><div class='vm-bar'>{segs}</div>"
+                          f"{esc(r['short'])}</span>"
+                          f"{M.bar(r['short'], r['segs'], r['total'])}"
                           f"<span class='vm-num vm-muted' style='font-size:13px;text-align:right'>"
                           f"{D.vi(r['total'], 0)}</span></div>")
         legend = "".join(
             f"<span><span class='vm-swatch' style='background:{bg}'></span>{esc(label)}</span>"
             for _, label, bg in D.TAX_TYPES)
         _md(f"""<div class='vm-card' style='margin-top:14px'>
-          <div class='vm-h2'>Phân loại lỗi — hình dạng thất bại, không phải số lượng</div>
+          {M.heading('Phân loại lỗi — hình dạng thất bại, không phải số lượng')}
           <p class='vm-muted' style='margin:0 0 14px;font-size:13px'>Mỗi thanh là toàn bộ số câu
             sai của một hệ thống, chia theo cơ chế.</p>
           {rows_html}<div class='vm-legend'>{legend}</div></div>""")
@@ -401,8 +400,9 @@ def stress_page() -> None:
         f"<span class='vm-tag {'vm-tag-ok' if s['valid'] else 'vm-tag-err'}'>"
         f"{'hợp lệ' if s['valid'] else 'không hợp lệ'}</span></div>"
         for s in D.group_samples(code))
-    _md(f"<div class='vm-card' style='margin-top:14px'><div class='vm-h2'>{esc(g['code'])} — "
-        f"{esc(g['name'])}</div><p class='vm-muted' style='font-size:13px;margin:0 0 14px'>"
+    _md(f"<div class='vm-card' style='margin-top:14px'>"
+        f"{M.heading(g['code'] + ' — ' + g['name'])}"
+        f"<p class='vm-muted' style='font-size:13px;margin:0 0 14px'>"
         f"{esc(g['mech'])}</p>{samples or MISSING}</div>")
 
 
@@ -410,7 +410,7 @@ def stress_page() -> None:
 def runs_page() -> None:
     rows = D.run_rows()
     if rows:
-        _md(f"<div class='vm-card'><div class='vm-h2'>F1 trên tập dev theo epoch</div>"
+        _md(f"<div class='vm-card'>{M.heading('F1 trên tập dev theo epoch')}"
             f"{_curve_svg(rows)}</div>")
 
         head = "".join(f"<th>{esc(c)}</th>" for c in D.RUN_COLS)
@@ -430,7 +430,7 @@ def runs_page() -> None:
                           f"{esc(v)}</td>")
             body += f"<tr><td>{esc(r['name'])}</td>{cells}</tr>"
         _md(f"""<div class='vm-card' style='margin-top:14px'>
-          <div class='vm-h2'>Các lần huấn luyện</div>
+          {M.heading('Các lần huấn luyện')}
           <div class='vm-scroll'><table class='vm-table'><thead><tr><th>Lần chạy</th>{head}</tr></thead>
           <tbody>{body}</tbody></table></div>
           <p class='vm-muted' style='margin:14px 0 0;font-size:12px'>* Lần chạy trước khi có nhật ký
@@ -452,7 +452,7 @@ def runs_page() -> None:
             body += f"<tr><td>{esc(r['name'])}</td>{cells}</tr>"
         _md(f"""<div class='vm-card' style='margin-top:14px'>
           <div style='display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px'>
-            <div class='vm-h2' style='margin:0'>Ngưỡng từ chối τ — chọn trên dev, áp lên validation</div>
+            {M.heading('Ngưỡng từ chối τ — chọn trên dev, áp lên validation', style='margin:0')}
             <span class='vm-muted' style='font-size:12.5px'>τ dịch cân bằng có/không đáp án mà
               không huấn luyện lại</span>
           </div>

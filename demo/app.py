@@ -15,8 +15,16 @@ import streamlit as st
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from console import data as D  # noqa: E402
+from console import markup as M  # noqa: E402
 from console import pages  # noqa: E402
 from console.theme import css  # noqa: E402
+
+TEAM = [
+    ("Nguyễn Quang Lâm", "25210289"),
+    ("Trần Trọng Tấn", "25210334"),
+    ("Lê Quang Thi", "25210337"),
+    ("Vỏ Cẩm Thu", "25210342"),
+]
 
 PAGES = {
     "qa": {"label": "Hỏi đáp", "note": "thử một câu, xem mô hình gãy ở đâu",
@@ -47,16 +55,10 @@ def sidebar() -> tuple[str, str]:
     system = st.session_state.setdefault("system", "phobert")
 
     with st.sidebar:
-        st.markdown("""
-        <div style='display:flex;align-items:center;gap:12px;margin-bottom:22px'>
-          <div style='width:44px;height:44px;border-radius:999px;background:var(--color-accent);
-            color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px;
-            letter-spacing:-0.015em;flex:none'>V</div>
-          <div style='display:flex;flex-direction:column'>
-            <div style='font-weight:800;letter-spacing:-0.015em;font-size:21px;line-height:1.1'>ViMRC</div>
-            <div class='vm-muted' style='font-size:12.5px'>Công cụ chẩn đoán MRC</div>
-          </div>
-        </div>""", unsafe_allow_html=True)
+        st.markdown(
+            "<span class='vm-sr-only'>ViMRC</span>"
+            "<div class='vm-muted' style='font-size:12.5px;margin:0 0 16px'>"
+            "Công cụ chẩn đoán MRC</div>", unsafe_allow_html=True)
 
         for key, meta in PAGES.items():
             if st.button(meta["label"], key=f"nav-{key}", use_container_width=True,
@@ -79,6 +81,7 @@ def sidebar() -> tuple[str, str]:
                 system = s["key"]
                 st.rerun()
 
+        st.markdown(M.team(TEAM), unsafe_allow_html=True)
         st.markdown("<div class='vm-foot'>"
                     + "".join(f"<div>{line}</div>" for line in D.provenance())
                     + "</div>", unsafe_allow_html=True)
@@ -89,6 +92,7 @@ def main() -> None:
     st.set_page_config(page_title="ViMRC Console", page_icon="◍", layout="wide",
                        initial_sidebar_state="expanded")
     st.markdown(css(), unsafe_allow_html=True)
+    st.logo(M.logo(), size='medium')
 
     page, system = sidebar()
     meta = PAGES[page]
