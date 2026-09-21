@@ -74,7 +74,8 @@ def load(dataset: str, data_dir: str):
 def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--models", nargs="+", required=True, choices=sorted(NAMES))
-    ap.add_argument("--dataset", default="validation", help="validation | stress2")
+    ap.add_argument("--dataset", default="validation", choices=["validation", "stress2"],
+                    help="validation | stress2 (bộ stress-test v1 đã gỡ bỏ)")
     ap.add_argument("--data-dir", default="data/raw")
     ap.add_argument("--out-dir", default="results")
     args = ap.parse_args(argv)

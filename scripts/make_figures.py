@@ -175,19 +175,19 @@ def fig_stress_v2():
     if not a:
         return
     cats = list(a["by_category"])
-    ms = [k for k in BOTH_SEEDS if load(f"eval_{k}_stress2.json")]
+    ms = [k for k in BOTH_SEEDS if load(f"eval_{k}_stress2_tuned.json") or load(f"eval_{k}_stress2.json")]
     if not ms:
         return
     fig, ax = plt.subplots(figsize=(8.5, 3.2))
     w = 0.8 / max(1, len(ms))
     for i, m in enumerate(ms):
-        ev = load(f"eval_{m}_stress2.json")
+        ev = load(f"eval_{m}_stress2_tuned.json") or load(f"eval_{m}_stress2.json")
         vals = [(ev.get("by_category", {}).get(c) or {}).get("EM", 0) for c in cats]
         xs = [j + (i - (len(ms) - 1) / 2) * w for j in range(len(cats))]
         ax.bar(xs, vals, w - 0.03, color=COLOR.get(m, MUTED), label=LABEL.get(m, m))
         for x, v in zip(xs, vals):
             ax.text(x, v + 1.2, f"{v:.0f}", ha="center", fontsize=6.5, color=INK)
-    ab = load("eval_abstain_stress2.json")
+    ab = load("eval_abstain_stress2.json")  # không có τ; điểm không đổi theo τ
     if ab:
         ax.axhline(ab["overall"]["EM"], color=MUTED, lw=1.2, ls="--")
         ax.text(-0.45, ab["overall"]["EM"] + 2.5,

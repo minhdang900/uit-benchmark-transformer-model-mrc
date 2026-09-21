@@ -60,7 +60,7 @@ người 87,34.
 ```bash
 uv venv .venv --python 3.12 && uv pip install --python .venv/bin/python -r requirements.txt
 python scripts/fetch_data.py                      # UIT-ViQuAD 2.0 -> data/raw/
-python -m pytest -m "not slow"                    # 297 kiểm thử, không cần GPU
+python -m pytest -m "not slow"                    # 303 kiểm thử, không cần GPU (con số trong báo cáo sinh tự động)
 
 python scripts/analyze_segmentation.py            # biên từ + trần EM (không cần mô hình)
 python scripts/build_stress_v2.py                 # dựng + kiểm định stress-test v2
@@ -69,14 +69,24 @@ python scripts/finetune.py --model FacebookAI/xlm-roberta-base --out models/xlmr
     --epochs 3 --max-length 384 --doc-stride 128 --max-answer-len 64
 python scripts/finetune.py --model vinai/phobert-base-v2 --out models/phobert --word-segmented \
     --epochs 3 --max-length 256 --doc-stride 96 --max-answer-len 64
+# Các lần chạy phụ mà báo cáo dùng (seed 13, PhoBERT lr 1e-5, XLM-R cửa sổ 256/96) + chấm chúng:
+bash scripts/queue_night1.sh && bash scripts/queue_night2.sh
 
 python scripts/run_eval.py --models abstain baseline xlmr phobert
-python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress2
+python scripts/run_eval.py --models abstain baseline xlmr xlmr_seed13 phobert phobert_seed13 xlmr_256 --dataset stress2
 python scripts/scan_features.py --model vinai/phobert-base-v2 --word-segmented \
     --max-length 256 --doc-stride 96 --name phobert          # quét feature
 bash scripts/queue_score_windows.sh                         # điểm từng cửa sổ (dev + validation)
-python scripts/calibrate_thresholds.py --runs xlmr phobert  # τ chọn trên dev, chấm validation 1 lần
+python scripts/calibrate_thresholds.py --runs xlmr xlmr_seed13 xlmr_256 phobert phobert_seed13 \
+    phobert_lr2e5 phobert_stable                           # τ chọn trên dev, chấm validation 1 lần
 python scripts/diagnose.py && python scripts/probe_loss.py
+
+# Bộ stress-test v2 ở τ hiệu chỉnh: chấm từng cửa sổ rồi áp τ của dev (không chọn gì trên stress2)
+for m in xlmr xlmr_seed13 phobert phobert_seed13 xlmr_256; do
+    python scripts/score_windows.py --checkpoint "models/$m" --name "$m" --split stress2
+done
+python scripts/score_stress2_tuned.py --check-tau0 \
+    --runs xlmr xlmr_seed13 phobert phobert_seed13 xlmr_256
 python scripts/make_report_numbers.py && python scripts/make_figures.py
 ```
 

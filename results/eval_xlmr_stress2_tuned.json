@@ -1,0 +1,168 @@
+{
+ "model": "xlmr",
+ "dataset": "stress-test v2",
+ "split": "stress2",
+ "tau": -0.47253,
+ "tau_source": "results/thresholds.json (chọn trên dev, split seed 42)",
+ "checkpoint": "models/xlmr",
+ "commit": "0f9199c",
+ "overall": {
+  "EM": 52.2388,
+  "F1": 61.146,
+  "count": 1139
+ },
+ "answerable_only": {
+  "EM": 46.9607,
+  "F1": 59.0528,
+  "count": 839
+ },
+ "impossible_only": {
+  "EM": 67.0,
+  "count": 300
+ },
+ "abstain_rate": 38.2792,
+ "by_category": {
+  "E1": {
+   "EM": 57.89,
+   "F1": 68.01,
+   "n": 133,
+   "n_answerable": 133,
+   "n_impossible": 0
+  },
+  "E2": {
+   "EM": 56.95,
+   "F1": 70.07,
+   "n": 223,
+   "n_answerable": 223,
+   "n_impossible": 0
+  },
+  "E3": {
+   "EM": 65.0,
+   "F1": 65.0,
+   "n": 200,
+   "n_answerable": 0,
+   "n_impossible": 200
+  },
+  "E4": {
+   "EM": 29.17,
+   "F1": 38.86,
+   "n": 120,
+   "n_answerable": 120,
+   "n_impossible": 0
+  },
+  "E5": {
+   "EM": 37.33,
+   "F1": 39.83,
+   "n": 150,
+   "n_answerable": 100,
+   "n_impossible": 50
+  }
+ },
+ "by_subset": {
+  "E1a": {
+   "EM": 48.48,
+   "F1": 59.32,
+   "n": 33,
+   "n_answerable": 33,
+   "n_impossible": 0
+  },
+  "E1b": {
+   "EM": 61.0,
+   "F1": 70.88,
+   "n": 100,
+   "n_answerable": 100,
+   "n_impossible": 0
+  },
+  "E2a": {
+   "EM": 57.5,
+   "F1": 72.12,
+   "n": 80,
+   "n_answerable": 80,
+   "n_impossible": 0
+  },
+  "E2b": {
+   "EM": 57.5,
+   "F1": 70.87,
+   "n": 80,
+   "n_answerable": 80,
+   "n_impossible": 0
+  },
+  "E2c": {
+   "EM": 55.56,
+   "F1": 66.46,
+   "n": 63,
+   "n_answerable": 63,
+   "n_impossible": 0,
+   "original": {
+    "EM": 63.49,
+    "F1": 77.3,
+    "n": 63,
+    "n_answerable": 63,
+    "n_impossible": 0
+   },
+   "pairs": {
+    "n": 63,
+    "both_correct": 34,
+    "broken": 6,
+    "fixed": 1,
+    "broken_pct_of_original_correct": 15.0
+   }
+  },
+  "E3a": {
+   "EM": 50.0,
+   "F1": 50.0,
+   "n": 100,
+   "n_answerable": 0,
+   "n_impossible": 100
+  },
+  "E3b": {
+   "EM": 80.0,
+   "F1": 80.0,
+   "n": 100,
+   "n_answerable": 0,
+   "n_impossible": 100,
+   "original": {
+    "EM": 51.0,
+    "F1": 66.68,
+    "n": 100,
+    "n_answerable": 100,
+    "n_impossible": 0
+   },
+   "pairs": {
+    "n": 100,
+    "both_correct": 41,
+    "broken": 10,
+    "fixed": 39,
+    "broken_pct_of_original_correct": 19.61
+   }
+  },
+  "E4": {
+   "EM": 29.17,
+   "F1": 38.86,
+   "n": 120,
+   "n_answerable": 120,
+   "n_impossible": 0
+  },
+  "E5": {
+   "EM": 37.33,
+   "F1": 39.83,
+   "n": 150,
+   "n_answerable": 100,
+   "n_impossible": 50,
+   "original": {
+    "EM": 52.67,
+    "F1": 65.31,
+    "n": 150,
+    "n_answerable": 100,
+    "n_impossible": 50
+   },
+   "pairs": {
+    "n": 150,
+    "both_correct": 35,
+    "broken": 44,
+    "fixed": 21,
+    "broken_pct_of_original_correct": 55.7
+   }
+  }
+ }
+}

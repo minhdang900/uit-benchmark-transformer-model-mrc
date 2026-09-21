@@ -279,7 +279,7 @@ def matrix_page(system_key: str) -> None:
             không-đáp-án rất thấp; seed 13 đảo lại cân bằng đó. Cột “tỉ lệ từ chối” là chìa khoá
             để đọc bảng này.</p></div>""")
 
-    _md(M.heading("Ma trận chẩn đoán E1–E5 (EM, bộ stress-test v2)",
+    _md(M.heading("Ma trận chẩn đoán E1–E5 (EM, bộ stress-test v2, τ chọn trên dev)",
                   style="margin:22px 0 10px"))
     scope = _chips([("category", "Theo nhóm E1–E5"), ("subset", "Theo tập con")],
                    "matrix-scope", ncols=4)
@@ -366,6 +366,25 @@ def stress_page() -> None:
             f"<span class='vm-tile-v'>{esc(t['v'])}</span>"
             f"<span class='vm-tile-d vm-muted'>{esc(t['note'])}</span></div>"
             for t in tiles) + "</div>")
+
+    prow = D.pair_rows()
+    if prow:
+        head = "".join(f"<th>{esc(sub)}<br><span>{esc(name)}</span></th>" for sub, name in D.PAIR_SUBSETS)
+        body = ""
+        for r in prow:
+            cells = "".join(
+                f"<td class='vm-num'>{D.vi(c['broken'], 0)} / {D.vi(c['orig_ok'], 0)}"
+                f" <span class='vm-muted'>({D.vi(c['pct'], 1)}%)</span></td>"
+                for c in r["cells"])
+            body += f"<tr><td>{esc(r['short'])}</td>{cells}</tr>"
+        _md(f"""<div class='vm-card' style='margin:14px 0'>
+          {M.heading("Hỏng vì phép biến đổi — con số chính của E2c, E3b, E5 (τ chọn trên dev)")}
+          <div class='vm-scroll'><table class='vm-table'><thead><tr><th>Hệ thống</th>{head}</tr></thead>
+          <tbody>{body}</tbody></table></div>
+          <p class='vm-muted' style='margin:14px 0 0;font-size:12.5px;max-width:90ch'>
+            Mỗi ô: số cặp mô hình trả lời đúng câu gốc nhưng sai sau biến đổi, trên số cặp nó vốn
+            trả lời đúng câu gốc. Chỉ số này quy lỗi cho chính phép biến đổi; EM trung bình thì
+            trộn lẫn với những câu mô hình vốn đã sai.</p></div>""")
 
     groups = D.group_cards()
     if not groups:

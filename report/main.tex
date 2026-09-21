@@ -67,6 +67,12 @@
   numbers=none,breaklines=true,showstringspaces=false,
   keywordstyle=\color{uitblue}\bfseries,commentstyle=\color{black!55}\itshape,
   stringstyle=\color{okgreen},xleftmargin=4pt,xrightmargin=4pt,aboveskip=6pt,belowskip=6pt}
+% listings chỉ chặn ký tự <256; dưới XeTeX, chữ tiếng Việt ngoài Latin-1 được in NGAY
+% trong khi listings còn giữ các chữ ASCII của cùng từ trong bộ đệm, nên bị đảo thứ tự
+% ("dựng" -> "ựdng"); literate KHÔNG sửa được (đã thử). Cách sửa: đưa chữ tiếng Việt
+% qua escapeinside để TeX in trực tiếp. \lstcmt tái tạo commentstyle ở trên cho phần
+% chú thích được thoát như vậy — sửa commentstyle thì sửa cả đây.
+\newcommand{\lstcmt}[1]{{\color{black!55}\itshape #1}}
 
 % ---------- Tiêu đề mục ----------
 \titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{0.8em}{}

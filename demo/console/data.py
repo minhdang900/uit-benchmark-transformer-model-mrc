@@ -157,7 +157,9 @@ def stress_matrix(scope: str = "category") -> tuple[list[dict], list[dict]]:
 
     rows, total_n = [], 0
     for sy in SYSTEMS:
-        ev = load(f"eval_{sy['key']}_stress2.json")
+        # Cùng nguồn với báo cáo: τ chọn trên dev (score_stress2_tuned.py); "luôn từ chối"
+        # và TF-IDF không có τ nên dùng tệp τ=0 — điểm của chúng không đổi theo τ.
+        ev = load(f"eval_{sy['key']}_stress2_tuned.json") or load(f"eval_{sy['key']}_stress2.json")
         if not ev:
             continue
         cells, den = [], 0
@@ -242,6 +244,31 @@ def paired_summary() -> str:
             f"Ở ngưỡng mặc định, chênh lệch EM tổng là {vi(p.get('em_diff'))} điểm "
             f"(KTC 95% theo bài viết {vi(ci[0])} … {vi(ci[1])}; p = {vi(p.get('mcnemar_p'), 3)}); "
             f"ở ngưỡng chọn trên dev là {vi(t.get('em_diff'))} điểm ({vi(tci[0])} … {vi(tci[1])}).")
+
+
+PAIR_SUBSETS = [("E2c", "chèn câu nhiễu"), ("E3b", "xoá câu chứa đáp án"), ("E5", "bỏ dấu câu hỏi")]
+
+
+def pair_rows() -> list[dict]:
+    """Độ nhất quán theo cặp ở τ dev — con số chính của E2c/E3b/E5, như Bảng trong báo cáo.
+
+    Mỗi ô: số cặp HỎNG (đúng câu gốc, sai sau biến đổi) trên số cặp mô hình vốn trả lời
+    đúng câu gốc. Chỉ các hệ thống có τ: "luôn từ chối" và TF-IDF gần như không trả lời
+    đúng câu gốc nào, nên mẫu số bằng 0 và tỉ lệ vô nghĩa.
+    """
+    rows = []
+    for sy in SYSTEMS:
+        ev = load(f"eval_{sy['key']}_stress2_tuned.json")
+        if not ev:
+            continue
+        cells = []
+        for sub, _ in PAIR_SUBSETS:
+            pr = dig(ev, "by_subset", sub, "pairs") or {}
+            ok = (pr.get("both_correct") or 0) + (pr.get("broken") or 0)
+            cells.append({"broken": pr.get("broken"), "orig_ok": ok,
+                          "pct": pr.get("broken_pct_of_original_correct")})
+        rows.append({**sy, "cells": cells})
+    return rows
 
 
 # ── trang bộ stress-test v2 ──────────────────────────────────────────────────

@@ -37,7 +37,7 @@ UIT-ViQuAD~2.0: \PctValImp\% câu validation \textbf{không có đáp án} $\Rig
 
 \begin{frame}{Bốn câu hỏi nghiên cứu}
 \small
-\renewcommand{\arraystretch}{1.35}
+\renewcommand{\arraystretch}{1.15}
 \begin{tabularx}{\textwidth}{@{}l X X@{}}
 \toprule
 & \textbf{Câu hỏi} & \textbf{Đo bằng} \\
@@ -49,7 +49,7 @@ UIT-ViQuAD~2.0: \PctValImp\% câu validation \textbf{không có đáp án} $\Rig
 \bottomrule
 \end{tabularx}
 
-\vspace{0.8em}
+\vspace{0.4em}
 \textbf{Giả thuyết ghi trước (RQ1):} PhoBERT yếu hơn ở ranh giới từ ghép vì lỗi tách từ lan truyền vào mô hình.
 \end{frame}
 
@@ -58,30 +58,30 @@ UIT-ViQuAD~2.0: \PctValImp\% câu validation \textbf{không có đáp án} $\Rig
 
 \begin{frame}{Giao thức: validation chỉ được chấm \emph{một lần}}
 \begin{columns}[T]
-\begin{column}{0.52\textwidth}
-\footnotesize
+\begin{column}{0.49\textwidth}
+\footnotesize\setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}l r l@{}}
 \toprule
 \textbf{Tập} & \textbf{Câu} & \textbf{Vai trò} \\
 \midrule
 fit (train) & \NFit & huấn luyện \\
-dev (5\% đoạn văn train) & \NDev & chọn epoch \\
+dev (5\% train) & \NDev & chọn epoch \\
 \textbf{validation} & \textbf{\NVal} & \textbf{test, chấm 1 lần} \\
 test chính thức & 7.301 & \textcolor{badred}{ẩn nhãn} \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.6em}
+\vspace{0.3em}
 $\bullet$ Chia theo \emph{đoạn văn}; \code{assert} không đoạn văn nào dùng chung\\
 $\bullet$ Stress-test \emph{chỉ để đánh giá} (khung mã cũ trộn 60\% vào train)\\
-$\bullet$ 1 seed (42), không tìm siêu tham số
+$\bullet$ 2 seed (42, 13), không tìm siêu tham số
 \end{column}
-\begin{column}{0.44\textwidth}
+\begin{column}{0.47\textwidth}
 \small
 \textbf{Bốn hệ thống, cùng một harness}
 \vspace{0.3em}
 
-\footnotesize
+\footnotesize\setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}l l@{}}
 \textcolor{muted}{\textbf{Luôn từ chối}} & mức sàn \\
 \textcolor{tfidf}{\textbf{TF-IDF}} & truy hồi câu (Buổi 4) \\
@@ -89,7 +89,7 @@ $\bullet$ 1 seed (42), không tìm siêu tham số
 \textcolor{phobert}{\textbf{PhoBERT-base-v2}} & fine-tune, 256 token \\
 \end{tabular}
 
-\vspace{0.6em}
+\vspace{0.3em}
 Cùng vòng lặp, batch 24, 3 epoch, đáp án tối đa 64 token. PhoBERT \emph{buộc} dùng 256 token; 384 token và độ chồng lấp cửa sổ của XLM-R là \emph{lựa chọn} của nhóm, không phải ràng buộc.
 \end{column}
 \end{columns}
@@ -136,17 +136,15 @@ Một đáp án \emph{đúng} bị chấm sai --- khung mã cũ mắc lỗi này
 \begin{column}{0.42\textwidth}
 \small
 \bignum{\StressViol}{phobert}\\
-vi phạm trên \StressN{} mục --- \emph{mọi} mục đều chấm được
-
-\vspace{0.4em}
-\footnotesize
-$\bullet$ \StressN{} mục trên \StressCtx{} ngữ cảnh\\
-$\bullet$ Câu hỏi + đáp án vàng đều do \emph{người} gán (ViQuAD 2.0)\\
-$\bullet$ Biến đổi chỉ dùng luật mà nhãn mới suy ra được\\
-$\bullet$ ``Luôn từ chối'' chỉ đạt \textbf{\AbstainStressEM} điểm\\[4pt]
-\textbf{Kiểm bằng máy:} offset đúng, đáp án đã mất thật sự, câu hỏi E5 hết dấu, không trùng train.
+vi phạm trên \StressN{} mục, \StressCtx{} ngữ cảnh --- \emph{mọi} mục chấm được
 
 \vspace{0.3em}
+\footnotesize
+$\bullet$ Câu hỏi, đáp án vàng do \emph{người} gán; biến đổi chỉ theo luật suy ra được nhãn\\
+$\bullet$ ``Luôn từ chối'' chỉ đạt \textbf{\AbstainStressEM} điểm\\[3pt]
+\textbf{Kiểm bằng máy:} offset, đáp án đã mất thật, E5 hết dấu, không trùng train.
+
+\vspace{0.2em}
 \alert{$\Rightarrow$ Xếp hạng được, dùng để chẩn đoán.}
 \end{column}
 \end{columns}
@@ -400,7 +398,7 @@ $\bullet$ \textbf{Phụ thuộc lần chạy}: seed 13, cùng lr $3\cdot10^{-5}$
 \begin{frame}{Mọi lần chạy trên dev: $\tau = 0$ và $\tau$ hiệu chỉnh}
 \small F1 trên toàn bộ dev (\NDevFull{} câu tách từ train) --- dữ liệu dùng cho mọi lựa chọn.\\[4pt]
 \footnotesize
-\renewcommand{\arraystretch}{1.2}
+\renewcommand{\arraystretch}{1.0}
 \begin{tabular}{@{}l l r r r r r@{}}
 \toprule
 & & \multicolumn{2}{c}{\textbf{$\tau = 0$}} & \multicolumn{3}{c}{\textbf{$\tau$ chọn trên dev}} \\
@@ -410,7 +408,7 @@ $\bullet$ \textbf{Phụ thuộc lần chạy}: seed 13, cùng lr $3\cdot10^{-5}$
 \bottomrule
 \end{tabular}
 
-\vspace{0.6em}
+\vspace{0.3em}
 \small \alert{Hai lần chạy sụp đổ đều là seed 42.} Sau hiệu chỉnh, hai seed PhoBERT gần như trùng nhau; lr $10^{-5}$ ổn định nhưng còn thiếu epoch. Nhóm báo cáo \textbf{hai seed ngang nhau}.
 \src{results/thresholds.json, results/training\_curve\_*.json}
 \end{frame}
@@ -423,7 +421,7 @@ $\bullet$ \textbf{Phụ thuộc lần chạy}: seed 13, cùng lr $3\cdot10^{-5}$
 \textbf{RQ4:} Transformer vượt TF-IDF ở mọi nhóm; TF-IDF (EM \TfidfEM) còn thua ``luôn từ chối''.
 \end{column}
 \begin{column}{0.46\textwidth}
-\small \textbf{EM trên stress-test v2 (\StressN{} mục)}\\[3pt]
+\small \textbf{EM stress-test v2 ($\tau$ dev)}\\[3pt]
 \begin{tabular}{@{}l r@{}}
 \toprule
 \textbf{Luôn từ chối} & \textbf{\AbstainStressEM} \\
@@ -433,8 +431,11 @@ TF-IDF & \TfidfStressEM \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.5em}
-\alert{Mô hình vượt xa mức sàn} --- ``luôn từ chối'' \AbstainStressEM{} điểm. Nhóm lệch từ vựng (E4) và câu hỏi không dấu (E5) là hai chỗ sụt rõ nhất.
+\vspace{0.3em}
+\alert{Vượt xa mức sàn}, nhưng bốn mô hình gần như ngang nhau.\\[2pt]
+\footnotesize\textbf{Hỏng vì biến đổi} (đúng câu gốc, sai sau đó):
+bỏ dấu phá \textbf{\XlmrEFiveBrokenPct\%} cặp (XLM-R), \textbf{\PhobertEFiveBrokenPct\%} (PhoBERT) ---
+gấp $\geq$\,\StressEFiveMinRatio{} lần xoá câu chứa đáp án.
 \end{column}
 \end{columns}
 \end{frame}
@@ -443,15 +444,15 @@ TF-IDF & \TfidfStressEM \\
 \section{Kết luận}
 
 \begin{frame}{Kết luận}
-\small
-\begin{enumerate}
+\footnotesize
+\begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\topsep}{0pt}
 \item \textbf{So ở $\tau$ cố định với một seed là so hiệu chỉnh, không phải năng lực.} Seed 42, $\tau = 0$: ``bằng nhau, hồ sơ ngược nhau''. Ở $\tau$ chọn trên dev: PhoBERT hơn \PairTDiff{} / \PairSTDiff{} điểm EM ở hai seed.
 \item \textbf{PhoBERT seed 42 ``không từ chối'' là một sự kiện khi huấn luyện}, tái hiện được, kèm gradient vọt; seed 13 không gặp.
 \item \textbf{Không đo được khác biệt về ``đọc''}: khớp cửa sổ thì chênh lệch trên câu có đáp án là \PairMAnsDiff{} điểm. Tách từ cũng không quyết định: chỉ \SegMisPct\% đáp án cắt ngang từ.
-\item \textbf{Kiểm định công cụ đo trước khi dùng}: bộ stress-test của chính nhóm xếp ``không làm gì'' đứng đầu.
+\item \textbf{Kiểm định công cụ đo trước khi dùng}: bộ cũ xếp ``không làm gì'' đứng đầu nên được dựng lại (v2: \StressViol{} vi phạm).
 \end{enumerate}
 
-\vspace{0.4em}
+\vspace{0.1em}
 \begin{block}{Giới hạn}
 \footnotesize 2 seed · 3 epoch, không tìm siêu tham số · \code{pyvi} thay RDRSegmenter · chưa rõ vì sao sụp đổ ở seed 42 mà không ở seed 13 · validation = public test VLSP (private test ẩn nhãn)
 \end{block}

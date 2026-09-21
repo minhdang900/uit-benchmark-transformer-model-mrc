@@ -9,6 +9,7 @@ cảnh báo — thiếu số phải NHÌN THẤY được, không được lặn
 from __future__ import annotations
 
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -100,6 +101,23 @@ def ci(r: dict) -> str:
     return f"[{vi(lo)}; {vi(hi)}]"
 
 
+def count_tests(marker: str | None = None) -> int | None:
+    """Số kiểm thử pytest thu thập được — sinh ra, không gõ tay, để con số trong báo cáo
+    không lệch mỗi khi thêm kiểm thử. Thất bại thì trả ``None`` (hiện ``??``)."""
+    import re
+    import subprocess
+
+    cmd = [sys.executable, "-m", "pytest", "--collect-only", "-p", "no:cacheprovider"]
+    if marker:
+        cmd += ["-m", marker]
+    try:
+        out = subprocess.run(cmd, cwd=_ROOT, capture_output=True, text=True, timeout=300).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None
+    hit = re.search(r"(\d+)(?:/\d+)? tests? collected", out)
+    return int(hit.group(1)) if hit else None
+
+
 def table(path: str, body: str) -> None:
     (OUT / path).write_text(body, encoding="utf-8")
 
@@ -108,6 +126,10 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     m = Macros()
     m.lines.append(r"\providecommand{\missing}{\textcolor{badred}{\textbf{??}}}")
+
+    # ── kiểm thử ──────────────────────────────────────────────────────────────
+    m("NTests", count_tests(), 0)
+    m("NTestsFast", count_tests("not slow"), 0)
 
     # ── dữ liệu ───────────────────────────────────────────────────────────────
     train = load_squad_file(_ROOT / "data/raw/viquad2_train.json")
@@ -169,10 +191,15 @@ def main() -> None:
     # lỗi và bảng từ chối phải có bản tương ứng (scripts/diagnose.py --tuned).
     diagt = load("diagnosis_validation_tuned.json") or {}
     main_rows, stress_rows, tax_rows, len_rows, ctx_rows, qt_rows, align_rows = [], [], [], [], [], [], []
+    pair_rows = []
     tax_rows_tuned = []
     for key, P, label in SYSTEMS:
         ev = load(f"eval_{key}_validation.json")
-        st = load(f"eval_{key}_stress2.json")
+        # Bộ stress-test chấm ở τ CHỌN TRÊN DEV (score_stress2_tuned.py), cùng giao thức
+        # với bảng chính. "Luôn từ chối" và TF-IDF không có τ nên dùng tệp τ=0 — điểm
+        # của chúng không phụ thuộc τ.
+        st_tuned = load(f"eval_{key}_stress2_tuned.json")
+        st = st_tuned or load(f"eval_{key}_stress2.json")
         dg = get(diag, "models", key)
         m(f"{P}EM", get(ev, "overall", "EM"))
         m(f"{P}Fone", get(ev, "overall", "F1"))
@@ -235,6 +262,28 @@ def main() -> None:
                 for qt, v in ev.get("by_question_type", {}).items():
                     if isinstance(v, dict):
                         qt_rows.append((qt, label, v))
+        # ── cặp (perturbation ↔ câu gốc): "broken" là con số chính của E2c/E3b/E5 ──
+        # broken = đúng câu gốc NHƯNG sai sau khi biến đổi, nên nó quy lỗi cho chính
+        # phép biến đổi. EM trung bình không làm được điều đó: nó lẫn lỗi sẵn có của
+        # mô hình vào hiệu ứng của phép thử.
+        for sub, w in (("E2c", "ETwoC"), ("E3b", "EThreeB"), ("E5", "EFive")):
+            pr = (get(st_tuned, "by_subset", sub, "pairs") or {}) if st_tuned else {}
+            if not pr:
+                continue
+            m(f"{P}{w}Broken", pr.get("broken"), 0)
+            m(f"{P}{w}Both", pr.get("both_correct"), 0)
+            m(f"{P}{w}Fixed", pr.get("fixed"), 0)
+            m(f"{P}{w}BrokenPct", pr.get("broken_pct_of_original_correct"))
+            m(f"{P}{w}PairN", pr.get("n"), 0)
+            # Mẫu số của tỉ lệ hỏng: số cặp mô hình VỐN trả lời đúng câu gốc,
+            # không phải tổng số cặp của tập con.
+            m(f"{P}{w}OrigOK", (pr.get("both_correct") or 0) + (pr.get("broken") or 0), 0)
+        if st_tuned and get(st_tuned, "by_subset", "E3b", "pairs"):
+            pair_rows.append(f"{label} & " + " & ".join(
+                (lambda pr: f"{vi(pr['broken'])} / {vi(pr['both_correct'] + pr['broken'])} "
+                            f"({vi(pr['broken_pct_of_original_correct'], 1)}\\%)")(
+                    get(st_tuned, "by_subset", sub, "pairs"))
+                for sub in ("E2c", "E3b", "E5")) + " \\\\")
         if st:
             cells = []
             for code in CAT_WORDS:
@@ -254,6 +303,19 @@ def main() -> None:
 
     table("tab_main.tex", "\n".join(main_rows) + "\n")
     table("tab_stress.tex", "\n".join(stress_rows) + "\n")
+    table("tab_stress_pairs.tex", "\n".join(pair_rows) + "\n")
+    # "Bỏ dấu phá nhiều nhất": tỉ số NHỎ NHẤT giữa tỉ lệ hỏng của E5 và của E2c/E3b trên mọi
+    # lần chạy có τ — sinh ra để câu chữ trong báo cáo không sai lặng lẽ khi chấm lại.
+    ratios = []
+    for key, _, _ in SYSTEMS:
+        t = load(f"eval_{key}_stress2_tuned.json")
+        pc = {sub: get(t, "by_subset", sub, "pairs", "broken_pct_of_original_correct")
+              for sub in ("E2c", "E3b", "E5")} if t else {}
+        if pc and all(pc.values()):
+            ratios += [pc["E5"] / pc["E2c"], pc["E5"] / pc["E3b"]]
+    # Làm tròn XUỐNG: câu chữ là "ít nhất X lần", nên X không được vượt tỉ số thật.
+    m("StressEFiveMinRatio", math.floor(10 * min(ratios)) / 10 if ratios else None, 1)
+
     table("tab_taxonomy.tex", "\n".join(tax_rows) + "\n")
     table("tab_taxonomy_tuned.tex", "\n".join(tax_rows_tuned) + "\n")
     table("tab_alignment.tex", "\n".join(align_rows) + "\n")
