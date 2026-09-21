@@ -36,8 +36,9 @@ E5 thay cho nhóm "nhãn mập mờ" của v1. Nhóm đó không dựng tự đ�
 
 - Điểm nhóm **không tính câu gốc**, vì câu gốc là đối chứng chứ không phải phép thử.
 - Với các tập con có cặp (E2c, E3b, E5), con số chính là `pairs.broken`: số câu mô hình **đúng ở câu gốc nhưng sai sau biến đổi**. Đây là lỗi do chính phép biến đổi gây ra, tách khỏi lỗi đọc hiểu vốn có.
-- **E3** thì hệ "luôn từ chối" đạt 100 EM trên câu thử theo định nghĩa, nên không đọc E3 bằng EM. Hãy đọc `E3b.pairs.both_correct`: trả lời đúng câu gốc **và** từ chối khi câu chứa đáp án bị xoá. Hệ "luôn từ chối" được 0 ở chỉ số này.
-- Điểm của run_eval dùng τ = 0. Để so với kết quả chính (τ chọn trên dev), cần áp ngưỡng như `scripts/calibrate_thresholds.py`.
+- Báo cáo dùng **tỉ lệ hỏng** `broken / (both_correct + broken)`: trong số cặp mô hình vốn trả lời đúng câu gốc, bao nhiêu hỏng sau biến đổi. `both_correct` (nhất quán) là phần bù của nó, không phải một chỉ số khác — hai cách đọc cùng một phép đo.
+- **E3** thì hệ "luôn từ chối" đạt 100 EM trên câu thử theo định nghĩa, nên không đọc E3 bằng EM. Nó cũng gần như không trả lời đúng câu gốc nào, nên mẫu số của tỉ lệ hỏng bằng 0: tỉ lệ đó không xác định cho "luôn từ chối" và TF-IDF, và các hệ này không có mặt trong bảng cặp.
+- `run_eval.py` chấm ở τ = 0. Kết quả trong báo cáo ở **τ chọn trên dev**: chấm từng cửa sổ bằng `scripts/score_windows.py --split stress2`, rồi áp τ của `results/thresholds.json` bằng `scripts/score_stress2_tuned.py` → `results/eval_<run>_stress2_tuned.json`. τ không bao giờ được chọn trên bộ này.
 
 ## Kiểm tra sơ bộ trên dự đoán có sẵn
 

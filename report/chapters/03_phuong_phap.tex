@@ -286,7 +286,16 @@ trùng với tập train. Bộ dữ liệu \textbf{hợp lệ} khi số vi phạ
 
 Để bộ trải rộng thay vì dồn vào vài đoạn văn, mỗi tập con lấy tối đa hai mục từ cùng một ngữ
 cảnh. Bộ v2 chỉ dùng để \emph{chẩn đoán sau khi mô hình đã chốt}: không epoch, seed hay ngưỡng
-$\tau$ nào được chọn trên nó. Kết quả kiểm định ở Mục~\ref{sec:audit}; điểm của các hệ thống ở
+$\tau$ nào được chọn trên nó. Mỗi mô hình được chấm ở đúng $\tau$ đã chọn trên dev cho nó
+(Mục~\ref{sec:threshold}), áp một lần --- cùng giao thức với validation; điểm từng cửa sổ được lưu
+nên dự đoán ở $\tau$ đó dựng lại được mà không chạy lại mô hình, và ở $\tau = 0$ chúng trùng khớp
+với lần chấm trực tiếp.
+
+Với ba tập con có cặp (E2c, E3b, E5), con số chính là \textbf{tỉ lệ hỏng}: trong số cặp mà mô
+hình trả lời đúng \emph{câu gốc}, tỉ lệ cặp nó trả lời sai \emph{sau biến đổi}. Chỉ số này quy lỗi
+cho đúng phép biến đổi; EM trung bình thì trộn lẫn hiệu ứng đó với những câu mô hình vốn đã sai.
+Phần bù của nó --- tỉ lệ cặp đúng cả hai --- là độ nhất quán theo cặp; đó là hai cách đọc cùng một
+phép đo, không phải hai chỉ số. Kết quả kiểm định ở Mục~\ref{sec:audit}; điểm của các hệ thống ở
 Mục~\ref{sec:res-rq3}.
 
 \subsection{Truy vết số liệu và kiểm thử}
@@ -296,6 +305,6 @@ Mọi hệ thống ghi \code{results/eval\_<hệ~thống>\_<tập>.json} (số t
 điểm, thiết bị) và \code{results/predictions\_<hệ~thống>\_<tập>.json} (dự đoán từng câu). Mọi
 phép đo chẩn đoán đọc các tệp này. Báo cáo \emph{không gõ tay con số kết quả nào}: script
 \code{make\_report\_numbers.py} sinh các macro \LaTeX{} và các bảng từ \code{results/}; giá trị
-nào chưa có sẽ hiện chữ đỏ ``??'' trong PDF thay vì một con số đoán. Mã nguồn có 348 kiểm thử
+nào chưa có sẽ hiện chữ đỏ ``??'' trong PDF thay vì một con số đoán. Mã nguồn có \NTests{} kiểm thử
 tự động chạy không cần GPU, gồm các bất biến của lớp tokenizer PhoBERT, phép đo biên từ, phân
 loại lỗi và kiểm định McNemar.

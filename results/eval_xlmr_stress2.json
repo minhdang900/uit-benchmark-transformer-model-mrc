@@ -3,8 +3,8 @@
   "dataset": "stress-test v2",
   "split": "stress2",
   "n": 1139,
-  "timestamp": "2026-09-20T16:02:39+00:00",
-  "commit": "f6f0b48",
+  "timestamp": "2026-09-21T03:55:38+00:00",
+  "commit": "0f9199c",
   "device": "mps",
   "env": {
     "device": "mps",
@@ -27,7 +27,7 @@
     "EM": 72.6667,
     "count": 300
   },
-  "avg_latency_ms": 14.826,
+  "avg_latency_ms": 14.411,
   "by_context_length": {
     "100-200": {
       "EM": 52.795,

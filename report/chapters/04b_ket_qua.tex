@@ -407,7 +407,7 @@ PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec & & \TunedP
 
 \begin{table}[htbp]
 \centering
-\caption{EM / F1 trên bộ stress-test v2 theo nhóm (\StressN{} mục, \StressViol{} vi phạm kiểm định --- xem Mục~\ref{sec:audit})}
+\caption{EM / F1 trên bộ stress-test v2 theo nhóm, ở ngưỡng $\tau$ chọn trên \emph{dev} (\StressN{} mục, \StressViol{} vi phạm kiểm định --- xem Mục~\ref{sec:audit})}
 \label{tab:stress}
 \renewcommand{\arraystretch}{1.15}
 \footnotesize
@@ -419,7 +419,9 @@ PhoBERT-base-v2 & \PhobertAbsRate & \PhobertAbsPrec & \PhobertAbsRec & & \TunedP
 \tabinput{generated/tab_stress.tex}
 \bottomrule
 \end{tabular}
-\par\vspace{2pt}{\footnotesize Số mục mỗi nhóm: E1 \StressEOneN, E2 \StressETwoN, E3 \StressEThreeN, E4 \StressEFourN, E5 \StressEFiveN. Mỗi ô là EM / F1.}
+\par\vspace{2pt}{\footnotesize Số mục mỗi nhóm: E1 \StressEOneN, E2 \StressETwoN, E3 \StressEThreeN, E4 \StressEFourN, E5 \StressEFiveN. Mỗi ô là EM / F1.
+$\tau$ lấy nguyên từ \code{results/thresholds.json} (tối đa F1 trên dev), áp một lần --- không chọn gì trên bộ stress-test.
+``Luôn từ chối'' và TF-IDF không có $\tau$; điểm của chúng không phụ thuộc $\tau$.}
 \end{table}
 
 \paragraph{Mức sàn.} Hệ thống không làm gì đạt EM \AbstainEM{} trên validation. Mọi điểm trên câu không
@@ -543,35 +545,66 @@ thay vì chọn một lần chạy ``chính''.
 \end{tabular}
 \end{table}
 
-\paragraph{Bộ stress-test v2 phân biệt được các hệ thống.} Trên \StressN{} mục, hệ thống ``luôn từ
-chối'' đạt \AbstainStressEM{} EM --- đúng bằng tỉ lệ câu không có đáp án --- trong khi XLM-R đạt
-\XlmrStressEM{} và PhoBERT \PhobertStressEM{} (seed 13: \XlmrThirteenStressEM{} và
-\PhobertThirteenStressEM{}). Khác với một bộ chẩn đoán mà mọi mô hình đều bằng mức sàn, bảng này
-xếp hạng được, nên các chênh lệch theo nhóm ở Bảng~\ref{tab:stress} và Hình~\ref{fig:stress} mới
-đọc được như tín hiệu về cơ chế thất bại.
+\paragraph{Ở $\tau$ hiệu chỉnh, điểm tổng gần như không tách được bốn hệ thống.} Trên
+\StressN{} mục, hệ thống ``luôn từ chối'' đạt \AbstainStressEM{} EM --- đúng bằng tỉ lệ câu không
+có đáp án --- nên bộ v2 xếp hạng được, khác hẳn bộ cũ. Nhưng bốn mô hình thật thì nằm trong
+khoảng hẹp \XlmrStressEM{}--\PhobertStressEM{} EM (XLM-R seed 13 \XlmrThirteenStressEM{},
+PhoBERT seed 13 \PhobertThirteenStressEM{}): đúng như trên validation, khi mỗi hệ thống dùng
+$\tau$ của riêng nó thì chênh lệch tổng gần như biến mất. Vì vậy phần dưới đây đọc bộ v2 bằng
+\emph{cơ chế}, không bằng bảng xếp hạng.
 
-Bốn quan sát theo nhóm:
+\paragraph{Với ba nhóm có cặp, con số chính là ``hỏng vì phép biến đổi''.} Ở E2c, E3b và E5, mỗi
+câu thử đi kèm chính câu gốc của nó. Điều đó cho phép đếm trực tiếp số cặp mà mô hình trả lời
+\emph{đúng câu gốc} nhưng \emph{sai sau khi biến đổi} --- cột \emph{hỏng} của
+Bảng~\ref{tab:stresspairs}. Chỉ số này quy lỗi cho đúng phép biến đổi, trong khi EM trung bình
+trộn lẫn hiệu ứng của phép thử với những câu mà mô hình vốn đã trả lời sai.
+
+\begin{table}[htbp]
+\centering
+\caption{Độ nhất quán theo cặp ở $\tau$ hiệu chỉnh: \emph{số cặp hỏng / số cặp mô hình vốn trả lời đúng câu gốc} (tỉ lệ hỏng)}
+\label{tab:stresspairs}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabular}{@{}l r r r@{}}
+\toprule
+\textbf{Hệ thống} & \textbf{E2c} chèn câu nhiễu & \textbf{E3b} xoá câu chứa đáp án & \textbf{E5} bỏ dấu câu hỏi \\
+\midrule
+\tabinput{generated/tab_stress_pairs.tex}
+\bottomrule
+\end{tabular}
+\par\vspace{2pt}{\footnotesize ``Luôn từ chối'' và TF-IDF không có mặt: chúng gần như không trả lời đúng câu gốc nào, nên mẫu số bằng 0 và tỉ lệ vô nghĩa.}
+\end{table}
+
+Bốn quan sát:
 
 \begin{enumerate}
-  \item \textbf{E4 (lệch từ vựng) tách hai mô hình mạnh nhất.} Đây là nhóm mà câu chứa đáp án
-        \emph{không} phải câu trùng từ nhiều nhất với câu hỏi. XLM-R rơi xuống mức thấp nhất trong
-        năm nhóm, còn PhoBERT giữ được khoảng cách rõ rệt --- dấu hiệu XLM-R dựa nhiều hơn vào
-        chồng lấn từ vựng giữa câu hỏi và câu chứa đáp án.
-  \item \textbf{E5 (câu hỏi không dấu) làm cả hai mô hình sụt.} Ngữ cảnh và đáp án vàng không đổi;
-        chỉ dấu tiếng Việt trong câu hỏi bị bỏ. Mọi hệ thống đều tụt mạnh, cho thấy biểu diễn câu
-        hỏi lệ thuộc vào dấu chứ không chỉ vào nội dung.
-  \item \textbf{E3 phải đọc theo cặp.} Mọi mục E3 đều không có đáp án nên ``luôn từ chối'' đạt 100
-        EM trên nhóm này \emph{theo định nghĩa}; điểm thấp của PhoBERT seed 42 ở đây phản ánh đúng
-        việc nó gần như không từ chối ở $\tau = 0$ (Mục~\ref{sec:res-rq3}), chứ không phải nó hiểu
-        sai câu hỏi. Chỉ số có nghĩa là độ nhất quán theo cặp với câu gốc đi kèm.
-  \item \textbf{TF-IDF gần như bằng 0 trên mọi nhóm.} Baseline truy hồi câu đạt \TfidfStressEM{} EM
-        toàn bộ: bộ v2 không thể giải bằng cách chọn câu trùng từ nhiều nhất, đúng như thiết kế.
+  \item \textbf{Bỏ dấu câu hỏi là phép biến đổi phá nhiều nhất --- gấp ít nhất \StressEFiveMinRatio{} lần các
+        phép còn lại, ở mọi lần chạy.} Ngữ cảnh và đáp án vàng không đổi; chỉ dấu tiếng Việt trong câu hỏi bị bỏ. Vậy mà
+        XLM-R hỏng \XlmrEFiveBroken/\XlmrEFiveOrigOK{} cặp nó vốn trả lời đúng
+        (\XlmrEFiveBrokenPct\%), PhoBERT hỏng \PhobertEFiveBroken/\PhobertEFiveOrigOK{}
+        (\PhobertEFiveBrokenPct\%). Cả hai seed đều lặp lại thứ tự này: biểu diễn câu hỏi phụ thuộc
+        vào dấu, và PhoBERT --- vốn tiền huấn luyện trên tiếng Việt đã tách từ --- chịu đựng tốt
+        hơn XLM-R đa ngữ.
+  \item \textbf{Xoá câu chứa đáp án: mô hình vẫn trả lời khi đáp án đã không còn.} E3b hỏng
+        \XlmrEThreeBBrokenPct\% (XLM-R) và \PhobertEThreeBBrokenPct\% (PhoBERT) số cặp. Kiểm định
+        đã bảo đảm đáp án thật sự biến mất khỏi ngữ cảnh (Mục~\ref{sec:audit}), nên mỗi cặp hỏng ở
+        đây là một lần mô hình đáng lẽ phải từ chối mà không từ chối --- dù $\tau$ đã hiệu chỉnh.
+  \item \textbf{Chèn một câu nhiễu là phép nhẹ nhất, nhưng không vô hại.} E2c hỏng
+        \XlmrETwoCBrokenPct\%--\PhobertETwoCBrokenPct\% số cặp, dù câu thêm vào nói về chủ thể khác
+        và không trả lời được câu hỏi.
+  \item \textbf{E4 (lệch từ vựng) vẫn là nhóm khó nhất theo EM.} Đây là nhóm mà câu chứa đáp án
+        \emph{không} phải câu trùng từ nhiều nhất với câu hỏi; nó là nhóm điểm thấp nhất của ba
+        trong bốn lần chạy (Bảng~\ref{tab:stress}). PhoBERT đứng trên XLM-R ở cả hai seed, nhưng
+        khoảng cách phụ thuộc seed --- rõ ở seed 42, hẹp ở seed 13 --- nên đây là \emph{dấu hiệu}
+        XLM-R dựa nhiều hơn vào chồng lấn từ vựng, chưa phải kết luận. TF-IDF, hệ thống chọn đúng
+        câu trùng từ nhiều nhất, đạt \TfidfStressEM{} EM toàn bộ: bộ v2 không giải được bằng
+        chồng lấn từ vựng, đúng như thiết kế.
 \end{enumerate}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\textwidth]{figures/stress_v2.png}
-\caption{EM theo nhóm E1--E5 trên bộ stress-test v2. Đường đứt là mốc của hệ thống ``luôn từ chối''}
+\caption{EM theo nhóm E1--E5 trên bộ stress-test v2, ở $\tau$ chọn trên dev. Đường đứt là mốc của hệ thống ``luôn từ chối'' (không phụ thuộc $\tau$)}
 \label{fig:stress}
 \end{figure}
 

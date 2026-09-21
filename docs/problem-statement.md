@@ -72,6 +72,8 @@ Ba hệ quả cụ thể:
 ### 5.1 Công cụ chẩn đoán
 Bộ stress-test 250 cặp Q-A, 5 nhóm × 50 câu, mỗi nhóm **cô lập một cơ chế thất bại** (E1–E5). Kèm quy trình kiểm tra rò rỉ dữ liệu với tập huấn luyện.
 
+> **Cập nhật 2026-09-21:** bộ 250 câu này đã được kiểm định, thấy không dùng được (chỉ 15/120 câu có đáp án chứa đáp án trong ngữ cảnh) và đã gỡ khỏi kho mã. Công cụ chẩn đoán hiện tại là **bộ stress-test v2** (1.139 mục, 572 ngữ cảnh, dựng từ validation, kiểm định tự động 0 vi phạm) — xem `data/stress_test_v2/README.md`.
+
 ### 5.2 Đối tượng thử nghiệm
 
 | Ưu tiên | Mô hình | Vai trò |
@@ -105,6 +107,8 @@ Giá trị nằm ở **hình dạng của các chênh lệch giữa các cột**
 ---
 
 ## 6. Hạn chế đã biết — phải nêu trong báo cáo
+
+> **Cập nhật 2026-09-21:** mục 1–3 là hạn chế của bộ v1 và đã được bộ v2 giải quyết — E3 đọc theo cặp với câu gốc đi kèm nên "luôn từ chối" không thắng được; tệp gộp 370/250 không còn (v1 đã gỡ); mỗi nhóm v2 có 120–223 mục thay vì 50. Mục 4 vẫn đúng: báo cáo dùng hai seed và nêu rõ điều đó.
 
 1. **E3 có 100% câu unanswerable, E5 có 86%.** Mô hình luôn từ chối trả lời sẽ đạt điểm tuyệt đối ở E3 mà không chứng minh năng lực gì. Hai nhóm này cần bổ sung câu answerable làm đối chứng; hiện chưa có.
 2. **`stress_test_combined.json` có 370 bài viết nhưng chỉ 250 cặp Q-A** — cần đối chiếu lại việc gộp file.

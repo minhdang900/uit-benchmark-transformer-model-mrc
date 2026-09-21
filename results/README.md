@@ -11,6 +11,8 @@ Mọi con số trong README, báo cáo (`report/`) và slide (`slides/`) đến 
 | `misaligned_labels.json` | phân loại thủ công | nguyên nhân của 33 câu lệch biên (cần nhóm rà lại) |
 | `stress_v2_audit.json` | `scripts/build_stress_v2.py` | thiết kế + kiểm định bộ stress-test v2 (0 vi phạm) |
 | `stress_v2_slice_scores.json` | `scripts/stress_v2_slice_scores.py` | điểm của các *slice* v2 chiếu lên dự đoán validation (không gồm perturbation) |
+| `windows_<run>_stress2.json` | `scripts/score_windows.py --split stress2` | điểm từng cửa sổ trên stress-test v2 — dựng lại dự đoán ở mọi τ |
+| `eval_<run>_stress2_tuned.json` | `scripts/score_stress2_tuned.py` | stress-test v2 ở τ chọn trên dev, kèm `by_subset.*.pairs` (both_correct / broken / fixed) |
 | `dataset_analysis.json` | `scripts/analyze_dataset.py` | thống kê mô tả UIT-ViQuAD 2.0 (độ dài, loại câu hỏi, phân bố nhãn) |
 | `diagnosis_validation.json` | `scripts/diagnose.py` | phân loại lỗi, từ chối, so sánh cặp, bẫy plausible |
 | `disagreements_phobert_xlmr.json`, `error_sample_*.json` | `scripts/diagnose.py` | nguyên liệu phân tích định tính |

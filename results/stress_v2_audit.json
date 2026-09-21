@@ -161,7 +161,7 @@
     "cohen_kappa": null,
     "status": "chưa kiểm tra tay"
   },
-  "commit": "f6f0b48",
+  "commit": "0f9199c",
   "seed": 42,
   "source": "UIT-ViQuAD 2.0 validation"
 }

@@ -1,0 +1,168 @@
+{
+ "model": "phobert",
+ "dataset": "stress-test v2",
+ "split": "stress2",
+ "tau": 7.864129,
+ "tau_source": "results/thresholds.json (chọn trên dev, split seed 42)",
+ "checkpoint": "models/phobert",
+ "commit": "0f9199c",
+ "overall": {
+  "EM": 53.6435,
+  "F1": 65.531,
+  "count": 1139
+ },
+ "answerable_only": {
+  "EM": 50.6555,
+  "F1": 66.7935,
+  "count": 839
+ },
+ "impossible_only": {
+  "EM": 62.0,
+  "count": 300
+ },
+ "abstain_rate": 30.5531,
+ "by_category": {
+  "E1": {
+   "EM": 52.63,
+   "F1": 70.81,
+   "n": 133,
+   "n_answerable": 133,
+   "n_impossible": 0
+  },
+  "E2": {
+   "EM": 59.19,
+   "F1": 73.25,
+   "n": 223,
+   "n_answerable": 223,
+   "n_impossible": 0
+  },
+  "E3": {
+   "EM": 61.0,
+   "F1": 61.0,
+   "n": 200,
+   "n_answerable": 0,
+   "n_impossible": 200
+  },
+  "E4": {
+   "EM": 40.0,
+   "F1": 56.56,
+   "n": 120,
+   "n_answerable": 120,
+   "n_impossible": 0
+  },
+  "E5": {
+   "EM": 38.67,
+   "F1": 48.17,
+   "n": 150,
+   "n_answerable": 100,
+   "n_impossible": 50
+  }
+ },
+ "by_subset": {
+  "E1a": {
+   "EM": 27.27,
+   "F1": 60.31,
+   "n": 33,
+   "n_answerable": 33,
+   "n_impossible": 0
+  },
+  "E1b": {
+   "EM": 61.0,
+   "F1": 74.28,
+   "n": 100,
+   "n_answerable": 100,
+   "n_impossible": 0
+  },
+  "E2a": {
+   "EM": 61.25,
+   "F1": 77.39,
+   "n": 80,
+   "n_answerable": 80,
+   "n_impossible": 0
+  },
+  "E2b": {
+   "EM": 62.5,
+   "F1": 73.17,
+   "n": 80,
+   "n_answerable": 80,
+   "n_impossible": 0
+  },
+  "E2c": {
+   "EM": 52.38,
+   "F1": 68.1,
+   "n": 63,
+   "n_answerable": 63,
+   "n_impossible": 0,
+   "original": {
+    "EM": 63.49,
+    "F1": 81.9,
+    "n": 63,
+    "n_answerable": 63,
+    "n_impossible": 0
+   },
+   "pairs": {
+    "n": 63,
+    "both_correct": 31,
+    "broken": 9,
+    "fixed": 2,
+    "broken_pct_of_original_correct": 22.5
+   }
+  },
+  "E3a": {
+   "EM": 51.0,
+   "F1": 51.0,
+   "n": 100,
+   "n_answerable": 0,
+   "n_impossible": 100
+  },
+  "E3b": {
+   "EM": 71.0,
+   "F1": 71.0,
+   "n": 100,
+   "n_answerable": 0,
+   "n_impossible": 100,
+   "original": {
+    "EM": 57.0,
+    "F1": 73.88,
+    "n": 100,
+    "n_answerable": 100,
+    "n_impossible": 0
+   },
+   "pairs": {
+    "n": 100,
+    "both_correct": 44,
+    "broken": 13,
+    "fixed": 27,
+    "broken_pct_of_original_correct": 22.81
+   }
+  },
+  "E4": {
+   "EM": 40.0,
+   "F1": 56.56,
+   "n": 120,
+   "n_answerable": 120,
+   "n_impossible": 0
+  },
+  "E5": {
+   "EM": 38.67,
+   "F1": 48.17,
+   "n": 150,
+   "n_answerable": 100,
+   "n_impossible": 50,
+   "original": {
+    "EM": 56.0,
+    "F1": 67.51,
+    "n": 150,
+    "n_answerable": 100,
+    "n_impossible": 50
+   },
+   "pairs": {
+    "n": 150,
+    "both_correct": 45,
+    "broken": 39,
+    "fixed": 13,
+    "broken_pct_of_original_correct": 46.43
+   }
+  }
+ }
+}

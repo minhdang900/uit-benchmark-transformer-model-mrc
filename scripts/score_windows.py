@@ -4,7 +4,10 @@ Từ tệp này, dự đoán ở MỌI ngưỡng τ dựng lại được chính
 model (``mrc.threshold.decide``). Dùng cho:
 
 * chấm một checkpoint trên TOÀN BỘ dev (không phải mẫu 500 câu),
-* chọn τ trên dev rồi áp một lần lên validation.
+* chọn τ trên dev rồi áp một lần lên validation hoặc lên bộ stress-test v2.
+
+``--split stress2`` chấm trên ``data/stress_test_v2/stress_v2.json``. τ KHÔNG bao
+giờ được chọn trên bộ này: nó là bộ chẩn đoán, τ luôn lấy từ dev (thresholds.json).
 
 Dev = 5% context của train, tách bằng ``split_by_context(seed=42)`` — cùng tập với
 ``finetune.py --split-seed 42``.
@@ -31,6 +34,11 @@ from mrc.threshold import predictions_at  # noqa: E402
 
 
 def load_split(split: str, data_dir: str, split_seed: int, dev_frac: float):
+    if split == "stress2":
+        from mrc.stress_v2 import load_stress_v2
+
+        examples, _ = load_stress_v2(_ROOT / "data/stress_test_v2/stress_v2.json")
+        return examples
     if split == "validation":
         return load_squad_file(Path(data_dir) / "viquad2_validation.json")
     train = load_squad_file(Path(data_dir) / "viquad2_train.json")
@@ -68,7 +76,7 @@ def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--checkpoint", required=True)
     ap.add_argument("--name", required=True, help="tên tệp kết quả: windows_<name>_<split>.json")
-    ap.add_argument("--split", choices=["dev", "validation"], required=True)
+    ap.add_argument("--split", choices=["dev", "validation", "stress2"], required=True)
     ap.add_argument("--data-dir", default="data/raw")
     ap.add_argument("--split-seed", type=int, default=42)
     ap.add_argument("--dev-frac", type=float, default=0.05)

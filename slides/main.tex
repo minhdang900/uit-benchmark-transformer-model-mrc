@@ -77,7 +77,13 @@
 \makeatletter\newcommand{\tabinput}[1]{\@@input #1 }\makeatother
 \graphicspath{{../report/figures/}}
 \newcommand{\bignum}[2]{{\headfont\fontsize{30}{32}\selectfont\color{#2}#1}}
-\newcommand{\src}[1]{\vfill{\scriptsize\color{muted}Nguồn: \code{#1}}}
+% Nguồn số liệu vẽ ở chân trang, cùng hàng với số trang, bằng hook shipout/foreground:
+% không chiếm chiều cao của thân slide nên không đẩy nội dung tràn khung. (Đặt
+% template ``frame footer'' bên trong khung KHÔNG được: nhóm của thân khung đóng
+% trước khi chân trang được dựng.) Hook ...Next chỉ áp vào trang kế tiếp = trang
+% của chính slide gọi \src; bộ slide không dùng overlay nên mỗi khung là một trang.
+\newcommand{\src}[1]{\AddToHookNext{shipout/foreground}{%
+  \put(28.35,-241.3){\makebox(0,0)[bl]{\scriptsize\color{muted}Nguồn: \code{#1}}}}}
 
 \title{Khảo sát và đánh giá hiệu năng các mô hình Transformer tiền huấn luyện\\trong bài toán đọc hiểu văn bản tiếng Việt}
 \subtitle{PhoBERT (word-level) vs XLM-R (subword) trên UIT-ViQuAD 2.0 --- một đánh giá chẩn đoán}

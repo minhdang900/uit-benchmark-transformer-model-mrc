@@ -114,8 +114,10 @@ Ba điểm đáng chú ý về thiết kế:
   \item \textbf{Câu gốc đi kèm để so theo cặp.} Các nhóm perturbation mang theo chính câu trước
         khi biến đổi (cột cuối Bảng~\ref{tab:audit}). Điều này quan trọng với E3: vì mọi mục E3
         đều không có đáp án, hệ thống ``luôn từ chối'' đạt 100 EM trên nhóm đó \emph{theo định
-        nghĩa}. Chỉ số có nghĩa của E3 vì thế là độ nhất quán theo cặp --- trả lời đúng câu gốc
-        \emph{và} từ chối đúng câu đã xoá --- nơi ``luôn từ chối'' được 0.
+        nghĩa}. E3b vì thế được đọc theo cặp: trong số cặp mà mô hình trả lời đúng câu gốc, bao
+        nhiêu cặp nó \emph{không} từ chối khi câu chứa đáp án đã bị xoá (tỉ lệ hỏng,
+        Mục~\ref{sec:audit-method}). ``Luôn từ chối'' không trả lời đúng câu gốc nào, nên chỉ số
+        này không xác định cho nó --- nó không thể ``thắng'' nhóm E3 bằng cách không làm gì.
   \item \textbf{Trải rộng trên nhiều đoạn văn.} \StressN{} mục nằm trên \StressCtx{} ngữ cảnh, mỗi
         tập con lấy tối đa hai mục từ cùng một ngữ cảnh, nên điểm số không bị chi phối bởi đặc
         điểm của vài đoạn văn riêng lẻ.

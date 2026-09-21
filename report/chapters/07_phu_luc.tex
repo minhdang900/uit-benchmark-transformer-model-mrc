@@ -12,31 +12,43 @@
 Toàn bộ kết quả tái lập được bằng các lệnh sau trên một máy có Python 3.12 (GPU không bắt buộc
 cho phần đánh giá baseline và phân tích; bắt buộc trên thực tế cho fine-tune).
 
-\begin{lstlisting}[language=bash]
-# 1. Môi trường và dữ liệu
+\begin{lstlisting}[language=bash,escapeinside={(*}{*)}]
+# 1. (*\lstcmt{Môi trường và dữ liệu}*)
 uv venv .venv --python 3.12
 uv pip install --python .venv/bin/python -r requirements.txt
 python scripts/fetch_data.py                   # UIT-ViQuAD 2.0 -> data/raw/
 
-# 2. Kiểm thử (không cần GPU)
+# 2. (*\lstcmt{Kiểm thử (không cần}*) GPU)
 python -m pytest -m "not slow"
 
-# 3. Phân tích không cần mô hình
-python scripts/analyze_segmentation.py         # biên từ + trần EM
-python scripts/build_stress_v2.py              # dựng + kiểm định stress-test v2
+# 3. (*\lstcmt{Phân tích không cần mô hình}*)
+python scripts/analyze_segmentation.py         # (*\lstcmt{biên từ + trần}*) EM
+python scripts/build_stress_v2.py              # (*\lstcmt{dựng + kiểm định}*) stress-test v2
 
-# 4. Fine-tune (dev tách từ train; validation không được nhìn thấy)
+# 4. Fine-tune (dev (*\lstcmt{tách từ train; validation không được nhìn thấy)}*)
 python scripts/finetune.py --model FacebookAI/xlm-roberta-base --out models/xlmr \
     --epochs 3 --max-length 384 --doc-stride 128 --max-answer-len 64
 python scripts/finetune.py --model vinai/phobert-base-v2 --out models/phobert \
     --word-segmented --epochs 3 --max-length 256 --doc-stride 96 --max-answer-len 64
+bash scripts/queue_night1.sh && bash scripts/queue_night2.sh   # seed 13, lr 1e-5, 256/96
 
-# 5. Chấm (mỗi hệ thống một lần, toàn bộ validation) và chẩn đoán
+# 5. (*\lstcmt{Chấm (mỗi hệ thống một lần, toàn bộ validation), chọn tau trên dev, chẩn đoán}*)
 python scripts/run_eval.py --models abstain baseline xlmr phobert
-python scripts/run_eval.py --models abstain baseline xlmr phobert --dataset stress
+python scripts/run_eval.py --models abstain baseline xlmr xlmr_seed13 phobert \
+    phobert_seed13 xlmr_256 --dataset stress2
+bash scripts/queue_score_windows.sh
+python scripts/calibrate_thresholds.py --runs xlmr xlmr_seed13 xlmr_256 phobert \
+    phobert_seed13 phobert_lr2e5 phobert_stable
 python scripts/diagnose.py
 
-# 6. Báo cáo: số liệu và hình sinh từ results/, rồi biên dịch
+# 5b. Stress-test v2 (*\lstcmt{ở tau chọn trên dev (không chọn gì trên}*) stress2)
+for m in xlmr xlmr_seed13 phobert phobert_seed13 xlmr_256; do
+  python scripts/score_windows.py --checkpoint models/$m --name $m --split stress2
+done
+python scripts/score_stress2_tuned.py --check-tau0 \
+    --runs xlmr xlmr_seed13 phobert phobert_seed13 xlmr_256
+
+# 6. (*\lstcmt{Báo cáo: số liệu và hình sinh từ results/, rồi biên dịch}*)
 python scripts/make_report_numbers.py && python scripts/make_figures.py
 cd report && latexmk -xelatex main.tex
 \end{lstlisting}
@@ -73,23 +85,24 @@ Bộ sinh stress-test: \code{\_find\_answer\_start} trả về 0 khi không tìm
 \section{Cấu trúc mã nguồn}
 \label{app:code}
 
-\begin{lstlisting}
+\begin{lstlisting}[escapeinside={(*}{*)}]
 src/mrc/
-  data.py, normalize.py, metrics.py     # nạp SQuAD-2.0, chuẩn hoá, EM/F1      (CS116)
+  data.py, normalize.py, metrics.py     # (*nạp SQuAD-2.0, chuẩn hoá,*) EM/F1      (CS116)
   windowing.py, features.py, training.py, transformer_qa.py                     (CS116)
   baseline_tfidf.py, evaluate.py, tagging.py                                   (CS116)
-  tokenization.py         # chọn tokenizer theo loại mô hình                   (CS221)
-  segmented_tokenizer.py  # PhoBERT: tách từ + BPE + offset về văn bản gốc     (CS221)
-  segmentation.py         # tương thích biên từ, trần EM                       (CS221)
-  stress_test.py          # nạp + kiểm định stress-test                        (CS221)
-  diagnosis.py            # phân loại lỗi, từ chối, McNemar, bootstrap         (CS221)
-  baselines.py            # luôn từ chối                                       (CS221)
+  tokenization.py         # (*chọn tokenizer theo loại mô hình*)                   (CS221)
+  segmented_tokenizer.py  # PhoBERT: (*tách từ + BPE + offset về văn bản gốc*)     (CS221)
+  segmentation.py         # (*tương thích biên từ, trần*) EM                       (CS221)
+  stress_v2.py            # (*dựng, kiểm định, chấm theo cặp*) stress-test v2       (CS221)
+  diagnosis.py            # (*phân loại lỗi, từ chối,*) McNemar, bootstrap         (CS221)
+  baselines.py            # (*luôn từ chối*)                                       (CS221)
 scripts/   finetune.py run_eval.py analyze_segmentation.py build_stress_v2.py
+           score_windows.py calibrate_thresholds.py score_stress2_tuned.py
            diagnose.py make_report_numbers.py make_figures.py
-tests/     348 kiểm thử (297 không cần GPU)
+tests/     (*\NTests{} kiểm thử (\NTestsFast{} không cần GPU)*)
 results/   eval_*.json predictions_*.json training_curve_*.json diagnosis_*.json ...
-report/    mã LaTeX của báo cáo; generated/ do make_report_numbers.py sinh
-legacy/    khung mã ban đầu (không dùng; xem Phụ lục B)
+report/    (*mã LaTeX của báo cáo;*) generated/ do make_report_numbers.py sinh
+legacy/    khung (*mã ban đầu (không dùng; xem Phụ lục*) B)
 \end{lstlisting}
 
 \section{Bảng truy vết số liệu}
@@ -107,7 +120,9 @@ legacy/    khung mã ban đầu (không dùng; xem Phụ lục B)
 \midrule
 Thống kê dữ liệu, kích thước train/dev & \code{data/raw/*.json} qua \code{compute\_stats}, \code{split\_by\_context} (seed 42) \\
 EM, F1, tách nhóm, độ trễ & \code{results/eval\_*\_validation.json} \\
-Điểm trên stress-test v2 theo nhóm & \code{results/eval\_*\_stress2.json} \\
+Điểm trên stress-test v2 theo nhóm, ở $\tau$ dev (Bảng~\ref{tab:stress}) & \code{results/eval\_*\_stress2\_tuned.json} \\
+Độ nhất quán theo cặp E2c/E3b/E5 (Bảng~\ref{tab:stresspairs}) & \code{by\_subset.*.pairs} trong cùng tệp \\
+Điểm từng cửa sổ trên stress-test v2 & \code{results/windows\_*\_stress2.json} \\
 Kiểm định stress-test v2 & \code{results/stress\_v2\_audit.json} \\
 Tương thích biên từ, trần EM & \code{results/segmentation\_validation.json} \\
 Phân loại lỗi, từ chối, theo độ dài đáp án, so sánh cặp & \code{results/diagnosis\_validation.json} \\
